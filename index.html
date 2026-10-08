@@ -109,7 +109,64 @@ file.onchange=()=>{const f=file.files[0];if(!f)return;title.textContent=f.name;t
 ['dragenter','dragover'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>{if(e.dataTransfer.files.length){file.files=e.dataTransfer.files;file.dispatchEvent(new Event('change'))}});
 close.onclick=()=>modal.classList.remove('show');buy.onclick=()=>{window.open('https://wa.me/6289616438173?text='+encodeURIComponent('Halo Bang, Saya Mau Topup Coin'),'_blank','noopener')};document.getElementById('claimKey').onclick=()=>{const key=document.getElementById('claimKeyInput').value.trim();if(!key){document.getElementById('claimKeyInput').focus();return}modal.classList.add('show');document.getElementById('modalTitle').textContent='Claim Akun';document.getElementById('modalText').textContent='Key diterima. Verifikasi akun akan dilakukan oleh API server.'};
 const stars=document.getElementById('stars');for(let i=0;i<78;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--l',(55+Math.random()*155)+'px');s.style.setProperty('--r',(-68+Math.random()*136)+'deg');s.style.setProperty('--x1',(-260+Math.random()*520)+'px');s.style.setProperty('--y1',(-210+Math.random()*420)+'px');s.style.setProperty('--x2',(-520+Math.random()*1040)+'px');s.style.setProperty('--y2',(-410+Math.random()*820)+'px');s.style.setProperty('--x3',(-300+Math.random()*600)+'px');s.style.setProperty('--y3',(-240+Math.random()*480)+'px');s.style.setProperty('--m',(12+Math.random()*20)+'s');s.style.setProperty('--d',(1.5+Math.random()*3)+'s');s.style.animationDelay=(-Math.random()*32)+'s';stars.appendChild(s)}
-document.querySelectorAll('.stars .star').forEach(s=>{s.style.setProperty('--x1',(-110+Math.random()*220)+'px');s.style.setProperty('--y1',(-90+Math.random()*180)+'px');s.style.setProperty('--x2',(-180+Math.random()*360)+'px');s.style.setProperty('--y2',(-150+Math.random()*300)+'px');s.style.setProperty('--x3',(-110+Math.random()*220)+'px');s.style.setProperty('--y3',(-90+Math.random()*180)+'px');s.style.setProperty('--m',(9+Math.random()*13)+'s');s.style.animationDelay=(-Math.random()*20)+'s'});const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='rise .7s ease both'}),{threshold:.12});document.querySelectorAll('.section,.card,.step').forEach(el=>revealObserver.observe(el));
+document.querySelectorAll('.stars .star').forEach(s=>{s.style.setProperty('--x1',(-110+Math.random()*220)+'px');s.style.setProperty('--y1',(-90+Math.random()*180)+'px');s.style.setProperty('--x2',(-180+Math.random()*360)+'px');s.style.setProperty('--y2',(-150+Math.random()*300)+'px');s.style.setProperty('--x3',(-110+Math.random()*220)+'px');s.style.setProperty('--y3',(-90+Math.random()*180)+'px');s.style.setProperty('--m',(9+Math.random()*13)+'s');s.style.animationDelay=(-Math.random()*20)+'s'});
+
+// LIVE CUSTOMER AUTH + WALLET
+const claimBtn=document.getElementById('claimKey'),claimInput=document.getElementById('claimKeyInput');
+const walletBadge=document.querySelector('.wallet-title .badge');
+const walletStats=document.querySelectorAll('.wallet-stat b');
+const walletProgressHead=document.querySelector('.wallet-progress-head strong');
+const walletProgressBar=document.querySelector('.wallet-progress .bar i');
+const walletBottomCost=document.querySelector('.wallet-bottom strong');
+
+function showModal(titleText,textText){modal.classList.add('show');document.getElementById('modalTitle').textContent=titleText;document.getElementById('modalText').textContent=textText}
+function closeModal(){modal.classList.remove('show')}
+function setWallet(d){
+  const balance=Number(d?.coin_balance ?? d?.coins ?? d?.balance ?? 0);
+  const used=Number(d?.encode_used ?? d?.encodes_used ?? d?.usage_count ?? 0);
+  const topup=Number(d?.topup_count ?? d?.topups ?? 0);
+  if(walletStats[0])walletStats[0].textContent=balance;
+  if(walletStats[1])walletStats[1].textContent=used;
+  if(walletStats[2])walletStats[2].textContent=topup;
+  if(walletBadge){walletBadge.textContent='TERHUBUNG';walletBadge.className='badge'}
+  if(walletProgressHead)walletProgressHead.textContent=balance+' coin';
+  if(walletProgressBar)walletProgressBar.style.width=balance>0?'100%':'0%';
+}
+async function loadWallet(){
+  try{
+    const r=await fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.wallet,{credentials:'include'});
+    if(!r.ok)return;
+    const d=await r.json();
+    setWallet(d);
+  }catch(e){}
+}
+claimBtn.onclick=async()=>{
+  const key=claimInput.value.trim();
+  if(!key){claimInput.focus();return}
+  claimBtn.disabled=true;
+  showModal('Claim Akun','Memverifikasi key ke API server...');
+  try{
+    const r=await fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.claimKey,{
+      method:'POST',
+      credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({key})
+    });
+    let d={};try{d=await r.json()}catch(e){}
+    if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));
+    await loadWallet();
+    const balance=Number(d?.coin_balance ?? d?.coins ?? d?.balance ?? walletStats[0]?.textContent ?? 0);
+    document.getElementById('modalTitle').textContent='Akun Berhasil Terhubung';
+    document.getElementById('modalText').textContent='Claim berhasil. Saldo wallet saat ini '+balance+' COIN.';
+    claimInput.value='';
+  }catch(e){
+    document.getElementById('modalTitle').textContent='Claim Gagal';
+    document.getElementById('modalText').textContent=e.message||'Terjadi kesalahan saat menghubungkan akun.';
+  }finally{
+    claimBtn.disabled=false;
+  }
+};
+loadWallet();const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='rise .7s ease both'}),{threshold:.12});document.querySelectorAll('.section,.card,.step').forEach(el=>revealObserver.observe(el));
 const checkerUrl=document.getElementById('checkerUrl'),checkerChoose=document.getElementById('checkerChoose'),checkerTitle=document.getElementById('checkerTitle'),checkerText=document.getElementById('checkerText'),analysisStatus=document.getElementById('analysisStatus');
 checkerChoose.onclick=async()=>{const url=checkerUrl.value.trim();if(!url){checkerText.textContent='Tempel link video TikTok terlebih dahulu.';checkerUrl.focus();return}if(!/^https?:\/\/(www\.)?tiktok\.com\//i.test(url)){checkerText.textContent='Link harus berupa URL TikTok yang valid.';return}checkerTitle.textContent='Mengambil data TikTok...';checkerText.textContent='Backend analyzer akan memeriksa hasil upload dan mengembalikan detail video.';analysisStatus.textContent='ANALYZING';analysisStatus.className='badge warn';try{const r=await fetch('https://103-235-74-92.sslip.io/public/tiktok-analytics?url='+encodeURIComponent(url));if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const map={mResolution:d.resolution,mFps:d.fps,mBitrate:d.bitrate,mCodec:d.codec,mSize:d.file_size,mContainer:d.container,sRegion:d.region,sReview:d.review_status,sVisibility:d.visibility,sIndex:d.index_visibility};Object.entries(map).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v??'—'});checkerTitle.textContent='Analisis selesai';checkerText.textContent='Data berhasil diterima dari TikTok Analytics backend.';analysisStatus.textContent='LIVE RESULT';analysisStatus.className='badge'}catch(e){checkerTitle.textContent='Analyzer belum tersedia';checkerText.textContent='Endpoint TikTok Analytics belum terhubung di backend. UI sudah siap menerima hasil live dari server.';analysisStatus.textContent='BACKEND REQUIRED';analysisStatus.className='badge warn'}};
 </script>
