@@ -64,11 +64,11 @@ body{background:radial-gradient(circle at 12% 12%,rgba(231,184,63,.075),transpar
 <section class="grid">
   <div class="card upload">
     <div class="card-head"><div><div class="mini">Pilih mode pemrosesan video</div></div><div class="pill">MP4</div></div>
-    <div class="mode-title">PILIH MODE</div><div class="mode-buttons"><button class="mode-btn active" id="sdrBtn">MODE SDR</button><button class="mode-btn" id="hdrBtn">MODE SDR + HDR</button></div>
-    <div class="drop" id="drop"><div class="upload-icon">↑</div><strong id="dropTitle">Pilih video untuk diproses</strong><p id="dropText">Tarik file ke sini atau pilih dari perangkat. Format utama: MP4.</p><input id="file" class="file" type="file" accept="video/mp4"><button class="btn btn-primary" id="choose">Pilih Video</button></div>
+    <div class="mode-title">PILIH PROSES</div><div class="mode-buttons"><button class="mode-btn active" id="sdrBtn">INJECT TIKTOK HD</button><button class="mode-btn" id="hdrBtn">CHANGE VIDEO NON HDR TO HDR + INJECT TIKTOK HD</button></div>
+    <div class="drop" id="drop"><div class="upload-icon">↑</div><strong id="dropTitle">Pilih mode di atas</strong><p id="dropText">Klik salah satu tombol proses. Jendela pilih file akan langsung terbuka.</p><input id="file" class="file" type="file" accept="video/mp4"></div>
   </div>
   <aside class="side">
-    <div class="card wallet-card"><div class="wallet-title"><h2>Wallet</h2><span class="badge">BELUM TERHUBUNG</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Coin tersedia</span><b>0</b><em>coin untuk encode</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Top up</span><b>0</b><em>transaksi</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Saldo wallet</span><strong>0 / 0 coin</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span>Biaya sekali encode <strong>SDR 5 · HDR 7 COIN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Tambah Saldo</button></div></div><div class="claim-box"><div class="claim-label">CLAIM AKUN</div><div class="claim-row"><input id="claimKeyInput" type="text" placeholder="Masukkan key akun" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan key yang diberikan admin untuk menghubungkan akun pelanggan.</div></div></div>
+    <div class="card wallet-card"><div class="wallet-title"><h2>Wallet</h2><span class="badge">BELUM TERHUBUNG</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Coin tersedia</span><b>0</b><em>coin untuk encode</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Top up</span><b>0</b><em>transaksi</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Saldo wallet</span><strong>0 / 0 coin</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span>Biaya sekali proses <strong>SDR 1 · HDR 7 COIN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Tambah Saldo</button></div></div><div class="claim-box"><div class="claim-label">CLAIM AKUN</div><div class="claim-row"><input id="claimKeyInput" type="text" placeholder="Masukkan key akun" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan key yang diberikan admin untuk menghubungkan akun pelanggan.</div></div></div>
     <div class="card"><h2 style="margin:0">Yang kamu dapat</h2><div class="feature-list"><div class="feature"><span class="check">✓</span>Pipeline Golden HD di server</div><div class="feature"><span class="check">✓</span>Upload diproses otomatis</div><div class="feature"><span class="check">✓</span>Hasil dapat diunduh</div><div class="feature"><span class="check">✓</span>File sementara dihapus otomatis</div></div></div>
   </aside>
 </section>
@@ -101,11 +101,103 @@ window.GOLDEN_PLATFORM = Object.freeze({
     analytics: '/public/tiktok-analytics'
   })
 });
-const file=document.getElementById('file'),choose=document.getElementById('choose'),drop=document.getElementById('drop'),title=document.getElementById('dropTitle'),text=document.getElementById('dropText'),modal=document.getElementById('modal'),close=document.getElementById('close'),buy=document.getElementById('buy'),sdrBtn=document.getElementById('sdrBtn'),hdrBtn=document.getElementById('hdrBtn');let selectedMode='sdr',selectedPrice=5;
-function selectMode(mode,price){selectedMode=mode;selectedPrice=price;sdrBtn.classList.toggle('active',mode==='sdr');hdrBtn.classList.toggle('active',mode==='hdr');}
-sdrBtn.onclick=()=>{selectMode('sdr',1);file.click()};hdrBtn.onclick=()=>{selectMode('hdr',7);file.click()};
-choose.onclick=()=>file.click();
-file.onchange=()=>{const f=file.files[0];if(!f)return;title.textContent=f.name;text.textContent=(f.size/1048576).toFixed(1)+' MB · '+(selectedMode==='hdr'?'HDR · 7 Coin':'Normal / SDR · 1 Coin');choose.textContent='Proses Video';choose.onclick=async()=>{if(!f)return;choose.disabled=true;modal.classList.add('show');document.getElementById('modalTitle').textContent='Mengirim video...';document.getElementById('modalText').textContent='Video sedang dikirim ke Golden API. Coin akan dipotong oleh server.';try{const fd=new FormData();fd.append('service_code',GOLDEN_PLATFORM.serviceCodes[selectedMode]);fd.append('file',f,f.name);const r=await fetch(GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.upload,{method:'POST',credentials:'include',body:fd});let d={};try{d=await r.json()}catch(e){}if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));document.getElementById('modalTitle').textContent='Video masuk antrean';document.getElementById('modalText').textContent='Job berhasil dibuat. '+(d.download_url?'Hasil siap diunduh.':'Server sedang memproses video.');if(d.download_url){const a=document.createElement('a');a.href=d.download_url;a.target='_blank';a.rel='noopener';a.className='btn btn-primary';a.style.display='block';a.style.textAlign='center';a.style.marginTop='14px';a.textContent='Download Hasil';document.querySelector('.modal-box').appendChild(a)}await loadWallet();}catch(e){document.getElementById('modalTitle').textContent='Upload Gagal';document.getElementById('modalText').textContent=e.message||'Gagal mengirim video ke server.';}finally{choose.disabled=false;}}};
+const file=document.getElementById('file'),drop=document.getElementById('drop'),title=document.getElementById('dropTitle'),text=document.getElementById('dropText'),modal=document.getElementById('modal'),close=document.getElementById('close'),buy=document.getElementById('buy'),sdrBtn=document.getElementById('sdrBtn'),hdrBtn=document.getElementById('hdrBtn');let selectedMode='sdr',selectedPrice=1,processing=false;
+
+function selectMode(mode,price){
+  selectedMode=mode;selectedPrice=price;
+  sdrBtn.classList.toggle('active',mode==='sdr');
+  hdrBtn.classList.toggle('active',mode==='hdr');
+  file.value='';
+  file.click();
+}
+sdrBtn.onclick=()=>selectMode('sdr',1);
+hdrBtn.onclick=()=>selectMode('hdr',7);
+
+function setProgress(p,label){
+  const n=Math.max(0,Math.min(100,Number(p)||0));
+  const bar=document.querySelector('#modal .progress i');
+  if(bar){bar.style.width=n+'%';bar.style.animation='none';}
+  document.getElementById('modalText').textContent=label+' '+Math.round(n)+'%.';
+}
+
+function extractJobId(d){
+  return d?.job_id ?? d?.id ?? d?.job?.id ?? d?.job?.job_id ?? d?.data?.job_id ?? d?.data?.id ?? null;
+}
+function extractDownload(d){
+  return d?.download_url ?? d?.output_url ?? d?.result_url ?? d?.job?.download_url ?? d?.job?.output_url ?? d?.data?.download_url ?? d?.data?.output_url ?? null;
+}
+function normalizeProgress(d){
+  const raw=d?.progress ?? d?.percent ?? d?.percentage ?? d?.job?.progress ?? d?.job?.percent ?? d?.data?.progress;
+  if(typeof raw==='number')return raw<=1?raw*100:raw;
+  if(typeof raw==='string'){const n=parseFloat(raw);if(!Number.isNaN(n))return n<=1?n*100:n;}
+  const st=String(d?.status ?? d?.job?.status ?? d?.data?.status ?? '').toLowerCase();
+  if(['completed','complete','done','success','finished'].includes(st))return 100;
+  if(['processing','running','queued','pending'].includes(st))return 5;
+  return null;
+}
+async function pollJob(jobId){
+  for(let i=0;i<180;i++){
+    await new Promise(r=>setTimeout(r,2000));
+    const r=await fetch(GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.job+encodeURIComponent(jobId),{credentials:'include'});
+    let d={};try{d=await r.json()}catch(e){}
+    if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));
+    const p=normalizeProgress(d);
+    if(p!==null)setProgress(p,p>=100?'Proses selesai':'Golden Engine sedang memproses');
+    const url=extractDownload(d);
+    const st=String(d?.status ?? d?.job?.status ?? d?.data?.status ?? '').toLowerCase();
+    if(url && (p===null || p>=100 || ['completed','complete','done','success','finished'].includes(st)))return url;
+    if(['failed','error','cancelled','canceled'].includes(st))throw new Error(d?.error||d?.detail||'Proses video gagal di server.');
+  }
+  throw new Error('Proses server melebihi batas waktu pemantauan.');
+}
+
+async function uploadVideo(f){
+  if(processing)return;
+  processing=true;
+  modal.classList.add('show');close.style.display='none';
+  document.getElementById('modalTitle').textContent=selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD';
+  setProgress(0,'Menyiapkan upload');
+  try{
+    const fd=new FormData();
+    fd.append('service_code',GOLDEN_PLATFORM.serviceCodes[selectedMode]);
+    fd.append('file',f,f.name);
+    const xhr=new XMLHttpRequest();
+    const response=await new Promise((resolve,reject)=>{
+      xhr.open('POST',GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.upload,true);
+      xhr.withCredentials=true;
+      xhr.upload.onprogress=e=>{
+        if(e.lengthComputable)setProgress((e.loaded/e.total)*35,'Mengunggah video');
+      };
+      xhr.onerror=()=>reject(new Error('Koneksi ke Golden API terputus.'));
+      xhr.onload=()=>{
+        let d={};try{d=JSON.parse(xhr.responseText||'{}')}catch(e){}
+        if(xhr.status<200||xhr.status>=300)return reject(new Error(d.detail||('HTTP '+xhr.status)));
+        resolve(d);
+      };
+      xhr.send(fd);
+    });
+    setProgress(40,'Upload selesai, menunggu engine');
+    let url=extractDownload(response);
+    const jobId=extractJobId(response);
+    if(!url && jobId)url=await pollJob(jobId);
+    if(!url)throw new Error('Server menerima job tetapi belum memberikan ID job atau link hasil download.');
+    setProgress(100,'Proses selesai');
+    document.getElementById('modalTitle').textContent='Video siap diunduh';
+    document.getElementById('modalText').textContent='Proses berhasil. File hasil tersedia.';
+    const old=document.getElementById('downloadResult');if(old)old.remove();
+    const a=document.createElement('a');a.id='downloadResult';a.href=url;a.target='_blank';a.rel='noopener';a.className='btn btn-primary';a.style.display='block';a.style.textAlign='center';a.style.marginTop='14px';a.textContent='DOWNLOAD HASIL';
+    document.querySelector('.modal-box').appendChild(a);
+    await loadWallet();
+  }catch(e){
+    document.getElementById('modalTitle').textContent='Proses Gagal';
+    document.getElementById('modalText').textContent=e.message||'Gagal memproses video.';
+    const old=document.getElementById('downloadResult');if(old)old.remove();
+    close.style.display='block';
+  }finally{processing=false;}
+}
+
+file.onchange=()=>{const f=file.files[0];if(!f)return;title.textContent=f.name;text.textContent=(f.size/1048576).toFixed(1)+' MB · '+(selectedMode==='hdr'?'HDR + Inject TikTok HD · 7 Coin':'Inject TikTok HD · 1 Coin');uploadVideo(f);};
+
 ['dragenter','dragover'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>{if(e.dataTransfer.files.length){file.files=e.dataTransfer.files;file.dispatchEvent(new Event('change'))}});
 close.onclick=()=>modal.classList.remove('show');buy.onclick=()=>{window.open('https://wa.me/6289616438173?text='+encodeURIComponent('Halo Bang, Saya Mau Topup Coin'),'_blank','noopener')};document.getElementById('claimKey').onclick=()=>{const key=document.getElementById('claimKeyInput').value.trim();if(!key){document.getElementById('claimKeyInput').focus();return}modal.classList.add('show');document.getElementById('modalTitle').textContent='Claim Akun';document.getElementById('modalText').textContent='Key diterima. Verifikasi akun akan dilakukan oleh API server.'};
 const stars=document.getElementById('stars');for(let i=0;i<78;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--l',(55+Math.random()*155)+'px');s.style.setProperty('--r',(-68+Math.random()*136)+'deg');s.style.setProperty('--x1',(-260+Math.random()*520)+'px');s.style.setProperty('--y1',(-210+Math.random()*420)+'px');s.style.setProperty('--x2',(-520+Math.random()*1040)+'px');s.style.setProperty('--y2',(-410+Math.random()*820)+'px');s.style.setProperty('--x3',(-300+Math.random()*600)+'px');s.style.setProperty('--y3',(-240+Math.random()*480)+'px');s.style.setProperty('--m',(12+Math.random()*20)+'s');s.style.setProperty('--d',(1.5+Math.random()*3)+'s');s.style.animationDelay=(-Math.random()*32)+'s';stars.appendChild(s)}
