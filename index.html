@@ -33,6 +33,18 @@ body{background:radial-gradient(circle at 12% 12%,rgba(231,184,63,.075),transpar
 .mode-btn:nth-child(2){animation-delay:-1.4s!important}
 .mode-btn:hover,.mode-btn.active:hover{transform:none!important}
 @keyframes modePulse{0%,100%{filter:brightness(1);box-shadow:inset 0 1px rgba(255,255,255,.09),inset 0 -12px 25px rgba(0,0,0,.12),0 0 0 rgba(231,184,63,0)}50%{filter:brightness(1.08);box-shadow:inset 0 1px rgba(255,255,255,.12),inset 0 -12px 25px rgba(0,0,0,.12),0 0 22px rgba(231,184,63,.12)}}.claim-box{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07)}.claim-label{font-size:10px;letter-spacing:.12em;font-weight:800;color:#9ca4ac;margin-bottom:8px}.claim-row{display:flex;gap:8px}.claim-row input{flex:1;min-width:0;padding:10px 11px;border:1px solid rgba(255,255,255,.1);border-radius:11px;background:#0b0f12;color:#f2f4f5;outline:none}.claim-row input:focus{border-color:rgba(231,184,63,.45);box-shadow:0 0 0 3px rgba(231,184,63,.06)}.claim-row .btn{padding:10px 13px;font-size:11px;white-space:nowrap}.claim-help{margin-top:7px;font-size:10px;line-height:1.45;color:#7f8992}
+
+/* Riwayat pemrosesan berbasis API */
+.history-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.history-list{display:grid;gap:12px}
+.history-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:17px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025)}
+.history-name{font-weight:700;overflow-wrap:anywhere}.history-meta{display:flex;flex-wrap:wrap;gap:7px 12px;color:var(--muted);font-size:12px;margin-top:7px}
+.history-status{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:5px 9px;font-size:10px;font-weight:850;text-transform:uppercase;white-space:nowrap}
+.history-status.completed{color:var(--good);border-color:rgba(114,215,165,.25);background:rgba(114,215,165,.08)}
+.history-status.failed{color:var(--danger);border-color:rgba(255,114,114,.25);background:rgba(255,114,114,.08)}
+.history-status.queued,.history-status.processing{color:var(--accent2);border-color:rgba(231,184,63,.22);background:rgba(231,184,63,.07)}
+.history-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap}.history-empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px;font-size:13px;line-height:1.6}
+@media(max-width:600px){.history-item{grid-template-columns:1fr}.history-actions{justify-content:flex-start}.history-toolbar{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
@@ -71,6 +83,14 @@ body{background:radial-gradient(circle at 12% 12%,rgba(231,184,63,.075),transpar
     <div class="card wallet-card"><div class="wallet-title"><h2>Wallet</h2><span class="badge">BELUM TERHUBUNG</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Coin tersedia</span><b>0</b><em>coin untuk encode</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Top up</span><b>0</b><em>transaksi</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Saldo wallet</span><strong>0 / 0 coin</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span>Biaya sekali proses <strong id="priceSummary">SDR 1 · HDR 7 COIN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Tambah Saldo</button></div></div><div class="claim-box"><div class="claim-label">CLAIM AKUN</div><div class="claim-row"><input id="claimKeyInput" type="text" placeholder="Masukkan key akun" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan key yang diberikan admin untuk menghubungkan akun pelanggan.</div></div></div>
     <div class="card"><h2 style="margin:0">Yang kamu dapat</h2><div class="feature-list"><div class="feature"><span class="check">✓</span>Pipeline Golden HD di server</div><div class="feature"><span class="check">✓</span>Upload diproses otomatis</div><div class="feature"><span class="check">✓</span>Hasil dapat diunduh</div><div class="feature"><span class="check">✓</span>File sementara dihapus otomatis</div></div></div>
   </aside>
+</section>
+
+<section class="section" id="job-history">
+  <div class="history-toolbar">
+    <div><h2 style="margin-bottom:6px">Riwayat Pemrosesan</h2><p class="section-intro" style="text-align:left;margin:0">Riwayat diambil dari database akun yang sedang login. Hasil yang selesai bisa diunduh kembali.</p></div>
+    <button class="btn btn-secondary" id="refreshHistory" type="button">Muat Ulang</button>
+  </div>
+  <div id="historyList" class="history-list"><div class="history-empty">Memuat riwayat dari server…</div></div>
 </section>
 <section class="section" id="tiktok-analytics"><h2>TikTok Analytics</h2><p class="section-intro">Tempel link video TikTok yang sudah di-upload. Analyzer akan mengambil data dari hasil upload TikTok melalui backend Dicky News, lalu menampilkan rincian teknis dan sinyal distribusi video.</p><div class="analytics"><div class="card analytics-upload"><div class="card-head"><div><h2>Analyze TikTok Result</h2><div class="mini">Masukkan URL video TikTok publik.</div></div><div class="pill">LIVE CHECK</div></div><div class="drop checker-drop" id="checkerDrop"><div class="upload-icon">⌁</div><strong id="checkerTitle">Paste TikTok video link</strong><p id="checkerText">Contoh: https://www.tiktok.com/@username/video/...</p><input id="checkerUrl" class="checker-url" type="url" placeholder="https://www.tiktok.com/@username/video/..." autocomplete="off"><button class="btn btn-primary" id="checkerChoose">Analyze TikTok</button></div></div><div class="card"><div class="card-head"><div><h2>TikTok Result Details</h2><div class="mini">Data yang dikembalikan analyzer.</div></div><span class="badge neutral" id="analysisStatus">READY</span></div><div class="metric-grid"><div class="metric"><span>Resolution</span><b id="mResolution">—</b></div><div class="metric"><span>Frame Rate</span><b id="mFps">—</b></div><div class="metric"><span>Bitrate</span><b id="mBitrate">—</b></div><div class="metric"><span>Codec</span><b id="mCodec">—</b></div><div class="metric"><span>File Size</span><b id="mSize">—</b></div><div class="metric"><span>Container</span><b id="mContainer">—</b></div></div><div class="signal-list"><div class="signal"><span class="signal-label">TikTok Region</span><span class="badge neutral" id="sRegion">—</span></div><div class="signal"><span class="signal-label">Review Status</span><span class="badge neutral" id="sReview">—</span></div><div class="signal"><span class="signal-label">Visibility</span><span class="badge neutral" id="sVisibility">—</span></div><div class="signal"><span class="signal-label">Index Visibility</span><span class="badge neutral" id="sIndex">—</span></div></div></div></div></section>
 <section class="section"><h2>Cara kerja</h2><div class="steps"><div class="step"><div class="num">1</div><h3>Upload</h3><p>Pilih video MP4 dan kirim ke server. Sistem akan memeriksa ukuran dan format sebelum masuk antrean.</p></div><div class="step"><div class="num">2</div><h3>Golden Processing</h3><p>Server menjalankan pipeline Golden Engine secara internal. Engine tidak diekspos ke pengguna maupun frontend.</p></div><div class="step"><div class="num">3</div><h3>Download</h3><p>Setelah selesai, hasil diberikan sebagai file output. File sementara dapat dihapus otomatis setelah masa retensi.</p></div></div></section>
@@ -210,6 +230,7 @@ async function uploadVideo(f){
     const a=document.createElement('a');a.id='downloadResult';a.href=url;a.target='_blank';a.rel='noopener';a.className='btn btn-primary';a.style.display='block';a.style.textAlign='center';a.style.marginTop='14px';a.textContent='DOWNLOAD HASIL';
     document.querySelector('.modal-box').appendChild(a);
     await loadWallet();
+    await loadJobHistory();
   }catch(e){
     document.getElementById('modalTitle').textContent='Proses Gagal';
     document.getElementById('modalText').textContent=e.message||'Gagal memproses video.';
@@ -269,6 +290,7 @@ claimBtn.onclick=async()=>{
     let d={};try{d=await r.json()}catch(e){}
     if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));
     await loadWallet();
+    await loadJobHistory();
     const balance=Number(d?.coin_balance ?? d?.customer?.coin_balance ?? d?.customer?.coins ?? d?.customer?.balance ?? walletStats[0]?.textContent ?? 0);
     document.getElementById('modalTitle').textContent='Akun Berhasil Terhubung';
     document.getElementById('modalText').textContent='Claim berhasil. Saldo wallet saat ini '+balance+' COIN.';
@@ -280,7 +302,74 @@ claimBtn.onclick=async()=>{
     claimBtn.disabled=false;
   }
 };
-loadPublicSettings();loadWallet();const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='rise .7s ease both'}),{threshold:.12});document.querySelectorAll('.section,.card,.step').forEach(el=>revealObserver.observe(el));
+
+const historyList=document.getElementById('historyList');
+const refreshHistoryBtn=document.getElementById('refreshHistory');
+function formatHistoryDate(value){
+  if(!value)return 'Waktu tidak tersedia';
+  const date=new Date(value);
+  return Number.isNaN(date.getTime())?String(value):date.toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'});
+}
+function historyStatusLabel(status){
+  const s=String(status||'unknown').toLowerCase();
+  return ({queued:'Dalam antrean',pending:'Menunggu',processing:'Diproses',running:'Diproses',completed:'Selesai',complete:'Selesai',done:'Selesai',failed:'Gagal',error:'Gagal',cancelled:'Dibatalkan',canceled:'Dibatalkan'})[s]||s;
+}
+function renderJobHistory(payload){
+  const rows=Array.isArray(payload)?payload:(Array.isArray(payload?.jobs)?payload.jobs:(Array.isArray(payload?.items)?payload.items:(Array.isArray(payload?.data)?payload.data:(Array.isArray(payload?.data?.jobs)?payload.data.jobs:[]))));
+  historyList.replaceChildren();
+  if(!rows.length){
+    const empty=document.createElement('div');empty.className='history-empty';
+    empty.textContent='Belum ada riwayat pemrosesan untuk akun ini.';
+    historyList.appendChild(empty);return;
+  }
+  for(const raw of rows){
+    const job=raw?.job||raw;
+    const status=String(job.status||raw.status||'unknown').toLowerCase();
+    const item=document.createElement('article');item.className='history-item';
+    const info=document.createElement('div');
+    const name=document.createElement('div');name.className='history-name';name.textContent=job.original_filename||job.filename||('Job #'+(job.id??job.job_id??'—'));
+    const meta=document.createElement('div');meta.className='history-meta';
+    const service=String(job.service_code||job.service||'').toLowerCase();
+    const serviceLabel=service.includes('hdr')?'HDR':'SDR';
+    const inputSize=Number(job.input_size_bytes);
+    const outputSize=Number(job.output_size_bytes);
+    const details=[
+      'Job #'+(job.id??job.job_id??'—'),
+      serviceLabel,
+      (job.coin_cost??job.cost_coins??'—')+' COIN',
+      formatHistoryDate(job.created_at||job.started_at||job.createdAt)
+    ];
+    if(Number.isFinite(inputSize)&&inputSize>0)details.push('Input '+(inputSize/1048576).toFixed(1)+' MB');
+    if(Number.isFinite(outputSize)&&outputSize>0)details.push('Output '+(outputSize/1048576).toFixed(1)+' MB');
+    for(const value of details){const span=document.createElement('span');span.textContent=value;meta.appendChild(span);}
+    const statusEl=document.createElement('span');statusEl.className='history-status '+status.replace(/[^a-z]/g,'');statusEl.textContent=historyStatusLabel(status);
+    info.append(name,meta);
+    const actions=document.createElement('div');actions.className='history-actions';actions.appendChild(statusEl);
+    const download=job.download_url||job.output_url||raw.download_url||raw.output_url;
+    if(download&&(status==='completed'||status==='complete'||status==='done')){
+      const link=document.createElement('a');link.className='btn btn-primary';link.textContent='Unduh';link.href=download.startsWith('http')?download:(GOLDEN_PLATFORM.apiBase+(download.startsWith('/')?'':'/')+download);link.rel='noopener';actions.appendChild(link);
+    }
+    item.append(info,actions);historyList.appendChild(item);
+  }
+}
+async function loadJobHistory(){
+  if(!historyList)return;
+  historyList.innerHTML='<div class="history-empty">Memuat riwayat dari server…</div>';
+  try{
+    const r=await fetch(GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.upload,{credentials:'include',cache:'no-store'});
+    let d={};try{d=await r.json()}catch(e){}
+    if(r.status===401){
+      historyList.innerHTML='<div class="history-empty">Hubungkan akun melalui Claim Key untuk melihat riwayat pemrosesan.</div>';return;
+    }
+    if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));
+    renderJobHistory(d);
+  }catch(e){
+    historyList.innerHTML='<div class="history-empty">Riwayat belum dapat dimuat dari server. Coba tekan Muat Ulang.</div>';
+  }
+}
+if(refreshHistoryBtn)refreshHistoryBtn.addEventListener('click',loadJobHistory);
+
+loadPublicSettings();loadWallet();loadJobHistory();const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='rise .7s ease both'}),{threshold:.12});document.querySelectorAll('.section,.card,.step').forEach(el=>revealObserver.observe(el));
 const checkerUrl=document.getElementById('checkerUrl'),checkerChoose=document.getElementById('checkerChoose'),checkerTitle=document.getElementById('checkerTitle'),checkerText=document.getElementById('checkerText'),analysisStatus=document.getElementById('analysisStatus');
 checkerChoose.onclick=async()=>{const url=checkerUrl.value.trim();if(!url){checkerText.textContent='Tempel link video TikTok terlebih dahulu.';checkerUrl.focus();return}if(!/^https?:\/\/(www\.)?tiktok\.com\//i.test(url)){checkerText.textContent='Link harus berupa URL TikTok yang valid.';return}checkerTitle.textContent='Mengambil data TikTok...';checkerText.textContent='Backend analyzer akan memeriksa hasil upload dan mengembalikan detail video.';analysisStatus.textContent='ANALYZING';analysisStatus.className='badge warn';try{const r=await fetch('https://103-235-74-92.sslip.io/public/tiktok-analytics?url='+encodeURIComponent(url));if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const map={mResolution:d.resolution,mFps:d.fps,mBitrate:d.bitrate,mCodec:d.codec,mSize:d.file_size,mContainer:d.container,sRegion:d.region,sReview:d.review_status,sVisibility:d.visibility,sIndex:d.index_visibility};Object.entries(map).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v??'—'});checkerTitle.textContent='Analisis selesai';checkerText.textContent='Data berhasil diterima dari TikTok Analytics backend.';analysisStatus.textContent='LIVE RESULT';analysisStatus.className='badge'}catch(e){checkerTitle.textContent='Analyzer belum tersedia';checkerText.textContent='Endpoint TikTok Analytics belum terhubung di backend. UI sudah siap menerima hasil live dari server.';analysisStatus.textContent='BACKEND REQUIRED';analysisStatus.className='badge warn'}};
 </script>
