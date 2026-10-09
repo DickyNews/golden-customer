@@ -64,11 +64,11 @@ body{background:radial-gradient(circle at 12% 12%,rgba(231,184,63,.075),transpar
 <section class="grid">
   <div class="card upload">
     <div class="card-head"><div><div class="mini">Pilih mode pemrosesan video</div></div><div class="pill">MP4</div></div>
-    <div class="mode-title">PILIH PROSES</div><div class="mode-buttons"><button class="mode-btn active" id="sdrBtn">INJECT TIKTOK HD</button><button class="mode-btn" id="hdrBtn">CHANGE VIDEO NON HDR TO HDR + INJECT TIKTOK HD</button></div>
+    <div class="mode-title">PILIH PROSES</div><div class="mode-buttons"><button class="mode-btn active" id="sdrBtn">INJECT TIKTOK HD <small id="sdrPrice">1 COIN / VIDEO</small></button><button class="mode-btn" id="hdrBtn">CHANGE VIDEO NON HDR TO HDR + INJECT TIKTOK HD <small id="hdrPrice">7 COIN / VIDEO</small></button></div>
     <div class="drop" id="drop"><div class="upload-icon">↑</div><strong id="dropTitle">Pilih mode di atas</strong><p id="dropText">Klik salah satu tombol proses. Jendela pilih file akan langsung terbuka.</p><input id="file" class="file" type="file" accept="video/mp4"></div>
   </div>
   <aside class="side">
-    <div class="card wallet-card"><div class="wallet-title"><h2>Wallet</h2><span class="badge">BELUM TERHUBUNG</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Coin tersedia</span><b>0</b><em>coin untuk encode</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Top up</span><b>0</b><em>transaksi</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Saldo wallet</span><strong>0 / 0 coin</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span>Biaya sekali proses <strong>SDR 1 · HDR 7 COIN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Tambah Saldo</button></div></div><div class="claim-box"><div class="claim-label">CLAIM AKUN</div><div class="claim-row"><input id="claimKeyInput" type="text" placeholder="Masukkan key akun" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan key yang diberikan admin untuk menghubungkan akun pelanggan.</div></div></div>
+    <div class="card wallet-card"><div class="wallet-title"><h2>Wallet</h2><span class="badge">BELUM TERHUBUNG</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Coin tersedia</span><b>0</b><em>coin untuk encode</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Top up</span><b>0</b><em>transaksi</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Saldo wallet</span><strong>0 / 0 coin</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span>Biaya sekali proses <strong id="priceSummary">SDR 1 · HDR 7 COIN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Tambah Saldo</button></div></div><div class="claim-box"><div class="claim-label">CLAIM AKUN</div><div class="claim-row"><input id="claimKeyInput" type="text" placeholder="Masukkan key akun" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan key yang diberikan admin untuk menghubungkan akun pelanggan.</div></div></div>
     <div class="card"><h2 style="margin:0">Yang kamu dapat</h2><div class="feature-list"><div class="feature"><span class="check">✓</span>Pipeline Golden HD di server</div><div class="feature"><span class="check">✓</span>Upload diproses otomatis</div><div class="feature"><span class="check">✓</span>Hasil dapat diunduh</div><div class="feature"><span class="check">✓</span>File sementara dihapus otomatis</div></div></div>
   </aside>
 </section>
@@ -103,15 +103,37 @@ window.GOLDEN_PLATFORM = Object.freeze({
 });
 const file=document.getElementById('file'),drop=document.getElementById('drop'),title=document.getElementById('dropTitle'),text=document.getElementById('dropText'),modal=document.getElementById('modal'),close=document.getElementById('close'),buy=document.getElementById('buy'),sdrBtn=document.getElementById('sdrBtn'),hdrBtn=document.getElementById('hdrBtn');let selectedMode='sdr',selectedPrice=1,processing=false;
 
+const servicePrices={sdr:1,hdr:7};
+function renderPrices(){
+  const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
+  if(sdr)sdr.textContent=servicePrices.sdr+' COIN / VIDEO';
+  if(hdr)hdr.textContent=servicePrices.hdr+' COIN / VIDEO';
+  if(summary)summary.textContent='SDR '+servicePrices.sdr+' · HDR '+servicePrices.hdr+' COIN';
+}
+async function loadPublicSettings(){
+  try{
+    const r=await fetch(GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.settings,{cache:'no-store'});
+    if(!r.ok)return;
+    const d=await r.json();
+    const services=Array.isArray(d.services)?d.services:(Array.isArray(d.items)?d.items:[]);
+    const all=services.length?services:[d];
+    for(const s of all){
+      if(s.service_code===GOLDEN_PLATFORM.serviceCodes.sdr&&Number.isFinite(Number(s.coin_cost)))servicePrices.sdr=Number(s.coin_cost);
+      if(s.service_code===GOLDEN_PLATFORM.serviceCodes.hdr&&Number.isFinite(Number(s.coin_cost)))servicePrices.hdr=Number(s.coin_cost);
+    }
+    renderPrices();
+  }catch(e){}
+}
 function selectMode(mode,price){
-  selectedMode=mode;selectedPrice=price;
+  selectedMode=mode;selectedPrice=servicePrices[mode]??price;
   sdrBtn.classList.toggle('active',mode==='sdr');
   hdrBtn.classList.toggle('active',mode==='hdr');
   file.value='';
   file.click();
 }
-sdrBtn.onclick=()=>selectMode('sdr',1);
-hdrBtn.onclick=()=>selectMode('hdr',7);
+sdrBtn.onclick=()=>selectMode('sdr',servicePrices.sdr);
+hdrBtn.onclick=()=>selectMode('hdr',servicePrices.hdr);
+renderPrices();
 
 function setProgress(p,label){
   const n=Math.max(0,Math.min(100,Number(p)||0));
@@ -258,7 +280,7 @@ claimBtn.onclick=async()=>{
     claimBtn.disabled=false;
   }
 };
-loadWallet();const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='rise .7s ease both'}),{threshold:.12});document.querySelectorAll('.section,.card,.step').forEach(el=>revealObserver.observe(el));
+loadPublicSettings();loadWallet();const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='rise .7s ease both'}),{threshold:.12});document.querySelectorAll('.section,.card,.step').forEach(el=>revealObserver.observe(el));
 const checkerUrl=document.getElementById('checkerUrl'),checkerChoose=document.getElementById('checkerChoose'),checkerTitle=document.getElementById('checkerTitle'),checkerText=document.getElementById('checkerText'),analysisStatus=document.getElementById('analysisStatus');
 checkerChoose.onclick=async()=>{const url=checkerUrl.value.trim();if(!url){checkerText.textContent='Tempel link video TikTok terlebih dahulu.';checkerUrl.focus();return}if(!/^https?:\/\/(www\.)?tiktok\.com\//i.test(url)){checkerText.textContent='Link harus berupa URL TikTok yang valid.';return}checkerTitle.textContent='Mengambil data TikTok...';checkerText.textContent='Backend analyzer akan memeriksa hasil upload dan mengembalikan detail video.';analysisStatus.textContent='ANALYZING';analysisStatus.className='badge warn';try{const r=await fetch('https://103-235-74-92.sslip.io/public/tiktok-analytics?url='+encodeURIComponent(url));if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const map={mResolution:d.resolution,mFps:d.fps,mBitrate:d.bitrate,mCodec:d.codec,mSize:d.file_size,mContainer:d.container,sRegion:d.region,sReview:d.review_status,sVisibility:d.visibility,sIndex:d.index_visibility};Object.entries(map).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v??'—'});checkerTitle.textContent='Analisis selesai';checkerText.textContent='Data berhasil diterima dari TikTok Analytics backend.';analysisStatus.textContent='LIVE RESULT';analysisStatus.className='badge'}catch(e){checkerTitle.textContent='Analyzer belum tersedia';checkerText.textContent='Endpoint TikTok Analytics belum terhubung di backend. UI sudah siap menerima hasil live dari server.';analysisStatus.textContent='BACKEND REQUIRED';analysisStatus.className='badge warn'}};
 </script>
