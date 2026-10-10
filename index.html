@@ -369,6 +369,12 @@ svg text{fill:#fff!important}
 html,body,#app,#app *{color:#fff!important;text-shadow:none!important}
 h1,h2,h3,h4,h5,h6,.hero-title,.brand-title,.title,.section-title,[class*="title"],[class*="heading"]{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important}
 .hero h1 span{background:none!important;background-image:none!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+
+/* PERFORMANCE PASS: avoid expensive page-wide filters and decorative layers */
+html,body{scroll-behavior:auto!important}
+#starfield{contain:strict;will-change:transform}
+.card,.panel,.hero,.modal-box,.nav,.pill{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.orb,.cursor-glow,.cursor-trail{display:none!important}
 </style>
 </head>
 <body>
@@ -804,7 +810,7 @@ checkerChoose.onclick=async()=>{const url=checkerUrl.value.trim();if(!url){check
   canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
   canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);
   // Dense but bounded for smooth rendering: varied tiny pinpoints and prominent stars.
-  const count=Math.min(9000,Math.max(2600,Math.floor(w*h/115)));
+  const count=Math.min(2200,Math.max(700,Math.floor(w*h/420)));
   stars=Array.from({length:count},()=>{
    const size=Math.random();
    return {x:Math.random()*w,y:Math.random()*h,r:size<.77?Math.random()*.48+.12:size<.96?Math.random()*1.05+.48:Math.random()*1.9+1.05,
@@ -831,8 +837,8 @@ checkerChoose.onclick=async()=>{const url=checkerUrl.value.trim();if(!url){check
    if(!reduce){s.x+=s.drift;if(s.x<0)s.x=w;if(s.x>w)s.x=0}
   }
   ctx.globalAlpha=1;
-  const cap=Math.min(64,Math.max(24,Math.floor(w*h/30000)));
-  if(!reduce && shooters.length<cap && Math.random()<.88){spawn();if(Math.random()<.35&&shooters.length<cap)spawn();}
+  const cap=Math.min(18,Math.max(7,Math.floor(w*h/100000)));
+  if(!reduce && shooters.length<cap && Math.random()<.42)spawn();
   for(let i=shooters.length-1;i>=0;i--){
    const s=shooters[i],mag=Math.max(Math.hypot(s.vx,s.vy),1);
    const px=s.x-s.vx*(s.tail/mag),py=s.y-s.vy*(s.tail/mag);
