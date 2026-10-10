@@ -243,10 +243,12 @@ async function uploadVideo(f){
     await loadWallet();
     await loadJobHistory();
   }catch(e){
-    document.getElementById('modalTitle').textContent='Proses Gagal';
-    document.getElementById('modalText').textContent=e.message||'Gagal memproses video.';
+    const timedOut=String(e?.message||'').includes('melebihi batas waktu pemantauan');
+    document.getElementById('modalTitle').textContent=timedOut?'Job Masih Menunggu':'Proses Gagal';
+    document.getElementById('modalText').textContent=timedOut?'Server belum memberikan hasil dalam 6 menit. Job tidak otomatis dianggap gagal; periksa statusnya di Riwayat Pemrosesan dan muat ulang beberapa saat lagi.':(e.message||'Gagal memproses video.');
     const old=document.getElementById('downloadResult');if(old)old.remove();
     close.style.display='block';
+    if(timedOut){try{await loadJobHistory()}catch{}}
   }finally{processing=false;}
 }
 
