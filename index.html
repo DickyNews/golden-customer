@@ -50,6 +50,80 @@ body{background:radial-gradient(circle at 12% 12%,rgba(231,184,63,.075),transpar
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+/* CYBERPUNK MOTION SYSTEM — visual-only; API and service contracts unchanged */
+:root{--bg:#070812;--panel:rgba(14,17,34,.78);--panel2:rgba(18,24,45,.9);--line:rgba(79,225,255,.2);--line2:rgba(255,57,202,.34);--text:#f4f7ff;--muted:#9aa9c8;--accent:#58f4ff;--accent2:#ff45d4;--good:#65ffc1;--danger:#ff627e;--cyber-glow:rgba(75,235,255,.22)}
+html{scroll-behavior:smooth;scroll-padding-top:26px;background:var(--bg)}
+body{background:radial-gradient(ellipse at 12% 0%,rgba(27,80,170,.22),transparent 38%),radial-gradient(ellipse at 92% 20%,rgba(180,35,145,.16),transparent 36%),linear-gradient(145deg,#070812 0%,#0b1020 48%,#100819 100%);background-attachment:fixed}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.16;background-image:linear-gradient(rgba(75,235,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(75,235,255,.12) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 86%)}
+.app{isolation:isolate}
+.stars{opacity:.65;filter:drop-shadow(0 0 4px var(--accent))}
+.orb{filter:blur(70px);opacity:.24;animation:cyberOrbA 16s ease-in-out infinite alternate}
+.orb.two{animation:cyberOrbB 19s ease-in-out infinite alternate}
+.hero{position:relative;isolation:isolate}
+.hero:after{content:"";position:absolute;inset:-14px -16px;z-index:-1;border:1px solid rgba(88,244,255,.16);border-radius:28px;background:linear-gradient(115deg,rgba(88,244,255,.07),transparent 42%,rgba(255,69,212,.06));box-shadow:inset 0 0 35px rgba(88,244,255,.035),0 0 45px rgba(88,244,255,.04);pointer-events:none}
+.hero h1 span{background:linear-gradient(95deg,#fff 0%,#58f4ff 36%,#b9a2ff 66%,#ff45d4 100%);background-size:220% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;animation:cyberTextFlow 7s linear infinite}
+.eyebrow,.pill,.badge{border-color:rgba(88,244,255,.3);box-shadow:0 0 16px rgba(88,244,255,.055)}
+.card{position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(19,24,46,.9),rgba(10,12,26,.82));border:1px solid rgba(88,244,255,.18);box-shadow:0 16px 50px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.035);backdrop-filter:blur(16px);transition:border-color .35s,box-shadow .35s,background .35s,transform .35s}
+.card:before{content:"";position:absolute;inset:0 20% auto;height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);opacity:.5;pointer-events:none}
+.card:hover{border-color:rgba(88,244,255,.42);box-shadow:0 18px 58px rgba(0,0,0,.3),0 0 28px rgba(88,244,255,.07),inset 0 1px 0 rgba(255,255,255,.06)}
+.section h2,.card h2,.mode-title{letter-spacing:.025em}
+.mode-btn,.btn,button{position:relative;isolation:isolate;overflow:hidden;transform:translateZ(0);transition:transform .24s cubic-bezier(.2,.8,.2,1),border-color .28s,box-shadow .28s,filter .28s}
+.mode-btn,.btn{--mx:50%;--my:50%;--btn-hue:185deg;background-image:radial-gradient(170px circle at var(--mx) var(--my),rgba(88,244,255,.17),transparent 65%)}
+button:before,.btn:before,.mode-btn:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.18) 48%,transparent 70%);transform:translateX(-120%);transition:opacity .2s}
+button:hover:before,.btn:hover:before,.mode-btn:hover:before{opacity:1;animation:cyberSweep .8s ease}
+button:hover,.btn:hover,.mode-btn:hover{transform:translateY(-2px) scale(1.012);filter:brightness(1.08);box-shadow:0 0 0 1px rgba(88,244,255,.16),0 8px 24px rgba(88,244,255,.12)}
+button:active,.btn:active,.mode-btn:active{transform:translateY(1px) scale(.975);filter:brightness(1.18)}
+button:disabled,.btn:disabled,.mode-btn:disabled{transform:none;filter:saturate(.5);box-shadow:none}
+.btn-primary,.mode-btn.active{background-color:rgba(20,91,112,.88);border-color:rgba(88,244,255,.65);box-shadow:0 0 22px rgba(88,244,255,.12),inset 0 0 18px rgba(88,244,255,.06)}
+.btn-primary:hover,.mode-btn.active:hover{box-shadow:0 0 28px rgba(88,244,255,.22),0 8px 25px rgba(88,244,255,.12)}
+.btn-secondary,.mode-btn{border-color:rgba(130,154,201,.27)}
+input,textarea,select,.checker-url{background:rgba(5,8,20,.75);border-color:rgba(88,244,255,.22);transition:border-color .25s,box-shadow .25s,background .25s}
+input:focus,textarea:focus,select:focus,.checker-url:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(88,244,255,.1),0 0 22px rgba(88,244,255,.08);background:rgba(7,13,30,.95)}
+.drop{border-color:rgba(88,244,255,.28);background:linear-gradient(135deg,rgba(88,244,255,.045),rgba(255,69,212,.035));transition:border-color .3s,background .3s,box-shadow .3s,transform .3s}
+.drop:hover,.drop:focus-within{border-color:rgba(88,244,255,.65);box-shadow:inset 0 0 35px rgba(88,244,255,.05),0 0 25px rgba(88,244,255,.07)}
+.upload-icon{color:var(--accent);text-shadow:0 0 20px rgba(88,244,255,.55)}
+.wallet-stat,.metric,.signal,.feature,.step,.history-item{transition:transform .35s,border-color .35s,background .35s,box-shadow .35s}
+.wallet-stat:hover,.metric:hover,.step:hover,.history-item:hover{transform:translateY(-3px);border-color:rgba(88,244,255,.32);box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.bar i,.wallet-progress .bar i{background:linear-gradient(90deg,var(--accent),#a18bff,var(--accent2));box-shadow:0 0 14px rgba(88,244,255,.5)}
+.modal{backdrop-filter:blur(14px);background:rgba(3,5,14,.72)}
+.modal-box{border-color:rgba(88,244,255,.35);background:linear-gradient(145deg,#111a30,#120e22);box-shadow:0 0 70px rgba(88,244,255,.12),0 30px 100px rgba(0,0,0,.5);animation:cyberModalIn .42s cubic-bezier(.16,1,.3,1)}
+.footer{border-color:rgba(88,244,255,.14)}
+/* Randomized motion presets rotate after every real user interaction */
+.app[data-motion="pulse"] .btn,.app[data-motion="pulse"] .mode-btn{animation:cyberIdlePulse 2.8s ease-in-out infinite}
+.app[data-motion="float"] .btn,.app[data-motion="float"] .mode-btn{animation:cyberIdleFloat 3.6s ease-in-out infinite}
+.app[data-motion="glitch"] .btn-primary,.app[data-motion="glitch"] .mode-btn.active{animation:cyberIdleGlitch 4.7s steps(1,end) infinite}
+.app[data-motion="orbit"] .btn,.app[data-motion="orbit"] .mode-btn{animation:cyberIdleOrbit 3.4s ease-in-out infinite}
+.app[data-motion="scan"] .card:before{animation:cyberScan 4.4s ease-in-out infinite}
+.app[data-motion="pulse"] .card{animation:cyberCardPulse 6s ease-in-out infinite}
+.app[data-motion="glitch"] .hero h1 span{animation:cyberTextGlitch 5s steps(1,end) infinite,cyberTextFlow 7s linear infinite}
+.app[data-motion="float"] .section{animation:cyberSectionFloat 7s ease-in-out infinite}
+.app[data-motion="orbit"] .orb{animation-duration:9s}
+.app.motion-change .card{animation:cyberReveal .55s cubic-bezier(.16,1,.3,1) both}
+.app.motion-change .hero{animation:cyberReveal .65s cubic-bezier(.16,1,.3,1) both}
+.cursor-glow{position:fixed;left:0;top:0;width:210px;height:210px;border-radius:50%;pointer-events:none;z-index:50;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(88,244,255,.09),rgba(255,69,212,.035) 42%,transparent 72%);mix-blend-mode:screen;opacity:0;transition:opacity .25s;will-change:left,top}
+.cursor-glow.active{opacity:1}
+.cursor-trail{position:fixed;width:8px;height:8px;left:0;top:0;border:1px solid rgba(88,244,255,.8);border-radius:2px;pointer-events:none;z-index:51;opacity:0;transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 0 12px rgba(88,244,255,.6);transition:opacity .2s}
+.cursor-trail.active{opacity:.85}
+button .cursor-ripple{position:absolute;border-radius:50%;pointer-events:none;background:rgba(88,244,255,.24);transform:scale(0);animation:cyberRipple .65s ease-out forwards;z-index:-1}
+@keyframes cyberOrbA{from{transform:translate3d(-3%,0,0) scale(.92)}to{transform:translate3d(8%,13%,0) scale(1.12)}}
+@keyframes cyberOrbB{from{transform:translate3d(5%,4%,0) scale(1.08)}to{transform:translate3d(-8%,-10%,0) scale(.9)}}
+@keyframes cyberTextFlow{to{background-position:220% 0}}
+@keyframes cyberSweep{to{transform:translateX(120%)}}
+@keyframes cyberIdlePulse{0%,100%{box-shadow:0 0 0 rgba(88,244,255,0)}50%{box-shadow:0 0 17px rgba(88,244,255,.17)}}
+@keyframes cyberIdleFloat{0%,100%{translate:0 0}50%{translate:0 -2px}}
+@keyframes cyberIdleGlitch{0%,92%,100%{translate:0 0;filter:none}93%{translate:1px 0;filter:hue-rotate(24deg)}94%{translate:-1px 0;filter:hue-rotate(-24deg)}95%{translate:0 0;filter:none}}
+@keyframes cyberIdleOrbit{0%,100%{box-shadow:0 0 0 0 rgba(88,244,255,0)}50%{box-shadow:2px -2px 0 -1px rgba(88,244,255,.28),-2px 2px 0 -1px rgba(255,69,212,.18)}}
+@keyframes cyberScan{0%,100%{transform:translateX(-25%);opacity:.2}50%{transform:translateX(200%);opacity:.85}}
+@keyframes cyberCardPulse{0%,100%{box-shadow:0 16px 50px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.035)}50%{box-shadow:0 16px 50px rgba(0,0,0,.24),0 0 24px rgba(88,244,255,.06),inset 0 1px 0 rgba(255,255,255,.035)}}
+@keyframes cyberSectionFloat{0%,100%{translate:0 0}50%{translate:0 -1px}}
+@keyframes cyberReveal{from{opacity:.78;filter:brightness(.8);transform:translateY(9px)}to{opacity:1;filter:brightness(1);transform:translateY(0)}}
+@keyframes cyberModalIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes cyberRipple{to{transform:scale(4);opacity:0}}
+@keyframes cyberTextGlitch{0%,95%,100%{text-shadow:none}96%{text-shadow:2px 0 #ff45d4,-2px 0 #58f4ff}97%{text-shadow:-2px 0 #ff45d4,2px 0 #58f4ff}98%{text-shadow:none}}
+@media(hover:none),(pointer:coarse){.cursor-glow,.cursor-trail{display:none}.app[data-motion] .btn,.app[data-motion] .mode-btn{animation:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.cursor-glow,.cursor-trail{display:none!important}.app[data-motion] .btn,.app[data-motion] .mode-btn,.app[data-motion] .card,.app[data-motion] .section,.app[data-motion] .hero{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -399,6 +473,51 @@ if(refreshHistoryBtn)refreshHistoryBtn.addEventListener('click',loadJobHistory);
 loadPublicSettings();(async()=>{const ok=await loadWallet();if(ok)await loadJobHistory();else if(historyList)historyList.replaceChildren();})();const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='rise .7s ease both'}),{threshold:.12});document.querySelectorAll('.section,.card,.step').forEach(el=>revealObserver.observe(el));
 const checkerUrl=document.getElementById('checkerUrl'),checkerChoose=document.getElementById('checkerChoose'),checkerTitle=document.getElementById('checkerTitle'),checkerText=document.getElementById('checkerText'),analysisStatus=document.getElementById('analysisStatus');
 checkerChoose.onclick=async()=>{const url=checkerUrl.value.trim();if(!url){checkerText.textContent='Tempel link video TikTok terlebih dahulu.';checkerUrl.focus();return}let parsedUrl;try{parsedUrl=new URL(url)}catch{checkerText.textContent='Link harus berupa URL TikTok yang valid.';return}if(!['http:','https:'].includes(parsedUrl.protocol)||!(parsedUrl.hostname==='tiktok.com'||parsedUrl.hostname.endsWith('.tiktok.com'))){checkerText.textContent='Gunakan link TikTok yang valid, termasuk link pendek vm.tiktok.com.';return}checkerChoose.disabled=true;checkerTitle.textContent='Mengambil data TikTok...';checkerText.textContent='Backend analyzer akan memeriksa hasil upload dan mengembalikan detail video.';analysisStatus.textContent='ANALYZING';analysisStatus.className='badge warn';try{const r=await fetch('https://103-235-74-92.sslip.io/public/tiktok-analytics?url='+encodeURIComponent(url));if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const map={mResolution:d.resolution,mFps:d.fps,mBitrate:d.bitrate,mCodec:d.codec,mSize:d.file_size,mContainer:d.container,sRegion:d.region,sReview:d.review_status,sVisibility:d.visibility,sIndex:d.index_visibility};Object.entries(map).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v??'—'});checkerTitle.textContent='Analisis selesai';checkerText.textContent='Data berhasil diterima dari TikTok Analytics backend.';analysisStatus.textContent='LIVE RESULT';analysisStatus.className='badge'}catch(e){checkerTitle.textContent='Analyzer belum tersedia';checkerText.textContent='Endpoint TikTok Analytics belum terhubung di backend. UI sudah siap menerima hasil live dari server.';analysisStatus.textContent='BACKEND REQUIRED';analysisStatus.className='badge warn'}finally{checkerChoose.disabled=false}};
+
+/* Interactive cyberpunk motion controller. Randomizes visual preset per interaction. */
+(function(){
+ const root=document.querySelector('.app');if(!root)return;
+ const presets=['pulse','float','glitch','orbit','scan'];
+ const glow=document.createElement('div');glow.className='cursor-glow';glow.setAttribute('aria-hidden','true');
+ const trail=document.createElement('div');trail.className='cursor-trail';trail.setAttribute('aria-hidden','true');
+ document.body.append(glow,trail);
+ const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ let lastPreset='',motionTimer=0,trailX=0,trailY=0,framePending=false;
+ const choosePreset=()=>{let choices=presets.filter(p=>p!==lastPreset);const next=choices[Math.floor(Math.random()*choices.length)]||presets[0];lastPreset=next;root.dataset.motion=next;root.classList.remove('motion-change');void root.offsetWidth;root.classList.add('motion-change');clearTimeout(motionTimer);motionTimer=setTimeout(()=>root.classList.remove('motion-change'),720)};
+ const updatePointer=e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';if(!framePending){framePending=true;requestAnimationFrame(()=>{trail.style.left=trailX+'px';trail.style.top=trailY+'px';framePending=false})}};
+ document.addEventListener('pointermove',e=>{
+   updatePointer(e);
+   const target=e.target.closest&&e.target.closest('button,a,.btn,.mode-btn');
+   if(target&&e.pointerType==='mouse'){
+     glow.classList.add('active');trail.classList.add('active');
+     const r=target.getBoundingClientRect();target.style.setProperty('--mx',Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100))+'%');target.style.setProperty('--my',Math.max(0,Math.min(100,(e.clientY-r.top)/r.height*100))+'%');
+     trailX=e.clientX;trailY=e.clientY;target.style.setProperty('--cursor-x',(e.clientX-r.left)+'px');target.style.setProperty('--cursor-y',(e.clientY-r.top)+'px');
+   }else{glow.classList.remove('active');trail.classList.remove('active')}
+ });
+ document.addEventListener('pointerdown',e=>{
+   const target=e.target.closest&&e.target.closest('button,a,.btn,.mode-btn');
+   if(!target||target.disabled||reduced)return;
+   choosePreset();
+   const r=target.getBoundingClientRect(),size=Math.max(r.width,r.height)*.65;
+   const ripple=document.createElement('span');ripple.className='cursor-ripple';ripple.style.width=size+'px';ripple.style.height=size+'px';ripple.style.left=(e.clientX-r.left-size/2)+'px';ripple.style.top=(e.clientY-r.top-size/2)+'px';target.appendChild(ripple);setTimeout(()=>ripple.remove(),720);
+ });
+ document.addEventListener('click',e=>{
+   if(reduced)return;
+   const target=e.target.closest&&e.target.closest('button,a,[role="button"],.mode-btn');
+   if(!target)return;
+   // Change scroll feel on each click, but only scroll to explicit in-page targets.
+   const styles=['smooth','instant'];
+   const behavior=styles[Math.floor(Math.random()*styles.length)];
+   document.documentElement.style.scrollBehavior=behavior==='instant'?'auto':'smooth';
+   const href=target.getAttribute('href');
+   if(href&&href.startsWith('#')){const dest=document.querySelector(href);if(dest){e.preventDefault();dest.scrollIntoView({behavior:behavior==='instant'?'auto':'smooth',block:'start'});}}
+ });
+ root.dataset.motion=presets[Math.floor(Math.random()*presets.length)];
+ if(reduced){root.removeAttribute('data-motion');return}
+ // Initial reveal stagger, without changing hidden/conditional UI.
+ document.querySelectorAll('.hero,.grid>.card,.grid>.side,.section,.footer').forEach((el,i)=>{el.style.animationDelay=Math.min(i*55,330)+'ms'});
+})();
+
 </script>
 </body>
 </html>
