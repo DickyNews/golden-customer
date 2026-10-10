@@ -228,6 +228,102 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:#62f3ff;
 @media(max-width:480px){.app{width:calc(100% - 20px)}.hero h1{font-size:36px}.card{padding:15px;border-radius:15px}.mode-buttons{grid-template-columns:1fr}.drop{padding:22px 14px}.wallet-grid{gap:8px}.wallet-stat{padding:11px 9px}.wallet-stat b{font-size:19px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
+
+/* TIKTOK BRAND SYSTEM V1 — recolor + typography only; preserve existing motion */
+@import url('https://fonts.googleapis.com/css2?family=TikTok+Sans:wght@400;500;600;700;800;900&display=swap');
+:root{
+  color-scheme:dark;
+  --tiktok-cyan:#25F4EE;
+  --tiktok-pink:#FE2C55;
+  --tiktok-black:#010101;
+  --tiktok-white:#FFFFFF;
+  --tiktok-ink:#161823;
+  --tiktok-muted:#A8A8B3;
+  --tiktok-cyan-glow:rgba(37,244,238,.22);
+  --tiktok-pink-glow:rgba(254,44,85,.22);
+  --bg:#08090D;
+  --panel:rgba(18,19,27,.94);
+  --panel2:rgba(25,26,36,.96);
+  --surface:rgba(18,19,27,.92);
+  --surface2:rgba(25,26,36,.94);
+  --line:rgba(255,255,255,.12);
+  --line2:rgba(37,244,238,.34);
+  --text:#FFFFFF;
+  --muted:#A8A8B3;
+  --accent:#25F4EE;
+  --accent2:#FE2C55;
+  --glow:rgba(37,244,238,.22);
+  --cyan:#25F4EE;
+  --good:#25F4EE;
+  --green:#25F4EE;
+  --danger:#FE2C55;
+  --red:#FE2C55;
+  --blue:#25F4EE;
+  --yellow:#25F4EE;
+  --yellow2:#FE2C55;
+}
+html,body,button,input,select,textarea,
+h1,h2,h3,h4,h5,h6,p,small,label,a,span,strong,b,li{
+  font-family:"TikTok Sans","Arial",sans-serif;
+}
+html{background:var(--tiktok-black)}
+body{
+  color:var(--tiktok-white);
+  background:
+    radial-gradient(ellipse at 0% 0%,rgba(37,244,238,.09),transparent 34%),
+    radial-gradient(ellipse at 100% 0%,rgba(254,44,85,.09),transparent 33%),
+    linear-gradient(145deg,#050506,#101117 55%,#08090D);
+}
+button,a,[role="button"],.btn,.mode-btn,.pill{ -webkit-tap-highlight-color:rgba(37,244,238,.18); }
+a{color:var(--tiktok-cyan);text-decoration-color:rgba(37,244,238,.5)}
+.card,.login-card,.customer-card,.stat,.wallet-card,.drop,.mode-btn,.feature,.step,.history-item,.signal,.metric,.wallet-stat{
+  border-color:rgba(255,255,255,.12);
+}
+.card:hover,.customer-card:hover,.stat:hover,.mode-btn:hover,.drop:hover{
+  border-color:rgba(37,244,238,.52);
+  box-shadow:0 0 24px rgba(37,244,238,.08),0 0 24px rgba(254,44,85,.045);
+}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--tiktok-cyan)!important;
+  box-shadow:0 0 0 3px rgba(37,244,238,.12),0 0 20px rgba(37,244,238,.07);
+}
+.primary,.btn-primary,.mode-btn.active{
+  border-color:rgba(37,244,238,.7);
+}
+.primary,.btn-primary{
+  background:linear-gradient(110deg,#25F4EE 0%,#25F4EE 48%,#FE2C55 100%);
+  color:#050506;
+  box-shadow:0 0 22px rgba(37,244,238,.16),0 0 18px rgba(254,44,85,.08),inset 0 1px rgba(255,255,255,.24);
+}
+.primary:hover,.btn-primary:hover{
+  background:linear-gradient(110deg,#74fff9 0%,#25F4EE 48%,#ff5676 100%);
+  color:#050506;
+}
+.secondary,.btn-secondary,.pill{
+  background:linear-gradient(125deg,rgba(37,244,238,.07),rgba(254,44,85,.07)),rgba(23,24,33,.94);
+  border-color:rgba(255,255,255,.17);
+  color:#FFFFFF;
+}
+.secondary:hover,.btn-secondary:hover{
+  border-color:rgba(37,244,238,.58);
+  box-shadow:0 0 20px rgba(37,244,238,.1),0 0 16px rgba(254,44,85,.06);
+}
+.badge,.eyebrow,.pill{
+  border-color:rgba(37,244,238,.3);
+}
+.badge.ok,.ok-text{color:var(--tiktok-cyan)}
+.badge.off,.danger,.err-text{color:var(--tiktok-pink)}
+.coin,.key-box b,.wallet-stat.primary b,.metric b{color:var(--tiktok-cyan)}
+:where(button,a,input,textarea,select,[tabindex]):focus-visible{
+  outline:2px solid var(--tiktok-cyan)!important;
+  outline-offset:3px;
+  box-shadow:0 0 0 4px rgba(37,244,238,.12);
+}
+::selection{background:rgba(37,244,238,.32);color:#fff}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
 </style>
 </head>
 <body>
