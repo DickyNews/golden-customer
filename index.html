@@ -375,6 +375,29 @@ html,body{scroll-behavior:auto!important}
 #starfield{contain:strict;will-change:transform}
 .card,.panel,.hero,.modal-box,.nav,.pill{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 .orb,.cursor-glow,.cursor-trail{display:none!important}
+
+/* PROFESSIONAL TYPOGRAPHY + MAXIMUM COIN HIGHLIGHT */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+html,body,#app,#app *{font-family:Inter,"Segoe UI",Arial,sans-serif!important;letter-spacing:normal}
+h1,h2,h3,h4,h5,h6,.hero h1,.section h2,.card h2{font-weight:750!important;letter-spacing:-.035em!important;color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important}
+.hero h1 span{background:none!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+p,.hero p,.section-intro,.muted,.mini,.description{line-height:1.65}
+.coin,.wallet-stat.primary b,.balance .coin,.nav-actions .pill .coin,.wallet-progress-head strong,#priceSummary,#sdrPrice,#hdrPrice,.price b,.stat,.wallet-stat b{
+ color:#fff200!important;-webkit-text-fill-color:#fff200!important;font-weight:900!important;
+ text-shadow:0 0 2px #fff200,0 0 8px rgba(255,242,0,.95),0 0 18px rgba(255,220,0,.85),0 0 32px rgba(255,200,0,.55)!important;
+}
+#sdrPrice,#hdrPrice{font-size:12px!important;letter-spacing:.06em!important}
+.wallet-stat.primary b{font-size:34px!important;line-height:1.05!important}
+.wallet-stat b{font-size:29px!important;line-height:1.1!important}
+.wallet-stat{padding:18px!important;border-radius:18px!important}
+.wallet-grid{gap:12px!important}
+.card,.panel,.drop,.wallet-stat,.metric,.step{border-radius:18px!important}
+.container{width:min(1240px,calc(100% - 40px))!important}
+.hero{padding:62px 0 30px!important}
+.hero h1{font-size:clamp(38px,5.4vw,68px)!important;line-height:1.04!important}
+.card{padding:24px!important}
+button,.btn,.mode-btn{font-weight:700!important;letter-spacing:.005em!important}
+@media(max-width:800px){.container{width:calc(100% - 24px)!important}.hero{padding:44px 0 24px!important}.card{padding:18px!important}}
 </style>
 </head>
 <body>
