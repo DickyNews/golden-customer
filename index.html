@@ -364,6 +364,11 @@ input,select,textarea{color:#fff!important;-webkit-text-fill-color:#fff!importan
 ::placeholder{color:#d0d0d0!important;opacity:1!important}
 svg text{fill:#fff!important}
 #starfield{z-index:0!important}
+
+/* WHITE TITLES + HIGH-DENSITY STARFIELD FINISH */
+html,body,#app,#app *{color:#fff!important;text-shadow:none!important}
+h1,h2,h3,h4,h5,h6,.hero-title,.brand-title,.title,.section-title,[class*="title"],[class*="heading"]{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important}
+.hero h1 span{background:none!important;background-image:none!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
 </style>
 </head>
 <body>
@@ -799,7 +804,7 @@ checkerChoose.onclick=async()=>{const url=checkerUrl.value.trim();if(!url){check
   canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
   canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);
   // Dense but bounded for smooth rendering: varied tiny pinpoints and prominent stars.
-  const count=Math.min(5200,Math.max(1600,Math.floor(w*h/190)));
+  const count=Math.min(9000,Math.max(2600,Math.floor(w*h/115)));
   stars=Array.from({length:count},()=>{
    const size=Math.random();
    return {x:Math.random()*w,y:Math.random()*h,r:size<.77?Math.random()*.48+.12:size<.96?Math.random()*1.05+.48:Math.random()*1.9+1.05,
@@ -814,7 +819,7 @@ checkerChoose.onclick=async()=>{const url=checkerUrl.value.trim();if(!url){check
   else{x=-35;y=Math.random()*h;ang=-Math.PI/3+Math.random()*Math.PI*.68}
   const speed=2.5+Math.random()*10;
   shooters.push({x,y,vx:Math.cos(ang)*speed,vy:Math.sin(ang)*speed,life:0,max:45+Math.random()*100,
-   tail:45+Math.pow(Math.random(),.55)*390,width:.45+Math.random()*1.7,alpha:.35+Math.random()*.65});
+   tail:35+Math.pow(Math.random(),.48)*480,width:.45+Math.random()*1.7,alpha:.35+Math.random()*.65});
  }
  function draw(t){
   if(!document.body.contains(canvas)){cancelAnimationFrame(raf);return}
@@ -826,8 +831,8 @@ checkerChoose.onclick=async()=>{const url=checkerUrl.value.trim();if(!url){check
    if(!reduce){s.x+=s.drift;if(s.x<0)s.x=w;if(s.x>w)s.x=0}
   }
   ctx.globalAlpha=1;
-  const cap=Math.min(48,Math.max(18,Math.floor(w*h/42000)));
-  if(!reduce && shooters.length<cap && Math.random()<.78)spawn();
+  const cap=Math.min(64,Math.max(24,Math.floor(w*h/30000)));
+  if(!reduce && shooters.length<cap && Math.random()<.88){spawn();if(Math.random()<.35&&shooters.length<cap)spawn();}
   for(let i=shooters.length-1;i>=0;i--){
    const s=shooters[i],mag=Math.max(Math.hypot(s.vx,s.vy),1);
    const px=s.x-s.vx*(s.tail/mag),py=s.y-s.vy*(s.tail/mag);
