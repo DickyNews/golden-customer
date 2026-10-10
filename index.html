@@ -45,6 +45,11 @@ body{background:radial-gradient(circle at 12% 12%,rgba(231,184,63,.075),transpar
 .history-status.queued,.history-status.processing{color:var(--accent2);border-color:rgba(231,184,63,.22);background:rgba(231,184,63,.07)}
 .history-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap}.history-empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px;font-size:13px;line-height:1.6}
 @media(max-width:600px){.history-item{grid-template-columns:1fr}.history-actions{justify-content:flex-start}.history-toolbar{align-items:flex-start;flex-direction:column}}
+/* Accessibility: keyboard focus and reduced-motion preference */
+:where(button,a,input,textarea,select,[tabindex]):focus-visible{outline:2px solid #f7c948;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 </style>
 </head>
 <body>
