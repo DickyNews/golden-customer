@@ -123,12 +123,16 @@ window.GOLDEN_PLATFORM = Object.freeze({
 });
 const file=document.getElementById('file'),drop=document.getElementById('drop'),title=document.getElementById('dropTitle'),text=document.getElementById('dropText'),modal=document.getElementById('modal'),close=document.getElementById('close'),buy=document.getElementById('buy'),sdrBtn=document.getElementById('sdrBtn'),hdrBtn=document.getElementById('hdrBtn');let selectedMode='sdr',selectedPrice=1,processing=false;
 
-const servicePrices={sdr:1,hdr:7};let maxFileSizeBytes=300*1024*1024;
+const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:true};let maxFileSizeBytes=300*1024*1024;
 function renderPrices(){
   const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
   if(sdr)sdr.textContent=servicePrices.sdr+' COIN / VIDEO';
   if(hdr)hdr.textContent=servicePrices.hdr+' COIN / VIDEO';
   if(summary)summary.textContent='SDR '+servicePrices.sdr+' · HDR '+servicePrices.hdr+' COIN';
+  sdrBtn.disabled=!serviceActive.sdr;hdrBtn.disabled=!serviceActive.hdr;
+  sdrBtn.title=serviceActive.sdr?'':'Layanan ini sedang dinonaktifkan oleh admin.';hdrBtn.title=serviceActive.hdr?'':'Layanan ini sedang dinonaktifkan oleh admin.';
+  sdrBtn.setAttribute('aria-disabled',String(!serviceActive.sdr));hdrBtn.setAttribute('aria-disabled',String(!serviceActive.hdr));
+  if(!serviceActive[selectedMode]){const next=serviceActive.sdr?'sdr':(serviceActive.hdr?'hdr':null);if(next)selectedMode=next;}
 }
 async function loadPublicSettings(){
   try{
@@ -138,14 +142,15 @@ async function loadPublicSettings(){
     const services=Array.isArray(d.services)?d.services:(Array.isArray(d.items)?d.items:[]);
     const all=services.length?services:[d];
     for(const s of all){
-      if(s.service_code===GOLDEN_PLATFORM.serviceCodes.sdr&&Number.isFinite(Number(s.coin_cost)))servicePrices.sdr=Number(s.coin_cost);
-      if(s.service_code===GOLDEN_PLATFORM.serviceCodes.hdr&&Number.isFinite(Number(s.coin_cost)))servicePrices.hdr=Number(s.coin_cost);
+      if(s.service_code===GOLDEN_PLATFORM.serviceCodes.sdr){if(Number.isFinite(Number(s.coin_cost)))servicePrices.sdr=Number(s.coin_cost);if(typeof s.is_active==='boolean')serviceActive.sdr=s.is_active;}
+      if(s.service_code===GOLDEN_PLATFORM.serviceCodes.hdr){if(Number.isFinite(Number(s.coin_cost)))servicePrices.hdr=Number(s.coin_cost);if(typeof s.is_active==='boolean')serviceActive.hdr=s.is_active;}
       if(Number.isFinite(Number(s.max_file_size_bytes))&&Number(s.max_file_size_bytes)>0)maxFileSizeBytes=Math.min(maxFileSizeBytes,Number(s.max_file_size_bytes));
     }
     renderPrices();
   }catch(e){}
 }
 function selectMode(mode,price){
+  if(!serviceActive[mode]){modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Layanan Tidak Tersedia';document.getElementById('modalText').textContent='Layanan ini sedang dinonaktifkan oleh admin. Silakan pilih mode lain.';return}
   selectedMode=mode;selectedPrice=servicePrices[mode]??price;
   sdrBtn.classList.toggle('active',mode==='sdr');
   hdrBtn.classList.toggle('active',mode==='hdr');
@@ -240,7 +245,7 @@ async function uploadVideo(f){
   }finally{processing=false;}
 }
 
-file.onchange=()=>{const f=file.files[0];if(!f)return;title.textContent=f.name;text.textContent=(f.size/1048576).toFixed(1)+' MB · '+(selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD')+' · '+selectedPrice+' COIN';if(f.size>maxFileSizeBytes){modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Ukuran Video Melebihi Batas';document.getElementById('modalText').textContent='Ukuran file '+(f.size/1048576).toFixed(1)+' MB, sedangkan batas layanan '+(maxFileSizeBytes/1048576).toFixed(0)+' MB. Pilih file yang lebih kecil.';return}uploadVideo(f);};
+file.onchange=()=>{const f=file.files[0];if(!f)return;if(!serviceActive[selectedMode]){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Layanan Tidak Tersedia';document.getElementById('modalText').textContent='Mode yang dipilih sedang dinonaktifkan oleh admin.';return}title.textContent=f.name;text.textContent=(f.size/1048576).toFixed(1)+' MB · '+(selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD')+' · '+selectedPrice+' COIN';if(f.size>maxFileSizeBytes){modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Ukuran Video Melebihi Batas';document.getElementById('modalText').textContent='Ukuran file '+(f.size/1048576).toFixed(1)+' MB, sedangkan batas layanan '+(maxFileSizeBytes/1048576).toFixed(0)+' MB. Pilih file yang lebih kecil.';return}uploadVideo(f);};
 
 ['dragenter','dragover'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>{if(e.dataTransfer.files.length){file.files=e.dataTransfer.files;file.dispatchEvent(new Event('change'))}});
 close.onclick=()=>modal.classList.remove('show');buy.onclick=()=>{window.open('https://wa.me/6289616438173?text='+encodeURIComponent('Halo Bang, Saya Mau Topup Coin'),'_blank','noopener')};document.getElementById('claimKey').onclick=()=>{const key=document.getElementById('claimKeyInput').value.trim();if(!key){document.getElementById('claimKeyInput').focus();return}modal.classList.add('show');document.getElementById('modalTitle').textContent='Claim Akun';document.getElementById('modalText').textContent='Key diterima. Verifikasi akun akan dilakukan oleh API server.'};
