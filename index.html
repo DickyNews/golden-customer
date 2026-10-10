@@ -258,7 +258,7 @@ let customerAuthenticated=false;
 const historySection=document.getElementById("job-history");
 function setCustomerAuth(auth,balance=null){
   customerAuthenticated=!!auth;
-  const hideHistory=!customerAuthenticated||Number(balance)===0;
+  const hideHistory=!customerAuthenticated;
   if(historySection){historySection.classList.toggle("hidden",hideHistory);historySection.setAttribute("aria-hidden",String(hideHistory));}
   const b=document.getElementById("walletAuthBadge");
   if(b){b.textContent=!customerAuthenticated?"BELUM LOGIN":(Number(balance)===0?"SALDO HABIS":"TERHUBUNG");b.className="badge "+(customerAuthenticated&&Number(balance)>0?"":"warn");}
