@@ -530,7 +530,7 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:var(--ne
     <div class="drop" id="drop"><div class="upload-icon">↑</div><strong id="dropTitle">Pilih mode di atas</strong><p id="dropText">Klik salah satu tombol proses. Jendela pilih file akan langsung terbuka.</p><input id="file" class="file" type="file" accept="video/mp4"></div>
   </div>
   <aside class="side">
-    <div class="card wallet-card"><div class="wallet-title"><h2>Wallet</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Coin tersedia</span><b>0</b><em>coin untuk encode</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Top up</span><b>0</b><em>transaksi</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Saldo wallet</span><strong>0 / 0 coin</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span>Biaya sekali proses <strong id="priceSummary">SDR 1 · HDR 7 COIN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Tambah Saldo</button></div></div><div class="claim-box"><div class="claim-label">CLAIM AKUN</div><div class="claim-row"><input id="claimKeyInput" type="text" placeholder="Masukkan key akun" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan key yang diberikan admin untuk menghubungkan akun pelanggan.</div></div></div>
+    <div class="card wallet-card"><div class="wallet-title"><h2>Wallet</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Coin tersedia</span><b>0</b><em>coin untuk encode</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Top up</span><b>0</b><em>transaksi</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Saldo wallet</span><strong>0 / 0 coin</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span>Biaya sekali proses <strong id="priceSummary">SDR 1 · HDR 7 COIN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Tambah Saldo</button><button class="btn btn-secondary" id="customerLogout" type="button" hidden>Logout</button></div></div><div class="claim-box"><div class="claim-label">CLAIM AKUN</div><div class="claim-row"><input id="claimKeyInput" type="text" placeholder="Masukkan key akun" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan key yang diberikan admin untuk menghubungkan akun pelanggan.</div></div></div>
     <div class="card"><h2 style="margin:0">Yang kamu dapat</h2><div class="feature-list"><div class="feature"><span class="check">✓</span>Pipeline Golden HD di server</div><div class="feature"><span class="check">✓</span>Upload diproses otomatis</div><div class="feature"><span class="check">✓</span>Hasil dapat diunduh</div><div class="feature"><span class="check">✓</span>File sementara dihapus otomatis</div></div></div>
   </aside>
 </section>
@@ -565,6 +565,7 @@ window.GOLDEN_PLATFORM = Object.freeze({
     settings: '/public/settings',
     claimKey: '/customer/claim',
     wallet: '/customer/wallet',
+    logout: '/customer/logout',
     topup: '/customer/topup',
     upload: '/customer/jobs',
     job: '/customer/jobs/',
@@ -709,6 +710,7 @@ document.querySelectorAll('.stars .star').forEach(s=>{s.style.setProperty('--x1'
 // LIVE CUSTOMER AUTH + WALLET
 const claimBtn=document.getElementById('claimKey'),claimInput=document.getElementById('claimKeyInput');
 const walletBadge=document.querySelector('.wallet-title .badge');
+const logoutBtn=document.getElementById('customerLogout');
 const walletStats=document.querySelectorAll('.wallet-stat b');
 const walletProgressHead=document.querySelector('.wallet-progress-head strong');
 const walletProgressBar=document.querySelector('.wallet-progress .bar i');
@@ -718,6 +720,7 @@ let customerAuthenticated=false;
 const historySection=document.getElementById("job-history");
 function setCustomerAuth(auth,balance=null){
   customerAuthenticated=!!auth;
+  if(logoutBtn)logoutBtn.hidden=!customerAuthenticated;
   const hideHistory=!customerAuthenticated;
   if(historySection){historySection.classList.toggle("hidden",hideHistory);historySection.setAttribute("aria-hidden",String(hideHistory));}
   const b=document.getElementById("walletAuthBadge");
@@ -746,6 +749,18 @@ async function loadWallet(){
     const d=await r.json();setWallet(d);return true;
   }catch(e){setCustomerAuth(false);return false;}
 }
+if(logoutBtn)logoutBtn.addEventListener('click',async()=>{
+  logoutBtn.disabled=true;
+  try{
+    const r=await fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.logout,{method:'POST',credentials:'include',cache:'no-store'});
+    let d={};try{d=await r.json()}catch(e){}
+    if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));
+    claimInput.value='';
+    window.location.reload();
+  }catch(e){
+    showModal('Logout Gagal',e.message||'Tidak dapat mengakhiri sesi. Silakan coba lagi.');
+  }finally{logoutBtn.disabled=false;}
+});
 claimBtn.onclick=async()=>{
   const key=claimInput.value.trim();
   if(!key){claimInput.focus();return}
