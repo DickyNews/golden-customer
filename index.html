@@ -730,9 +730,10 @@ function setCustomerAuth(auth,balance=null){
 function showModal(titleText,textText){modal.classList.add('show');document.getElementById('modalTitle').textContent=titleText;document.getElementById('modalText').textContent=textText}
 function closeModal(){modal.classList.remove('show')}
 function setWallet(d){
-  const balance=Number(d?.coin_balance ?? d?.coins ?? d?.balance ?? 0);
-  const used=Number(d?.encode_used ?? d?.encodes_used ?? d?.usage_count ?? 0);
-  const topup=Number(d?.topup_count ?? d?.topups ?? 0);
+  const wallet=d?.wallet ?? d;
+  const balance=Number(wallet?.coin_balance ?? wallet?.coins ?? wallet?.balance ?? d?.customer?.coin_balance ?? d?.coin_balance ?? 0);
+  const used=Number(wallet?.encode_used ?? wallet?.encodes_used ?? wallet?.usage_count ?? wallet?.completed_jobs ?? d?.encode_used ?? d?.encodes_used ?? d?.usage_count ?? 0);
+  const topup=Number(wallet?.topup_count ?? wallet?.topups ?? d?.topup_count ?? d?.topups ?? 0);
   if(walletStats[0])walletStats[0].textContent=balance;
   if(walletStats[1])walletStats[1].textContent=used;
   if(walletStats[2])walletStats[2].textContent=topup;
