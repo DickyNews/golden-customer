@@ -762,6 +762,104 @@ if(logoutBtn)logoutBtn.addEventListener('click',async()=>{
     showModal('Logout Gagal',e.message||'Tidak dapat mengakhiri sesi. Silakan coba lagi.');
   }finally{logoutBtn.disabled=false;}
 });
+/* CUSTOMER SESSION IDLE RESET
+   Client-side idle timeout: 10 minutes. Never log out while upload/processing is active
+   or while a download was explicitly started. Download exemption has a 30-minute safety cap.
+   Server-side session expiry is still required for closed-browser enforcement. */
+(function(){
+  const IDLE_LIMIT_MS=10*60*1000;
+  const DOWNLOAD_MAX_MS=30*60*1000;
+  let idleTimer=null,downloadTimer=null,downloadActive=false,lastActivity=Date.now(),hiddenAt=0,logoutInProgress=false;
+  function clearIdleTimer(){if(idleTimer){clearTimeout(idleTimer);idleTimer=null;}}
+  function scheduleIdleReset(){
+    clearIdleTimer();
+    if(!customerAuthenticated||logoutInProgress)return;
+    const remaining=Math.max(0,IDLE_LIMIT_MS-(Date.now()-lastActivity));
+    idleTimer=setTimeout(handleIdleTimeout,remaining);
+  }
+  async function endCustomerSession(reason){
+    if(logoutInProgress||!customerAuthenticated)return;
+    logoutInProgress=true;clearIdleTimer();
+    try{
+      const r=await fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.logout,{
+        method:'POST',credentials:'include',cache:'no-store',keepalive:true
+      });
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      if(claimInput)claimInput.value='';
+      setCustomerAuth(false);
+      if(walletStats)walletStats.forEach(el=>{if(el)el.textContent='0';});
+      if(walletProgressHead)walletProgressHead.textContent='0 coin';
+      if(walletProgressBar)walletProgressBar.style.width='0%';
+      if(walletBadge){walletBadge.textContent='BELUM LOGIN';walletBadge.className='badge warn';}
+      showModal('Sesi Berakhir',reason||'Sesi pelanggan diakhiri karena tidak ada aktivitas selama 10 menit. Silakan Claim Key kembali.');
+    }catch(e){
+      // Do not pretend the server session was invalidated if the logout request failed.
+      showModal('Logout Belum Terkonfirmasi','Sesi tidak aktif selama 10 menit, tetapi server belum mengonfirmasi logout. Periksa koneksi lalu tekan Logout.');
+    }finally{
+      logoutInProgress=false;
+      if(customerAuthenticated){lastActivity=Date.now();scheduleIdleReset();}
+    }
+  }
+  function handleIdleTimeout(){
+    if(!customerAuthenticated||logoutInProgress)return;
+    if(processing||downloadActive){idleTimer=setTimeout(handleIdleTimeout,60*1000);return;}
+    endCustomerSession('Sesi pelanggan diakhiri karena tidak ada aktivitas selama 10 menit. Silakan Claim Key kembali.');
+  }
+  function recordActivity(){
+    lastActivity=Date.now();
+    if(customerAuthenticated&&!downloadActive&&!processing)scheduleIdleReset();
+  }
+  ['pointerdown','keydown','touchstart','click','input','scroll'].forEach(type=>{
+    document.addEventListener(type,recordActivity,{passive:true,capture:true});
+  });
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){hiddenAt=Date.now();return;}
+    if(hiddenAt){
+      // A download may finish in another browser surface; returning clears the exemption.
+      if(downloadActive){
+        downloadActive=false;
+        if(downloadTimer){clearTimeout(downloadTimer);downloadTimer=null;}
+      }
+      hiddenAt=0;recordActivity();
+    }
+  });
+  window.addEventListener('focus',()=>{
+    if(downloadActive&&hiddenAt===0){
+      downloadActive=false;
+      if(downloadTimer){clearTimeout(downloadTimer);downloadTimer=null;}
+    }
+    recordActivity();
+  });
+  document.addEventListener('click',e=>{
+    const link=e.target.closest&&e.target.closest('a#downloadResult, #historyList a.btn');
+    if(!link)return;
+    downloadActive=true;clearIdleTimer();
+    if(downloadTimer)clearTimeout(downloadTimer);
+    downloadTimer=setTimeout(()=>{
+      downloadActive=false;downloadTimer=null;
+      if(customerAuthenticated){lastActivity=Date.now();scheduleIdleReset();}
+    },DOWNLOAD_MAX_MS);
+  },true);
+  // Upload/engine polling is an active transaction; resume the idle clock after it finishes.
+  const processingDescriptor=Object.getOwnPropertyDescriptor(window,'__goldenIdleProcessing');
+  window.__goldenIdleProcessing=()=>processing;
+  const processingWatch=setInterval(()=>{
+    if(!customerAuthenticated){clearIdleTimer();return;}
+    if(processing||downloadActive){clearIdleTimer();return;}
+    if(!idleTimer)scheduleIdleReset();
+  },5000);
+  window.addEventListener('pagehide',()=>{
+    // keepalive helps the server receive logout if the page is leaving; no claim of success until response.
+    if(customerAuthenticated&&!processing&&!downloadActive){
+      try{fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.logout,{method:'POST',credentials:'include',cache:'no-store',keepalive:true});}catch(e){}
+    }
+  });
+  const authObserver=setInterval(()=>{
+    if(customerAuthenticated&&!idleTimer&&!processing&&!downloadActive)scheduleIdleReset();
+    if(!customerAuthenticated)clearIdleTimer();
+  },1500);
+})(); 
+
 claimBtn.onclick=async()=>{
   const key=claimInput.value.trim();
   if(!key){claimInput.focus();return}
