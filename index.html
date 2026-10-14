@@ -685,10 +685,51 @@ async function uploadVideo(f){
     document.getElementById('modalTitle').textContent='Video siap diunduh';
     document.getElementById('modalText').textContent='Proses berhasil. File hasil tersedia.';
     const old=document.getElementById('downloadResult');if(old)old.remove();
-    const a=document.createElement('a');a.id='downloadResult';
-    a.href=jobId?`${GOLDEN_PLATFORM.apiBase}${GOLDEN_PLATFORM.endpoints.job}${encodeURIComponent(jobId)}/download`: (url.startsWith('http')?url:(GOLDEN_PLATFORM.apiBase+(url.startsWith('/')?'':'/')+url));
-    a.className='btn btn-primary';a.style.display='block';a.style.textAlign='center';a.style.marginTop='14px';a.textContent='DOWNLOAD HASIL';
-    a.setAttribute('download','');a.rel='noopener';
+    const a=document.createElement('button');a.id='downloadResult';
+    a.type='button';
+    a.className='btn btn-primary';a.style.display='block';a.style.width='100%';a.style.textAlign='center';a.style.marginTop='14px';a.textContent='DOWNLOAD HASIL';
+    a.onclick=async()=>{
+      if(a.dataset.busy==='1')return;
+      a.dataset.busy='1';a.disabled=true;a.textContent='MENYIAPKAN DOWNLOAD...';
+      let objectUrl=null;
+      try{
+        const downloadUrl=jobId
+          ? `${GOLDEN_PLATFORM.apiBase}${GOLDEN_PLATFORM.endpoints.job}${encodeURIComponent(jobId)}/download`
+          : (url.startsWith('http')?url:(GOLDEN_PLATFORM.apiBase+(url.startsWith('/')?'':'/')+url));
+        const r=await fetch(downloadUrl,{method:'GET',credentials:'include',cache:'no-store'});
+        if(!r.ok){
+          let detail='HTTP '+r.status;
+          try{const d=await r.json();detail=d.detail||detail}catch(e){}
+          throw new Error(detail);
+        }
+        const blob=await r.blob();
+        if(!blob.size)throw new Error('File hasil kosong.');
+        objectUrl=URL.createObjectURL(blob);
+        const save=document.createElement('a');
+        save.href=objectUrl;save.download=`golden_${jobId||'result'}.mp4`;
+        document.body.appendChild(save);save.click();save.remove();
+        a.textContent='DOWNLOAD DIMULAI';
+        document.getElementById('modalText').textContent='File sudah diterima browser. Jika file tidak muncul, periksa notifikasi download perangkat.';
+        if(jobId){
+          const ack=await fetch(`${GOLDEN_PLATFORM.apiBase}${GOLDEN_PLATFORM.endpoints.job}${encodeURIComponent(jobId)}/download/ack`,{
+            method:'POST',credentials:'include',cache:'no-store'
+          });
+          if(!ack.ok){
+            console.error('Download ACK gagal:',ack.status);
+            document.getElementById('modalText').textContent='Download dimulai, tetapi pembersihan file server belum terkonfirmasi.';
+          }else{
+            await Promise.allSettled([loadJobHistory()]);
+          }
+        }
+      }catch(e){
+        document.getElementById('modalText').textContent='Download gagal: '+(e.message||'Kesalahan jaringan')+'. File server tidak diminta untuk dihapus.';
+        a.textContent='COBA DOWNLOAD LAGI';
+      }finally{
+        if(objectUrl)setTimeout(()=>URL.revokeObjectURL(objectUrl),60000);
+        a.dataset.busy='0';a.disabled=false;
+        if(a.textContent==='DOWNLOAD DIMULAI')a.textContent='DOWNLOAD HASIL';
+      }
+    };
     document.querySelector('.modal-box').appendChild(a);
     await loadWallet();
     await loadJobHistory();
@@ -835,7 +876,7 @@ if(logoutBtn)logoutBtn.addEventListener('click',async()=>{
     recordActivity();
   });
   document.addEventListener('click',e=>{
-    const link=e.target.closest&&e.target.closest('a#downloadResult, #historyList a.btn');
+    const link=e.target.closest&&e.target.closest('#downloadResult, #historyList a.btn');
     if(!link)return;
     downloadActive=true;clearIdleTimer();
     if(downloadTimer)clearTimeout(downloadTimer);
