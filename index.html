@@ -537,7 +537,7 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:var(--ne
 
 <section class="section hidden" id="job-history" aria-hidden="true">
   <div class="history-toolbar">
-    <div><h2 style="margin-bottom:6px">Riwayat Pemrosesan</h2><p class="section-intro" style="text-align:left;margin:0">Riwayat diambil dari database akun yang sedang login. Hasil yang selesai bisa diunduh kembali.</p></div>
+    <div><h2 style="margin-bottom:6px">Riwayat Pemrosesan</h2><p class="section-intro" style="text-align:left;margin:0">Riwayat status pemrosesan akun ini. Untuk menjaga storage tetap bersih, hasil hanya tersedia pada popup setelah proses selesai.</p></div>
     <button class="btn btn-secondary" id="refreshHistory" type="button">Muat Ulang</button>
   </div>
   <div id="historyList" class="history-list"><div class="history-empty">Memuat riwayat dari server…</div></div>
@@ -681,10 +681,14 @@ async function uploadVideo(f){
     if(!url && jobId)url=await pollJob(jobId);
     if(!url)throw new Error('Server menerima job tetapi belum memberikan ID job atau link hasil download.');
     setProgress(100,'Proses selesai');
+    close.style.display='block';
     document.getElementById('modalTitle').textContent='Video siap diunduh';
     document.getElementById('modalText').textContent='Proses berhasil. File hasil tersedia.';
     const old=document.getElementById('downloadResult');if(old)old.remove();
-    const a=document.createElement('a');a.id='downloadResult';a.href=url;a.target='_blank';a.rel='noopener';a.className='btn btn-primary';a.style.display='block';a.style.textAlign='center';a.style.marginTop='14px';a.textContent='DOWNLOAD HASIL';
+    const a=document.createElement('a');a.id='downloadResult';
+    a.href=jobId?`${GOLDEN_PLATFORM.apiBase}${GOLDEN_PLATFORM.endpoints.job}${encodeURIComponent(jobId)}/download`: (url.startsWith('http')?url:(GOLDEN_PLATFORM.apiBase+(url.startsWith('/')?'':'/')+url));
+    a.className='btn btn-primary';a.style.display='block';a.style.textAlign='center';a.style.marginTop='14px';a.textContent='DOWNLOAD HASIL';
+    a.setAttribute('download','');a.rel='noopener';
     document.querySelector('.modal-box').appendChild(a);
     await loadWallet();
     await loadJobHistory();
@@ -703,7 +707,7 @@ async function uploadVideo(f){
 file.onchange=()=>{const f=file.files[0];if(!f)return;if(!serviceActive[selectedMode]){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Layanan Tidak Tersedia';document.getElementById('modalText').textContent='Mode yang dipilih sedang dinonaktifkan oleh admin.';return}title.textContent=f.name;text.textContent=(f.size/1048576).toFixed(1)+' MB · '+(selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD')+' · '+selectedPrice+' COIN';if(f.size>maxFileSizeBytes){modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Ukuran Video Melebihi Batas';document.getElementById('modalText').textContent='Ukuran file '+(f.size/1048576).toFixed(1)+' MB, sedangkan batas layanan '+(maxFileSizeBytes/1048576).toFixed(0)+' MB. Pilih file yang lebih kecil.';return}uploadVideo(f);};
 
 ['dragenter','dragover'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>{if(e.dataTransfer.files.length){file.files=e.dataTransfer.files;file.dispatchEvent(new Event('change'))}});
-close.onclick=()=>modal.classList.remove('show');buy.onclick=()=>{window.open('https://wa.me/6289616438173?text='+encodeURIComponent('Halo Bang, Saya Mau Topup Coin'),'_blank','noopener')};document.getElementById('claimKey').onclick=()=>{const key=document.getElementById('claimKeyInput').value.trim();if(!key){document.getElementById('claimKeyInput').focus();return}modal.classList.add('show');document.getElementById('modalTitle').textContent='Claim Akun';document.getElementById('modalText').textContent='Key diterima. Verifikasi akun akan dilakukan oleh API server.'};
+close.onclick=()=>{modal.classList.remove('show');const result=document.getElementById('downloadResult');if(result)result.remove();};buy.onclick=()=>{window.open('https://wa.me/6289616438173?text='+encodeURIComponent('Halo Bang, Saya Mau Topup Coin'),'_blank','noopener')};document.getElementById('claimKey').onclick=()=>{const key=document.getElementById('claimKeyInput').value.trim();if(!key){document.getElementById('claimKeyInput').focus();return}modal.classList.add('show');document.getElementById('modalTitle').textContent='Claim Akun';document.getElementById('modalText').textContent='Key diterima. Verifikasi akun akan dilakukan oleh API server.'};
 const stars=document.getElementById('stars');for(let i=0;i<78;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--l',(55+Math.random()*155)+'px');s.style.setProperty('--r',(-68+Math.random()*136)+'deg');s.style.setProperty('--x1',(-260+Math.random()*520)+'px');s.style.setProperty('--y1',(-210+Math.random()*420)+'px');s.style.setProperty('--x2',(-520+Math.random()*1040)+'px');s.style.setProperty('--y2',(-410+Math.random()*820)+'px');s.style.setProperty('--x3',(-300+Math.random()*600)+'px');s.style.setProperty('--y3',(-240+Math.random()*480)+'px');s.style.setProperty('--m',(12+Math.random()*20)+'s');s.style.setProperty('--d',(1.5+Math.random()*3)+'s');s.style.animationDelay=(-Math.random()*32)+'s';stars.appendChild(s)}
 document.querySelectorAll('.stars .star').forEach(s=>{s.style.setProperty('--x1',(-110+Math.random()*220)+'px');s.style.setProperty('--y1',(-90+Math.random()*180)+'px');s.style.setProperty('--x2',(-180+Math.random()*360)+'px');s.style.setProperty('--y2',(-150+Math.random()*300)+'px');s.style.setProperty('--x3',(-110+Math.random()*220)+'px');s.style.setProperty('--y3',(-90+Math.random()*180)+'px');s.style.setProperty('--m',(9+Math.random()*13)+'s');s.style.animationDelay=(-Math.random()*20)+'s'});
 
@@ -924,10 +928,6 @@ function renderJobHistory(payload){
     const statusEl=document.createElement('span');statusEl.className='history-status '+status.replace(/[^a-z]/g,'');statusEl.textContent=historyStatusLabel(status);
     info.append(name,meta);
     const actions=document.createElement('div');actions.className='history-actions';actions.appendChild(statusEl);
-    const download=job.download_url||job.output_url||raw.download_url||raw.output_url;
-    if(download&&(status==='completed'||status==='complete'||status==='done')){
-      const link=document.createElement('a');link.className='btn btn-primary';link.textContent='Unduh';link.href=download.startsWith('http')?download:(GOLDEN_PLATFORM.apiBase+(download.startsWith('/')?'':'/')+download);link.rel='noopener';actions.appendChild(link);
-    }
     item.append(info,actions);historyList.appendChild(item);
   }
 }
