@@ -1,0 +1,48 @@
+name: Deploy TikTok Analytics Worker
+on:
+  push:
+    branches: [main]
+    paths:
+      - "analytics-worker/**"
+      - ".github/workflows/deploy-tiktok-analytics.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Deploy Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" || (echo "::error::Add CLOUDFLARE_API_TOKEN in repository secrets"; exit 1)
+          test -n "$CLOUDFLARE_ACCOUNT_ID" || (echo "::error::Add CLOUDFLARE_ACCOUNT_ID in repository secrets"; exit 1)
+          cd analytics-worker
+          npx --yes wrangler@4 deploy 2>&1 | tee ../worker-deploy.log
+      - name: Update frontend API URL after successful deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          URL="$(grep -Eo 'https://[a-zA-Z0-9.-]+\.workers\.dev' worker-deploy.log | tail -n 1 || true)"
+          if [ -z "$URL" ]; then
+            echo "::warning::Worker deployed but workers.dev URL was not detected; set TIKTOK_ANALYTICS_API_BASE repository variable manually."
+            exit 0
+          fi
+          printf 'window.GOLDEN_TIKTOK_ANALYTICS_API = "%s";\n' "$URL" > analytics-config.js
+          if git diff --quiet -- analytics-config.js; then
+            echo "Frontend API URL is already current: $URL"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analytics-config.js
+          git commit -m "Configure deployed TikTok Analytics endpoint"
+          git push
