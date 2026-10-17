@@ -587,6 +587,7 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:var(--ne
 <footer class="container footer"><span>© 2026 Dicky News</span><span>Golden API aktif · TikTok Analytics menunggu endpoint backend</span></footer>
 </div>
 <div class="modal" id="modal"><div class="modal-box"><h3 id="modalTitle">Memproses...</h3><p class="mini" id="modalText">Demo frontend. Backend Golden Engine akan dihubungkan setelah VPS siap.</p><div class="progress"><i></i></div><button class="btn btn-secondary" style="margin-top:18px;width:100%" id="close">Tutup</button></div></div>
+<script src="./analytics-config.js"></script>
 <script>
 /* ============================================================
    CUSTOMER WEB CONTRACT — JANGAN UBAH STRUKTUR BACKEND
@@ -1031,7 +1032,31 @@ if(refreshHistoryBtn)refreshHistoryBtn.addEventListener('click',loadJobHistory);
 
 loadPublicSettings();(async()=>{const ok=await loadWallet();if(ok)await loadJobHistory();else if(historyList)historyList.replaceChildren();})();const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='rise .7s ease both'}),{threshold:.12});document.querySelectorAll('.section,.card,.step').forEach(el=>revealObserver.observe(el));
 const checkerUrl=document.getElementById('checkerUrl'),checkerChoose=document.getElementById('checkerChoose'),checkerTitle=document.getElementById('checkerTitle'),checkerText=document.getElementById('checkerText'),analysisStatus=document.getElementById('analysisStatus');
-checkerChoose.onclick=async()=>{const url=checkerUrl.value.trim();if(!url){checkerText.textContent='Tempel link video TikTok terlebih dahulu.';checkerUrl.focus();return}let parsedUrl;try{parsedUrl=new URL(url)}catch{checkerText.textContent='Link harus berupa URL TikTok yang valid.';return}if(!['http:','https:'].includes(parsedUrl.protocol)||!(parsedUrl.hostname==='tiktok.com'||parsedUrl.hostname.endsWith('.tiktok.com'))){checkerText.textContent='Gunakan link TikTok yang valid, termasuk link pendek vm.tiktok.com.';return}checkerChoose.disabled=true;checkerTitle.textContent='Mengambil data TikTok...';checkerText.textContent='Backend analyzer akan memeriksa hasil upload dan mengembalikan detail video.';analysisStatus.textContent='ANALYZING';analysisStatus.className='badge warn';try{const r=await fetch('https://103-235-74-92.sslip.io/public/tiktok-analytics?url='+encodeURIComponent(url));if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();const map={mResolution:d.resolution,mFps:d.fps,mBitrate:d.bitrate,mCodec:d.codec,mSize:d.file_size,mContainer:d.container,sRegion:d.region,sReview:d.review_status,sVisibility:d.visibility,sIndex:d.index_visibility};Object.entries(map).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v??'—'});checkerTitle.textContent='Analisis selesai';checkerText.textContent='Data berhasil diterima dari TikTok Analytics backend.';analysisStatus.textContent='LIVE RESULT';analysisStatus.className='badge'}catch(e){checkerTitle.textContent='Analyzer belum tersedia';checkerText.textContent='Endpoint TikTok Analytics belum terhubung di backend. UI sudah siap menerima hasil live dari server.';analysisStatus.textContent='BACKEND REQUIRED';analysisStatus.className='badge warn'}finally{checkerChoose.disabled=false}};
+checkerChoose.onclick=async()=>{
+ const url=checkerUrl.value.trim();
+ if(!url){checkerText.textContent='Tempel link video TikTok terlebih dahulu.';checkerUrl.focus();return}
+ let parsedUrl;try{parsedUrl=new URL(url)}catch{checkerText.textContent='Link harus berupa URL TikTok yang valid.';return}
+ if(!['http:','https:'].includes(parsedUrl.protocol)||!(parsedUrl.hostname==='tiktok.com'||parsedUrl.hostname.endsWith('.tiktok.com'))){checkerText.textContent='Gunakan link TikTok yang valid, termasuk link pendek vm.tiktok.com.';return}
+ const apiBase=String(window.GOLDEN_TIKTOK_ANALYTICS_API||'').replace(/\\/$/,'');
+ if(!apiBase){checkerTitle.textContent='Analyzer belum diaktifkan';checkerText.textContent='Worker serverless belum dideploy. Tidak ada permintaan yang dikirim ke Golden API/VPS. Aktifkan deployment GitHub Actions melalui Cloudflare secrets terlebih dahulu.';analysisStatus.textContent='DEPLOY REQUIRED';analysisStatus.className='badge warn';return}
+ checkerChoose.disabled=true;checkerTitle.textContent='Mengambil data TikTok...';checkerText.textContent='Memeriksa metadata publik. Detail teknis hanya tampil jika benar-benar tersedia dari sumber.';analysisStatus.textContent='ANALYZING';analysisStatus.className='badge warn';
+ try{
+  const r=await fetch(apiBase+'/public/tiktok-analytics?url='+encodeURIComponent(url),{cache:'no-store'});
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(d.error||('HTTP '+r.status));
+  const map={mResolution:d.resolution,mFps:d.fps,mBitrate:d.bitrate,mCodec:d.codec,mSize:d.file_size,mContainer:d.container,sRegion:d.region,sReview:d.review_status,sVisibility:d.visibility,sIndex:d.index_visibility};
+  Object.entries(map).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=(v===null||v===undefined||v==='')?'Tidak tersedia':v});
+  checkerTitle.textContent=d.title||'Analisis metadata selesai';
+  const notes=[d.author?'Kreator: '+d.author:'',d.data_source&&d.data_source.length?'Sumber: '+d.data_source.join(', '):'',d.limitations&&d.limitations.length?d.limitations.join(' '):''];
+  checkerText.textContent=notes.filter(Boolean).join(' ')||'Metadata publik tidak tersedia untuk link ini.';
+  analysisStatus.textContent=d.status==='partial'?'PARTIAL RESULT':d.status==='unavailable'?'DATA UNAVAILABLE':'LIVE RESULT';
+  analysisStatus.className=d.status==='unavailable'?'badge warn':'badge';
+ }catch(e){
+  checkerTitle.textContent='Analisis gagal';
+  checkerText.textContent='Worker tidak dapat menyelesaikan permintaan. '+(e.message||'Periksa link publik dan coba lagi.');
+  analysisStatus.textContent='REQUEST FAILED';analysisStatus.className='badge warn';
+ }finally{checkerChoose.disabled=false}
+};
 
 /* Interactive cyberpunk motion controller. Randomizes visual preset per interaction. */
 (function(){
