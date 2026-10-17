@@ -31,10 +31,12 @@ jobs:
       - name: Update frontend API URL after successful deployment
         env:
           GH_TOKEN: ${{ github.token }}
+          TIKTOK_ANALYTICS_API_BASE: ${{ vars.TIKTOK_ANALYTICS_API_BASE }}
         run: |
           URL="$(grep -Eo 'https://[a-zA-Z0-9.-]+\.workers\.dev' worker-deploy.log | tail -n 1 || true)"
+          if [ -z "$URL" ]; then URL="$TIKTOK_ANALYTICS_API_BASE"; fi
           if [ -z "$URL" ]; then
-            echo "::warning::Worker deployed but workers.dev URL was not detected; set TIKTOK_ANALYTICS_API_BASE repository variable manually."
+            echo "::warning::Worker deployed but URL was not detected. Set repository variable TIKTOK_ANALYTICS_API_BASE."
             exit 0
           fi
           printf 'window.GOLDEN_TIKTOK_ANALYTICS_API = "%s";\n' "$URL" > analytics-config.js
