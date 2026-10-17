@@ -155,6 +155,7 @@ body:before{opacity:.12;background-size:36px 36px;background-image:linear-gradie
 .hero p{max-width:780px;margin:16px auto 0;line-height:1.8;color:#bac6e5;font-size:clamp(14px,1.25vw,16px)}
 .eyebrow{display:inline-flex;align-items:center;gap:9px;color:#83f6ff;border:1px solid rgba(98,243,255,.32);background:rgba(24,56,80,.36);border-radius:999px;padding:8px 13px;font-size:10px;font-weight:850;letter-spacing:.16em}
 .eyebrow:before{content:"";width:6px;height:6px;border-radius:50%;background:#62f3ff;box-shadow:0 0 12px #62f3ff;animation:neonSignal 1.7s ease-in-out infinite}
+.eyebrow.status-online:before{background:#39ff88;box-shadow:0 0 7px #39ff88,0 0 16px rgba(57,255,136,.9);animation:onlinePulse 1.35s ease-in-out infinite}@keyframes onlinePulse{0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 7px #39ff88,0 0 16px rgba(57,255,136,.8)}50%{opacity:.55;transform:scale(.72);box-shadow:0 0 3px #39ff88,0 0 8px rgba(57,255,136,.5)}}
 .hero-social{color:#d7d9ff;font-size:12px;letter-spacing:.055em}
 .grid{grid-template-columns:minmax(0,1.3fr) minmax(320px,.85fr);gap:22px;align-items:start}
 .card{border-radius:18px;padding:22px;background:linear-gradient(145deg,rgba(19,25,52,.92),rgba(10,13,29,.95));border:1px solid rgba(98,243,255,.2);box-shadow:0 18px 46px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.045);backdrop-filter:blur(18px);transition:transform .36s cubic-bezier(.2,.8,.2,1),border-color .32s,box-shadow .32s}
@@ -548,7 +549,7 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:var(--ne
 <div class="app" data-platform="dicky-news-golden" data-pillar="customer-web" data-architecture="customer-web-api-server">
 <div class="stars" id="stars"></div><div class="orb"></div><div class="orb two"></div>
 <main class="container">
-<section class="hero"><div class="eyebrow">GOLDEN ENGINE · VIDEO PROCESSING</div><h1><span>Dicky News Method</span></h1><div class="social-owner-label">SOCIAL MEDIA OWNER</div>
+<section class="hero"><div class="eyebrow status-online">4K 120FPS Engine Transcode</div><h1><span>Dicky News Method</span></h1><div class="social-owner-label">SOCIAL MEDIA OWNER</div>
 <a class="hero-social youtube-social" href="https://www.youtube.com/@dickynews" target="_blank" rel="noopener noreferrer" aria-label="Kunjungi channel YouTube Dicky News">
   <svg class="social-brand-icon youtube-brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
   <span>YouTube : Dicky News</span><span class="social-divider">|</span><span class="youtube-subs">400K Subscribers</span><span class="social-link-arrow" aria-hidden="true">↗</span>
