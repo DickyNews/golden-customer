@@ -495,6 +495,15 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:var(--ne
 @media(hover:none),(pointer:coarse){.app .btn,.app .mode-btn{animation:none}}
 @media(prefers-reduced-motion:reduce){.app .btn,.app .mode-btn,.app .feature .check,.app .step .num{animation:none!important}}
 
+
+/* HDR availability: visible animated SOON label; mode stays unavailable until relaunched. */
+.mode-btn.hdr-soon{cursor:not-allowed;filter:saturate(.68);border-color:rgba(169,149,255,.38)}
+.mode-btn.hdr-soon:disabled{opacity:1;color:#c9cde2;background:linear-gradient(140deg,rgba(27,30,57,.72),rgba(14,17,36,.82));box-shadow:inset 0 1px rgba(255,255,255,.035)}
+.mode-btn.hdr-soon .soon-label{display:inline-flex!important;align-items:center;justify-content:center;align-self:center;margin-top:9px;padding:4px 12px;border:1px solid rgba(98,243,255,.58);border-radius:999px;color:#8ff7ff!important;background:linear-gradient(100deg,rgba(98,243,255,.11),rgba(255,77,222,.12),rgba(98,243,255,.11));background-size:220% 100%;font-size:10px!important;font-weight:950;letter-spacing:.22em;text-shadow:0 0 12px rgba(98,243,255,.55);box-shadow:0 0 18px rgba(98,243,255,.12),inset 0 0 12px rgba(98,243,255,.06);animation:hdrSoonGlow 2.1s ease-in-out infinite,hdrSoonFlow 3.2s linear infinite}
+@keyframes hdrSoonGlow{0%,100%{opacity:.72;box-shadow:0 0 9px rgba(98,243,255,.1),inset 0 0 8px rgba(98,243,255,.03);filter:brightness(.92)}50%{opacity:1;box-shadow:0 0 23px rgba(98,243,255,.3),0 0 12px rgba(255,77,222,.12),inset 0 0 14px rgba(98,243,255,.1);filter:brightness(1.25)}}
+@keyframes hdrSoonFlow{to{background-position:220% 0}}
+@media(prefers-reduced-motion:reduce){.mode-btn.hdr-soon .soon-label{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -526,7 +535,7 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:var(--ne
 <section class="grid">
   <div class="card upload">
     <div class="card-head"><div><div class="mini">Pilih mode pemrosesan video</div></div><div class="pill">MP4</div></div>
-    <div class="mode-title">PILIH PROSES</div><div class="mode-buttons"><button class="mode-btn active" id="sdrBtn">INJECT TIKTOK HD <small id="sdrPrice">1 COIN / VIDEO</small></button><button class="mode-btn" id="hdrBtn">CHANGE VIDEO NON HDR TO HDR + INJECT TIKTOK HD <small id="hdrPrice">7 COIN / VIDEO</small></button></div>
+    <div class="mode-title">PILIH PROSES</div><div class="mode-buttons"><button class="mode-btn active" id="sdrBtn">INJECT TIKTOK HD <small id="sdrPrice">1 COIN / VIDEO</small></button><button class="mode-btn hdr-soon" id="hdrBtn" type="button" disabled aria-disabled="true" title="HDR sedang disiapkan dan belum tersedia">CHANGE VIDEO NON HDR TO HDR + INJECT TIKTOK HD <small id="hdrPrice" class="soon-label">SOON</small></button></div>
     <div class="drop" id="drop"><div class="upload-icon">↑</div><strong id="dropTitle">Pilih mode di atas</strong><p id="dropText">Klik salah satu tombol proses. Jendela pilih file akan langsung terbuka.</p><input id="file" class="file" type="file" accept="*/*"></div>
   </div>
   <aside class="side">
@@ -578,11 +587,11 @@ const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:true};let maxFileS
 function renderPrices(){
   const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
   if(sdr)sdr.textContent=servicePrices.sdr+' COIN / VIDEO';
-  if(hdr)hdr.textContent=servicePrices.hdr+' COIN / VIDEO';
-  if(summary)summary.textContent='SDR '+servicePrices.sdr+' · HDR '+servicePrices.hdr+' COIN';
-  sdrBtn.disabled=!serviceActive.sdr;hdrBtn.disabled=!serviceActive.hdr;
-  sdrBtn.title=serviceActive.sdr?'':'Layanan ini sedang dinonaktifkan oleh admin.';hdrBtn.title=serviceActive.hdr?'':'Layanan ini sedang dinonaktifkan oleh admin.';
-  sdrBtn.setAttribute('aria-disabled',String(!serviceActive.sdr));hdrBtn.setAttribute('aria-disabled',String(!serviceActive.hdr));
+  if(hdr)hdr.textContent='SOON';
+  if(summary)summary.textContent='SDR '+servicePrices.sdr+' COIN · HDR SOON';
+  sdrBtn.disabled=!serviceActive.sdr;hdrBtn.disabled=true;
+  sdrBtn.title=serviceActive.sdr?'':'Layanan ini sedang dinonaktifkan oleh admin.';hdrBtn.title='HDR sedang disiapkan dan belum tersedia.';
+  sdrBtn.setAttribute('aria-disabled',String(!serviceActive.sdr));hdrBtn.setAttribute('aria-disabled','true');
   if(!serviceActive[selectedMode]){const next=serviceActive.sdr?'sdr':(serviceActive.hdr?'hdr':null);if(next)selectedMode=next;}
 }
 async function loadPublicSettings(){
@@ -594,7 +603,7 @@ async function loadPublicSettings(){
     const all=services.length?services:[d];
     for(const s of all){
       if(s.service_code===GOLDEN_PLATFORM.serviceCodes.sdr){if(Number.isFinite(Number(s.coin_cost)))servicePrices.sdr=Number(s.coin_cost);if(typeof s.is_active==='boolean')serviceActive.sdr=s.is_active;}
-      if(s.service_code===GOLDEN_PLATFORM.serviceCodes.hdr){if(Number.isFinite(Number(s.coin_cost)))servicePrices.hdr=Number(s.coin_cost);if(typeof s.is_active==='boolean')serviceActive.hdr=s.is_active;}
+      if(s.service_code===GOLDEN_PLATFORM.serviceCodes.hdr){if(Number.isFinite(Number(s.coin_cost)))servicePrices.hdr=Number(s.coin_cost);serviceActive.hdr=false;}
       if(Number.isFinite(Number(s.max_file_size_bytes))&&Number(s.max_file_size_bytes)>0)maxFileSizeBytes=Math.min(maxFileSizeBytes,Number(s.max_file_size_bytes));
     }
     renderPrices();
