@@ -583,7 +583,7 @@ window.GOLDEN_PLATFORM = Object.freeze({
 });
 const file=document.getElementById('file'),drop=document.getElementById('drop'),title=document.getElementById('dropTitle'),text=document.getElementById('dropText'),modal=document.getElementById('modal'),close=document.getElementById('close'),buy=document.getElementById('buy'),sdrBtn=document.getElementById('sdrBtn'),hdrBtn=document.getElementById('hdrBtn');let selectedMode='sdr',selectedPrice=1,processing=false;
 
-const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:true};let maxFileSizeBytes=300*1024*1024;
+const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:false};let maxFileSizeBytes=300*1024*1024;
 function renderPrices(){
   const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
   if(sdr)sdr.textContent=servicePrices.sdr+' COIN / VIDEO';
