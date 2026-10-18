@@ -1097,6 +1097,48 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   filter: none !important;
 }
 
+
+/* REQUESTED: Riwayat Pemrosesan section matches the yellow customer theme */
+#job-history:not(.hidden) {
+  padding: 24px 20px !important;
+  border: 2px solid #fff3a0 !important;
+  border-radius: 22px !important;
+  background: linear-gradient(145deg,#fff9a6 0%,#ffed42 48%,#ffdc00 100%) !important;
+  color: #111 !important;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.85), inset 0 -5px 0 rgba(0,0,0,.08), 0 8px 0 rgba(0,0,0,.55), 0 12px 24px rgba(0,0,0,.28) !important;
+}
+#job-history:not(.hidden) h2,
+#job-history:not(.hidden) .history-empty,
+#job-history:not(.hidden) .history-name,
+#job-history:not(.hidden) .history-meta,
+#job-history:not(.hidden) .history-item,
+#job-history:not(.hidden) .history-item * {
+  color: #111 !important;
+  -webkit-text-fill-color: #111 !important;
+}
+#job-history:not(.hidden) .history-item,
+#job-history:not(.hidden) .history-empty {
+  background: rgba(255,255,255,.48) !important;
+  border: 1px solid rgba(0,0,0,.42) !important;
+  border-radius: 14px !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 3px 0 rgba(0,0,0,.12) !important;
+}
+#job-history:not(.hidden) .history-status {
+  color: #111 !important;
+  border-color: #111 !important;
+  background: rgba(255,255,255,.55) !important;
+}
+#job-history:not(.hidden) #refreshHistory {
+  color: #111 !important;
+  -webkit-text-fill-color: #111 !important;
+  background: linear-gradient(180deg,#fffef0,#e8d77c) !important;
+  border: 2px solid #111 !important;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.9), 0 4px 0 #111, 0 6px 10px rgba(0,0,0,.2) !important;
+}
+@media(max-width:600px) {
+  #job-history:not(.hidden) { padding: 20px 14px !important; }
+}
+
 </style>
 </head>
 <body>
