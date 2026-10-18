@@ -1002,7 +1002,6 @@ async function uploadVideo(f){
           xhr.open('GET',downloadUrl,true);
           xhr.withCredentials=true;
           xhr.responseType='blob';
-          xhr.setRequestHeader('Cache-Control','no-cache');
           xhr.onprogress=e=>{
             if(e.lengthComputable&&e.total>0){
               const pct=Math.min(100,(e.loaded/e.total)*100);
