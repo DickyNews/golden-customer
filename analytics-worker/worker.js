@@ -62,9 +62,21 @@ function formatBytes(n) {
   while (v >= 1024 && i < units.length - 1) { v /= 1024; i++; }
   return v.toFixed(i ? 2 : 0) + " " + units[i];
 }
+function findItemStruct(root) {
+  let found = null; const seen = new Set();
+  function walk(v, depth) {
+    if (!v || typeof v !== "object" || depth > 24 || seen.has(v) || found) return;
+    seen.add(v);
+    if (v.itemStruct && typeof v.itemStruct === "object" && (v.itemStruct.id || v.itemStruct.desc || v.itemStruct.stats)) { found = v.itemStruct; return; }
+    for (const value of Object.values(v)) walk(value, depth + 1);
+  }
+  walk(root, 0); return found;
+}
 function baseResult(input) {
   return {
     input_url: input, title: null, author: null, description: null, thumbnail: null,
+    video_id: null, created_at: null, duration: null, play_count: null, like_count: null,
+    comment_count: null, share_count: null, music_title: null, music_author: null, aspect_ratio: null,
     resolution: null, fps: null, bitrate: null, codec: null, file_size: null, container: null,
     region: "Tidak tersedia dari data publik", review_status: "Tidak dapat diverifikasi secara publik",
     visibility: "Belum diverifikasi", index_visibility: "Tidak tersedia dari data publik",
@@ -108,6 +120,25 @@ export default {
         if (title) result.title = title[1].replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
         if (image) result.thumbnail = image[1].replace(/&amp;/g, "&");
         const embedded = parseEmbeddedJson(html);
+        const item = embedded ? findItemStruct(embedded) : null;
+        if (item) {
+          const stats = item.stats || item.statsV2 || {};
+          const author = item.author || {};
+          const music = item.music || {};
+          result.video_id = item.id || null;
+          result.description = item.desc || result.description;
+          result.author = author.nickname || author.uniqueId || result.author;
+          result.created_at = numeric(item.createTime) ? new Date(Number(item.createTime) * 1000).toISOString() : null;
+          result.duration = numeric(item.video?.duration) ? Number(item.video.duration) + " detik" : null;
+          result.play_count = stats.playCount ?? stats.play_count ?? null;
+          result.like_count = stats.diggCount ?? stats.digg_count ?? null;
+          result.comment_count = stats.commentCount ?? stats.comment_count ?? null;
+          result.share_count = stats.shareCount ?? stats.share_count ?? null;
+          result.music_title = music.title || null;
+          result.music_author = music.authorName || null;
+          result.aspect_ratio = item.video?.ratio || null;
+          result.data_source.push("Metadata video publik");
+        }
         const video = embedded ? findVideoObjects(embedded) : null;
         if (video) {
           const width = numeric(video.width), height = numeric(video.height);
@@ -134,6 +165,7 @@ export default {
       if (response.ok) {
         const o = await response.json();
         result.title = result.title || o.title || null;
+        result.description = result.description || o.title || null;
         result.author = o.author_name || result.author;
         result.thumbnail = result.thumbnail || o.thumbnail_url || null;
         if (o.title || o.author_name) result.data_source.push("TikTok oEmbed");
