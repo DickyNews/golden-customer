@@ -85,6 +85,35 @@ function firstNumeric(object, keys) {
   }
   return null;
 }
+function findTechnicalNumber(root, keys) {
+  const wanted = new Set(keys.map(k => k.toLowerCase()));
+  const seen = new Set();
+  let result = null;
+  function walk(v, depth) {
+    if (!v || typeof v !== "object" || depth > 30 || seen.has(v) || result !== null) return;
+    seen.add(v);
+    for (const [key, value] of Object.entries(v)) {
+      if (wanted.has(key.toLowerCase())) {
+        const n = numeric(value);
+        if (n && n <= 1000) { result = n; return; }
+      }
+    }
+    for (const value of Object.values(v)) walk(value, depth + 1);
+  }
+  walk(root, 0);
+  return result;
+}
+function classifyResolution(width, height) {
+  const long = Math.max(width, height);
+  if (long >= 3800) return "4K";
+  if (long >= 2500) return "2K / QHD";
+  if (long >= 2000) return "1440p";
+  if (long >= 1050) return "1080p / Full HD";
+  if (long >= 700) return "720p / HD";
+  if (long >= 500) return "540p";
+  if (long >= 350) return "360p";
+  return "Di bawah 360p";
+}
 function findItemStruct(root) {
   let found = null; const seen = new Set();
   function walk(v, depth) {
@@ -100,7 +129,7 @@ function baseResult(input) {
     input_url: input, title: null, author: null, description: null, thumbnail: null,
     video_id: null, created_at: null, duration: null, play_count: null, like_count: null,
     comment_count: null, share_count: null, music_title: null, music_author: null, aspect_ratio: null,
-    resolution: null, fps: null, bitrate: null, codec: null, file_size: null, container: null,
+    resolution: null, resolution_label: null, video_format: null, fps: null, fps_value: null, bitrate: null, codec: null, file_size: null, container: null,
     region: "Tidak tersedia dari data publik", review_status: "Tidak dapat diverifikasi secara publik",
     visibility: "Belum diverifikasi", index_visibility: "Tidak tersedia dari data publik",
     data_source: [], limitations: []
