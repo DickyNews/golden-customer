@@ -1531,11 +1531,11 @@ if(logoutBtn)logoutBtn.addEventListener('click',async()=>{
   }finally{logoutBtn.disabled=false;}
 });
 /* CUSTOMER SESSION IDLE RESET
-   Client-side idle timeout: 10 minutes. Never log out while upload/processing is active
+   Client-side idle timeout: 30 minutes. Never log out while upload/processing is active
    or while a download was explicitly started. Download exemption has a 30-minute safety cap.
    Server-side session expiry is still required for closed-browser enforcement. */
 (function(){
-  const IDLE_LIMIT_MS=10*60*1000;
+  const IDLE_LIMIT_MS=30*60*1000;
   const DOWNLOAD_MAX_MS=30*60*1000;
   let idleTimer=null,downloadTimer=null,downloadActive=false,lastActivity=Date.now(),hiddenAt=0,logoutInProgress=false;
   function clearIdleTimer(){if(idleTimer){clearTimeout(idleTimer);idleTimer=null;}}
@@ -1559,10 +1559,10 @@ if(logoutBtn)logoutBtn.addEventListener('click',async()=>{
       if(walletProgressHead)walletProgressHead.textContent='0 coin';
       if(walletProgressBar)walletProgressBar.style.width='0%';
       if(walletBadge){walletBadge.textContent='BELUM LOGIN';walletBadge.className='badge warn';}
-      showModal('Sesi Berakhir',reason||'Sesi pelanggan diakhiri karena tidak ada aktivitas selama 10 menit. Silakan Claim Key kembali.');
+      window.location.reload();
     }catch(e){
       // Do not pretend the server session was invalidated if the logout request failed.
-      showModal('Logout Belum Terkonfirmasi','Sesi tidak aktif selama 10 menit, tetapi server belum mengonfirmasi logout. Periksa koneksi lalu tekan Logout.');
+      showModal('Logout Belum Terkonfirmasi','Sesi tidak aktif selama 30 menit, tetapi server belum mengonfirmasi logout. Periksa koneksi lalu tekan Logout.');
     }finally{
       logoutInProgress=false;
       if(customerAuthenticated){lastActivity=Date.now();scheduleIdleReset();}
@@ -1571,7 +1571,7 @@ if(logoutBtn)logoutBtn.addEventListener('click',async()=>{
   function handleIdleTimeout(){
     if(!customerAuthenticated||logoutInProgress)return;
     if(processing||downloadActive){idleTimer=setTimeout(handleIdleTimeout,60*1000);return;}
-    endCustomerSession('Sesi pelanggan diakhiri karena tidak ada aktivitas selama 10 menit. Silakan Claim Key kembali.');
+    endCustomerSession('Sesi pelanggan diakhiri karena tidak ada aktivitas selama 30 menit. Silakan Claim Key kembali.');
   }
   function recordActivity(){
     lastActivity=Date.now();
