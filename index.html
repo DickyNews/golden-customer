@@ -893,6 +893,18 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
  vertical-align:middle!important;filter:drop-shadow(0 0 5px rgba(255,211,38,.3))!important;
 }
 
+
+/* Add a gold coin icon beside the per-video coin price in the Inject TikTok HD button. */
+.app #sdrPrice{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ gap:6px!important;white-space:nowrap!important;
+}
+.app #sdrPrice::after{
+ content:"🪙"!important;display:inline-block!important;font-size:17px!important;
+ line-height:1!important;vertical-align:middle!important;
+ filter:drop-shadow(0 0 3px rgba(255,213,35,.28))!important;
+}
+
 </style>
 </head>
 <body>
