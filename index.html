@@ -1098,8 +1098,9 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 }
 
 
-/* REQUESTED: Riwayat Pemrosesan section matches the yellow customer theme */
-#job-history:not(.hidden) {
+
+/* FIX: Apply yellow background directly to the visible processing-history section */
+#job-history {
   padding: 24px 20px !important;
   border: 2px solid #fff3a0 !important;
   border-radius: 22px !important;
@@ -1107,37 +1108,35 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   color: #111 !important;
   box-shadow: inset 0 2px 0 rgba(255,255,255,.85), inset 0 -5px 0 rgba(0,0,0,.08), 0 8px 0 rgba(0,0,0,.55), 0 12px 24px rgba(0,0,0,.28) !important;
 }
-#job-history:not(.hidden) h2,
-#job-history:not(.hidden) .history-empty,
-#job-history:not(.hidden) .history-name,
-#job-history:not(.hidden) .history-meta,
-#job-history:not(.hidden) .history-item,
-#job-history:not(.hidden) .history-item * {
+#job-history h2,
+#job-history .history-empty,
+#job-history .history-name,
+#job-history .history-meta,
+#job-history .history-item,
+#job-history .history-item * {
   color: #111 !important;
   -webkit-text-fill-color: #111 !important;
 }
-#job-history:not(.hidden) .history-item,
-#job-history:not(.hidden) .history-empty {
+#job-history .history-item,
+#job-history .history-empty {
   background: rgba(255,255,255,.48) !important;
   border: 1px solid rgba(0,0,0,.42) !important;
   border-radius: 14px !important;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 3px 0 rgba(0,0,0,.12) !important;
 }
-#job-history:not(.hidden) .history-status {
+#job-history .history-status {
   color: #111 !important;
   border-color: #111 !important;
   background: rgba(255,255,255,.55) !important;
 }
-#job-history:not(.hidden) #refreshHistory {
+#job-history #refreshHistory {
   color: #111 !important;
   -webkit-text-fill-color: #111 !important;
   background: linear-gradient(180deg,#fffef0,#e8d77c) !important;
   border: 2px solid #111 !important;
   box-shadow: inset 0 2px 0 rgba(255,255,255,.9), 0 4px 0 #111, 0 6px 10px rgba(0,0,0,.2) !important;
 }
-@media(max-width:600px) {
-  #job-history:not(.hidden) { padding: 20px 14px !important; }
-}
+@media(max-width:600px) { #job-history { padding: 20px 14px !important; } }
 
 </style>
 </head>
