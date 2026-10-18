@@ -831,6 +831,30 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
  .app button.mode-btn,.app button.mode-btn::after{animation:none!important}
 }
 
+
+/* Desktop-only: keep both mode labels centered independently of the inward arrows. */
+@media screen and (min-width: 768px){
+  .app .mode-buttons{width:100%!important}
+  .app button.mode-btn{
+    text-align:center!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding-left:48px!important;
+    padding-right:48px!important;
+    line-height:1.25!important;
+  }
+  .app button.mode-btn small,
+  .app button.mode-btn .soon-label{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    text-align:center!important;
+    align-self:center!important;
+    margin-left:0!important;
+    margin-right:0!important;
+  }
+}
+
 </style>
 </head>
 <body>
