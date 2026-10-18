@@ -878,6 +878,21 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   .method-flow-track{width:100%!important;margin-left:auto!important;margin-right:auto!important}
 }
 
+
+/* Compact processing cost: clear 5 COIN label with a gold coin icon. */
+.app .wallet-cost-label{
+ display:inline-flex!important;align-items:center!important;justify-content:flex-start!important;
+ flex-wrap:wrap!important;gap:6px!important;min-width:0!important;
+}
+.app .wallet-cost-label strong{
+ color:#ffed00!important;-webkit-text-fill-color:#ffed00!important;
+ font-size:14px!important;font-weight:950!important;white-space:nowrap!important;
+}
+.app .gold-coin-icon{
+ display:inline-block!important;width:22px!important;height:22px!important;flex:0 0 22px!important;
+ vertical-align:middle!important;filter:drop-shadow(0 0 5px rgba(255,211,38,.3))!important;
+}
+
 </style>
 </head>
 <body>
@@ -963,7 +978,7 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
     <div class="drop" id="drop"><div class="upload-icon">↑</div><strong id="dropTitle">Pilih mode di atas</strong><p id="dropText">Klik salah satu tombol proses. Jendela pilih file akan langsung terbuka.</p><input id="file" class="file" type="file" accept="*/*"></div>
   </div>
   <aside class="side">
-    <div class="card wallet-card"><div class="wallet-title"><h2>Wallet</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Coin tersedia</span><b>0</b><em>coin untuk encode</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Top up</span><b>0</b><em>transaksi</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Saldo wallet</span><strong>0 / 0 coin</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span>Biaya sekali proses <strong id="priceSummary">SDR 1 · HDR 7 COIN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Tambah Saldo</button><button class="btn btn-secondary" id="customerLogout" type="button" hidden>Logout</button></div></div><div class="claim-box"><div class="claim-label">CLAIM AKUN</div><div class="claim-row"><input id="claimKeyInput" type="text" placeholder="Masukkan key akun" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan key yang sudah kamu miliki untuk klaim coin.</div></div></div>
+    <div class="card wallet-card"><div class="wallet-title"><h2>Wallet</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Coin tersedia</span><b>0</b><em>coin untuk encode</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Top up</span><b>0</b><em>transaksi</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Saldo wallet</span><strong>0 / 0 coin</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span class="wallet-cost-label">Biaya sekali proses <strong id="priceSummary">5 COIN</strong><svg class="gold-coin-icon" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="goldCoinFill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff59a"/><stop offset=".38" stop-color="#ffd928"/><stop offset=".72" stop-color="#e9a900"/><stop offset="1" stop-color="#fff078"/></linearGradient></defs><circle cx="16" cy="16" r="14" fill="url(#goldCoinFill)" stroke="#fff2a0" stroke-width="1.4"/><circle cx="16" cy="16" r="10.5" fill="none" stroke="#a97800" stroke-width="1.2"/><path d="M19.5 10.5c-1-.8-2.1-1.2-3.5-1.2-2.6 0-4.5 1.4-4.5 3.5 0 2 1.6 2.8 4.3 3.3 2.1.4 3.1.9 3.1 2.1 0 1.2-1.2 2-3 2-1.5 0-2.9-.6-4-1.6M16 7.8v16.4" fill="none" stroke="#805800" stroke-width="1.8" stroke-linecap="round"/></svg></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Tambah Saldo</button><button class="btn btn-secondary" id="customerLogout" type="button" hidden>Logout</button></div></div><div class="claim-box"><div class="claim-label">CLAIM AKUN</div><div class="claim-row"><input id="claimKeyInput" type="text" placeholder="Masukkan key akun" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan key yang sudah kamu miliki untuk klaim coin.</div></div></div>
     
   </aside>
 </section>
@@ -1013,7 +1028,7 @@ function renderPrices(){
   const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
   if(sdr)sdr.textContent=servicePrices.sdr+' COIN / VIDEO';
   if(hdr)hdr.textContent='KLIK DISINI UNTUK MENDAPATKAN MESIN HDR';
-  if(summary)summary.textContent='SDR '+servicePrices.sdr+' COIN · HDR SOON';
+  if(summary)summary.textContent=servicePrices.sdr+' COIN';
   sdrBtn.disabled=!serviceActive.sdr;hdrBtn.disabled=false;
   sdrBtn.title=serviceActive.sdr?'':'Layanan ini sedang dinonaktifkan oleh admin.';hdrBtn.title='Klik untuk menghubungi WhatsApp dan mendapatkan mesin HDR.';
   sdrBtn.setAttribute('aria-disabled',String(!serviceActive.sdr));hdrBtn.setAttribute('aria-disabled','false');
