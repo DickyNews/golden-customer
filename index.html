@@ -993,6 +993,7 @@ async function uploadVideo(f){
       document.getElementById('modalTitle').textContent='Mengunduh hasil video';
       setProgress(0,'Mengunduh hasil');
       let objectUrl=null;
+      let transferComplete=false;
       try{
         const downloadUrl=jobId
           ? `${GOLDEN_PLATFORM.apiBase}${GOLDEN_PLATFORM.endpoints.job}${encodeURIComponent(jobId)}/download`
@@ -1027,6 +1028,7 @@ async function uploadVideo(f){
           };
           xhr.send();
         });
+        transferComplete=true;
         objectUrl=URL.createObjectURL(blob);
         const save=document.createElement('a');
         save.href=objectUrl;save.download=`golden_${jobId||'result'}.mp4`;
@@ -1050,8 +1052,26 @@ async function uploadVideo(f){
         close.style.display='block';
         document.getElementById('modalText').textContent='Unduhan mencapai 100%. File hasil sudah dikirim ke browser dan konfirmasi pembersihan server berhasil.';
       }catch(e){
+        let failureNote='';
+        if(!transferComplete&&jobId){
+          try{
+            const failUrl=`${GOLDEN_PLATFORM.apiBase}${GOLDEN_PLATFORM.endpoints.job}${encodeURIComponent(jobId)}/download/fail`;
+            const fr=await fetch(failUrl,{method:'POST',credentials:'include',cache:'no-store'});
+            const result=await fr.json().catch(()=>({}));
+            if(fr.ok&&result.ok){
+              failureNote=result.refunded
+                ?' File server dibersihkan dan coin dikembalikan.'
+                :' Refund sudah tercatat dan file server dibersihkan.';
+              await Promise.allSettled([loadWallet(),loadJobHistory()]);
+            }else{
+              failureNote=' Refund belum terkonfirmasi ('+(result.detail||('HTTP '+fr.status))+'); hubungi admin.';
+            }
+          }catch(refundError){
+            failureNote=' API refund tidak dapat dijangkau; saldo perlu diperiksa admin.';
+          }
+        }
         document.getElementById('modalTitle').textContent='Unduhan belum selesai';
-        document.getElementById('modalText').textContent='Unduhan gagal: '+(e.message||'Kesalahan jaringan')+'. File server tidak diminta untuk dihapus jika transfer belum selesai. Tekan tombol untuk mencoba lagi.';
+        document.getElementById('modalText').textContent='Unduhan gagal: '+(e.message||'Kesalahan jaringan')+'.'+failureNote+(transferComplete?' Transfer video sudah diterima browser; refund tidak diminta.':' Tekan tombol untuk mencoba lagi.');
         a.textContent='COBA UNDUH LAGI';
         close.style.display='block';
       }finally{
