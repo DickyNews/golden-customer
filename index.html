@@ -1022,6 +1022,12 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 @media(min-width:701px){#payment-options .payment-options-panel{padding:18px!important}#payment-options .payment-options-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important}#payment-options .payment-option{min-height:104px!important}}
 @media(max-width:380px){#payment-options .payment-options-panel{padding:10px!important}#payment-options .payment-options-heading h2{font-size:14px!important}#payment-options .payment-options-grid{gap:7px!important}}
 
+
+/* Payment title and footnote visibility */
+#payment-options .payment-options-heading h2{display:block!important;visibility:visible!important;opacity:1!important;color:#151923!important;margin:0 0 12px!important;font-size:clamp(16px,2.4vw,22px)!important;font-weight:800!important;text-align:center!important;line-height:1.35!important}
+#payment-options .payment-options-note{color:#111!important;text-align:left!important;font-size:12px!important}
+#payment-options .payment-options-note span{color:#111!important;font-weight:900!important;margin-right:4px!important}
+
 </style>
 </head>
 <body>
@@ -1115,7 +1121,7 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 <section class="section payment-options-section" id="payment-options" aria-labelledby="payment-options-title">
   <div class="payment-options-panel">
     <div class="payment-options-heading">
-      <h2 id="payment-options-title">metode pembayaran top up coin yang tersedia :</h2>
+      <h2 id="payment-options-title">Metode Pembayaran Top Up Coin :</h2>
     </div>
     <div class="payment-options-grid">
       <div class="payment-option"><img src="https://cdn.jsdelivr.net/npm/idn-finlogos@2/dist/png/qris@2x.png" alt="Logo QRIS" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">QRIS</span><span class="payment-option-name">QRIS</span></div>
@@ -1129,7 +1135,7 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
       <div class="payment-option"><img src="https://cdn.jsdelivr.net/npm/idn-finlogos@2/dist/png/bca@2x.png" alt="Logo Bank BCA" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">BCA</span><span class="payment-option-name">Bank BCA</span></div>
       <div class="payment-option"><img src="https://cdn.jsdelivr.net/npm/idn-finlogos@2/dist/png/permata@2x.png" alt="Logo Bank Permata" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">PERMATA</span><span class="payment-option-name">Bank Permata</span></div>
     </div>
-    <p class="payment-options-note">Ketersediaan dan aktivasi metode pembayaran mengikuti konfirmasi admin.</p>
+    <p class="payment-options-note"><span aria-hidden="true">*</span> Ketersediaan dan aktivasi metode pembayaran mengikuti konfirmasi admin.</p>
   </div>
 </section>
 <section class="section hidden" id="job-history" aria-hidden="true">
