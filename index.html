@@ -1034,6 +1034,35 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 #payment-options .payment-options-heading{display:block!important;visibility:visible!important;opacity:1!important;min-height:26px!important;height:auto!important;overflow:visible!important;margin:0 auto 14px!important}
 #payment-options #payment-options-title{display:block!important;visibility:visible!important;opacity:1!important;color:#111!important;-webkit-text-fill-color:#111!important;background:transparent!important;position:relative!important;z-index:5!important;font-size:18px!important;font-weight:800!important;line-height:1.4!important;text-align:center!important;margin:0!important;padding:0!important}
 
+
+/* WALLET RESPONSIVE FIX — keep wallet and its three stat columns inside the viewport */
+@media(max-width:800px){
+  html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+  .app{width:100%!important;max-width:100%!important;margin:0!important;padding-left:0!important;padding-right:0!important;overflow-x:clip!important}
+  .container{display:block!important;width:calc(100% - 24px)!important;max-width:720px!important;margin-left:auto!important;margin-right:auto!important;padding-left:0!important;padding-right:0!important;box-sizing:border-box!important}
+  .grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%!important;max-width:100%!important;min-width:0!important;margin:24px 0 42px!important;gap:16px!important}
+  .grid>.card,.grid>.side,.side,.wallet-card{width:100%!important;min-width:0!important;max-width:100%!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important}
+  .side{display:flex!important;align-items:stretch!important}
+  .wallet-card{padding:18px 14px!important;overflow:hidden!important}
+  .wallet-title{width:100%!important;min-width:0!important;gap:8px!important}
+  .wallet-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;width:100%!important;min-width:0!important}
+  .wallet-stat{width:100%!important;min-width:0!important;max-width:100%!important;padding:12px 9px!important;box-sizing:border-box!important;overflow-wrap:anywhere!important}
+  .wallet-stat span,.wallet-stat em{overflow-wrap:anywhere!important;word-break:normal!important}
+  .wallet-stat b{max-width:100%!important}
+  .wallet-progress,.wallet-bottom,.claim-box{width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+  .wallet-bottom{flex-wrap:wrap!important;align-items:center!important}
+  .wallet-cost-label{min-width:0!important;max-width:100%!important;flex:1 1 180px!important}
+  .wallet-actions{flex:0 0 auto!important}
+}
+@media(max-width:380px){
+  .container{width:calc(100% - 20px)!important}
+  .wallet-card{padding:15px 10px!important}
+  .wallet-grid{gap:6px!important}
+  .wallet-stat{padding:10px 7px!important}
+  .wallet-stat span,.wallet-stat em{font-size:9px!important}
+  .wallet-stat b{font-size:17px!important}
+}
+
 </style>
 </head>
 <body>
