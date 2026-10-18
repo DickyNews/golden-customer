@@ -194,9 +194,25 @@ export default {
         const video = embedded ? findVideoObjects(embedded) : null;
         if (video) {
           const width = numeric(video.width), height = numeric(video.height);
-          if (width && height) result.resolution = width + "×" + height;
-          const fps = firstNumeric(video, ["fps", "frameRate", "frame_rate", "frame_rate_num"]);
-          if (fps && fps <= 1000) result.fps = fps + " FPS";
+          if (width && height) {
+            result.resolution = width + "×" + height;
+            result.resolution_label = classifyResolution(width, height);
+          }
+          // Expert fallback: check the selected video object, the canonical item video,
+          // and then the embedded payload for explicitly published frame-rate fields.
+          // Never infer FPS from a caption, thumbnail, or duration alone.
+          const fps = firstNumeric(video, ["fps", "frameRate", "frame_rate", "frame_rate_num", "frameRateNum"]) ||
+            firstNumeric(item?.video, ["fps", "frameRate", "frame_rate", "frame_rate_num", "frameRateNum"]) ||
+            (embedded ? findTechnicalNumber(embedded, ["fps", "frameRate", "frame_rate", "frame_rate_num", "frameRateNum"]) : null);
+          if (fps && fps <= 1000) {
+            result.fps_value = fps;
+            result.fps = fps + " FPS";
+          }
+          if (result.resolution_label && result.fps_value) {
+            result.video_format = result.resolution_label + " " + result.fps_value + " FPS";
+          } else if (result.resolution_label) {
+            result.video_format = result.resolution_label + " · FPS tidak terverifikasi";
+          }
 
           // Preserve an explicitly supplied bitrate. If TikTok exposes only file size and
           // duration, calculate average total bitrate and label it as derived, not source metadata.
