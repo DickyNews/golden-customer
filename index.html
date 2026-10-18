@@ -1063,6 +1063,28 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   .wallet-stat b{font-size:17px!important}
 }
 
+
+/* Wallet stats: align label, number, and description consistently */
+.wallet-grid{align-items:stretch!important}
+.wallet-stat{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;text-align:center!important;min-width:0!important;box-sizing:border-box!important}
+.wallet-stat span{display:block!important;width:100%!important;text-align:center!important;margin:0 0 8px!important;line-height:1.4!important}
+.wallet-stat b{display:block!important;width:100%!important;text-align:center!important;line-height:1.05!important;margin:0 0 7px!important}
+.wallet-stat em{display:block!important;width:100%!important;text-align:center!important;line-height:1.45!important;margin:0!important;overflow-wrap:normal!important}
+@media(max-width:800px){
+ .wallet-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+ .wallet-stat{min-height:166px!important;padding:14px 7px!important}
+ .wallet-stat span{font-size:12px!important;min-height:34px!important;margin-bottom:8px!important}
+ .wallet-stat b{font-size:28px!important;margin-bottom:6px!important}
+ .wallet-stat em{font-size:11px!important}
+}
+@media(max-width:380px){
+ .wallet-grid{gap:6px!important}
+ .wallet-stat{min-height:158px!important;padding:12px 5px!important}
+ .wallet-stat span{font-size:10px!important;min-height:30px!important}
+ .wallet-stat b{font-size:24px!important}
+ .wallet-stat em{font-size:10px!important}
+}
+
 </style>
 </head>
 <body>
