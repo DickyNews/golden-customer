@@ -856,109 +856,6 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   .card.upload .mode-btn,.card.upload .mode-btn::before{animation:none !important}
 }
 
-
-/* FINAL OVERRIDE — bright yellow processing area, pure black text */
-.card.upload{
-  background:#ffeb00 !important;
-  background-image:linear-gradient(135deg,#fff52b 0%,#ffe500 52%,#ffd900 100%) !important;
-  color:#000 !important;border:2px solid #fff16a !important;
-  box-shadow:0 12px 36px rgba(255,229,0,.18),inset 0 1px rgba(255,255,255,.75) !important;
-}
-.card.upload *{color:#000 !important;text-shadow:none !important}
-.card.upload .mini{font-weight:700 !important}
-.card.upload .pill{background:#fff9a8 !important;color:#000 !important;border:1px solid #9d8e00 !important}
-.card.upload .mode-title{color:#000 !important;font-weight:950 !important;opacity:1 !important}
-.card.upload .mode-btn,
-.card.upload .mode-btn:visited{
-  color:#000 !important;font-weight:850 !important;
-  background:linear-gradient(135deg,#fff9a6 0%,#ffe94a 100%) !important;
-  border:2px solid #000 !important;border-radius:15px !important;
-  box-shadow:0 5px 0 rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.08) !important;
-  position:relative;isolation:isolate;overflow:hidden;
-  animation:yellowButtonMotion 2.4s ease-in-out infinite !important;
-  transition:transform .22s ease,box-shadow .22s ease !important;
-}
-.card.upload .mode-btn.active{
-  color:#000 !important;
-  background:linear-gradient(135deg,#fff94f 0%,#ffd000 100%) !important;
-  border:3px solid #000 !important;
-  box-shadow:0 0 0 3px rgba(0,0,0,.12),0 6px 0 rgba(0,0,0,.22) !important;
-  animation:yellowButtonMotion 1.8s ease-in-out infinite !important;
-}
-.card.upload .mode-btn small,
-.card.upload .mode-btn.active small,
-.card.upload .mode-btn.hdr-soon small{
-  color:#000 !important;font-weight:950 !important;
-}
-.card.upload .mode-btn::before{
-  content:"";position:absolute;inset:-30% -80%;z-index:-1;pointer-events:none;
-  background:linear-gradient(110deg,transparent 34%,rgba(0,0,0,.24) 47%,rgba(0,0,0,.08) 52%,transparent 66%);
-  transform:translateX(-70%);animation:blackGlassSweep 2.7s linear infinite !important;opacity:1 !important;
-}
-.card.upload .mode-btn>*{position:relative;z-index:1}
-.card.upload .mode-btn.hdr-soon,
-.card.upload .mode-btn:disabled{
-  color:#000 !important;background:linear-gradient(135deg,#fff8a8,#e8d86b) !important;
-  border:2px solid #554d00 !important;opacity:1 !important;
-  animation:yellowButtonMotion 3.4s ease-in-out infinite !important;
-}
-.card.upload .drop{
-  background:linear-gradient(145deg,#fffbd0 0%,#fff3a0 100%) !important;
-  color:#000 !important;border:2px dashed #000 !important;
-  box-shadow:inset 0 1px rgba(255,255,255,.9),0 6px 18px rgba(0,0,0,.09) !important;
-}
-.card.upload .drop::before{
-  content:"";display:block;position:absolute;inset:-45% -35%;pointer-events:none;
-  background:linear-gradient(115deg,transparent 38%,rgba(0,0,0,.12) 49%,transparent 60%);
-  animation:blackGlassSweep 4s linear infinite !important;
-}
-.card.upload .drop strong,.card.upload .drop p{color:#000 !important}
-.card.upload .upload-icon{
-  background:#fff38a !important;color:#000 !important;border:2px solid #000 !important;
-  box-shadow:0 4px 12px rgba(0,0,0,.12) !important;
-  animation:yellowArrowMotion 1.7s ease-in-out infinite !important;
-}
-.card.upload .mode-btn:hover:not(:disabled){
-  transform:translateY(-3px) scale(1.012) !important;
-  box-shadow:0 9px 0 rgba(0,0,0,.18),0 0 0 4px rgba(0,0,0,.12) !important;
-}
-@keyframes blackGlassSweep{
-  0%{transform:translateX(-70%)}
-  100%{transform:translateX(70%)}
-}
-@keyframes yellowButtonMotion{
-  0%,100%{transform:translateY(0);filter:brightness(1);box-shadow:0 5px 0 rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.08)}
-  50%{transform:translateY(-2px);filter:brightness(1.035);box-shadow:0 7px 0 rgba(0,0,0,.18),0 0 0 3px rgba(0,0,0,.10)}
-}
-@keyframes yellowArrowMotion{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-5px)}
-}
-@media (prefers-reduced-motion:reduce){
-  .card.upload .mode-btn,.card.upload .mode-btn::before,.card.upload .drop::before,.card.upload .upload-icon{animation:none !important;transition:none !important}
-}
-
-
-/* Contrast fix: heading and coin price must be solid black */
-.card.upload .mode-title,
-.card.upload .mode-title *{
-  color:#000000 !important;
-  -webkit-text-fill-color:#000000 !important;
-  opacity:1 !important;
-  text-shadow:none !important;
-  font-weight:950 !important;
-}
-.card.upload #sdrPrice,
-.card.upload #hdrPrice,
-.card.upload .mode-btn small{
-  color:#000000 !important;
-  -webkit-text-fill-color:#000000 !important;
-  opacity:1 !important;
-  font-weight:950 !important;
-  text-shadow:none !important;
-  filter:none !important;
-}
-
 </style>
 </head>
 <body>
@@ -1040,7 +937,7 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 <section class="grid">
   <div class="card upload">
     <div class="card-head"><div><div class="mini">Pilih mode pemrosesan video</div></div><div class="pill">MP4</div></div>
-    <div class="mode-title">PILIH PROSES</div><div class="mode-buttons"><button class="mode-btn active" id="sdrBtn">INJECT TIKTOK HD <small id="sdrPrice">1 COIN / VIDEO</small></button><button class="mode-btn hdr-soon" id="hdrBtn" type="button" title="Hubungi WhatsApp untuk mendapatkan mesin HDR" onclick="window.open('https://wa.me/6289616438173?text=Halo%20Bang%2C%20Saya%20Mau%20Mesin%20HDR','_blank','noopener')">MESIN PENGUBAH VIDEO BIASA JADI HDR <small id="hdrPrice" class="soon-label">KLIK DISINI UNTUK MENDAPATKAN MESIN HDR</small></button></div>
+    <div class="mode-title">PILIH PROSES</div><div class="mode-buttons"><button class="mode-btn active" id="sdrBtn">INJECT TIKTOK HD <small id="sdrPrice">1 COIN / VIDEO</small></button><button class="mode-btn hdr-soon" id="hdrBtn" type="button" disabled aria-disabled="true" title="HDR sedang disiapkan dan belum tersedia">CHANGE VIDEO NON HDR TO HDR + INJECT TIKTOK HD <small id="hdrPrice" class="soon-label">SOON</small></button></div>
     <div class="drop" id="drop"><div class="upload-icon">↑</div><strong id="dropTitle">Pilih mode di atas</strong><p id="dropText">Klik salah satu tombol proses. Jendela pilih file akan langsung terbuka.</p><input id="file" class="file" type="file" accept="*/*"></div>
   </div>
   <aside class="side">
@@ -1093,11 +990,11 @@ const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:false};let maxFile
 function renderPrices(){
   const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
   if(sdr)sdr.textContent=servicePrices.sdr+' COIN / VIDEO';
-  if(hdr)hdr.textContent='KLIK DISINI UNTUK MENDAPATKAN MESIN HDR';
-  if(summary)summary.textContent='SDR '+servicePrices.sdr+' COIN · HDR HUBUNGI WHATSAPP';
-  sdrBtn.disabled=!serviceActive.sdr;hdrBtn.disabled=false;
-  sdrBtn.title=serviceActive.sdr?'':'Layanan ini sedang dinonaktifkan oleh admin.';hdrBtn.title='Hubungi WhatsApp untuk mendapatkan mesin HDR.';
-  sdrBtn.setAttribute('aria-disabled',String(!serviceActive.sdr));hdrBtn.setAttribute('aria-disabled','false');
+  if(hdr)hdr.textContent='SOON';
+  if(summary)summary.textContent='SDR '+servicePrices.sdr+' COIN · HDR SOON';
+  sdrBtn.disabled=!serviceActive.sdr;hdrBtn.disabled=true;
+  sdrBtn.title=serviceActive.sdr?'':'Layanan ini sedang dinonaktifkan oleh admin.';hdrBtn.title='HDR sedang disiapkan dan belum tersedia.';
+  sdrBtn.setAttribute('aria-disabled',String(!serviceActive.sdr));hdrBtn.setAttribute('aria-disabled','true');
   if(!serviceActive[selectedMode]){const next=serviceActive.sdr?'sdr':(serviceActive.hdr?'hdr':null);if(next)selectedMode=next;}
 }
 async function loadPublicSettings(){
@@ -1125,7 +1022,7 @@ function selectMode(mode,price){
 }
 sdrBtn.onclick=()=>selectMode('sdr',servicePrices.sdr);
 document.getElementById('methodProcessingButton').addEventListener('click',()=>{document.getElementById('sdrBtn').click();});
-hdrBtn.onclick=(event)=>{event.preventDefault();window.open('https://wa.me/6289616438173?text=Halo%20Bang%2C%20Saya%20Mau%20Mesin%20HDR','_blank','noopener');};
+hdrBtn.onclick=()=>selectMode('hdr',servicePrices.hdr);
 renderPrices();
 
 function setProgress(p,label){
