@@ -1009,6 +1009,19 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
  #payment-options .payment-options-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 }
 
+
+/* FINAL OVERRIDE — force visible heading and remove unused space above payment cards */
+#payment-options.section{display:block!important;min-height:0!important;height:auto!important;padding:0!important;margin:0 auto 28px!important}
+#payment-options .payment-options-panel{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:stretch!important;gap:0!important;min-height:0!important;height:auto!important;padding:14px!important;margin:0!important;border:2px solid #c8cdd4!important;border-radius:20px!important;background:#fff!important;box-sizing:border-box!important}
+#payment-options .payment-options-heading{display:block!important;position:relative!important;visibility:visible!important;opacity:1!important;order:0!important;flex:0 0 auto!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;margin:0 auto 12px!important;padding:0!important;transform:none!important;text-align:center!important}
+#payment-options .payment-options-heading h2{display:block!important;position:static!important;visibility:visible!important;opacity:1!important;width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;color:#151923!important;font-size:clamp(15px,2.2vw,21px)!important;font-weight:800!important;line-height:1.35!important;text-align:center!important;letter-spacing:0!important;transform:none!important}
+#payment-options .payment-options-kicker,#payment-options .payment-options-heading p{display:none!important}
+#payment-options .payment-options-grid{display:grid!important;position:static!important;order:1!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+#payment-options .payment-option{display:flex!important;min-width:0!important;min-height:94px!important;height:auto!important;align-items:center!important;justify-content:center!important;padding:10px 8px!important;border:1.5px solid #cfd4db!important;border-radius:14px!important;box-sizing:border-box!important}
+#payment-options .payment-options-note{display:block!important;order:2!important;margin:12px 0 0!important;padding:0!important;text-align:center!important;color:#77808e!important;font-size:11px!important;line-height:1.5!important}
+@media(min-width:701px){#payment-options .payment-options-panel{padding:18px!important}#payment-options .payment-options-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important}#payment-options .payment-option{min-height:104px!important}}
+@media(max-width:380px){#payment-options .payment-options-panel{padding:10px!important}#payment-options .payment-options-heading h2{font-size:14px!important}#payment-options .payment-options-grid{gap:7px!important}}
+
 </style>
 </head>
 <body>
