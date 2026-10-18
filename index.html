@@ -855,6 +855,29 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   }
 }
 
+
+/* Mobile layout: center the hero frame and all content blocks symmetrically. */
+@media screen and (max-width:800px),(pointer:coarse){
+  html,body,.app{width:100%!important;max-width:100%!important;margin-left:0!important;margin-right:0!important}
+  .app{box-sizing:border-box!important;overflow-x:clip!important}
+  .container{
+    width:calc(100% - 32px)!important;
+    max-width:100%!important;
+    margin-left:auto!important;margin-right:auto!important;
+    padding-left:0!important;padding-right:0!important;
+    box-sizing:border-box!important;
+  }
+  .hero,.grid,.method-flow,.card,.method-flow-track{
+    min-width:0!important;max-width:100%!important;box-sizing:border-box!important;
+  }
+  .hero{width:100%!important;margin-left:auto!important;margin-right:auto!important}
+  .hero:after{left:0!important;right:0!important;inset-block:-10px!important}
+  .hero-social{box-sizing:border-box!important;margin-left:auto!important;margin-right:auto!important;max-width:100%!important}
+  .grid{width:100%!important;margin-left:0!important;margin-right:0!important}
+  .method-flow{width:100%!important;margin-left:auto!important;margin-right:auto!important;padding-left:0!important;padding-right:0!important}
+  .method-flow-track{width:100%!important;margin-left:auto!important;margin-right:auto!important}
+}
+
 </style>
 </head>
 <body>
