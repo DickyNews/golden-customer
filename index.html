@@ -817,6 +817,45 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   .card.upload .mode-btn,.card.upload .mode-btn::before,.card.upload .drop::before,.card.upload .upload-icon{animation:none !important;transition:none !important}
 }
 
+
+/* High-contrast text + visible motion on every processing button */
+.card.upload,
+.card.upload *:not(svg):not(path){color:#111827}
+.card.upload .mini,
+.card.upload .mode-title,
+.card.upload .drop p{color:#263442 !important}
+.card.upload .mode-title{font-weight:900 !important;text-shadow:none !important}
+.card.upload .mode-btn,
+.card.upload .mode-btn:visited,
+.card.upload .mode-btn span{color:#111827 !important;text-shadow:none !important}
+.card.upload .mode-btn small,
+.card.upload .mode-btn.active small{color:#111827 !important;font-weight:900 !important}
+.card.upload .mode-btn.hdr-soon,
+.card.upload .mode-btn.hdr-soon small{color:#263442 !important}
+.card.upload .mode-btn{
+  animation:processingButtonBreathe 2.8s ease-in-out infinite !important;
+}
+.card.upload .mode-btn.active{
+  animation:processingActivePulse 2.6s ease-in-out infinite,processingButtonBreathe 2.8s ease-in-out infinite !important;
+}
+.card.upload .mode-btn::before{
+  z-index:0 !important;
+  opacity:.55;
+}
+.card.upload .mode-btn>*{position:relative;z-index:1}
+.card.upload .mode-btn:hover:not(:disabled){
+  transform:translateY(-3px) scale(1.008) !important;
+  box-shadow:0 10px 25px rgba(31,55,72,.17),0 0 0 3px rgba(8,127,140,.10) !important;
+}
+.card.upload .mode-btn.hdr-soon::before{animation-duration:5.5s;opacity:.28}
+@keyframes processingButtonBreathe{
+  0%,100%{filter:brightness(1);box-shadow:0 5px 14px rgba(31,55,72,.09),inset 0 1px #fff}
+  50%{filter:brightness(1.035);box-shadow:0 8px 22px rgba(31,55,72,.16),0 0 0 2px rgba(8,127,140,.08),inset 0 1px #fff}
+}
+@media (prefers-reduced-motion:reduce){
+  .card.upload .mode-btn,.card.upload .mode-btn::before{animation:none !important}
+}
+
 </style>
 </head>
 <body>
