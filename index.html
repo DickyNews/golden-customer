@@ -1040,7 +1040,7 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 <section class="grid">
   <div class="card upload">
     <div class="card-head"><div><div class="mini">Pilih mode pemrosesan video</div></div><div class="pill">MP4</div></div>
-    <div class="mode-title">PILIH PROSES</div><div class="mode-buttons"><button class="mode-btn active" id="sdrBtn">INJECT TIKTOK HD <small id="sdrPrice">1 COIN / VIDEO</small></button><button class="mode-btn hdr-soon" id="hdrBtn" type="button" title="Hubungi WhatsApp untuk mendapatkan mesin HDR" onclick="window.open('https://wa.me/6289616438173?text=Halo%20Bang%2C%20Saya%20Mau%20Mesin%20HDR','_blank','noopener')">APLIKASI PENGUBAH VIDEO BIASA JADI HDR <small id="hdrPrice" class="soon-label">KLIK DISINI UNTUK MENDAPATKAN MESIN HDR</small></button></div>
+    <div class="mode-title">PILIH PROSES</div><div class="mode-buttons"><button class="mode-btn active" id="sdrBtn">INJECT TIKTOK HD <small id="sdrPrice">1 COIN / VIDEO</small></button><button class="mode-btn hdr-soon" id="hdrBtn" type="button" title="Hubungi WhatsApp untuk mendapatkan mesin HDR" onclick="window.open('https://wa.me/6289616438173?text=Halo%20Bang%2C%20Saya%20Mau%20Mesin%20HDR','_blank','noopener')">MESIN PENGUBAH VIDEO BIASA JADI HDR <small id="hdrPrice" class="soon-label">KLIK DISINI UNTUK MENDAPATKAN MESIN HDR</small></button></div>
     <div class="drop" id="drop"><div class="upload-icon">↑</div><strong id="dropTitle">Pilih mode di atas</strong><p id="dropText">Klik salah satu tombol proses. Jendela pilih file akan langsung terbuka.</p><input id="file" class="file" type="file" accept="*/*"></div>
   </div>
   <aside class="side">
@@ -1093,11 +1093,11 @@ const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:false};let maxFile
 function renderPrices(){
   const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
   if(sdr)sdr.textContent=servicePrices.sdr+' COIN / VIDEO';
-  if(hdr)hdr.textContent='SOON';
-  if(summary)summary.textContent='SDR '+servicePrices.sdr+' COIN · HDR SOON';
-  sdrBtn.disabled=!serviceActive.sdr;hdrBtn.disabled=true;
-  sdrBtn.title=serviceActive.sdr?'':'Layanan ini sedang dinonaktifkan oleh admin.';hdrBtn.title='HDR sedang disiapkan dan belum tersedia.';
-  sdrBtn.setAttribute('aria-disabled',String(!serviceActive.sdr));hdrBtn.setAttribute('aria-disabled','true');
+  if(hdr)hdr.textContent='KLIK DISINI UNTUK MENDAPATKAN MESIN HDR';
+  if(summary)summary.textContent='SDR '+servicePrices.sdr+' COIN · HDR HUBUNGI WHATSAPP';
+  sdrBtn.disabled=!serviceActive.sdr;hdrBtn.disabled=false;
+  sdrBtn.title=serviceActive.sdr?'':'Layanan ini sedang dinonaktifkan oleh admin.';hdrBtn.title='Hubungi WhatsApp untuk mendapatkan mesin HDR.';
+  sdrBtn.setAttribute('aria-disabled',String(!serviceActive.sdr));hdrBtn.setAttribute('aria-disabled','false');
   if(!serviceActive[selectedMode]){const next=serviceActive.sdr?'sdr':(serviceActive.hdr?'hdr':null);if(next)selectedMode=next;}
 }
 async function loadPublicSettings(){
@@ -1125,7 +1125,7 @@ function selectMode(mode,price){
 }
 sdrBtn.onclick=()=>selectMode('sdr',servicePrices.sdr);
 document.getElementById('methodProcessingButton').addEventListener('click',()=>{document.getElementById('sdrBtn').click();});
-hdrBtn.onclick=()=>selectMode('hdr',servicePrices.hdr);
+hdrBtn.onclick=(event)=>{event.preventDefault();window.open('https://wa.me/6289616438173?text=Halo%20Bang%2C%20Saya%20Mau%20Mesin%20HDR','_blank','noopener');};
 renderPrices();
 
 function setProgress(p,label){
