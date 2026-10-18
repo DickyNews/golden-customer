@@ -30,15 +30,25 @@ function findVideoObjects(root) {
   const found = [];
   const seen = new Set();
   function walk(v, depth) {
-    if (!v || typeof v !== "object" || depth > 24 || seen.has(v)) return;
+    if (!v || typeof v !== "object" || depth > 28 || seen.has(v)) return;
     seen.add(v);
-    if (v.video && typeof v.video === "object" &&
-        (v.video.width || v.video.height || v.video.codecType || v.video.playAddr || v.video.duration)) found.push(v.video);
+    // TikTok has used several shapes for public video metadata across page versions.
+    for (const key of ["video", "videoMeta", "videoInfo", "itemVideo"]) {
+      const candidate = v[key];
+      if (candidate && typeof candidate === "object" &&
+          (candidate.width || candidate.height || candidate.codecType || candidate.playAddr ||
+           candidate.duration || candidate.fps || candidate.frameRate || candidate.bitrate || candidate.bitRate)) {
+        found.push(candidate);
+      }
+    }
     if (v.itemStruct && typeof v.itemStruct === "object" && v.itemStruct.video) found.push(v.itemStruct.video);
     for (const value of Object.values(v)) walk(value, depth + 1);
   }
   walk(root, 0);
-  return found.find(v => v.width || v.height || v.codecType || v.duration) || found[0] || null;
+  return found.sort((a, b) => {
+    const score = v => ["width","height","duration","fps","frameRate","bitrate","bitRate","codecType","codec","size","fileSize"].filter(k => v[k] != null).length;
+    return score(b) - score(a);
+  })[0] || null;
 }
 function parseEmbeddedJson(html) {
   const patterns = [
@@ -61,6 +71,19 @@ function formatBytes(n) {
   let v = n, i = 0;
   while (v >= 1024 && i < units.length - 1) { v /= 1024; i++; }
   return v.toFixed(i ? 2 : 0) + " " + units[i];
+}
+function formatBitrate(bitsPerSecond) {
+  if (!Number.isFinite(bitsPerSecond) || bitsPerSecond <= 0) return null;
+  return bitsPerSecond >= 1000000
+    ? (bitsPerSecond / 1000000).toFixed(2) + " Mbps"
+    : Math.round(bitsPerSecond / 1000) + " kbps";
+}
+function firstNumeric(object, keys) {
+  for (const key of keys) {
+    const value = numeric(object?.[key]);
+    if (value) return value;
+  }
+  return null;
 }
 function findItemStruct(root) {
   let found = null; const seen = new Set();
@@ -143,14 +166,32 @@ export default {
         if (video) {
           const width = numeric(video.width), height = numeric(video.height);
           if (width && height) result.resolution = width + "×" + height;
-          const fps = numeric(video.fps || video.frameRate);
-          if (fps) result.fps = fps + " FPS";
-          const br = numeric(video.bitrate || video.bitRate);
-          if (br) result.bitrate = br >= 100000 ? (br / 1000000).toFixed(2) + " Mbps" : Math.round(br / 1000) + " kbps";
-          if (video.codecType || video.codec) result.codec = String(video.codecType || video.codec).slice(0, 40);
-          const bytes = numeric(video.size || video.fileSize);
+          const fps = firstNumeric(video, ["fps", "frameRate", "frame_rate", "frame_rate_num"]);
+          if (fps && fps <= 1000) result.fps = fps + " FPS";
+
+          // Preserve an explicitly supplied bitrate. If TikTok exposes only file size and
+          // duration, calculate average total bitrate and label it as derived, not source metadata.
+          const br = firstNumeric(video, ["bitrate", "bitRate", "bit_rate", "playBitrate", "downloadBitrate"]);
+          if (br) {
+            result.bitrate = formatBitrate(br);
+            result.bitrate_source = "Metadata TikTok";
+          }
+          if (video.codecType || video.codec || video.codec_type) {
+            result.codec = String(video.codecType || video.codec || video.codec_type).slice(0, 40);
+          }
+          const bytes = firstNumeric(video, ["size", "fileSize", "file_size", "downloadSize"]);
           if (bytes) result.file_size = formatBytes(bytes);
-          if (video.format || video.container) result.container = String(video.format || video.container).slice(0, 20);
+          if (video.format || video.container || video.containerFormat) {
+            result.container = String(video.format || video.container || video.containerFormat).slice(0, 20);
+          }
+          // Some page payloads expose dimensions/duration but no FPS or bitrate.
+          // Do not manufacture FPS. Derive average bitrate only when both size and duration are known.
+          const itemDuration = firstNumeric(video, ["duration", "durationSeconds", "duration_sec"]);
+          const seconds = itemDuration || (typeof result.duration === "string" ? Number(result.duration.match(/[0-9.]+/)?.[0]) : null);
+          if (!result.bitrate && bytes && seconds > 0) {
+            result.bitrate = formatBitrate((bytes * 8) / seconds);
+            result.bitrate_source = "Perkiraan rata-rata dari ukuran file dan durasi";
+          }
           result.data_source.push("Halaman publik TikTok");
         }
       }
@@ -175,8 +216,16 @@ export default {
     } catch {
       result.limitations.push("Layanan TikTok oEmbed tidak merespons.");
     }
-    if (!result.resolution || !result.fps || !result.bitrate || !result.codec || !result.file_size) {
-      result.limitations.push("Detail teknis yang tidak dipublikasikan TikTok ditampilkan sebagai tidak tersedia, bukan diperkirakan.");
+    if (!result.fps) {
+      result.limitations.push("Frame rate (FPS) tidak disertakan pada metadata publik TikTok untuk video ini; FPS asli tidak bisa dipastikan tanpa mengakses file video.");
+    }
+    if (!result.bitrate) {
+      result.limitations.push("Bitrate tidak tersedia dan tidak dapat dihitung karena ukuran file sumber atau durasi tidak tersedia.");
+    } else if (result.bitrate_source === "Perkiraan rata-rata dari ukuran file dan durasi") {
+      result.limitations.push("Bitrate adalah rata-rata total hasil perhitungan ukuran file/durasi, bukan bitrate video stream yang terukur langsung.");
+    }
+    if (!result.resolution || !result.codec || !result.file_size) {
+      result.limitations.push("Sebagian detail teknis tidak dipublikasikan TikTok pada metadata yang dapat dibaca.");
     }
     result.data_source = [...new Set(result.data_source)];
     result.analyzed_at = new Date().toISOString();
