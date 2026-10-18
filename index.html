@@ -1079,6 +1079,24 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 }
 @media (prefers-reduced-motion: reduce) { .method-flow-card { animation: none !important; } }
 
+
+/* FINAL TEXT LEGIBILITY FIX: all Processing Flow card headings are black and bold */
+.method-flow-card h3,
+.method-flow-card h3 *,
+.method-flow-card .method-flow-title,
+.method-flow-card .method-flow-title *,
+.method-flow-card a:not(.method-flow-action),
+.method-flow-card a:not(.method-flow-action) *,
+.method-flow-card .method-flow-action,
+.method-flow-card .method-flow-action *,
+.method-flow-card .method-flow-action span {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  font-weight: 900 !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
 </style>
 </head>
 <body>
