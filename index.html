@@ -949,6 +949,15 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 }
 
 
+/* Compact symmetric payment panel: heading only, centered, stronger outer border. */
+#payment-options .payment-options-panel{padding:18px!important;border:2px solid #c8cdd4!important;border-radius:20px!important;align-items:center!important}
+#payment-options .payment-options-heading{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;max-width:none!important;min-height:0!important;height:auto!important;margin:0 auto 16px!important;padding:0!important;text-align:center!important}
+#payment-options .payment-options-kicker,#payment-options .payment-options-heading p{display:none!important}
+#payment-options .payment-options-heading h2{display:block!important;visibility:visible!important;opacity:1!important;margin:0!important;padding:0!important;text-align:center!important;color:#151923!important;font-size:clamp(15px,2.2vw,21px)!important;font-weight:800!important;line-height:1.35!important;letter-spacing:0!important}
+#payment-options .payment-options-grid{width:100%!important;max-width:100%!important;justify-items:stretch!important;align-items:stretch!important}
+#payment-options .payment-option{border:1.5px solid #cfd4db!important}
+#payment-options .payment-options-note{margin-top:13px!important}
+@media(max-width:700px){#payment-options .payment-options-panel{padding:14px 12px!important;border-width:2px!important}#payment-options .payment-options-heading{margin-bottom:13px!important}#payment-options .payment-options-heading h2{font-size:15px!important}#payment-options .payment-options-grid{gap:8px!important}#payment-options .payment-option{min-height:94px!important;border-width:1.5px!important}}
 /* Payment panel layout correction: remove excess blank space and center all content. */
 #payment-options{
  width:100%!important;max-width:100%!important;margin:0 auto 28px!important;
@@ -1093,9 +1102,7 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 <section class="section payment-options-section" id="payment-options" aria-labelledby="payment-options-title">
   <div class="payment-options-panel">
     <div class="payment-options-heading">
-      <span class="payment-options-kicker">WALLET • TOP UP</span>
-      <h2 id="payment-options-title">Opsi Pembayaran Top Up Coin</h2>
-      <p>Pilihan metode pembayaran yang tersedia untuk top up saldo.</p>
+      <h2 id="payment-options-title">metode pembayaran top up coin yang tersedia :</h2>
     </div>
     <div class="payment-options-grid">
       <div class="payment-option"><img src="https://cdn.jsdelivr.net/npm/idn-finlogos@2/dist/png/qris@2x.png" alt="Logo QRIS" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">QRIS</span><span class="payment-option-name">QRIS</span></div>
