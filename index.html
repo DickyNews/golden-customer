@@ -1138,6 +1138,92 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 }
 @media(max-width:600px) { #job-history { padding: 20px 14px !important; } }
 
+
+/* FINAL FINISH: crisp metallic borders + embossed depth on dark panels; preserve button shine */
+.card:not(.method-flow-card),
+.bitrate-guide,
+.wallet-card,
+#analytics,
+.analytics-card,
+.result-card,
+#tiktokAnalytics,
+#tiktokResultDetails {
+  border: 1px solid rgba(226, 216, 180, .58) !important;
+  background-image: linear-gradient(145deg, rgba(28,28,27,.98), rgba(7,7,8,.99) 58%, rgba(20,18,14,.98)) !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.14),
+    inset 0 -3px 0 rgba(0,0,0,.92),
+    inset 1px 0 0 rgba(255,239,190,.09),
+    0 2px 0 rgba(0,0,0,.95),
+    0 5px 0 rgba(174,151,82,.35),
+    0 10px 24px rgba(0,0,0,.55) !important;
+}
+.card:not(.method-flow-card):hover,
+.bitrate-guide:hover,
+.wallet-card:hover {
+  border-color: rgba(255, 229, 137, .82) !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.17),
+    inset 0 -3px 0 rgba(0,0,0,.92),
+    0 2px 0 rgba(0,0,0,.95),
+    0 5px 0 rgba(201,171,83,.48),
+    0 12px 28px rgba(0,0,0,.62) !important;
+}
+.metric,
+.signal,
+.wallet-stat,
+.drop,
+.history-item,
+.history-list .history-empty {
+  border-color: rgba(218, 205, 164, .42) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -2px 0 rgba(0,0,0,.72),
+    0 2px 0 rgba(0,0,0,.72) !important;
+}
+.btn,
+button,
+.mode-btn,
+.method-flow-action,
+#job-history #refreshHistory {
+  text-shadow: 0 1px 0 rgba(255,255,255,.16);
+  filter: drop-shadow(0 2px 0 rgba(0,0,0,.62));
+}
+.btn,
+button,
+.mode-btn,
+.method-flow-action {
+  position: relative;
+}
+button:not(.btn)::after,
+.method-flow-action::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(112deg, transparent 28%, rgba(255,255,255,.0) 39%, rgba(255,255,255,.42) 50%, rgba(255,255,255,.04) 59%, transparent 72%);
+  background-size: 220% 100%;
+  animation: finalMetalSheen 4.6s ease-in-out infinite;
+}
+.btn::after {
+  background: linear-gradient(112deg, transparent 38%, rgba(255,255,255,.48) 50%, transparent 62%) !important;
+}
+.mode-btn,
+.method-flow-action {
+  border-color: rgba(245, 231, 183, .82) !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.34),
+    inset 0 -3px 0 rgba(0,0,0,.5),
+    0 3px 0 rgba(0,0,0,.88),
+    0 5px 0 rgba(180,153,76,.52),
+    0 8px 16px rgba(0,0,0,.42) !important;
+}
+@keyframes finalMetalSheen {
+  0%, 12% { background-position: 130% 0; opacity: .5; }
+  48%, 100% { background-position: -130% 0; opacity: .9; }
+}
+
 </style>
 </head>
 <body>
