@@ -1032,31 +1032,35 @@ if(refreshHistoryBtn)refreshHistoryBtn.addEventListener('click',loadJobHistory);
 
 loadPublicSettings();(async()=>{const ok=await loadWallet();if(ok)await loadJobHistory();else if(historyList)historyList.replaceChildren();})();const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='rise .7s ease both'}),{threshold:.12});document.querySelectorAll('.section,.card,.step').forEach(el=>revealObserver.observe(el));
 const checkerUrl=document.getElementById('checkerUrl'),checkerChoose=document.getElementById('checkerChoose'),checkerTitle=document.getElementById('checkerTitle'),checkerText=document.getElementById('checkerText'),analysisStatus=document.getElementById('analysisStatus');
-checkerChoose.onclick=async()=>{
- const url=checkerUrl.value.trim();
- if(!url){checkerText.textContent='Tempel link video TikTok terlebih dahulu.';checkerUrl.focus();return}
- let parsedUrl;try{parsedUrl=new URL(url)}catch{checkerText.textContent='Link harus berupa URL TikTok yang valid.';return}
+async function runTikTokAnalytics(){
+ const url=String(checkerUrl?.value||'').trim();
+ if(!url){checkerText.textContent='Tempel link video TikTok terlebih dahulu.';checkerUrl?.focus();return}
+ let parsedUrl;
+ try{parsedUrl=new URL(url)}catch{checkerText.textContent='Link harus berupa URL TikTok yang valid.';return}
  if(!['http:','https:'].includes(parsedUrl.protocol)||!(parsedUrl.hostname==='tiktok.com'||parsedUrl.hostname.endsWith('.tiktok.com'))){checkerText.textContent='Gunakan link TikTok yang valid, termasuk link pendek vm.tiktok.com.';return}
- const apiBase=String(window.GOLDEN_TIKTOK_ANALYTICS_API||'').replace(/\\/$/,'');
- if(!apiBase){checkerTitle.textContent='Analyzer belum diaktifkan';checkerText.textContent='Worker serverless belum dideploy. Tidak ada permintaan yang dikirim ke Golden API/VPS. Aktifkan deployment GitHub Actions melalui Cloudflare secrets terlebih dahulu.';analysisStatus.textContent='DEPLOY REQUIRED';analysisStatus.className='badge warn';return}
- checkerChoose.disabled=true;checkerTitle.textContent='Mengambil data TikTok...';checkerText.textContent='Memeriksa metadata publik. Detail teknis hanya tampil jika benar-benar tersedia dari sumber.';analysisStatus.textContent='ANALYZING';analysisStatus.className='badge warn';
+ const apiBase=String(window.GOLDEN_TIKTOK_ANALYTICS_API||'').trim().replace(/\/+$/,'');
+ if(!apiBase){checkerTitle.textContent='Analyzer belum diaktifkan';checkerText.textContent='URL Worker belum dikonfigurasi. Periksa analytics-config.js.';analysisStatus.textContent='CONFIG REQUIRED';analysisStatus.className='badge warn';return}
+ checkerChoose.disabled=true;checkerTitle.textContent='Mengambil data TikTok...';checkerText.textContent='Memeriksa metadata publik. Detail teknis hanya tampil jika tersedia dari sumber.';analysisStatus.textContent='ANALYZING';analysisStatus.className='badge warn';
  try{
-  const r=await fetch(apiBase+'/public/tiktok-analytics?url='+encodeURIComponent(url),{cache:'no-store'});
-  const d=await r.json().catch(()=>({}));
-  if(!r.ok)throw new Error(d.error||('HTTP '+r.status));
-  const map={mResolution:d.resolution,mFps:d.fps,mBitrate:d.bitrate,mCodec:d.codec,mSize:d.file_size,mContainer:d.container,sRegion:d.region,sReview:d.review_status,sVisibility:d.visibility,sIndex:d.index_visibility};
-  Object.entries(map).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=(v===null||v===undefined||v==='')?'Tidak tersedia':v});
-  checkerTitle.textContent=d.title||'Analisis metadata selesai';
-  const notes=[d.author?'Kreator: '+d.author:'',d.data_source&&d.data_source.length?'Sumber: '+d.data_source.join(', '):'',d.limitations&&d.limitations.length?d.limitations.join(' '):''];
+  const response=await fetch(apiBase+'/public/tiktok-analytics?url='+encodeURIComponent(url),{method:'GET',mode:'cors',cache:'no-store',headers:{'Accept':'application/json'}});
+  const data=await response.json().catch(()=>null);
+  if(!response.ok)throw new Error(data?.error||('Server mengembalikan HTTP '+response.status));
+  if(!data||typeof data!=='object')throw new Error('Respons API bukan JSON yang valid.');
+  const map={mResolution:data.resolution,mFps:data.fps,mBitrate:data.bitrate,mCodec:data.codec,mSize:data.file_size,mContainer:data.container,sRegion:data.region,sReview:data.review_status,sVisibility:data.visibility,sIndex:data.index_visibility};
+  Object.entries(map).forEach(([id,value])=>{const el=document.getElementById(id);if(el)el.textContent=(value===null||value===undefined||value==='')?'Tidak tersedia':value});
+  checkerTitle.textContent=data.title||'Analisis metadata selesai';
+  const notes=[data.author?'Kreator: '+data.author:'',data.data_source?.length?'Sumber: '+data.data_source.join(', '):'',data.limitations?.length?data.limitations.join(' '):''];
   checkerText.textContent=notes.filter(Boolean).join(' ')||'Metadata publik tidak tersedia untuk link ini.';
-  analysisStatus.textContent=d.status==='partial'?'PARTIAL RESULT':d.status==='unavailable'?'DATA UNAVAILABLE':'LIVE RESULT';
-  analysisStatus.className=d.status==='unavailable'?'badge warn':'badge';
- }catch(e){
+  analysisStatus.textContent=data.status==='partial'?'PARTIAL RESULT':data.status==='unavailable'?'DATA UNAVAILABLE':'LIVE RESULT';
+  analysisStatus.className=data.status==='unavailable'?'badge warn':'badge';
+ }catch(error){
   checkerTitle.textContent='Analisis gagal';
-  checkerText.textContent='Worker tidak dapat menyelesaikan permintaan. '+(e.message||'Periksa link publik dan coba lagi.');
+  checkerText.textContent='Permintaan ke Worker gagal: '+(error?.message||'gangguan jaringan atau CORS')+'. Coba lagi atau tes endpoint /health.';
   analysisStatus.textContent='REQUEST FAILED';analysisStatus.className='badge warn';
  }finally{checkerChoose.disabled=false}
-};
+}
+if(checkerChoose)checkerChoose.addEventListener('click',runTikTokAnalytics);
+if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();runTikTokAnalytics()}});
 
 /* Interactive cyberpunk motion controller. Randomizes visual preset per interaction. */
 (function(){
