@@ -1035,6 +1035,50 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   .card.upload .mode-buttons .mode-btn.hdr-soon { animation: none !important; }
 }
 
+
+/* REQUESTED: Processing Flow cards use the same vivid yellow palette as the process panel */
+.method-flow-card {
+  color: #111 !important;
+  background: linear-gradient(145deg, #fff9a6 0%, #ffed42 48%, #ffdc00 100%) !important;
+  border: 2px solid #fff5a8 !important;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.85), inset 0 -5px 0 rgba(0,0,0,.10), 0 8px 0 rgba(0,0,0,.65), 0 12px 24px rgba(0,0,0,.32) !important;
+  animation: methodFlowYellowEmboss 4s ease-in-out infinite !important;
+}
+.method-flow-card h3,
+.method-flow-card p { color: #171500 !important; }
+.method-flow-card .method-flow-num {
+  color: #111 !important;
+  background: linear-gradient(145deg,#fffbd1,#f3d900) !important;
+  border-color: #111 !important;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.85), 0 3px 0 #111 !important;
+}
+.method-flow-card .method-flow-icon { color: #111 !important; text-shadow: none !important; }
+.method-flow-card .method-flow-action {
+  color: #111 !important;
+  background: linear-gradient(180deg,#fffef0 0%,#e8d77c 100%) !important;
+  border: 2px solid #111 !important;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.9), inset 0 -4px 0 rgba(0,0,0,.13), 0 4px 0 #111, 0 7px 12px rgba(0,0,0,.22) !important;
+  text-shadow: none !important;
+}
+.method-flow-card .method-flow-action *,
+.method-flow-card .method-flow-action span { color: #111 !important; text-shadow: none !important; }
+.method-flow-card:not(:last-child)::after {
+  color: #111 !important;
+  background: #fff2a0 !important;
+  border: 2px solid #111 !important;
+  box-shadow: 0 3px 0 rgba(0,0,0,.55) !important;
+}
+.method-flow-card:hover {
+  transform: translateY(-3px) !important;
+  border-color: #111 !important;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.9), inset 0 -5px 0 rgba(0,0,0,.12), 0 9px 0 #111, 0 14px 24px rgba(0,0,0,.34) !important;
+}
+@keyframes methodFlowYellowEmboss {
+  0%,100% { box-shadow: inset 0 2px 0 rgba(255,255,255,.85), inset 0 -5px 0 rgba(0,0,0,.10), 0 8px 0 rgba(0,0,0,.65), 0 12px 24px rgba(0,0,0,.32); }
+  50% { box-shadow: inset 0 2px 0 rgba(255,255,255,.95), inset 0 -5px 0 rgba(0,0,0,.14), 0 8px 0 #111, 0 14px 27px rgba(0,0,0,.38); }
+}
+@media (prefers-reduced-motion: reduce) { .method-flow-card { animation: none !important; } }
+
 </style>
 </head>
 <body>
