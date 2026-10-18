@@ -948,6 +948,58 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
  #payment-options .payment-options-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 
+
+/* Payment panel layout correction: remove excess blank space and center all content. */
+#payment-options{
+ width:100%!important;max-width:100%!important;margin:0 auto 28px!important;
+ padding:0!important;display:block!important;
+}
+#payment-options .payment-options-panel{
+ width:100%!important;max-width:100%!important;margin:0 auto!important;
+ padding:clamp(18px,3vw,28px)!important;display:flex!important;flex-direction:column!important;
+ align-items:stretch!important;justify-content:flex-start!important;gap:0!important;
+ background:#fff!important;color:#151923!important;border:1px solid #e1e5eb!important;
+ border-radius:22px!important;min-height:0!important;height:auto!important;
+}
+#payment-options .payment-options-heading{
+ display:block!important;visibility:visible!important;opacity:1!important;
+ position:static!important;flex:none!important;width:100%!important;max-width:720px!important;
+ height:auto!important;min-height:0!important;margin:0 auto 22px!important;padding:0!important;
+ text-align:center!important;color:#151923!important;transform:none!important;
+}
+#payment-options .payment-options-kicker{display:inline-block!important;color:#687386!important;font-size:11px!important;font-weight:800!important;letter-spacing:.16em!important;margin:0 0 8px!important}
+#payment-options .payment-options-heading h2{display:block!important;visibility:visible!important;opacity:1!important;margin:0 0 8px!important;padding:0!important;color:#111827!important;font-size:clamp(20px,2.8vw,27px)!important;line-height:1.25!important}
+#payment-options .payment-options-heading p{display:block!important;margin:0!important;color:#687386!important;font-size:14px!important;line-height:1.6!important}
+#payment-options .payment-options-grid{
+ display:grid!important;width:100%!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;
+ gap:12px!important;align-items:stretch!important;justify-content:center!important;
+ margin:0 auto!important;padding:0!important;
+}
+#payment-options .payment-option{
+ min-width:0!important;min-height:112px!important;height:auto!important;padding:13px 8px 11px!important;
+ display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+ gap:10px!important;text-align:center!important;background:#fff!important;border:1px solid #e1e5eb!important;
+ border-radius:14px!important;box-shadow:0 2px 5px rgba(17,24,39,.035)!important;
+}
+#payment-options .payment-option img{display:block;width:100%;max-width:94px;height:48px;object-fit:contain;object-position:center;margin:0 auto}
+#payment-options .payment-option-name{display:block!important;color:#252b36!important;font-size:12px!important;font-weight:700!important;line-height:1.25!important;overflow-wrap:anywhere!important}
+#payment-options .payment-logo-fallback{width:100%;height:48px;place-items:center;color:#28344b;font-size:16px;font-weight:850;letter-spacing:-.04em}
+#payment-options .payment-custom-logo{width:48px;height:48px;display:grid;place-items:center;border-radius:11px;font-size:27px;font-weight:800}
+#payment-options .pulsa-logo{background:#eaf8ef;color:#178548}
+#payment-options .payment-options-note{margin:17px 0 0!important;text-align:center!important;color:#77808e!important;font-size:11px!important;line-height:1.5!important}
+@media(max-width:700px){
+ #payment-options{padding:0!important}
+ #payment-options .payment-options-panel{padding:18px 14px!important;border-radius:18px!important}
+ #payment-options .payment-options-heading{margin:0 auto 17px!important}
+ #payment-options .payment-options-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ #payment-options .payment-option{min-height:102px!important;padding:12px 8px!important}
+ #payment-options .payment-option img{max-width:88px;height:42px}
+ #payment-options .payment-option-name{font-size:12px!important}
+}
+@media(min-width:701px) and (max-width:980px){
+ #payment-options .payment-options-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+
 </style>
 </head>
 <body>
@@ -1046,21 +1098,20 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
       <p>Pilihan metode pembayaran yang tersedia untuk top up saldo.</p>
     </div>
     <div class="payment-options-grid">
-      <div class="payment-option"><img src="https://logo.clearbit.com/qris.id?size=128" alt="Logo QRIS" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">QRIS</span><span class="payment-option-name">QRIS</span></div>
-      <div class="payment-option"><img src="https://logo.clearbit.com/dana.id?size=128" alt="Logo DANA" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">DANA</span><span class="payment-option-name">DANA</span></div>
-      <div class="payment-option"><img src="https://logo.clearbit.com/gopay.co.id?size=128" alt="Logo GoPay" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">GoPay</span><span class="payment-option-name">GoPay</span></div>
-      <div class="payment-option"><img src="https://logo.clearbit.com/ovo.id?size=128" alt="Logo OVO" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">OVO</span><span class="payment-option-name">OVO</span></div>
+      <div class="payment-option"><img src="https://cdn.jsdelivr.net/npm/idn-finlogos@2/dist/png/qris@2x.png" alt="Logo QRIS" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">QRIS</span><span class="payment-option-name">QRIS</span></div>
+      <div class="payment-option"><img src="https://cdn.jsdelivr.net/npm/idn-finlogos@2/dist/png/dana@2x.png" alt="Logo DANA" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">DANA</span><span class="payment-option-name">DANA</span></div>
+      <div class="payment-option"><img src="https://cdn.jsdelivr.net/npm/idn-finlogos@2/dist/png/gopay@2x.png" alt="Logo GoPay" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">GoPay</span><span class="payment-option-name">GoPay</span></div>
+      <div class="payment-option"><img src="https://cdn.jsdelivr.net/npm/idn-finlogos@2/dist/png/ovo@2x.png" alt="Logo OVO" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">OVO</span><span class="payment-option-name">OVO</span></div>
       <div class="payment-option"><span class="payment-custom-logo pulsa-logo" aria-hidden="true">▥</span><span class="payment-option-name">Pulsa</span></div>
-      <div class="payment-option"><img src="https://logo.clearbit.com/paypal.com?size=128" alt="Logo PayPal" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">PayPal</span><span class="payment-option-name">PayPal</span></div>
-      <div class="payment-option"><img src="https://logo.clearbit.com/sociabuzz.com?size=128" alt="Logo Sociabuzz" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">SociaBuzz</span><span class="payment-option-name">Sociabuzz</span></div>
-      <div class="payment-option"><img src="https://logo.clearbit.com/saweria.co?size=128" alt="Logo Saweria" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">Saweria</span><span class="payment-option-name">Saweria</span></div>
-      <div class="payment-option"><img src="https://logo.clearbit.com/bca.co.id?size=128" alt="Logo Bank BCA" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">BCA</span><span class="payment-option-name">Bank BCA</span></div>
-      <div class="payment-option"><img src="https://logo.clearbit.com/permata.com?size=128" alt="Logo Bank Permata" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">PERMATA</span><span class="payment-option-name">Bank Permata</span></div>
+      <div class="payment-option"><img src="https://cdn.jsdelivr.net/npm/idn-finlogos@2/dist/png/paypal@2x.png" alt="Logo PayPal" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">PayPal</span><span class="payment-option-name">PayPal</span></div>
+      <div class="payment-option"><img src="https://www.google.com/s2/favicons?domain=sociabuzz.com&sz=128" alt="Logo SociaBuzz" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">SociaBuzz</span><span class="payment-option-name">Sociabuzz</span></div>
+      <div class="payment-option"><img src="https://www.google.com/s2/favicons?domain=saweria.co&sz=128" alt="Logo Saweria" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">Saweria</span><span class="payment-option-name">Saweria</span></div>
+      <div class="payment-option"><img src="https://cdn.jsdelivr.net/npm/idn-finlogos@2/dist/png/bca@2x.png" alt="Logo Bank BCA" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">BCA</span><span class="payment-option-name">Bank BCA</span></div>
+      <div class="payment-option"><img src="https://cdn.jsdelivr.net/npm/idn-finlogos@2/dist/png/permata@2x.png" alt="Logo Bank Permata" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="payment-logo-fallback" style="display:none">PERMATA</span><span class="payment-option-name">Bank Permata</span></div>
     </div>
     <p class="payment-options-note">Ketersediaan dan aktivasi metode pembayaran mengikuti konfirmasi admin.</p>
   </div>
 </section>
-
 <section class="section hidden" id="job-history" aria-hidden="true">
   <div class="history-toolbar">
     <div><h2 style="margin-bottom:6px">Riwayat Pemrosesan</h2></div>
