@@ -662,6 +662,84 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   }
 }
 
+
+/* BOLD GLASS SHEEN — high-visibility animated glass reflection on every interactive control */
+a[href],button:not(:disabled),[role="button"],input[type="button"]:not(:disabled),
+input[type="submit"]:not(:disabled),input[type="reset"]:not(:disabled),
+.btn,.mode-btn,.pill,.hero-social,.nav-actions a,.wallet-actions a{
+  position:relative!important;isolation:isolate!important;overflow:hidden!important;
+  border:1px solid rgba(133,245,255,.72)!important;
+  background-image:linear-gradient(120deg,rgba(255,255,255,.075),rgba(120,245,255,.10) 24%,rgba(130,85,255,.09) 55%,rgba(255,255,255,.055))!important;
+  box-shadow:0 0 0 1px rgba(96,232,255,.12),0 0 12px rgba(55,219,255,.22),inset 0 1px 0 rgba(255,255,255,.3)!important;
+  animation:dickyGlassPulseBold 1.8s ease-in-out infinite!important;
+  transition:transform .18s ease,box-shadow .2s ease,filter .2s ease!important;
+}
+a[href]::before,button:not(:disabled)::before,[role="button"]::before,
+input[type="button"]:not(:disabled)::before,input[type="submit"]:not(:disabled)::before,
+input[type="reset"]:not(:disabled)::before,.btn::before,.mode-btn::before,.pill::before,
+.hero-social::before,.nav-actions a::before,.wallet-actions a::before{
+  content:""!important;position:absolute!important;inset:-2px!important;z-index:8!important;
+  display:block!important;pointer-events:none!important;border-radius:inherit!important;
+  opacity:1!important;transform:none!important;
+  background:linear-gradient(108deg,
+    transparent 0%,rgba(255,255,255,.03) 24%,
+    rgba(255,255,255,.22) 34%,rgba(255,255,255,.98) 42%,
+    rgba(255,255,255,.68) 46%,rgba(110,246,255,.62) 50%,
+    rgba(185,133,255,.32) 55%,rgba(255,255,255,.04) 64%,transparent 74%)!important;
+  background-size:320% 100%!important;
+  mix-blend-mode:screen!important;
+  animation:dickyGlassSweepBold 2.05s linear infinite!important;
+}
+a[href]::after,button:not(:disabled)::after,[role="button"]::after,
+input[type="button"]:not(:disabled)::after,input[type="submit"]:not(:disabled)::after,
+input[type="reset"]:not(:disabled)::after,.btn::after,.mode-btn::after,.pill::after,
+.hero-social::after,.nav-actions a::after,.wallet-actions a::after{
+  content:""!important;position:absolute!important;inset:1px!important;z-index:7!important;
+  border-radius:inherit!important;pointer-events:none!important;
+  border:1px solid rgba(255,255,255,.36)!important;
+  box-shadow:inset 0 0 9px rgba(255,255,255,.14),0 0 9px rgba(91,235,255,.24)!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.15),transparent 46%,rgba(116,91,255,.09))!important;
+  animation:dickyGlassEdgeBold 1.8s ease-in-out infinite!important;
+}
+a[href]>* ,button:not(:disabled)>*,[role="button"]>*,
+.btn>*,.mode-btn>*,.pill>*,.hero-social>*{position:relative;z-index:9}
+a[href]:hover,button:not(:disabled):hover,[role="button"]:hover,
+.btn:hover,.mode-btn:hover,.pill:hover,.hero-social:hover{
+  filter:brightness(1.3)!important;
+  box-shadow:0 0 7px rgba(255,255,255,.6),0 0 24px rgba(65,226,255,.5),0 0 36px rgba(163,94,255,.24),inset 0 0 18px rgba(255,255,255,.18)!important;
+}
+a[href]:active,button:not(:disabled):active,[role="button"]:active,
+.btn:active,.mode-btn:active,.pill:active,.hero-social:active{
+  transform:scale(.965)!important;filter:brightness(1.4)!important;
+}
+button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
+@keyframes dickyGlassSweepBold{
+  0%{background-position:160% 0;opacity:.45}
+  35%{opacity:1}
+  100%{background-position:-160% 0;opacity:.72}
+}
+@keyframes dickyGlassPulseBold{
+  0%,100%{filter:brightness(1);box-shadow:0 0 0 1px rgba(96,232,255,.15),0 0 10px rgba(55,219,255,.18),inset 0 1px 0 rgba(255,255,255,.24)}
+  50%{filter:brightness(1.2);box-shadow:0 0 0 2px rgba(96,232,255,.3),0 0 24px rgba(55,219,255,.42),0 0 35px rgba(145,92,255,.18),inset 0 1px 0 rgba(255,255,255,.5)}
+}
+@keyframes dickyGlassEdgeBold{
+  0%,100%{opacity:.42}
+  50%{opacity:1}
+}
+@media(max-width:800px),(pointer:coarse){
+  a[href],button:not(:disabled),[role="button"],input[type="button"]:not(:disabled),
+  input[type="submit"]:not(:disabled),input[type="reset"]:not(:disabled),
+  .btn,.mode-btn,.pill,.hero-social,.nav-actions a,.wallet-actions a{
+    animation:dickyGlassPulseBold 1.8s ease-in-out infinite!important;
+  }
+  a[href]::before,button:not(:disabled)::before,[role="button"]::before,
+  input[type="button"]:not(:disabled)::before,input[type="submit"]:not(:disabled)::before,
+  input[type="reset"]:not(:disabled)::before,.btn::before,.mode-btn::before,.pill::before,
+  .hero-social::before,.nav-actions a::before,.wallet-actions a::before{
+    animation:dickyGlassSweepBold 2.05s linear infinite!important;
+  }
+}
+
 </style>
 </head>
 <body>
