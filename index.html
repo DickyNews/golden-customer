@@ -757,7 +757,7 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   animation:modeSatinPulse 3.2s ease-in-out infinite!important;
 }
 .app button.mode-btn::before{
-  content:"⇀  ↼"!important;position:absolute!important;inset:auto 9px auto auto!important;
+  content:"→";position:absolute;left:12px;right:auto;top:50%;transform:translateY(-50%);z-index:12;pointer-events:none;display:grid;place-items:center;width:21px;height:21px;border:1px solid rgba(255,229,107,.72);border-radius:50%;background:rgba(255,221,76,.10);color:#ffe34f;font-size:14px;font-weight:950;line-height:1;opacity:.98;box-shadow:none;animation:none;
   top:9px!important;z-index:12!important;pointer-events:none!important;
   display:grid!important;place-items:center!important;width:21px!important;height:21px!important;
   border:1px solid rgba(255,229,107,.72)!important;border-radius:50%!important;
@@ -800,6 +800,25 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 .app button.mode-btn:active{
   transform:translateY(1px) scale(.992)!important;
   box-shadow:inset 0 3px 8px rgba(0,0,0,.5),0 1px 0 rgba(0,0,0,.5)!important;
+}
+
+/* Two distinct inward-facing arrow markers: left edge points right, right edge points left. */
+.app button.mode-btn{padding-left:42px!important;padding-right:42px!important}
+.app button.mode-btn::before{
+ content:"→"!important;position:absolute!important;left:12px!important;right:auto!important;top:50%!important;bottom:auto!important;
+ transform:translateY(-50%)!important;z-index:12!important;pointer-events:none!important;
+ display:grid!important;place-items:center!important;width:21px!important;height:21px!important;
+ border:1px solid rgba(255,229,107,.72)!important;border-radius:50%!important;
+ background:rgba(255,221,76,.10)!important;color:#ffe34f!important;font-size:14px!important;
+ font-weight:950!important;line-height:1!important;opacity:.98!important;box-shadow:none!important;animation:none!important;
+}
+.app button.mode-btn::after{
+ content:"←"!important;position:absolute!important;left:auto!important;right:12px!important;top:50%!important;bottom:auto!important;
+ transform:translateY(-50%)!important;z-index:12!important;pointer-events:none!important;
+ display:grid!important;place-items:center!important;width:21px!important;height:21px!important;
+ border:1px solid rgba(255,229,107,.72)!important;border-radius:50%!important;
+ background:rgba(255,221,76,.10)!important;color:#ffe34f!important;font-size:14px!important;
+ font-weight:950!important;line-height:1!important;opacity:.98!important;box-shadow:none!important;animation:none!important;
 }
 @keyframes modeSatinPulse{0%,100%{transform:translateY(0) scale(1);box-shadow:inset 0 1px 1px rgba(255,255,255,.28),inset 0 -3px 7px rgba(0,0,0,.55),0 3px 0 rgba(0,0,0,.5)}50%{transform:translateY(-1px) scale(1.006);box-shadow:inset 0 1px 1px rgba(255,255,255,.34),inset 0 -3px 7px rgba(0,0,0,.48),0 5px 0 rgba(0,0,0,.46),0 0 0 2px rgba(255,226,93,.10)}}
 @keyframes modeSatinSweep{0%,18%{background-position:150% 0}55%,100%{background-position:-150% 0}}
