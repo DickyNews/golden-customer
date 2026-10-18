@@ -959,6 +959,82 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   filter:none !important;
 }
 
+
+/* FINAL UI FIX: tombol proses kontras tinggi, emboss hitam, tanpa neon warna */
+.card.upload .mode-buttons .mode-btn,
+.card.upload .mode-buttons .mode-btn.active,
+.card.upload .mode-buttons .mode-btn.hdr-soon {
+  position: relative !important;
+  isolation: isolate !important;
+  color: #111 !important;
+  border: 3px solid #111 !important;
+  border-radius: 22px !important;
+  text-shadow: none !important;
+  filter: none !important;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease !important;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.92),
+    inset 0 -5px 0 rgba(0,0,0,.16),
+    0 5px 0 #111,
+    0 8px 12px rgba(0,0,0,.24) !important;
+  animation: processBlackEmboss 3s ease-in-out infinite !important;
+}
+.card.upload .mode-buttons .mode-btn.active {
+  background: linear-gradient(180deg,#fffef2 0%,#eee8cb 100%) !important;
+}
+.card.upload .mode-buttons .mode-btn.hdr-soon {
+  background: linear-gradient(180deg,#f4f1e4 0%,#d8d2bd 100%) !important;
+  border-color: #111 !important;
+  animation-delay: .35s !important;
+}
+.card.upload .mode-buttons .mode-btn small,
+.card.upload .mode-buttons .mode-btn.active small,
+.card.upload .mode-buttons .mode-btn.hdr-soon small,
+.card.upload #hdrPrice {
+  color: #111 !important;
+  -webkit-text-fill-color: #111 !important;
+  border-color: #111 !important;
+  background: rgba(255,255,255,.28) !important;
+  box-shadow: inset 0 2px 3px rgba(0,0,0,.10), 0 2px 0 rgba(0,0,0,.12) !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+.card.upload .mode-buttons .mode-btn::before,
+.card.upload .mode-buttons .mode-btn::after {
+  background: none !important;
+  box-shadow: none !important;
+  animation: none !important;
+  opacity: 0 !important;
+}
+.card.upload .mode-buttons .mode-btn:hover:not(:disabled) {
+  transform: translateY(-2px) !important;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.92),
+    inset 0 -5px 0 rgba(0,0,0,.16),
+    0 7px 0 #111,
+    0 11px 15px rgba(0,0,0,.28) !important;
+}
+.card.upload .mode-buttons .mode-btn:active:not(:disabled) {
+  transform: translateY(3px) !important;
+  box-shadow:
+    inset 0 3px 6px rgba(0,0,0,.16),
+    0 2px 0 #111,
+    0 4px 7px rgba(0,0,0,.2) !important;
+}
+@keyframes processBlackEmboss {
+  0%,100% {
+    box-shadow: inset 0 3px 0 rgba(255,255,255,.92), inset 0 -5px 0 rgba(0,0,0,.16), 0 5px 0 #111, 0 8px 12px rgba(0,0,0,.24);
+  }
+  50% {
+    box-shadow: inset 0 3px 0 rgba(255,255,255,.96), inset 0 -5px 0 rgba(0,0,0,.2), 0 5px 0 #000, 0 9px 14px rgba(0,0,0,.32);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card.upload .mode-buttons .mode-btn,
+  .card.upload .mode-buttons .mode-btn.active,
+  .card.upload .mode-buttons .mode-btn.hdr-soon { animation: none !important; }
+}
+
 </style>
 </head>
 <body>
