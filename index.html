@@ -565,8 +565,7 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:var(--ne
   .stars,#starfield,.orb,.cursor-glow,.cursor-trail{display:none!important}
   body:before{opacity:.055;background-size:48px 48px}
   .hero,.hero h1 span,.eyebrow:before,.social-owner-label,.hero-social,.hero-social:after,
-  .card,.card:before,.step,.upload-icon,.btn,.btn:after,.btn-primary,.mode-btn,
-  .mode-btn.active,.drop:before,.progress i,.bar i,.wallet-progress .bar i,
+  .card,.card:before,.step,.upload-icon,.drop:before,.progress i,.bar i,.wallet-progress .bar i,
   .app[data-motion] .btn,.app[data-motion] .mode-btn,.app[data-motion] .card,
   .app[data-motion] .section,.app.motion-change .card,.app.motion-change .hero{
     animation:none!important;
@@ -579,8 +578,13 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:var(--ne
   .card:before{display:none!important}
   .card:hover,.step:hover,.wallet-stat:hover,.metric:hover,.history-item:hover,
   .btn:hover,.mode-btn:hover,.hero-social:hover{transform:none!important;filter:none!important}
-  button,.btn,.mode-btn{transition:background-color .15s,border-color .15s!important}
-  button:before,.btn:before,.mode-btn:before{display:none!important;animation:none!important}
+  button,.btn,.mode-btn{position:relative;overflow:hidden;isolation:isolate;transition:transform .16s ease,background-color .2s,border-color .2s,box-shadow .2s!important;animation:mobileButtonGlow 3s ease-in-out infinite!important;cursor:pointer;-webkit-tap-highlight-color:rgba(98,243,255,.22)}
+  button:not(:disabled):active,.btn:not(:disabled):active,.mode-btn:not(:disabled):active{transform:scale(.975)!important;filter:brightness(1.18)!important}
+  button:disabled,.btn:disabled,.mode-btn:disabled{cursor:not-allowed!important;animation:none!important;opacity:.65}
+  button:before,.btn:before,.mode-btn:before{content:""!important;display:block!important;position:absolute;inset:0;pointer-events:none;opacity:.8;background:linear-gradient(110deg,transparent 0%,transparent 36%,rgba(255,255,255,.05) 43%,rgba(255,255,255,.72) 50%,rgba(98,243,255,.26) 54%,transparent 64%,transparent 100%);background-size:240% 100%;transform:none!important;animation:mobileButtonSheen 3.6s ease-in-out infinite!important;z-index:3;border-radius:inherit}
+  .btn:after{animation:mobileButtonSheen 3.6s ease-in-out infinite!important;z-index:2}
+  @keyframes mobileButtonSheen{0%,18%{background-position:130% 0;opacity:.15}58%{background-position:-35% 0;opacity:.85}82%,100%{background-position:-35% 0;opacity:.18}}
+  @keyframes mobileButtonGlow{0%,100%{box-shadow:0 0 0 rgba(98,243,255,0),inset 0 1px rgba(255,255,255,.06)}50%{box-shadow:0 0 15px rgba(98,243,255,.17),inset 0 1px rgba(255,255,255,.16)}}
   .app{overflow:clip}
 }
 @media(max-width:600px){
@@ -675,8 +679,8 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:var(--ne
   <p class="bitrate-guide-note">Pastikan video yang kamu miliki adalah video original atau sudah jernih dari sumber aslinya.</p>
   <div class="bitrate-guide-table" aria-label="Panduan bitrate ideal">
     <div class="bitrate-guide-item"><strong>1080p · 60fps</strong><span>10–15MB</span></div>
-    <div class="bitrate-guide-item"><strong>2K · 60fps</strong><span>25–30MB</span></div>
-    <div class="bitrate-guide-item"><strong>4K · 60fps</strong><span>45–50MB</span></div>
+    <div class="bitrate-guide-item"><strong>2K · 60fps</strong><span>20–25MB</span></div>
+    <div class="bitrate-guide-item"><strong>4K · 60fps</strong><span>30–35MB</span></div>
   </div>
   <p class="bitrate-guide-warning">Semakin besar ukuran video, semakin berisiko video mengalami lag saat diputar di TikTok. <strong>Atur bitrate dengan bijak</strong> dan ikuti saran bitrate ideal di atas.</p>
 </section>
