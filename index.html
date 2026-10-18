@@ -938,6 +938,27 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   .card.upload .mode-btn,.card.upload .mode-btn::before,.card.upload .drop::before,.card.upload .upload-icon{animation:none !important;transition:none !important}
 }
 
+
+/* Contrast fix: heading and coin price must be solid black */
+.card.upload .mode-title,
+.card.upload .mode-title *{
+  color:#000000 !important;
+  -webkit-text-fill-color:#000000 !important;
+  opacity:1 !important;
+  text-shadow:none !important;
+  font-weight:950 !important;
+}
+.card.upload #sdrPrice,
+.card.upload #hdrPrice,
+.card.upload .mode-btn small{
+  color:#000000 !important;
+  -webkit-text-fill-color:#000000 !important;
+  opacity:1 !important;
+  font-weight:950 !important;
+  text-shadow:none !important;
+  filter:none !important;
+}
+
 </style>
 </head>
 <body>
