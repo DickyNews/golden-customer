@@ -606,6 +606,62 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:var(--ne
   .history-item{padding:13px}
 }
 
+
+/* UNIVERSAL INTERACTIVE CONTROL ANIMATION — continuous pulse + moving shine */
+a[href],button:not(:disabled),[role="button"],input[type="button"]:not(:disabled),
+input[type="submit"]:not(:disabled),input[type="reset"]:not(:disabled),
+.btn,.mode-btn,.pill,.hero-social,.nav-actions a,.wallet-actions a{
+  position:relative!important;isolation:isolate!important;overflow:hidden!important;
+  animation:dickyUniversalButtonPulse 2.7s ease-in-out infinite!important;
+  transition:transform .2s ease,box-shadow .25s ease,border-color .25s ease,filter .25s ease!important;
+  -webkit-tap-highlight-color:rgba(98,243,255,.25);
+}
+a[href]::before,button:not(:disabled)::before,[role="button"]::before,
+input[type="button"]:not(:disabled)::before,input[type="submit"]:not(:disabled)::before,
+input[type="reset"]:not(:disabled)::before,.btn::before,.mode-btn::before,.pill::before,
+.hero-social::before,.nav-actions a::before,.wallet-actions a::before{
+  content:""!important;position:absolute!important;inset:0!important;z-index:8!important;
+  display:block!important;pointer-events:none!important;opacity:.78!important;
+  border-radius:inherit!important;transform:none!important;
+  background:linear-gradient(112deg,transparent 0%,transparent 34%,rgba(255,255,255,.04) 40%,rgba(255,255,255,.78) 49%,rgba(98,243,255,.32) 53%,transparent 64%,transparent 100%)!important;
+  background-size:250% 100%!important;
+  animation:dickyUniversalButtonShine 3.3s ease-in-out infinite!important;
+}
+a[href]>* ,button:not(:disabled)>*,[role="button"]>*,
+.btn>*,.mode-btn>*,.pill>*,.hero-social>*{position:relative;z-index:9}
+a[href]:hover,button:not(:disabled):hover,[role="button"]:hover,
+.btn:hover,.mode-btn:hover,.pill:hover,.hero-social:hover{
+  filter:brightness(1.12)!important;
+  box-shadow:0 0 18px rgba(98,243,255,.19),inset 0 0 14px rgba(255,255,255,.055)!important;
+}
+a[href]:active,button:not(:disabled):active,[role="button"]:active,
+.btn:active,.mode-btn:active,.pill:active,.hero-social:active{
+  transform:scale(.975)!important;filter:brightness(1.18)!important;
+}
+button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
+@keyframes dickyUniversalButtonPulse{
+  0%,100%{box-shadow:0 0 0 rgba(98,243,255,0),inset 0 1px rgba(255,255,255,.055);filter:brightness(1)}
+  50%{box-shadow:0 0 17px rgba(98,243,255,.16),inset 0 1px rgba(255,255,255,.15);filter:brightness(1.055)}
+}
+@keyframes dickyUniversalButtonShine{
+  0%,8%{background-position:140% 0!important;opacity:.2!important}
+  48%{background-position:0% 0!important;opacity:.9!important}
+  76%,100%{background-position:-140% 0!important;opacity:.2!important}
+}
+@media(max-width:800px),(pointer:coarse){
+  a[href],button:not(:disabled),[role="button"],input[type="button"]:not(:disabled),
+  input[type="submit"]:not(:disabled),input[type="reset"]:not(:disabled),
+  .btn,.mode-btn,.pill,.hero-social,.nav-actions a,.wallet-actions a{
+    animation:dickyUniversalButtonPulse 2.7s ease-in-out infinite!important;
+  }
+  a[href]::before,button:not(:disabled)::before,[role="button"]::before,
+  input[type="button"]:not(:disabled)::before,input[type="submit"]:not(:disabled)::before,
+  input[type="reset"]:not(:disabled)::before,.btn::before,.mode-btn::before,.pill::before,
+  .hero-social::before,.nav-actions a::before,.wallet-actions a::before{
+    animation:dickyUniversalButtonShine 3.3s ease-in-out infinite!important;
+  }
+}
+
 </style>
 </head>
 <body>
