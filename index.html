@@ -740,6 +740,83 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   }
 }
 
+
+/* Processing panel: bright, clear, professional CTA hierarchy */
+.card.upload{
+  background:linear-gradient(145deg,#ffffff 0%,#f7fafc 58%,#edf5f7 100%) !important;
+  color:#17212b !important;
+  border:1px solid #d7e2e8 !important;
+  box-shadow:0 18px 48px rgba(0,0,0,.22),0 0 0 1px rgba(255,255,255,.5) inset !important;
+}
+.card.upload .mini{color:#526170 !important;font-weight:600}
+.card.upload .pill{background:#eaf2f6 !important;color:#344454 !important;border:1px solid #d2dfe7 !important}
+.card.upload .mode-title{color:#243443 !important;font-size:12px;letter-spacing:.16em}
+.card.upload .mode-buttons{gap:12px}
+.card.upload .mode-btn{
+  position:relative;isolation:isolate;overflow:hidden;
+  color:#17212b !important;
+  background:linear-gradient(135deg,#fff 0%,#f0f5f8 100%) !important;
+  border:1px solid #bdccd6 !important;
+  border-radius:15px !important;
+  box-shadow:0 5px 14px rgba(31,55,72,.09),inset 0 1px #fff !important;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease !important;
+}
+.card.upload .mode-btn::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(110deg,transparent 18%,rgba(255,255,255,.9) 42%,transparent 64%);
+  transform:translateX(-130%);animation:processingShimmer 4.8s ease-in-out infinite;
+}
+.card.upload .mode-btn.active{
+  background:linear-gradient(135deg,#fff9e7 0%,#fff0b8 100%) !important;
+  border:2px solid #d4a72c !important;
+  box-shadow:0 0 0 3px rgba(212,167,44,.12),0 8px 22px rgba(158,116,18,.14),inset 0 1px #fff !important;
+  animation:processingActivePulse 2.6s ease-in-out infinite !important;
+}
+.card.upload .mode-btn small{color:#8b6810 !important;font-weight:850}
+.card.upload .mode-btn.hdr-soon{background:#f1f4f6 !important;color:#64717b !important;border-color:#d4dde3 !important}
+.card.upload .mode-btn.hdr-soon small{color:#7d8992 !important}
+.card.upload .mode-btn:disabled{opacity:.88}
+.card.upload .drop{
+  position:relative;overflow:hidden;
+  background:linear-gradient(145deg,#fff 0%,#f4f8fa 100%) !important;
+  border:1px dashed #a9bbc7 !important;
+  box-shadow:inset 0 1px #fff,0 5px 18px rgba(31,55,72,.045) !important;
+  color:#17212b !important;
+}
+.card.upload .drop::before{
+  display:block !important;content:"";position:absolute;inset:-60% -20%;pointer-events:none;
+  background:linear-gradient(115deg,transparent 40%,rgba(80,190,190,.10) 49%,transparent 58%);
+  animation:processingDropGlow 6s ease-in-out infinite;
+}
+.card.upload .upload-icon{
+  background:linear-gradient(145deg,#e5fbfa,#dceaff) !important;
+  color:#087f8c !important;border:1px solid #b9e5e4 !important;
+  box-shadow:0 5px 18px rgba(8,127,140,.12) !important;
+  animation:processingArrowFloat 2.2s ease-in-out infinite !important;
+}
+.card.upload .drop strong{color:#17212b !important;font-weight:800}
+.card.upload .drop p{color:#536373 !important}
+@keyframes processingShimmer{
+  0%,58%{transform:translateX(-130%);opacity:0}
+  68%{opacity:.9}
+  100%{transform:translateX(130%);opacity:0}
+}
+@keyframes processingActivePulse{
+  0%,100%{box-shadow:0 0 0 3px rgba(212,167,44,.10),0 8px 22px rgba(158,116,18,.12),inset 0 1px #fff}
+  50%{box-shadow:0 0 0 5px rgba(212,167,44,.16),0 10px 28px rgba(158,116,18,.22),inset 0 1px #fff}
+}
+@keyframes processingDropGlow{
+  0%,100%{transform:translateX(-12%);opacity:.25}
+  50%{transform:translateX(12%);opacity:.85}
+}
+@keyframes processingArrowFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .card.upload .mode-btn,.card.upload .mode-btn::before,.card.upload .drop::before,.card.upload .upload-icon{animation:none !important;transition:none !important}
+}
+
 </style>
 </head>
 <body>
