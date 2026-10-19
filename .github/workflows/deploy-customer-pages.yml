@@ -25,20 +25,22 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Prepare static site
+      - name: Prepare static site and Pages Functions
         run: |
           set -eu
-          mkdir -p dist
+          mkdir -p dist/functions
           cp index.html dist/
           cp analytics-config.js dist/
+          cp -R functions/. dist/functions/
 
       - name: Ensure Cloudflare Pages project exists
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
+          set -eu
           npx --yes wrangler@4 pages project create golden-customer --production-branch main || {
-            echo "Project creation did not complete; checking deployment next."
+            echo "Project may already exist; deployment will confirm whether it is usable."
           }
 
       - name: Deploy customer website and API proxy
