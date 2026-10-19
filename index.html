@@ -1556,7 +1556,12 @@ claimBtn.onclick=async()=>{
     });
     let d={};try{d=await r.json()}catch(e){}
     if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));
-    await loadWallet();
+    const walletLoaded=await loadWallet();
+    if(!walletLoaded){
+      document.getElementById('modalTitle').textContent='Sesi Login Belum Aktif';
+      document.getElementById('modalText').textContent='Claim key diterima server, tetapi sesi login tidak terbaca oleh browser. Wallet belum bisa ditampilkan. Jangan klaim berulang; masalah sesi cookie perlu diperbaiki.';
+      return;
+    }
     await loadJobHistory();
     const balance=Number(d?.coin_balance ?? d?.customer?.coin_balance ?? d?.customer?.coins ?? d?.customer?.balance ?? walletStats[0]?.textContent ?? 0);
     document.getElementById('modalTitle').textContent='Akun Berhasil Terhubung';
