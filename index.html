@@ -1534,12 +1534,60 @@ if(logoutBtn)logoutBtn.addEventListener('click',async()=>{
     showModal('Logout Gagal',e.message||'Tidak dapat mengakhiri sesi. Silakan coba lagi.');
   }finally{logoutBtn.disabled=false;}
 });
-/* CUSTOMER SESSION IDLE LOGOUT DISABLED
-   Automatic browser-side logout after 30 minutes of inactivity is disabled.
-   Manual Logout remains available. Server-side session expiry is unchanged. */
+/* Customer idle logout: 10 minutes without user interaction. */
 (function(){
-  // Keep the processing status hook available to other frontend code.
-  window.__goldenIdleProcessing=()=>processing;
+  const IDLE_LIMIT_MS = 10 * 60 * 1000;
+  let lastActivity = Date.now();
+  let idleLogoutStarted = false;
+  let idleTimer = 0;
+
+  window.__goldenIdleProcessing = () => processing;
+
+  function noteActivity(){
+    if(idleLogoutStarted) return;
+    lastActivity = Date.now();
+    scheduleCheck();
+  }
+
+  async function expireIdleSession(){
+    if(idleLogoutStarted) return;
+    idleLogoutStarted = true;
+    if(idleTimer) clearTimeout(idleTimer);
+    try {
+      await fetch(window.GOLDEN_PLATFORM.apiBase + window.GOLDEN_PLATFORM.endpoints.logout, {
+        method:'POST',
+        credentials:'include',
+        cache:'no-store',
+        keepalive:true
+      });
+    } catch (_) {}
+    window.location.reload();
+  }
+
+  function scheduleCheck(){
+    if(idleTimer) clearTimeout(idleTimer);
+    const remaining = IDLE_LIMIT_MS - (Date.now() - lastActivity);
+    if(remaining <= 0) {
+      expireIdleSession();
+      return;
+    }
+    idleTimer = setTimeout(scheduleCheck, remaining);
+  }
+
+  ['pointerdown','keydown','touchstart','click','input','change','wheel'].forEach(type => {
+    document.addEventListener(type, noteActivity, {passive:true});
+  });
+  document.addEventListener('visibilitychange', () => {
+    if(document.visibilityState === 'visible') {
+      if(Date.now() - lastActivity >= IDLE_LIMIT_MS) expireIdleSession();
+      else scheduleCheck();
+    }
+  });
+  window.addEventListener('pageshow', () => {
+    if(Date.now() - lastActivity >= IDLE_LIMIT_MS) expireIdleSession();
+    else scheduleCheck();
+  });
+  scheduleCheck();
 })(); 
 
 claimBtn.onclick=async()=>{
