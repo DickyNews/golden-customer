@@ -1187,7 +1187,7 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
     <div class="drop" id="drop"><div class="upload-icon">↑</div><strong id="dropTitle">Pilih mode di atas</strong><p id="dropText">Klik salah satu tombol proses untuk memilih file video.</p><p class="android-files-note"><strong>Android:</strong> pilih video melalui pemilih file di perangkat, misalnya <b>Files / File Manager</b>.</p><p class="ios-files-note"><strong>Khusus iPhone:</strong> pilih video dari aplikasi <b>File (Files)</b>.</p><input id="file" class="file" type="file" accept="*/*"></div>
   </div>
   <aside class="side">
-    <div class="card wallet-card"><div class="wallet-title"><h2>Wallet</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Coin tersedia</span><b>0</b><em>coin untuk encode</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Top up</span><b>0</b><em>transaksi</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Saldo wallet</span><strong>0 / 0 coin</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span class="wallet-cost-label">Biaya sekali proses <strong id="priceSummary">5 COIN</strong><svg class="gold-coin-icon" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="goldCoinFill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff59a"/><stop offset=".38" stop-color="#ffd928"/><stop offset=".72" stop-color="#e9a900"/><stop offset="1" stop-color="#fff078"/></linearGradient></defs><circle cx="16" cy="16" r="14" fill="url(#goldCoinFill)" stroke="#fff2a0" stroke-width="1.4"/><circle cx="16" cy="16" r="10.5" fill="none" stroke="#a97800" stroke-width="1.2"/><path d="M19.5 10.5c-1-.8-2.1-1.2-3.5-1.2-2.6 0-4.5 1.4-4.5 3.5 0 2 1.6 2.8 4.3 3.3 2.1.4 3.1.9 3.1 2.1 0 1.2-1.2 2-3 2-1.5 0-2.9-.6-4-1.6M16 7.8v16.4" fill="none" stroke="#805800" stroke-width="1.8" stroke-linecap="round"/></svg></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Tambah Saldo</button><button class="btn btn-secondary" id="customerLogout" type="button" hidden>Logout</button></div></div><div class="claim-box"><div class="claim-label">CLAIM AKUN</div><div class="claim-row"><input id="claimKeyInput" type="text" placeholder="Masukkan key akun" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan key yang sudah kamu miliki untuk klaim coin.</div></div></div>
+    <div class="card wallet-card"><div class="wallet-title"><h2>Wallet</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Coin tersedia</span><b>0</b><em>coin untuk encode</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Top up</span><b>0</b><em>transaksi</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Saldo wallet</span><strong>0 / 0 coin</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span class="wallet-cost-label">Biaya sekali proses <strong id="priceSummary">5 COIN</strong><svg class="gold-coin-icon" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="goldCoinFill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff59a"/><stop offset=".38" stop-color="#ffd928"/><stop offset=".72" stop-color="#e9a900"/><stop offset="1" stop-color="#fff078"/></linearGradient></defs><circle cx="16" cy="16" r="14" fill="url(#goldCoinFill)" stroke="#fff2a0" stroke-width="1.4"/><circle cx="16" cy="16" r="10.5" fill="none" stroke="#a97800" stroke-width="1.2"/><path d="M19.5 10.5c-1-.8-2.1-1.2-3.5-1.2-2.6 0-4.5 1.4-4.5 3.5 0 2 1.6 2.8 4.3 3.3 2.1.4 3.1.9 3.1 2.1 0 1.2-1.2 2-3 2-1.5 0-2.9-.6-4-1.6M16 7.8v16.4" fill="none" stroke="#805800" stroke-width="1.8" stroke-linecap="round"/></svg></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Tambah Saldo</button><button class="btn btn-secondary" id="customerLogout" type="button" hidden>Logout</button></div></div><div class="claim-box"><div class="claim-label">CLAIM AKUN</div><div class="claim-row" style="display:grid;grid-template-columns:1fr;gap:10px"><input id="claimUsernameInput" type="text" placeholder="Masukkan username customer" autocomplete="username"><input id="claimKeyInput" type="text" placeholder="Masukkan Claim Key ID" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan username yang diberikan admin dan Claim Key ID milik username tersebut.</div></div></div>
     
   </aside>
 </section>
@@ -1488,7 +1488,7 @@ const stars=document.getElementById('stars');for(let i=0;i<78;i++){const s=docum
 document.querySelectorAll('.stars .star').forEach(s=>{s.style.setProperty('--x1',(-110+Math.random()*220)+'px');s.style.setProperty('--y1',(-90+Math.random()*180)+'px');s.style.setProperty('--x2',(-180+Math.random()*360)+'px');s.style.setProperty('--y2',(-150+Math.random()*300)+'px');s.style.setProperty('--x3',(-110+Math.random()*220)+'px');s.style.setProperty('--y3',(-90+Math.random()*180)+'px');s.style.setProperty('--m',(9+Math.random()*13)+'s');s.style.animationDelay=(-Math.random()*20)+'s'});
 
 // LIVE CUSTOMER AUTH + WALLET
-const claimBtn=document.getElementById('claimKey'),claimInput=document.getElementById('claimKeyInput');
+const claimBtn=document.getElementById('claimKey'),claimInput=document.getElementById('claimKeyInput'),claimUsernameInput=document.getElementById('claimUsernameInput');
 const walletBadge=document.querySelector('.wallet-title .badge');
 const logoutBtn=document.getElementById('customerLogout');
 const walletStats=document.querySelectorAll('.wallet-stat b');
@@ -1599,7 +1599,9 @@ if(logoutBtn)logoutBtn.addEventListener('click',async()=>{
 })(); 
 
 claimBtn.onclick=async()=>{
+  const username=claimUsernameInput.value.trim();
   const key=claimInput.value.trim();
+  if(!username){claimUsernameInput.focus();return}
   if(!key){claimInput.focus();return}
   claimBtn.disabled=true;
   showModal('Claim Akun','Memverifikasi key ke API server...');
@@ -1608,7 +1610,7 @@ claimBtn.onclick=async()=>{
       method:'POST',
       credentials:'include',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({key})
+      body:JSON.stringify({username,key})
     });
     let d={};try{d=await r.json()}catch(e){}
     if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));
