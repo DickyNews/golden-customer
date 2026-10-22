@@ -1208,6 +1208,24 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 @keyframes machineButtonFloat{0%,100%{box-shadow:0 4px 12px rgba(18,34,60,.09),inset 0 1px #fff}50%{box-shadow:0 7px 18px rgba(18,34,60,.15),inset 0 1px #fff}}
 @media(max-width:700px){.machine-columns{grid-template-columns:1fr!important;gap:14px!important}.machine-card{height:auto;padding:15px}.machine-notes{font-size:13px;gap:10px}.machine-card>.mode-btn{min-height:80px}}
 @media(prefers-reduced-motion:reduce){.machine-card,.machine-card::before,.machine-card>.mode-btn{animation:none!important;transition:none!important}.machine-card:hover,.machine-card>.mode-btn:hover{transform:none}}
+
+/* High-contrast labels for both machine selection buttons. */
+.machine-card>.mode-btn,
+.machine-card>.mode-btn:visited{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:100%;box-sizing:border-box;color:#fff!important;-webkit-text-fill-color:#fff!important;font-size:14px!important;font-weight:900!important;line-height:1.35!important;text-align:center;text-shadow:none!important;opacity:1!important;visibility:visible!important}
+.machine-card.inject-machine>.mode-btn{background:linear-gradient(145deg,#30343b 0%,#171a20 100%)!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border:1px solid #d6b84e!important}
+.machine-card.inject-machine>.mode-btn small{color:#ffe15a!important;-webkit-text-fill-color:#ffe15a!important}
+.machine-card.hdr-machine>.mode-btn{background:linear-gradient(145deg,#4f5fda 0%,#29368f 100%)!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border:1px solid #8794ff!important}
+.machine-card.hdr-machine>.mode-btn small{color:#fff!important;-webkit-text-fill-color:#fff!important;font-size:11px!important;font-weight:900!important}
+.machine-card>.mode-btn::before{content:"";display:inline-block;flex:0 0 auto;width:23px;height:23px;border:1.5px solid currentColor;border-radius:50%;background:rgba(255,255,255,.12);box-shadow:0 0 12px rgba(255,255,255,.12);mask:none}
+.machine-card.inject-machine>.mode-btn::before{content:"＋";display:flex;align-items:center;justify-content:center;color:#fff!important;font-size:20px;font-weight:500;line-height:1}
+.machine-card.hdr-machine>.mode-btn::before{content:"＋";display:flex;align-items:center;justify-content:center;color:#fff!important;font-size:20px;font-weight:500;line-height:1}
+.machine-card>.mode-btn:hover,.machine-card>.mode-btn:focus-visible{filter:brightness(1.1);transform:translateY(-2px) scale(1.012);box-shadow:0 10px 24px rgba(20,35,80,.24)!important;outline:3px solid rgba(91,121,255,.22);outline-offset:2px}
+.machine-card>.mode-btn:active{transform:scale(.985)}
+#drop .upload-icon{display:flex;align-items:center;justify-content:center}
+#drop .upload-icon .ui-icon{display:none}
+#drop .upload-icon::after{content:"+";display:flex;align-items:center;justify-content:center;width:44px;height:44px;border:1.5px solid #25dce8;border-radius:14px;background:linear-gradient(145deg,rgba(37,220,232,.18),rgba(82,105,219,.2));color:#63f4ff;font-size:34px;font-weight:500;line-height:1;box-shadow:0 0 18px rgba(37,220,232,.18);transition:transform .22s ease,box-shadow .22s ease}
+#drop:hover .upload-icon::after{transform:scale(1.08) rotate(90deg);box-shadow:0 0 25px rgba(37,220,232,.32)}
+@media(prefers-reduced-motion:reduce){.machine-card>.mode-btn,#drop .upload-icon::after{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
