@@ -1150,6 +1150,19 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 #payment-options a.payment-option:focus-visible{outline:3px solid #16a6b5!important;outline-offset:3px!important}
 #payment-options a.payment-option:active{transform:scale(.985)}
 @media(prefers-reduced-motion:reduce){#payment-options a.payment-option{transition:none!important}}
+
+/* Separate Inject TikTok HD and HDR machine into independent information columns. */
+.machine-columns{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:14px!important}
+.machine-card{min-width:0;padding:14px;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:linear-gradient(145deg,rgba(22,24,31,.96),rgba(8,9,13,.96));box-shadow:inset 0 1px rgba(255,255,255,.035)}
+.machine-card.inject-machine{border-color:rgba(37,244,238,.3)}
+.machine-card.hdr-machine{border-color:rgba(254,44,85,.28)}
+.machine-card>.mode-btn{display:block;width:100%;min-height:86px;text-align:center;font-size:13px;line-height:1.5}
+.machine-card>.mode-btn small{font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+.machine-notes{display:grid;gap:10px;margin:15px 0 2px;padding:0 0 0 20px;color:#e8e8ec;font-size:12px;line-height:1.7}
+.machine-notes li{padding-left:2px}
+.machine-notes li::marker{color:#25F4EE}
+.hdr-machine .machine-notes li::marker{color:#FE2C55}
+@media(max-width:700px){.machine-columns{grid-template-columns:1fr!important}.machine-card{padding:13px}.machine-notes{font-size:13px;gap:9px}.machine-card>.mode-btn{min-height:78px}}
 </style>
 </head>
 <body>
@@ -1235,7 +1248,33 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 <section class="grid">
   <div class="card upload">
     <div class="card-head"><div><div class="mini">Pilih mode pemrosesan video</div></div><div class="pill">MP4</div></div>
-    <div class="mode-title">PILIH PROSES</div><div class="mode-buttons"><button class="mode-btn active" id="sdrBtn">INJECT TIKTOK HD <small id="sdrPrice">1 COIN / VIDEO</small></button><button class="mode-btn hdr-soon" id="hdrBtn" type="button" aria-disabled="false" title="Klik untuk menghubungi WhatsApp dan mendapatkan mesin HDR">UBAH VIDEO BIASA JADI HDR <small id="hdrPrice" class="soon-label">KLIK DISINI UNTUK MENDAPATKAN MESIN HDR</small></button></div>
+    <div class="mode-title">PILIH MESIN</div>
+    <div class="mode-buttons machine-columns">
+      <article class="machine-card inject-machine">
+        <button class="mode-btn active" id="sdrBtn" type="button">INJECT TIKTOK HD <small id="sdrPrice">1 COIN / VIDEO</small></button>
+        <ul class="machine-notes">
+          <li>Pastikan format video adalah MP4.</li>
+          <li>Mesin ini untuk Android &amp; iPhone.</li>
+          <li>Jika kamu sudah punya video HDR bawaan, maka hasil di TikTok nanti videomu akan aktif HDR.</li>
+          <li>Kamu tidak perlu menggunakan mesin HDR jika memang kamu sudah punya video HDR bawaan.</li>
+          <li>Mesin ini untuk video SDR (non HDR) &amp; HDR Dolby Vision.</li>
+          <li>Gunakan mesin ini agar kamu videomu menjadi HD di TikTok.</li>
+          <li>Setelah videomu selesai di-upload dan berhasil di-download dari mesin ini, langkah selanjutnya tinggal upload ke TikTok lewat Zernio.</li>
+        </ul>
+      </article>
+      <article class="machine-card hdr-machine">
+        <button class="mode-btn hdr-soon" id="hdrBtn" type="button" aria-disabled="false" title="Klik untuk menghubungi WhatsApp dan mendapatkan mesin HDR">MESIN HDR <small id="hdrPrice" class="soon-label">KLIK DISINI UNTUK MENDAPATKAN MESIN HDR</small></button>
+        <ul class="machine-notes">
+          <li>Mesin HDR ini bisa membuat video biasa menjadi HDR.</li>
+          <li>Gunakan mesin HDR ini jika kamu ingin mengubah video biasa menjadi HDR.</li>
+          <li>Jika video bawaan sudah HDR, mesin HDR ini tidak berlaku.</li>
+          <li>Mesin HDR yang saya buat ini adalah untuk Android, tidak bisa untuk iPhone, karena iPhone biasanya sudah memiliki fitur HDR bawaan di kameranya.</li>
+          <li>Mesin HDR ini bisa membuat video apapun menjadi HDR, khusus untuk Android.</li>
+          <li>Dapatkan mesin HDR ini dengan klik tombol di atas.</li>
+          <li>Setelah videomu sudah menjadi HDR karena mesin ini, maka langkah selanjutnya tinggal proses di mesin INJECT HD TIKTOK, dan setelah itu tinggal upload ke TikTok melalui Zernio.</li>
+        </ul>
+      </article>
+    </div>
     <div class="drop" id="drop"><div class="upload-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 16V4m-5 5 5-5 5 5M4 17v3h16v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><strong id="dropTitle">Pilih mode di atas</strong><p id="dropText">Klik salah satu tombol proses untuk memilih file video.</p><p class="android-files-note"><strong>Android:</strong> pilih video melalui pemilih file di perangkat, misalnya <b>Files / File Manager</b>.</p><p class="ios-files-note"><strong>Khusus iPhone:</strong> pilih video dari aplikasi <b>File (Files)</b>.</p><input id="file" class="file" type="file" accept="*/*"></div>
   </div>
   <aside class="side">
