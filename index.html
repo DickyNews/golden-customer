@@ -1174,6 +1174,17 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 .method-flow-attention strong{flex:0 0 auto;color:#ffd56a;font-size:12px;font-weight:900;letter-spacing:.12em;padding-top:2px}
 .method-flow-attention p{margin:0;color:#f3f4fa;font-size:14px;line-height:1.7}
 @media(max-width:600px){.method-flow-attention{width:calc(100% - 24px);margin:18px auto 14px;padding:13px 14px;gap:9px;flex-direction:column}.method-flow-attention p{font-size:13px}}
+
+/* Keep all three processing-flow cards symmetrical regardless of description length. */
+#method-flow .method-flow-track{align-items:stretch}
+#method-flow .method-flow-card{height:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center}
+#method-flow .method-flow-card p{flex:1 1 auto;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;margin:0}
+#method-flow .method-flow-action{margin-top:auto;flex:0 0 auto}
+@media(max-width:800px){
+#method-flow .method-flow-card{height:auto;display:grid;grid-template-columns:38px 30px minmax(0,1fr);align-items:center}
+#method-flow .method-flow-card p{grid-column:3;display:block;width:auto}
+#method-flow .method-flow-action{grid-column:3;margin-top:4px}
+}
 </style>
 </head>
 <body>
