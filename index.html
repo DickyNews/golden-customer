@@ -1185,6 +1185,29 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 #method-flow .method-flow-card p{grid-column:3;display:block;width:auto}
 #method-flow .method-flow-action{grid-column:3;margin-top:4px}
 }
+
+/* Professional light theme for the Inject HD and HDR machine panels. */
+.machine-columns{align-items:stretch!important;gap:16px!important}
+.machine-card{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;align-items:stretch;min-width:0;height:100%;box-sizing:border-box;padding:18px;border:1px solid #d7dee8!important;border-radius:20px;background:linear-gradient(145deg,#fff 0%,#f7f9fc 58%,#eef3f8 100%)!important;color:#172033!important;box-shadow:0 10px 28px rgba(10,24,48,.09),inset 0 1px 0 rgba(255,255,255,.95)!important;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}
+.machine-card::before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 15%,rgba(255,255,255,.92) 48%,transparent 72%);transform:translateX(-130%);transition:transform .75s ease}
+.machine-card:hover{transform:translateY(-4px);border-color:#8da5c4!important;box-shadow:0 18px 38px rgba(10,24,48,.14)!important}
+.machine-card:hover::before{transform:translateX(130%)}
+.machine-card.inject-machine{border-top:4px solid #d5a500!important}
+.machine-card.hdr-machine{border-top:4px solid #5269db!important}
+.machine-card>.mode-btn{position:relative;z-index:1;flex:0 0 auto;min-height:92px;padding:16px 12px;border:1px solid #d4dbe6;border-radius:15px;background:linear-gradient(135deg,#fff,#e9eef5)!important;color:#172033!important;text-shadow:none!important;box-shadow:0 4px 12px rgba(18,34,60,.1),inset 0 1px #fff;transition:transform .22s ease,box-shadow .22s ease,background .22s ease,border-color .22s ease;animation:machineButtonFloat 3.6s ease-in-out infinite}
+.machine-card.hdr-machine>.mode-btn{background:linear-gradient(135deg,#fff,#eef0ff)!important;border-color:#cbd2f5}
+.machine-card>.mode-btn small{display:block;margin-top:10px;color:#8a6800!important;font-size:11px;font-weight:900;line-height:1.45;letter-spacing:.045em}
+.machine-card.hdr-machine>.mode-btn small{color:#4658c4!important}
+.machine-card>.mode-btn:hover,.machine-card>.mode-btn:focus-visible{transform:translateY(-2px) scale(1.012);border-color:#687eaa;box-shadow:0 9px 22px rgba(22,43,80,.18);outline:none}
+.machine-card>.mode-btn:active{transform:scale(.985)}
+.machine-card>.mode-btn.active{border-color:#c5a12a!important;box-shadow:0 0 0 2px rgba(213,165,0,.12),0 5px 16px rgba(18,34,60,.1)}
+.machine-notes{position:relative;z-index:1;flex:1 1 auto;display:flex;flex-direction:column;gap:12px;margin:18px 0 0;padding:0 0 0 21px;color:#263247!important;font-size:13px;line-height:1.75}
+.machine-notes li{padding-left:2px}
+.machine-notes li::marker{color:#b18a00!important}
+.hdr-machine .machine-notes li::marker{color:#5269db!important}
+@keyframes machineButtonFloat{0%,100%{box-shadow:0 4px 12px rgba(18,34,60,.09),inset 0 1px #fff}50%{box-shadow:0 7px 18px rgba(18,34,60,.15),inset 0 1px #fff}}
+@media(max-width:700px){.machine-columns{grid-template-columns:1fr!important;gap:14px!important}.machine-card{height:auto;padding:15px}.machine-notes{font-size:13px;gap:10px}.machine-card>.mode-btn{min-height:80px}}
+@media(prefers-reduced-motion:reduce){.machine-card,.machine-card::before,.machine-card>.mode-btn{animation:none!important;transition:none!important}.machine-card:hover,.machine-card>.mode-btn:hover{transform:none}}
 </style>
 </head>
 <body>
