@@ -1226,6 +1226,18 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 #drop .upload-icon::after{content:"+";display:flex;align-items:center;justify-content:center;width:44px;height:44px;border:1.5px solid #25dce8;border-radius:14px;background:linear-gradient(145deg,rgba(37,220,232,.18),rgba(82,105,219,.2));color:#63f4ff;font-size:34px;font-weight:500;line-height:1;box-shadow:0 0 18px rgba(37,220,232,.18);transition:transform .22s ease,box-shadow .22s ease}
 #drop:hover .upload-icon::after{transform:scale(1.08) rotate(90deg);box-shadow:0 0 25px rgba(37,220,232,.32)}
 @media(prefers-reduced-motion:reduce){.machine-card>.mode-btn,#drop .upload-icon::after{transition:none!important;animation:none!important}}
+
+/* Final button alignment: matching dimensions and a clear add-video cue. */
+.machine-columns{align-items:stretch!important}
+.machine-card{display:flex!important;flex-direction:column!important;height:100%;box-sizing:border-box}
+.machine-card>.mode-btn,
+.machine-card>.mode-btn:visited{height:126px!important;min-height:126px!important;max-height:126px!important;flex:0 0 126px!important;padding:12px 18px!important;gap:7px!important;box-sizing:border-box!important;border-radius:20px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;white-space:normal!important;overflow-wrap:anywhere!important}
+.machine-card>.mode-btn::before{width:27px!important;height:27px!important;flex:0 0 27px!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;line-height:1!important}
+.machine-card.inject-machine>.mode-btn::before{content:"+"!important;font-size:23px!important;font-weight:600!important;color:#fff!important;border-color:#ffe15a!important;background:rgba(255,225,90,.14)!important}
+.machine-card.hdr-machine>.mode-btn::before{content:"＋"!important;font-size:20px!important;font-weight:500!important;color:#fff!important}
+.machine-card>.mode-btn small{display:block!important;width:100%!important;max-width:290px!important;font-size:11px!important;line-height:1.25!important;letter-spacing:.035em!important;overflow-wrap:anywhere!important}
+.machine-card.inject-machine>.mode-btn small{font-size:12px!important}
+@media(max-width:700px){.machine-card>.mode-btn,.machine-card>.mode-btn:visited{height:112px!important;min-height:112px!important;max-height:112px!important;flex-basis:112px!important;padding:10px 14px!important}.machine-card>.mode-btn small{font-size:10px!important}.machine-card.inject-machine>.mode-btn small{font-size:11px!important}}
 </style>
 </head>
 <body>
@@ -1330,7 +1342,7 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
         </ul>
       </article>
       <article class="machine-card hdr-machine">
-        <button class="mode-btn hdr-soon" id="hdrBtn" type="button" aria-disabled="false" title="Klik untuk menghubungi WhatsApp dan mendapatkan mesin HDR">MESIN HDR <small id="hdrPrice" class="soon-label">KLIK DISINI UNTUK MENDAPATKAN MESIN HDR</small></button>
+        <button class="mode-btn hdr-soon" id="hdrBtn" type="button" aria-disabled="false" title="Klik untuk menghubungi WhatsApp dan mendapatkan mesin HDR">MESIN HDR <small id="hdrPrice" class="soon-label">KLIK DISINI UNTUK MENDAPATKAN MESIN</small></button>
         <ul class="machine-notes">
           <li>Mesin HDR ini bisa membuat video biasa menjadi HDR.</li>
           <li>Gunakan mesin HDR ini jika kamu ingin mengubah video biasa menjadi HDR.</li>
