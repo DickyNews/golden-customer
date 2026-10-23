@@ -1240,6 +1240,49 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 @media(max-width:700px){.machine-card>.mode-btn,.machine-card>.mode-btn:visited{height:112px!important;min-height:112px!important;max-height:112px!important;flex-basis:112px!important;padding:10px 14px!important}.machine-card>.mode-btn small{font-size:10px!important}.machine-card.inject-machine>.mode-btn small{font-size:11px!important}}
 
 .free-inject-wrap{margin:0 0 16px;text-align:center}.free-inject-btn{width:100%;font-weight:900;letter-spacing:.04em}.free-inject-caption{margin:7px 0 0;color:var(--muted,#a8a8a8);font-size:.85rem}.free-topup-link{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:14px;text-decoration:none}.free-topup-link svg{width:21px;height:21px;flex:0 0 auto}.free-inject-wrap[hidden]{display:none!important}
+
+/* Samakan tampilan tiga tombol mesin; Inject Gratis berada paling atas. */
+.free-inject-wrap{margin:12px 0 14px;text-align:center}
+.free-inject-btn,.inject-machine>.mode-btn,.hdr-machine>.mode-btn{
+  width:100%!important;height:112px!important;min-height:112px!important;max-height:112px!important;
+  flex:0 0 112px!important;box-sizing:border-box!important;border-radius:20px!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  gap:7px!important;padding:10px 14px!important;position:relative!important;overflow:hidden!important;
+  color:#fff!important;-webkit-text-fill-color:#fff!important;
+  background:linear-gradient(145deg,#30343b 0%,#171a20 100%)!important;
+  border:1px solid #d6b84e!important;box-shadow:0 6px 18px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.1)!important;
+  font-size:14px!important;font-weight:900!important;line-height:1.35!important;text-align:center!important;
+  animation:goldenMachineGlow 3s ease-in-out infinite!important;
+  transition:transform .22s ease,box-shadow .22s ease,filter .22s ease!important;
+}
+.free-inject-btn::before,.inject-machine>.mode-btn::before,.hdr-machine>.mode-btn::before{
+  content:"+"!important;display:flex!important;align-items:center!important;justify-content:center!important;
+  width:27px!important;height:27px!important;flex:0 0 27px!important;border-radius:50%!important;
+  border:1px solid #ffe15a!important;background:rgba(255,225,90,.14)!important;color:#ffe15a!important;
+  font-size:22px!important;font-weight:600!important;line-height:1!important;
+}
+.free-inject-btn::before{content:"✓"!important}
+.free-inject-btn:hover,.inject-machine>.mode-btn:hover,.hdr-machine>.mode-btn:hover,
+.free-inject-btn:focus-visible,.machine-card>.mode-btn:focus-visible{
+  transform:translateY(-2px)!important;filter:brightness(1.12)!important;
+  box-shadow:0 10px 25px rgba(231,184,63,.2),inset 0 1px rgba(255,255,255,.12)!important;
+  border-color:#ffe783!important;outline:2px solid rgba(255,225,90,.2)!important;outline-offset:2px!important;
+}
+.free-inject-btn:active,.inject-machine>.mode-btn:active,.hdr-machine>.mode-btn:active{transform:scale(.985)!important}
+.free-inject-btn small,.inject-machine>.mode-btn small,.hdr-machine>.mode-btn small{
+  display:block!important;width:100%!important;max-width:290px!important;margin-top:4px!important;
+  color:#ffe15a!important;-webkit-text-fill-color:#ffe15a!important;font-size:11px!important;
+  font-weight:900!important;line-height:1.3!important;letter-spacing:.035em!important;
+}
+.free-inject-btn{letter-spacing:.035em!important}
+.free-inject-caption{margin:7px 0 0;color:var(--muted,#a8a8a8);font-size:.82rem}
+.free-inject-wrap[hidden]{display:none!important}
+@keyframes goldenMachineGlow{
+  0%,100%{box-shadow:0 6px 18px rgba(0,0,0,.24),0 0 0 rgba(231,184,63,0),inset 0 1px rgba(255,255,255,.1)}
+  50%{box-shadow:0 7px 22px rgba(0,0,0,.26),0 0 17px rgba(231,184,63,.14),inset 0 1px rgba(255,255,255,.13)}
+}
+@media(prefers-reduced-motion:reduce){.free-inject-btn,.inject-machine>.mode-btn,.hdr-machine>.mode-btn{animation:none!important;transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -1330,6 +1373,7 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   <div class="card upload">
     <div class="card-head"><div><div class="mini">Pilih mode pemrosesan video</div></div><div class="pill">MP4</div></div>
     <div class="mode-title">PILIH MESIN</div>
+    <div id="freeInjectWrap" class="free-inject-wrap"><button class="mode-btn free-inject-btn" id="freeInjectBtn" type="button">INJECT GRATIS</button><p class="free-inject-caption">Coba Dicky News Method tanpa login.</p><input id="freeInjectFile" type="file" accept=".mp4,.mov,video/mp4,video/quicktime" hidden></div>
     <div class="mode-buttons machine-columns">
       <article class="machine-card inject-machine">
         <button class="mode-btn active" id="sdrBtn" type="button">INJECT TIKTOK HD <small id="sdrPrice">1 COIN / VIDEO</small></button>
@@ -1356,7 +1400,6 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
         </ul>
       </article>
     </div>
-    <div id="freeInjectWrap" class="free-inject-wrap"><button class="btn btn-primary free-inject-btn" id="freeInjectBtn" type="button">INJECT GRATIS</button><p class="free-inject-caption">Coba Dicky News Method tanpa login.</p><input id="freeInjectFile" type="file" accept=".mp4,.mov,video/mp4,video/quicktime" hidden></div>
     <div class="drop" id="drop"><div class="upload-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 16V4m-5 5 5-5 5 5M4 17v3h16v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><strong id="dropTitle">Pilih mode di atas</strong><p id="dropText">Klik salah satu tombol proses untuk memilih file video.</p><p class="android-files-note"><strong>Android:</strong> pilih video melalui pemilih file di perangkat, misalnya <b>Files / File Manager</b>.</p><p class="ios-files-note"><strong>Khusus iPhone:</strong> pilih video dari aplikasi <b>File (Files)</b>.</p><input id="file" class="file" type="file" accept="*/*"></div>
   </div>
   <aside class="side">
