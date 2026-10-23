@@ -1317,6 +1317,29 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 }
 @media(prefers-reduced-motion:reduce){.free-inject-btn,.machine-card.inject-machine>.mode-btn,.machine-card.hdr-machine>.mode-btn{animation:none!important;transition:none!important}}
 
+
+/* Last-resort control-level override: exact three buttons on the live customer page. */
+#freeInjectBtn,#sdrBtn,#hdrBtn{
+  background:#fff200!important;
+  background-image:linear-gradient(135deg,#fff200 0%,#ffdf00 48%,#ffc800 100%)!important;
+  color:#050505!important;-webkit-text-fill-color:#050505!important;
+  border:2px solid #050505!important;
+  box-shadow:0 0 0 1px rgba(0,0,0,.18),0 7px 0 #050505,0 10px 22px rgba(255,220,0,.3),inset 0 2px 0 rgba(255,255,255,.75)!important;
+  animation:goldenYellowAlive 2.1s ease-in-out infinite!important;
+}
+#freeInjectBtn::before,#sdrBtn::before,#hdrBtn::before{
+  color:#050505!important;-webkit-text-fill-color:#050505!important;
+  border-color:#050505!important;background:rgba(0,0,0,.07)!important;
+}
+#freeInjectBtn small,#sdrBtn small,#hdrBtn small{
+  color:#050505!important;-webkit-text-fill-color:#050505!important;
+}
+#freeInjectBtn:hover,#sdrBtn:hover,#hdrBtn:hover,
+#freeInjectBtn:focus-visible,#sdrBtn:focus-visible,#hdrBtn:focus-visible{
+  background:#fff800!important;
+  background-image:linear-gradient(135deg,#fff800 0%,#ffe600 48%,#ffd000 100%)!important;
+  border-color:#000!important;
+}
 </style>
 </head>
 <body>
