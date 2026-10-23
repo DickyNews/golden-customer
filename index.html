@@ -1284,41 +1284,38 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 @media(prefers-reduced-motion:reduce){.free-inject-btn,.inject-machine>.mode-btn,.hdr-machine>.mode-btn{animation:none!important;transition:none!important}}
 
 
-/* Final unified vivid-yellow treatment for all three machine buttons. */
-.free-inject-btn,.inject-machine>.mode-btn,.hdr-machine>.mode-btn{
+/* Final enforced unified vivid-yellow treatment for all three machine buttons. */
+.free-inject-btn,.machine-card.inject-machine>.mode-btn,.machine-card.hdr-machine>.mode-btn{
   background:linear-gradient(135deg,#fff200 0%,#ffdf00 48%,#ffc800 100%)!important;
   color:#080808!important;-webkit-text-fill-color:#080808!important;
-  border:2px solid #050505!important;
-  border-radius:18px!important;
+  border:2px solid #050505!important;border-radius:18px!important;
   box-shadow:0 0 0 1px rgba(0,0,0,.18),0 7px 0 #080808,0 10px 22px rgba(255,220,0,.3),inset 0 2px 0 rgba(255,255,255,.75)!important;
   animation:goldenYellowAlive 2.1s ease-in-out infinite!important;
-  transform-origin:center center!important;
-  filter:saturate(1.12)!important;
+  transform-origin:center center!important;filter:saturate(1.12)!important;
 }
-.free-inject-btn::before,.inject-machine>.mode-btn::before,.hdr-machine>.mode-btn::before{
+.free-inject-btn::before,.machine-card.inject-machine>.mode-btn::before,.machine-card.hdr-machine>.mode-btn::before{
   color:#080808!important;-webkit-text-fill-color:#080808!important;
   background:rgba(0,0,0,.07)!important;border:2px solid #080808!important;
   box-shadow:0 0 0 2px rgba(255,255,255,.24),inset 0 1px 2px rgba(0,0,0,.12)!important;
 }
-.free-inject-btn small,.inject-machine>.mode-btn small,.hdr-machine>.mode-btn small{
-  color:#080808!important;-webkit-text-fill-color:#080808!important;
+.free-inject-btn small,.machine-card.inject-machine>.mode-btn small,.machine-card.hdr-machine>.mode-btn small{
+  color:#080808!important;-webkit-text-fill-color:#080808!important;font-weight:900!important;
 }
-.free-inject-btn:hover,.inject-machine>.mode-btn:hover,.hdr-machine>.mode-btn:hover,
-.free-inject-btn:focus-visible,.machine-card>.mode-btn:focus-visible{
-  background:linear-gradient(135deg,#fff94a 0%,#ffeb00 45%,#ffd000 100%)!important;
-  transform:translateY(-3px) scale(1.012)!important;
-  box-shadow:0 0 0 1px rgba(0,0,0,.2),0 9px 0 #080808,0 14px 28px rgba(255,220,0,.48),0 0 24px rgba(255,230,0,.42),inset 0 2px 0 rgba(255,255,255,.9)!important;
-  border-color:#000!important;outline:2px solid rgba(255,230,0,.42)!important;outline-offset:3px!important;
+.free-inject-btn:hover,.machine-card.inject-machine>.mode-btn:hover,.machine-card.hdr-machine>.mode-btn:hover,
+.free-inject-btn:focus-visible,.machine-card.inject-machine>.mode-btn:focus-visible,.machine-card.hdr-machine>.mode-btn:focus-visible{
+  background:linear-gradient(135deg,#fff800 0%,#ffe600 48%,#ffd000 100%)!important;
+  border-color:#000!important;transform:translateY(-2px) scale(1.012)!important;
+  box-shadow:0 0 0 1px rgba(0,0,0,.18),0 8px 0 #080808,0 13px 30px rgba(255,225,0,.48),0 0 20px rgba(255,238,0,.3)!important;
 }
-.free-inject-btn:active,.inject-machine>.mode-btn:active,.hdr-machine>.mode-btn:active{
+.free-inject-btn:active,.machine-card.inject-machine>.mode-btn:active,.machine-card.hdr-machine>.mode-btn:active{
   transform:translateY(4px) scale(.99)!important;
-  box-shadow:0 0 0 1px rgba(0,0,0,.2),0 2px 0 #080808,0 5px 12px rgba(255,220,0,.25),inset 0 2px 5px rgba(0,0,0,.13)!important;
+  box-shadow:0 0 0 1px rgba(0,0,0,.2),0 2px 0 #080808,0 5px 12px rgba(255,220,0,.25)!important;
 }
 @keyframes goldenYellowAlive{
   0%,100%{filter:brightness(1) saturate(1.08);box-shadow:0 0 0 1px rgba(0,0,0,.18),0 7px 0 #080808,0 10px 22px rgba(255,220,0,.25),inset 0 2px 0 rgba(255,255,255,.75)}
   50%{filter:brightness(1.08) saturate(1.2);box-shadow:0 0 0 1px rgba(0,0,0,.18),0 7px 0 #080808,0 12px 30px rgba(255,225,0,.5),0 0 20px rgba(255,238,0,.35),inset 0 2px 0 rgba(255,255,255,.95)}
 }
-@media(prefers-reduced-motion:reduce){.free-inject-btn,.inject-machine>.mode-btn,.hdr-machine>.mode-btn{animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){.free-inject-btn,.machine-card.inject-machine>.mode-btn,.machine-card.hdr-machine>.mode-btn{animation:none!important;transition:none!important}}
 
 </style>
 </head>
