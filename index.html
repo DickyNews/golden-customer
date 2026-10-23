@@ -1431,7 +1431,7 @@ window.GOLDEN_PLATFORM = Object.freeze({
 });
 const file=document.getElementById('file'),drop=document.getElementById('drop'),title=document.getElementById('dropTitle'),text=document.getElementById('dropText'),modal=document.getElementById('modal'),close=document.getElementById('close'),buy=document.getElementById('buy'),sdrBtn=document.getElementById('sdrBtn'),hdrBtn=document.getElementById('hdrBtn');let selectedMode='sdr',selectedPrice=1,processing=false;
 
-const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:false};let maxFileSizeBytes=300*1024*1024;
+const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:false};let maxFileSizeBytes=1024*1024*1024;
 function renderPrices(){
   const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
   if(sdr)sdr.textContent=servicePrices.sdr+' COIN / VIDEO';
@@ -1452,7 +1452,7 @@ async function loadPublicSettings(){
     for(const s of all){
       if(s.service_code===GOLDEN_PLATFORM.serviceCodes.sdr){if(Number.isFinite(Number(s.coin_cost)))servicePrices.sdr=Number(s.coin_cost);if(typeof s.is_active==='boolean')serviceActive.sdr=s.is_active;}
       if(s.service_code===GOLDEN_PLATFORM.serviceCodes.hdr){if(Number.isFinite(Number(s.coin_cost)))servicePrices.hdr=Number(s.coin_cost);serviceActive.hdr=false;}
-      if(Number.isFinite(Number(s.max_file_size_bytes))&&Number(s.max_file_size_bytes)>0)maxFileSizeBytes=Math.min(maxFileSizeBytes,Number(s.max_file_size_bytes));
+      if(Number.isFinite(Number(s.max_file_size_bytes))&&Number(s.max_file_size_bytes)>0)maxFileSizeBytes=Number(s.max_file_size_bytes);
     }
     renderPrices();
   }catch(e){}
@@ -1510,6 +1510,8 @@ async function pollJob(jobId){
 
 async function uploadVideo(f){
   if(processing)return;
+  if(!f){return;}
+  if(Number.isFinite(maxFileSizeBytes)&&f.size>maxFileSizeBytes){const limit=(maxFileSizeBytes/(1024*1024)).toFixed(0);modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Ukuran Video Terlalu Besar';document.getElementById('modalText').textContent='Ukuran file melebihi batas layanan ('+limit+' MB). Pilih video yang lebih kecil.';return;}
   processing=true;
   modal.classList.add('show');close.style.display='none';
   document.getElementById('modalTitle').textContent=selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD';
@@ -1528,7 +1530,7 @@ async function uploadVideo(f){
       xhr.onerror=()=>reject(new Error('Koneksi ke Golden API terputus.'));
       xhr.onload=()=>{
         let d={};try{d=JSON.parse(xhr.responseText||'{}')}catch(e){}
-        if(xhr.status<200||xhr.status>=300)return reject(new Error(d.detail||('HTTP '+xhr.status)));
+        if(xhr.status<200||xhr.status>=300){const msg=xhr.status===413?'Ukuran upload ditolak oleh jalur proxy/server (HTTP 413). File belum diproses dan coin tidak seharusnya terpotong.':(d.detail||('HTTP '+xhr.status));return reject(new Error(msg));}
         resolve(d);
       };
       xhr.send(fd);
