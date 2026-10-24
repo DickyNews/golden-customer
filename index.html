@@ -1340,6 +1340,37 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   background-image:linear-gradient(135deg,#fff800 0%,#ffe600 48%,#ffd000 100%)!important;
   border-color:#000!important;
 }
+
+/* Dicky News — continuous animated border for every interactive button */
+@property --dicky-border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes dickyInfiniteBorderFlow {
+  to { --dicky-border-angle: 360deg; }
+}
+:where(button:not(:disabled), .btn:not(:disabled), .mode-btn:not(:disabled),
+a.button, [role="button"]:not([aria-disabled="true"]),
+input[type="button"]:not(:disabled), input[type="submit"]:not(:disabled)) {
+  border: 1px solid transparent !important;
+  border-image: conic-gradient(from var(--dicky-border-angle),
+    #62f3ff 0deg, #9b70ff 75deg, #ff4edb 145deg,
+    #e7b83f 220deg, #62f3ff 300deg, #62f3ff 360deg) 1 !important;
+  animation: dickyInfiniteBorderFlow 3.2s linear infinite !important;
+  will-change: border-image-source;
+}
+:where(button:disabled, .btn:disabled, .mode-btn:disabled,
+[role="button"][aria-disabled="true"], input:disabled) {
+  animation: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  :where(button, .btn, .mode-btn, a.button, [role="button"],
+  input[type="button"], input[type="submit"]) {
+    animation: none !important;
+  }
+}
+
 </style>
 </head>
 <body>
