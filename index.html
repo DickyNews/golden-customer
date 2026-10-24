@@ -1629,7 +1629,7 @@ function normalizeProgress(d){
 async function pollJob(jobId){
   for(let i=0;i<180;i++){
     await new Promise(r=>setTimeout(r,2000));
-    const r=await fetch(GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.job+encodeURIComponent(jobId),{credentials:'include'});
+    const r=await fetch(GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.job+encodeURIComponent(jobId),{credentials:'include',headers:customerAuthHeaders()});
     let d={};try{d=await r.json()}catch(e){}
     if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));
     const p=normalizeProgress(d);
@@ -1714,6 +1714,7 @@ async function uploadVideo(f){
     const response=await new Promise((resolve,reject)=>{
       xhr.open('POST',GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.upload,true);
       xhr.withCredentials=true;
+      const sessionToken=localStorage.getItem('golden_customer_session_token');if(sessionToken)xhr.setRequestHeader('Authorization','Bearer '+sessionToken);
       xhr.upload.onprogress=e=>{
         if(e.lengthComputable)setProgress((e.loaded/e.total)*35,'Mengunggah video');
       };
@@ -1755,6 +1756,7 @@ async function uploadVideo(f){
           const xhr=new XMLHttpRequest();
           xhr.open('GET',downloadUrl,true);
           xhr.withCredentials=true;
+          const sessionToken=localStorage.getItem('golden_customer_session_token');if(sessionToken)xhr.setRequestHeader('Authorization','Bearer '+sessionToken);
           xhr.responseType='blob';
           xhr.onprogress=e=>{
             if(e.lengthComputable&&e.total>0){
@@ -1792,7 +1794,7 @@ async function uploadVideo(f){
         document.getElementById('modalText').textContent='Seluruh data video sudah diterima browser. Mengonfirmasi pembersihan file server…';
         if(jobId){
           const ack=await fetch(`${GOLDEN_PLATFORM.apiBase}${GOLDEN_PLATFORM.endpoints.job}${encodeURIComponent(jobId)}/download/ack`,{
-            method:'POST',credentials:'include',cache:'no-store'
+            method:'POST',credentials:'include',cache:'no-store',headers:customerAuthHeaders()
           });
           if(!ack.ok){
             let detail='HTTP '+ack.status;try{const d=await ack.json();detail=d.detail||detail}catch(e){}
@@ -1809,7 +1811,7 @@ async function uploadVideo(f){
         if(!transferComplete&&jobId){
           try{
             const failUrl=`${GOLDEN_PLATFORM.apiBase}${GOLDEN_PLATFORM.endpoints.job}${encodeURIComponent(jobId)}/download/fail`;
-            const fr=await fetch(failUrl,{method:'POST',credentials:'include',cache:'no-store'});
+            const fr=await fetch(failUrl,{method:'POST',credentials:'include',cache:'no-store',headers:customerAuthHeaders()});
             const result=await fr.json().catch(()=>({}));
             if(fr.ok&&result.ok){
               failureNote=result.refunded
@@ -1879,6 +1881,7 @@ function setCustomerAuth(auth,balance=null){
   if(b){b.textContent=!customerAuthenticated?"BELUM LOGIN":(Number(balance)===0?"SALDO HABIS":"TERHUBUNG");b.className="badge "+(customerAuthenticated&&Number(balance)>0?"":"warn");}
   if(!customerAuthenticated&&historyList)historyList.replaceChildren();
 }
+function customerAuthHeaders(extra={}){const token=localStorage.getItem('golden_customer_session_token');return token?{...extra,Authorization:'Bearer '+token}:{...extra};}
 function showModal(titleText,textText){modal.classList.add('show');document.getElementById('modalTitle').textContent=titleText;document.getElementById('modalText').textContent=textText}
 function closeModal(){modal.classList.remove('show')}
 function setWallet(d){
@@ -1896,7 +1899,7 @@ function setWallet(d){
 }
 async function loadWallet(){
   try{
-    const r=await fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.wallet,{credentials:"include",cache:"no-store"});
+    const r=await fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.wallet,{credentials:"include",cache:"no-store",headers:customerAuthHeaders()});
     if(r.status===401||r.status===403){setCustomerAuth(false);if(walletBadge){walletBadge.textContent="BELUM LOGIN";walletBadge.className="badge warn";}return false;}
     if(!r.ok){setCustomerAuth(false);return false;}
     const d=await r.json();setWallet(d);return true;
@@ -1905,9 +1908,10 @@ async function loadWallet(){
 if(logoutBtn)logoutBtn.addEventListener('click',async()=>{
   logoutBtn.disabled=true;
   try{
-    const r=await fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.logout,{method:'POST',credentials:'include',cache:'no-store'});
+    const r=await fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.logout,{method:'POST',credentials:'include',cache:'no-store',headers:customerAuthHeaders()});
     let d={};try{d=await r.json()}catch(e){}
     if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));
+    localStorage.removeItem('golden_customer_session_token');
     claimInput.value='';
     window.location.reload();
   }catch(e){
@@ -1930,6 +1934,7 @@ claimBtn.onclick=async()=>{
     });
     let d={};try{d=await r.json()}catch(e){}
     if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));
+    if(typeof d.session_token==='string'&&d.session_token)localStorage.setItem('golden_customer_session_token',d.session_token);
     const walletLoaded=await loadWallet();
     if(!walletLoaded){
       document.getElementById('modalTitle').textContent='Sesi Login Belum Aktif';
@@ -1999,7 +2004,7 @@ async function loadJobHistory(){
   if(!customerAuthenticated){setCustomerAuth(false);return;}
   historyList.innerHTML='<div class="history-empty">Memuat riwayat dari server…</div>';
   try{
-    const r=await fetch(GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.upload,{credentials:'include',cache:'no-store'});
+    const r=await fetch(GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.upload,{credentials:'include',cache:'no-store',headers:customerAuthHeaders()});
     let d={};try{d=await r.json()}catch(e){}
     if(r.status===401){
       historyList.innerHTML='<div class="history-empty">Hubungkan akun melalui Claim Key untuk melihat riwayat pemrosesan.</div>';return;
