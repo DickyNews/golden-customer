@@ -1434,6 +1434,40 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 .machine-details .machine-notes{margin-top:12px}
 .machine-details[open]{padding-bottom:2px}
 @media(max-width:700px){.machine-card{height:auto!important}.machine-details>summary{min-height:38px;font-size:13px}}
+
+/* REAL SPIRAL BORDER: dedicated masked ring layer, independent from button sheen effects */
+@property --dicky-spiral-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes dickySpiralBorderTurn {
+  from { --dicky-spiral-angle: 0deg; }
+  to { --dicky-spiral-angle: 360deg; }
+}
+.dicky-spiral-border {
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  padding:2px!important;
+  border:0!important;
+  border-radius:inherit!important;
+  background:conic-gradient(from var(--dicky-spiral-angle),
+    #62f3ff 0deg,#477dff 52deg,#9b70ff 104deg,
+    #ff4edb 156deg,#ffd84d 208deg,#42ffb4 260deg,
+    #62f3ff 312deg,#477dff 360deg)!important;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)!important;
+  -webkit-mask-composite:xor!important;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)!important;
+  mask-composite:exclude!important;
+  pointer-events:none!important;
+  z-index:6!important;
+  opacity:1!important;
+  animation:dickySpiralBorderTurn 2.4s linear infinite!important;
+}
+@media(prefers-reduced-motion:reduce){
+ .dicky-spiral-border{animation:none!important}
+}
 </style>
 </head>
 <body>
@@ -2257,5 +2291,26 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
 })();
 </script>
 
+
+<script id="DICKY_REAL_SPIRAL_BORDER">
+(function(){
+  const selector='button:not(:disabled),a[href],[role="button"]:not([aria-disabled="true"]),input[type="button"]:not(:disabled),input[type="submit"]:not(:disabled),input[type="reset"]:not(:disabled)';
+  function install(){
+    document.querySelectorAll(selector).forEach(el=>{
+      if(el.querySelector(':scope > .dicky-spiral-border')) return;
+      if(el instanceof HTMLInputElement) return;
+      const style=getComputedStyle(el);
+      if(style.position==='static') el.style.setProperty('position','relative','important');
+      if(style.overflow==='visible') el.style.setProperty('overflow','hidden','important');
+      const ring=document.createElement('span');
+      ring.className='dicky-spiral-border';
+      ring.setAttribute('aria-hidden','true');
+      el.appendChild(ring);
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true});
+  else install();
+})();
+</script>
 </body>
 </html>
