@@ -1381,6 +1381,30 @@ input[type="button"]:not(:disabled), input[type="submit"]:not(:disabled)) {
   }
 }
 
+
+/* FINAL FIX: prevent the step-3 description from splitting into flex columns on desktop. */
+@media (min-width: 801px) {
+  #method-flow .method-flow-card p {
+    display: block !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+  }
+  #method-flow .method-flow-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  #method-flow .method-flow-card .method-flow-action {
+    width: 100% !important;
+    margin-top: auto !important;
+  }
+}
 </style>
 </head>
 <body>
