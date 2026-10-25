@@ -2036,7 +2036,33 @@ async function loadPublicSettings(){
     renderPrices();
   }catch(e){}
 }
+function showSubscriptionRequired(){
+  modal.classList.add('show');
+  close.style.display='block';
+  close.textContent='Tutup';
+  document.getElementById('modalTitle').textContent='Paket Langganan Diperlukan';
+  document.getElementById('modalText').textContent='Anda belum memiliki paket aktif. Pilih paket langganan untuk mengaktifkan Inject TikTok HD.';
+  let action=document.getElementById('goToSubscription');
+  if(!action){
+    action=document.createElement('button');
+    action.id='goToSubscription';
+    action.type='button';
+    action.className='btn btn-primary';
+    action.style.cssText='display:block;width:100%;margin-top:12px;border-radius:14px;';
+    action.textContent='Lihat Pilihan Paket';
+    document.getElementById('modalText').insertAdjacentElement('afterend',action);
+    action.addEventListener('click',()=>{
+      closeModal();
+      const panel=document.getElementById('subscriptionPanel');
+      if(panel){panel.scrollIntoView({behavior:'smooth',block:'center'});panel.style.outline='2px solid rgba(98,243,255,.8)';setTimeout(()=>panel.style.outline='',1800);}
+    });
+  }
+  action.hidden=false;
+}
 function selectMode(mode,price){
+  if(mode==='sdr'&&!customerAuthenticated){showSubscriptionRequired();return;}
+  const existingAction=document.getElementById('goToSubscription');
+  if(existingAction)existingAction.hidden=true;
   if(!serviceActive[mode]){modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Layanan Tidak Tersedia';document.getElementById('modalText').textContent='Layanan ini sedang dinonaktifkan oleh admin. Silakan pilih mode lain.';return}
   selectedMode=mode;selectedPrice=servicePrices[mode]??price;
   sdrBtn.classList.toggle('active',mode==='sdr');
