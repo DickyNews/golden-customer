@@ -1447,6 +1447,51 @@ body>.app{position:relative!important;z-index:1!important;background:transparent
 @media(prefers-reduced-motion:reduce){
  :where(button,a[href],[role="button"],input[type="button"],input[type="submit"],summary){animation:none!important}
 }
+
+/* GLOBAL MOVING NEON BORDER — apply across every card, field, column and button. */
+@keyframes dickyAllBordersCycle{
+  0%{border-color:#26f4ff;box-shadow:0 0 0 1px rgba(38,244,255,.65),0 0 7px rgba(38,244,255,.24)}
+  16%{border-color:#3d7bff;box-shadow:0 0 0 1px rgba(61,123,255,.7),0 0 9px rgba(61,123,255,.28)}
+  33%{border-color:#b04dff;box-shadow:0 0 0 1px rgba(176,77,255,.7),0 0 9px rgba(176,77,255,.28)}
+  50%{border-color:#ff40d6;box-shadow:0 0 0 1px rgba(255,64,214,.7),0 0 10px rgba(255,64,214,.3)}
+  66%{border-color:#ffd94a;box-shadow:0 0 0 1px rgba(255,217,74,.7),0 0 9px rgba(255,217,74,.25)}
+  83%{border-color:#46ffb5;box-shadow:0 0 0 1px rgba(70,255,181,.7),0 0 9px rgba(70,255,181,.25)}
+  100%{border-color:#26f4ff;box-shadow:0 0 0 1px rgba(38,244,255,.65),0 0 7px rgba(38,244,255,.24)}
+}
+:where(
+  .container,.hero,.section,.section-card,.card,.panel,.wallet,.wallet-card,
+  .wallet-panel,.machine-columns,.machine-card,.machine-details,
+  .method-flow-track,.method-flow-card,.method-flow-action,
+  .upload-card,.upload-panel,.upload-area,.drop-zone,.job-card,.history-card,
+  .claim-card,.claim-panel,.pricing-card,.price-card,.feature-card,
+  .stats-card,.stat-card,.modal,.modal-content,.dialog,.notice,.alert,
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  select,textarea,button:not(:disabled),a[href],[role="button"]:not([aria-disabled="true"]),
+  summary
+){
+  animation:dickyAllBordersCycle 8s linear infinite!important;
+}
+:where(.container,.hero,.section,.section-card,.card,.panel,.wallet,.wallet-card,
+.machine-columns,.machine-card,.method-flow-track,.method-flow-card,.upload-card,
+.upload-panel,.upload-area,.drop-zone,.job-card,.history-card,.claim-card,
+.claim-panel,.pricing-card,.price-card,.feature-card,.stats-card,.stat-card,
+.modal,.modal-content,.dialog,.notice,.alert){
+  border-style:solid!important;
+  border-width:1px!important;
+}
+:where(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),select,textarea){
+  border-style:solid!important;border-width:1px!important;
+}
+:where(button,a[href],[role="button"],summary){will-change:border-color,box-shadow}
+#starfield{z-index:0!important;opacity:1!important;visibility:visible!important;pointer-events:none!important}
+body>.app{z-index:1!important;position:relative!important;background:transparent!important}
+@media(prefers-reduced-motion:reduce){
+ :where(.container,.hero,.section,.section-card,.card,.panel,.wallet,.wallet-card,
+ .machine-columns,.machine-card,.method-flow-track,.method-flow-card,.method-flow-action,
+ .upload-card,.upload-panel,.upload-area,.drop-zone,.job-card,.history-card,.claim-card,
+ .claim-panel,.pricing-card,.price-card,.feature-card,.stats-card,.stat-card,.modal,
+ .modal-content,.dialog,.notice,.alert,input,select,textarea,button,a[href],[role="button"],summary){animation:none!important}
+}
 </style>
 </head>
 <body>
