@@ -46,7 +46,7 @@
       "url": "https://dickynewsmethod.pages.dev/",
       "sameAs": [
         "https://www.youtube.com/@dickynews",
-        "https://www.tiktok.com/@dickynewsofficial",
+        "https://www.tiktok.com/@dickynewsyt",
         "https://www.instagram.com/dickynews"
       ]
     }
@@ -621,8 +621,7 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:var(--ne
 @media (max-width:800px),(pointer:coarse){
   html{scroll-behavior:auto!important;scroll-padding-top:12px}
   body{background-attachment:scroll!important}
-  .stars,.orb,.cursor-glow,.cursor-trail{display:none!important}
-  #starfield{display:block!important;visibility:visible!important;opacity:.95!important}
+  .stars,#starfield,.orb,.cursor-glow,.cursor-trail{display:none!important}
   body:before{opacity:.055;background-size:48px 48px}
   .hero,.hero h1 span,.eyebrow:before,.social-owner-label,.hero-social,.hero-social:after,
   .card,.card:before,.step,.upload-icon,.drop:before,.progress i,.bar i,.wallet-progress .bar i,
@@ -1420,173 +1419,13 @@ input[type="button"]:not(:disabled), input[type="submit"]:not(:disabled)) {
 .machine-details[open]{padding-bottom:2px}
 @media(max-width:700px){.machine-card{height:auto!important}.machine-details>summary{min-height:38px;font-size:13px}}
 
-/* Stable rainbow border animation: use native border/halo, no child overlays that break button layout. */
-@property --dicky-border-angle { syntax:"<angle>"; inherits:false; initial-value:0deg; }
-@keyframes dickyBorderGlow {
-  0% { border-color:#22f5ff; box-shadow:0 0 0 1px rgba(34,245,255,.85),0 0 9px rgba(34,245,255,.45); }
-  20% { border-color:#427cff; box-shadow:0 0 0 1px rgba(66,124,255,.85),0 0 10px rgba(66,124,255,.45); }
-  40% { border-color:#bb54ff; box-shadow:0 0 0 1px rgba(187,84,255,.85),0 0 10px rgba(187,84,255,.45); }
-  60% { border-color:#ff42d0; box-shadow:0 0 0 1px rgba(255,66,208,.85),0 0 10px rgba(255,66,208,.45); }
-  80% { border-color:#ffe45b; box-shadow:0 0 0 1px rgba(255,228,91,.85),0 0 10px rgba(255,228,91,.45); }
-  100% { border-color:#42ffb4; box-shadow:0 0 0 1px rgba(66,255,180,.85),0 0 10px rgba(66,255,180,.45); }
-}
-:where(button:not(:disabled),a[href],[role="button"]:not([aria-disabled="true"]),input[type="button"]:not(:disabled),input[type="submit"]:not(:disabled),summary){
-  animation:dickyBorderGlow 5s linear infinite!important;
-}
-:where(button:disabled,[role="button"][aria-disabled="true"],input:disabled){animation:none!important}
-#starfield{
- position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100dvh!important;
- display:block!important;z-index:0!important;pointer-events:none!important;background:transparent!important;
-}
-html,body{background-color:#02030a!important;background-image:radial-gradient(ellipse at 50% 0%,rgba(21,35,76,.48),transparent 62%)!important}
-body>.app{position:relative!important;z-index:1!important;background:transparent!important;background-color:transparent!important;background-image:none!important}
-.app,.container,main,.hero,section,header,footer{background-color:transparent}
-.card,.wallet-card,.upload,.section-card,.panel,.method-flow-card,.machine-card{
- background:linear-gradient(145deg,rgba(5,13,30,.76),rgba(10,7,27,.78))!important;
- backdrop-filter:blur(5px) saturate(120%)!important;-webkit-backdrop-filter:blur(5px) saturate(120%)!important;
-}
-@media(prefers-reduced-motion:reduce){
- :where(button,a[href],[role="button"],input[type="button"],input[type="submit"],summary){animation:none!important}
-}
-
-/* Continuous rotating neon outline: overlays only existing borders, never creates box borders. */
-@property --dicky-ring-angle{syntax:"<angle>";inherits:false;initial-value:0deg}
-@keyframes dickyRingRotate{to{--dicky-ring-angle:360deg}}
-.dicky-ring-overlay{
- position:absolute!important;inset:0!important;display:block!important;box-sizing:border-box!important;
- padding:1px!important;border:0!important;border-radius:inherit!important;
- background:conic-gradient(from var(--dicky-ring-angle),#25f4ff 0deg,#477dff 65deg,#bd55ff 130deg,#ff43cf 190deg,#ffe35b 250deg,#4bffb8 310deg,#25f4ff 360deg)!important;
- -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
- -webkit-mask-composite:xor!important;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;mask-composite:exclude!important;
- pointer-events:none!important;z-index:20!important;opacity:1!important;animation:dickyRingRotate 2s linear infinite!important;
- box-shadow:none!important;filter:drop-shadow(0 0 2px rgba(65,225,255,.35))!important;
-}
-@media(prefers-reduced-motion:reduce){.dicky-ring-overlay{animation:none!important}}
-#starfield{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;display:block!important;visibility:visible!important;opacity:1!important;z-index:0!important;pointer-events:none!important;background:transparent!important}
-body>.app{position:relative!important;z-index:1!important;background:transparent!important}
-
-/* Mobile performance: thinner ring, less canvas work, no expensive glow filters. */
-@media(max-width:800px), (pointer:coarse){
-  .dicky-ring-overlay{padding:.65px!important;filter:none!important;animation-duration:1.5s!important;opacity:.96!important}
- #starfield{opacity:.78!important}
-}
-
-/* Fix top hero border and mobile canvas performance/layout. */
-.hero{border:1px solid rgba(60,220,255,.42);border-radius:24px;box-shadow:0 0 0 1px rgba(120,75,255,.08),inset 0 0 24px rgba(40,160,255,.035)}
-#starfield{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;z-index:1!important;pointer-events:none!important;display:block!important;visibility:visible!important;opacity:.92!important}
-body>.app{position:relative!important;z-index:2!important;background:transparent!important}
-@media(max-width:800px),(pointer:coarse){
- #starfield,.stars{display:none!important;visibility:hidden!important;opacity:0!important}
-  .dicky-ring-overlay{padding:.65px!important;filter:none!important;animation-duration:1.5s!important}
- .hero{border-radius:18px!important;box-shadow:0 0 0 1px rgba(70,210,255,.06)!important}
-}
-
-/* FINAL SCROLL + ANIMATION STABILITY PASS */
-html{scroll-behavior:smooth!important;scroll-padding-top:24px}
-body{overflow-x:clip!important;overscroll-behavior-y:contain}
-#starfield{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;pointer-events:none!important;z-index:0!important}
-.dicky-ring-overlay{pointer-events:none!important;display:block!important;mix-blend-mode:screen;will-change:background;animation-duration:2.4s!important}
-.scroll-reveal{opacity:0;transform:translate3d(0,16px,0);transition:opacity .55s ease,transform .65s cubic-bezier(.2,.7,.2,1);transition-delay:0ms;will-change:opacity,transform}
-.scroll-reveal[data-reveal-direction="left"]{transform:translate3d(-18px,0,0)}
-.scroll-reveal[data-reveal-direction="right"]{transform:translate3d(18px,0,0)}
-.scroll-reveal[data-reveal-direction="up"]{transform:translate3d(0,16px,0)}
-.scroll-reveal.scroll-reveal-visible{opacity:1;transform:translate3d(0,0,0);will-change:auto}
-@media(max-width:800px),(pointer:coarse){
- html{scroll-behavior:smooth!important;scroll-padding-top:12px}
- #starfield,.stars{display:none!important;visibility:hidden!important;opacity:0!important}
- .dicky-ring-overlay{animation-duration:2.8s!important;filter:none!important;mix-blend-mode:normal}
- .scroll-reveal{transform:translate3d(0,10px,0);transition-duration:.38s}
- .scroll-reveal[data-reveal-direction="left"],.scroll-reveal[data-reveal-direction="right"]{transform:translate3d(0,10px,0)}
- .scroll-reveal.scroll-reveal-visible{transform:translate3d(0,0,0)}
-}
-@media(prefers-reduced-motion:reduce){
- html{scroll-behavior:auto!important}
- .scroll-reveal,.scroll-reveal[data-reveal-direction="left"],.scroll-reveal[data-reveal-direction="right"],.scroll-reveal[data-reveal-direction="up"]{opacity:1!important;transform:none!important;transition:none!important;will-change:auto!important}
- .dicky-ring-overlay{animation:none!important}
-}
-
-
-/* Footer social links + scroll stability: keep all content visible, avoid nested reveal transforms. */
-.footer{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:24px!important;padding-top:28px!important;padding-bottom:24px!important}
-.footer-social-owner{width:100%;text-align:center;padding:24px 0 8px;border-top:1px solid rgba(98,243,255,.24)}
-.footer-social-owner .social-owner-label{margin:0 0 18px!important}
-.footer-social-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px}
-.footer-social-links .hero-social{display:inline-flex!important;align-items:center;justify-content:center;gap:10px;min-width:150px;max-width:100%;padding:12px 18px;margin:0!important;box-sizing:border-box}
-.footer-social-links .social-brand-icon{width:20px;height:20px;flex:0 0 20px}
-.footer-copyright{width:100%;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);text-align:center;color:#a6b1d1;font-size:13px}
-.scroll-reveal,.scroll-reveal[data-reveal-direction="left"],.scroll-reveal[data-reveal-direction="right"],.scroll-reveal[data-reveal-direction="up"],.scroll-reveal.scroll-reveal-visible{opacity:1!important;transform:none!important;transition:none!important;will-change:auto!important}
-@media(max-width:800px),(pointer:coarse){
- .footer-social-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
- .footer-social-links .hero-social{min-width:0;width:100%;padding:12px 8px;font-size:13px}
-}
-@media(max-width:380px){.footer-social-links{grid-template-columns:1fr}}
-
-
-/* FINAL CLEAN LAYOUT — stable scrolling and consistent animated borders */
-html{scroll-behavior:smooth!important;scroll-padding-top:22px}
-body{overflow-x:hidden!important}
-.section,.card,.step,.machine-card,.method-flow-card,.hero-social,.signal,.wallet-stat,.feature,
-.scroll-reveal,.scroll-reveal-visible{
- opacity:1!important;visibility:visible!important;transform:none!important;
- transition:none!important;animation:none!important;will-change:auto!important
-}
-.card,.analytics-upload,.analytics>.card,.section,.grid>.card,.method-flow-card,.machine-card,
-.wallet-card,.panel,.section-card,.claim-card,.pricing-card,.modal-box,.footer-social-owner{
- border:2px solid rgba(72,213,255,.58)!important;
- box-shadow:0 0 0 1px rgba(138,79,255,.18),0 0 22px rgba(36,194,255,.07),inset 0 0 18px rgba(42,115,255,.035)!important;
-}
-.card{height:auto;min-height:0}
-.analytics{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);align-items:start;gap:20px}
-.analytics-upload{min-height:0!important}
-.checker-drop{min-height:260px!important;height:auto!important}
-.analytics>.card{min-width:0;align-self:start}
-.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.dicky-ring-overlay{
- position:absolute!important;inset:0!important;display:block!important;box-sizing:border-box!important;
- padding:2px!important;border:0!important;border-radius:inherit!important;
- background:conic-gradient(from var(--dicky-ring-angle),#25f4ff 0deg,#477dff 65deg,#bd55ff 130deg,#ff43cf 190deg,#ffe35b 250deg,#4bffb8 310deg,#25f4ff 360deg)!important;
- -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
- -webkit-mask-composite:xor!important;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;mask-composite:exclude!important;
- pointer-events:none!important;z-index:3!important;opacity:1!important;animation:dickyRingRotate 1.8s linear infinite!important;
- box-shadow:none!important;filter:drop-shadow(0 0 3px rgba(65,225,255,.28))!important;
-}
-.footer{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:22px!important;padding:30px 0 24px!important;border-top:0!important}
-.footer-social-owner{width:100%;box-sizing:border-box;text-align:center;padding:26px 24px 28px!important;border-radius:22px!important;background:linear-gradient(135deg,rgba(10,19,35,.92),rgba(21,10,32,.92))!important}
-.footer-social-owner .social-owner-label{margin:0 0 22px!important;font-size:18px!important;letter-spacing:.16em!important}
-.footer-social-links{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px!important;width:100%}
-.footer-social-links .hero-social{display:flex!important;position:relative!important;width:100%!important;min-width:0!important;max-width:none!important;min-height:54px!important;box-sizing:border-box!important;gap:10px!important;padding:13px 14px!important;margin:0!important;border:2px solid rgba(74,222,255,.72)!important;border-radius:16px!important;font-size:14px!important;font-weight:750!important;white-space:nowrap!important}
-.footer-social-links .social-brand-icon{width:22px!important;height:22px!important;flex:0 0 22px!important}
-.footer-copyright{width:100%;box-sizing:border-box;padding:18px 8px 4px!important;border-top:2px solid rgba(72,213,255,.42)!important;text-align:center;color:#aeb8d7;font-size:14px!important}
-@media(max-width:900px){.analytics{grid-template-columns:minmax(0,1fr)!important}.footer-social-links{grid-template-columns:repeat(2,minmax(0,1fr))!important}.footer-social-links .hero-social{white-space:normal!important}}
-@media(max-width:480px){.footer-social-owner{padding:20px 14px!important}.footer-social-links{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}.footer-social-links .hero-social{min-height:50px!important;padding:10px 7px!important;font-size:13px!important}.analytics .card{padding:16px!important}.section{padding-bottom:42px!important}}
-@media(prefers-reduced-motion:reduce){.dicky-ring-overlay{animation:none!important}html{scroll-behavior:auto!important}}
-
-
-/* HOTFIX 2026-10-25: single borders and reliable touch scrolling */
-.dicky-ring-overlay{display:none!important;visibility:hidden!important;animation:none!important}
-html{height:auto!important;min-height:100%!important;overflow-y:auto!important;overscroll-behavior-y:auto!important;touch-action:pan-y!important}
-body{height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:visible!important;overscroll-behavior-y:auto!important;touch-action:pan-y!important}
-.app{height:auto!important;min-height:100vh!important;overflow:visible!important;overflow-x:clip!important;touch-action:pan-y!important}
-@media(max-width:800px),(pointer:coarse){
- html,body{height:auto!important;min-height:100%!important;overflow-y:auto!important;overscroll-behavior-y:auto!important;touch-action:pan-y!important}
- body{position:static!important}
- .app{height:auto!important;min-height:100dvh!important;overflow:visible!important;overflow-x:clip!important;touch-action:pan-y!important}
- .card,.analytics-upload,.analytics>.card,.section,.grid>.card,.method-flow-card,.machine-card,.wallet-card,.panel,.section-card,.claim-card,.pricing-card,.modal-box,.footer-social-owner{box-shadow:0 8px 24px rgba(0,0,0,.2)!important}
-}
-
-/* VISUAL HOTFIX: restore animated card borders, remove the oversized section frame */
-.section{border:0!important;outline:0!important;box-shadow:none!important}
-.card,.step,.machine-card,.method-flow-card,.wallet-card,.panel,.section-card,.claim-card,.pricing-card,.modal-box,.footer-social-owner{
- border:2px solid #22f5ff!important;
- animation:dickyBorderGlow 5s linear infinite!important;
-}
-.dicky-ring-overlay{display:none!important;visibility:hidden!important;animation:none!important}
-@media(max-width:800px),(pointer:coarse){
- .section{border:0!important;outline:0!important;box-shadow:none!important}
- .card,.step,.machine-card,.method-flow-card,.wallet-card,.panel,.section-card,.claim-card,.pricing-card,.modal-box,.footer-social-owner{
-  border-width:2px!important;animation:dickyBorderGlow 5s linear infinite!important;
- }
-}
+/* Rainbow animated border overlay for interactive controls (separate from existing shine effects). */
+.dicky-rainbow-border{position:absolute;inset:-1.5px;z-index:9;pointer-events:none;border-radius:inherit;padding:1.5px;background:conic-gradient(from var(--dicky-border-angle,0deg),#22f5ff,#3f73ff,#c65cff,#ff4dcc,#ffd84a,#5dffb0,#22f5ff);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.88;animation:dickyBorderRotate 5s linear infinite}
+@keyframes dickyBorderRotate{to{--dicky-border-angle:360deg}}
+@property --dicky-border-angle{syntax:"<angle>";inherits:false;initial-value:0deg}
+:where(button,a[href],[role="button"],input[type="button"],input[type="submit"],input[type="reset"]){isolation:isolate}
+:where(button,a[href],[role="button"],input[type="button"],input[type="submit"],input[type="reset"]):focus-visible{outline:2px solid #fff!important;outline-offset:3px!important}
+@media(prefers-reduced-motion:reduce){.dicky-rainbow-border{animation:none;opacity:.7}}
 </style>
 </head>
 <body>
@@ -1622,7 +1461,19 @@ body{height:auto!important;min-height:100%!important;overflow-x:hidden!important
 
 
 <a class="hero-social tutorial-social" href="https://youtu.be/fzS84EMb26M" target="_blank" rel="noopener noreferrer" aria-label="Video Tutorial Dicky News Method"><svg class="social-brand-icon youtube-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg><span>Video Tutorial Dicky News Method</span><svg class="ui-icon social-link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-</section>
+<div class="social-owner-label">SOCIAL MEDIA OWNER</div>
+<a class="hero-social youtube-social" href="https://www.youtube.com/@dickynews" target="_blank" rel="noopener noreferrer" aria-label="Kunjungi channel YouTube Dicky News">
+  <svg class="social-brand-icon youtube-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+  <span>YouTube : Dicky News</span><span class="social-divider">|</span><span class="youtube-subs">400K Subscribers</span><svg class="ui-icon social-link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+<a class="hero-social tiktok-social" href="https://www.tiktok.com/@dickynewsyt" target="_blank" rel="noopener noreferrer" aria-label="Kunjungi TikTok Dicky News Method">
+  <svg class="social-brand-icon tiktok-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+  <span>TikTok : Dicky News Method</span><svg class="ui-icon social-link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+<a class="hero-social instagram-social" href="https://www.instagram.com/dickynews" target="_blank" rel="noopener noreferrer" aria-label="Kunjungi Instagram @dickynews">
+  <svg class="social-brand-icon instagram-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>
+  <span>Instagram : @dickynews</span><svg class="ui-icon social-link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a></section>
 <div class="method-flow-attention" role="note" aria-label="Perhatian">
   <strong>PERHATIAN</strong>
   <p>Abaikan processing flow di bawah jika kamu tidak mau ribet mengatur bitrate. Kamu bisa langsung proses video pada mesin Inject HD TikTok, dan hasilnya bisa langsung kamu upload ke TikTok dengan 2 Opsi, VIDEO NON HDR bisa langsung pakai TIKTOK WEB, dan VIDEO HDR Dolby Vision pakai ZERNIO. di ZERNIO kamu bisa upload VIDEO NON HDR &amp; VIDEO HDR Dolby Vision. TIKTOK WEB khusus upload VIDEO NON HDR jika kamu tidak mau ribet pakai ZERNIO.</p>
@@ -1743,33 +1594,10 @@ body{height:auto!important;min-height:100%!important;overflow-x:hidden!important
   </div>
   <div id="historyList" class="history-list"><div class="history-empty">Memuat riwayat dari server…</div></div>
 </section>
-<section class="section" id="tiktok-analytics"><h2>TikTok Analytics</h2><p class="section-intro">Tempel link video TikTok yang sudah di-upload. Analyzer akan mengambil data dari hasil upload TikTok melalui backend Dicky News, lalu menampilkan rincian teknis dan sinyal distribusi video.</p><div class="analytics"><div class="card analytics-upload"><div class="card-head"><div><h2>Analyze TikTok Result</h2><div class="mini">Masukkan URL video TikTok publik.</div></div><div class="pill">LIVE CHECK</div></div><div class="drop checker-drop" id="checkerDrop"><div class="upload-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4M8 11h6M11 8v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><img id="videoPreview" class="video-preview" alt="Pratinjau video TikTok" hidden><strong id="checkerTitle">Paste TikTok video link</strong><p id="checkerText">Contoh: https://www.tiktok.com/@dickynewsofficial/video/...</p><input id="checkerUrl" class="checker-url" type="url" placeholder="https://www.tiktok.com/@dickynewsofficial/video/..." autocomplete="off"><button class="btn btn-primary" id="checkerChoose">Analyze TikTok</button></div></div><div class="card"><div class="card-head"><div><h2>TikTok Result Details</h2><div class="mini">Data yang dikembalikan analyzer.</div></div><span class="badge neutral" id="analysisStatus">READY</span></div><div class="metric-grid"><div class="metric"><span>Resolution / Definisi</span><b id="mResolution">—</b></div><div class="metric"><span>Frame Rate</span><b id="mFps">—</b></div><div class="metric"><span>Format Video</span><b id="mFormat">—</b></div><div class="metric"><span>Bitrate</span><b id="mBitrate">—</b></div><div class="metric"><span>Codec</span><b id="mCodec">—</b></div><div class="metric"><span>File Size</span><b id="mSize">—</b></div><div class="metric"><span>Container</span><b id="mContainer">—</b></div></div><div class="metric-grid analytics-extra"><div class="metric"><span>Views</span><b id="mViews">—</b></div><div class="metric"><span>Likes</span><b id="mLikes">—</b></div><div class="metric"><span>Comments</span><b id="mComments">—</b></div><div class="metric"><span>Shares</span><b id="mShares">—</b></div><div class="metric"><span>Duration</span><b id="mDuration">—</b></div><div class="metric"><span>Published</span><b id="mCreated">—</b></div><div class="metric"><span>Music</span><b id="mMusic">—</b></div><div class="metric"><span>Video ID</span><b id="mVideoId">—</b></div></div><div class="signal-list"><div class="signal"><span class="signal-label">TikTok Region</span><span class="badge neutral" id="sRegion">—</span></div><div class="signal"><span class="signal-label">Review Status</span><span class="badge neutral" id="sReview">—</span></div><div class="signal"><span class="signal-label">Visibility</span><span class="badge neutral" id="sVisibility">—</span></div><div class="signal"><span class="signal-label">Index Visibility</span><span class="badge neutral" id="sIndex">—</span></div></div></div></div></section>
-
+<section class="section" id="tiktok-analytics"><h2>TikTok Analytics</h2><p class="section-intro">Tempel link video TikTok yang sudah di-upload. Analyzer akan mengambil data dari hasil upload TikTok melalui backend Dicky News, lalu menampilkan rincian teknis dan sinyal distribusi video.</p><div class="analytics"><div class="card analytics-upload"><div class="card-head"><div><h2>Analyze TikTok Result</h2><div class="mini">Masukkan URL video TikTok publik.</div></div><div class="pill">LIVE CHECK</div></div><div class="drop checker-drop" id="checkerDrop"><div class="upload-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4M8 11h6M11 8v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><img id="videoPreview" class="video-preview" alt="Pratinjau video TikTok" hidden><strong id="checkerTitle">Paste TikTok video link</strong><p id="checkerText">Contoh: https://www.tiktok.com/@username/video/...</p><input id="checkerUrl" class="checker-url" type="url" placeholder="https://www.tiktok.com/@username/video/..." autocomplete="off"><button class="btn btn-primary" id="checkerChoose">Analyze TikTok</button></div></div><div class="card"><div class="card-head"><div><h2>TikTok Result Details</h2><div class="mini">Data yang dikembalikan analyzer.</div></div><span class="badge neutral" id="analysisStatus">READY</span></div><div class="metric-grid"><div class="metric"><span>Resolution / Definisi</span><b id="mResolution">—</b></div><div class="metric"><span>Frame Rate</span><b id="mFps">—</b></div><div class="metric"><span>Format Video</span><b id="mFormat">—</b></div><div class="metric"><span>Bitrate</span><b id="mBitrate">—</b></div><div class="metric"><span>Codec</span><b id="mCodec">—</b></div><div class="metric"><span>File Size</span><b id="mSize">—</b></div><div class="metric"><span>Container</span><b id="mContainer">—</b></div></div><div class="metric-grid analytics-extra"><div class="metric"><span>Views</span><b id="mViews">—</b></div><div class="metric"><span>Likes</span><b id="mLikes">—</b></div><div class="metric"><span>Comments</span><b id="mComments">—</b></div><div class="metric"><span>Shares</span><b id="mShares">—</b></div><div class="metric"><span>Duration</span><b id="mDuration">—</b></div><div class="metric"><span>Published</span><b id="mCreated">—</b></div><div class="metric"><span>Music</span><b id="mMusic">—</b></div><div class="metric"><span>Video ID</span><b id="mVideoId">—</b></div></div><div class="signal-list"><div class="signal"><span class="signal-label">TikTok Region</span><span class="badge neutral" id="sRegion">—</span></div><div class="signal"><span class="signal-label">Review Status</span><span class="badge neutral" id="sReview">—</span></div><div class="signal"><span class="signal-label">Visibility</span><span class="badge neutral" id="sVisibility">—</span></div><div class="signal"><span class="signal-label">Index Visibility</span><span class="badge neutral" id="sIndex">—</span></div></div></div></div></section>
+<section class="section"><h2>Cara kerja</h2><div class="steps"><div class="step"><div class="num">1</div><h3>Upload</h3></div><div class="step"><div class="num">2</div><h3>Dicky News Method</h3></div><div class="step"><div class="num">3</div><h3>Download</h3></div></div></section>
 </main>
-<footer class="container footer">
-  <section class="footer-social-owner" aria-label="Social media owner">
-    <h2 class="social-owner-label">SOCIAL MEDIA OWNER</h2>
-    <div class="footer-social-links">
-      <a class="hero-social whatsapp-social" href="https://wa.me/6289616438173?text=Halo%20Bang%2C%20Saya%20mau%20Top%20Up%20Coin" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Dicky News Official">
-        <svg class="social-brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.52 14.94L2.1 22l5.2-1.36A10 10 0 1 0 12.04 2Zm0 18.15a8.1 8.1 0 0 1-4.12-1.12l-.3-.18-3.08.8.82-3-.2-.31a8.14 8.14 0 1 1 6.88 3.81Zm4.46-6.1c-.24-.12-1.43-.71-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.01-.37.1-.49.11-.1.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.1 3.62.57.25 1.02.4 1.37.51.58.18 1.1.16 1.52.1.46-.07 1.43-.59 1.63-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28Z"/></svg>
-        <span>WhatsApp</span>
-      </a>
-      <a class="hero-social instagram-social" href="https://www.instagram.com/dickynews" target="_blank" rel="noopener noreferrer" aria-label="Instagram Dicky News">
-        <svg class="social-brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2.2A2.8 2.8 0 0 0 4.2 7v10A2.8 2.8 0 0 0 7 19.8h10a2.8 2.8 0 0 0 2.8-2.8V7A2.8 2.8 0 0 0 17 4.2H7Zm5 3.1a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Zm0 2.2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm5.1-3.5a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z"/></svg>
-        <span>Instagram</span>
-      </a>
-      <a class="hero-social tiktok-social" href="https://www.tiktok.com/@dickynewsofficial" target="_blank" rel="noopener noreferrer" aria-label="TikTok Dicky News Official">
-        <svg class="social-brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.6 5.1a6.7 6.7 0 0 1-4-4.1V.5h-4.2v15.1a3.1 3.1 0 1 1-2.2-3v-4.3a7.4 7.4 0 1 0 6.4 7.3V8a10.8 10.8 0 0 0 4.7 1.1V4.9c-.2.1-.5.2-.7.2Z"/></svg>
-        <span>TikTok</span>
-      </a>
-      <a class="hero-social youtube-social" href="https://www.youtube.com/@dickynews" target="_blank" rel="noopener noreferrer" aria-label="YouTube Dicky News">
-        <svg class="social-brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4L15.8 12l-6.2 3.6Z"/></svg>
-        <span>YouTube</span>
-      </a>
-    </div>
-  </section>
-  <div class="footer-copyright">© Dicky News Official</div>
-</footer>
+<footer class="container footer"><span>© 2026 Dicky News</span><span>Golden API aktif · TikTok Analytics menunggu endpoint backend</span></footer>
 </div>
 <div class="modal" id="modal"><div class="modal-box"><h3 id="modalTitle">Memproses...</h3><p class="mini" id="modalText">Demo frontend. Backend Golden Engine akan dihubungkan setelah VPS siap.</p><div class="progress"><i></i></div><button class="btn btn-secondary" style="margin-top:18px;width:100%" id="close">Tutup</button></div></div>
 <script src="./analytics-config.js"></script>
@@ -2251,7 +2079,8 @@ async function loadJobHistory(){
 }
 if(refreshHistoryBtn)refreshHistoryBtn.addEventListener('click',loadJobHistory);
 
-loadPublicSettings();(async()=>{const ok=await loadWallet();if(ok)await loadJobHistory();else if(historyList)historyList.replaceChildren();})();const checkerUrl=document.getElementById('checkerUrl'),checkerChoose=document.getElementById('checkerChoose'),checkerTitle=document.getElementById('checkerTitle'),checkerText=document.getElementById('checkerText'),analysisStatus=document.getElementById('analysisStatus');
+loadPublicSettings();(async()=>{const ok=await loadWallet();if(ok)await loadJobHistory();else if(historyList)historyList.replaceChildren();})();const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='rise .7s ease both'}),{threshold:.12});document.querySelectorAll('.section,.card,.step').forEach(el=>revealObserver.observe(el));
+const checkerUrl=document.getElementById('checkerUrl'),checkerChoose=document.getElementById('checkerChoose'),checkerTitle=document.getElementById('checkerTitle'),checkerText=document.getElementById('checkerText'),analysisStatus=document.getElementById('analysisStatus');
 async function runTikTokAnalytics(){
  const url=String(checkerUrl?.value||'').trim();
  if(!url){checkerText.textContent='Tempel link video TikTok terlebih dahulu.';checkerUrl?.focus();return}
@@ -2351,72 +2180,84 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
 </script>
 
 <script>
-/* Lightweight responsive constellation background + border overlays. */
+/* Colourful animated constellation background — responsive desktop and mobile. */
 (function(){
- const mobile=matchMedia('(max-width:800px), (pointer:coarse)').matches;
- const canvas=document.getElementById('starfield')||document.createElement('canvas');
- canvas.id='starfield';canvas.setAttribute('aria-hidden','true');
- if(!canvas.parentNode)document.body.prepend(canvas);
+ const id='starfield';
+ let canvas=document.getElementById(id);
+ if(!canvas){canvas=document.createElement('canvas');canvas.id=id;canvas.setAttribute('aria-hidden','true');document.body.prepend(canvas);}
  const ctx=canvas.getContext('2d',{alpha:true});if(!ctx)return;
- let w=0,h=0,dpr=1,stars=[],raf=0,last=0,paused=false;
- const colors=[185,205,225,255,280,315,42,145];
+ let w=0,h=0,dpr=1,stars=[],shooters=[],raf=0,lastFrame=0;
+ const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const mobile=window.matchMedia&&window.matchMedia('(max-width: 800px), (pointer: coarse)').matches;
+ const palette=[185,205,225,255,280,315,42,145];
  function resize(){
-  dpr=Math.min(devicePixelRatio||1,mobile?.7:1);
-  w=innerWidth;h=innerHeight;
-  canvas.width=Math.max(1,Math.floor(w*dpr));canvas.height=Math.max(1,Math.floor(h*dpr));
-  canvas.style.width=w+'px';canvas.style.height='100vh';ctx.setTransform(dpr,0,0,dpr,0,0);
-  const n=mobile?24:170;
-  stars=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*(mobile?.8:1.4)+.25,
-   hue:colors[Math.floor(Math.random()*colors.length)],a:Math.random()*(mobile?.5:.45)+(mobile?.4:.25),dx:(Math.random()-.5)*(mobile?.08:.18),dy:(Math.random()-.5)*(mobile?.08:.18)}));
+  dpr=Math.min(window.devicePixelRatio||1,mobile?1.15:1.5);w=window.innerWidth;h=window.innerHeight;
+  canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+  canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);
+  const count=Math.min(mobile?180:520,Math.max(mobile?90:220,Math.floor(w*h/(mobile?6500:2800))));
+  stars=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,ox:Math.random()*w,oy:Math.random()*h,
+   r:Math.random()<.91?Math.random()*.9+.25:Math.random()*1.7+1.1,a:Math.random()*.6+.25,
+   hue:palette[Math.floor(Math.random()*palette.length)]+(Math.random()*16-8),phase:Math.random()*6.28,
+   speed:Math.random()*.0014+.00025,dx:(Math.random()-.5)*(mobile?.12:.22),dy:(Math.random()-.5)*(mobile?.10:.18)}));
+ }
+ function spawn(){
+  if(mobile&&Math.random()>.35)return;
+  const edge=Math.floor(Math.random()*4);let x,y,ang;
+  if(edge===0){x=Math.random()*w;y=-20;ang=.3+Math.random()*1.1}
+  else if(edge===1){x=w+20;y=Math.random()*h;ang=2+Math.random()*1.1}
+  else if(edge===2){x=Math.random()*w;y=h+20;ang=4+Math.random()*1.1}
+  else{x=-20;y=Math.random()*h;ang=5.2+Math.random()*1.1}
+  const v=mobile?1.8+Math.random()*3:2.5+Math.random()*5;
+  shooters.push({x,y,vx:Math.cos(ang)*v,vy:Math.sin(ang)*v,life:0,max:50+Math.random()*65,tail:mobile?40+Math.random()*70:60+Math.random()*150,hue:palette[Math.floor(Math.random()*palette.length)]});
  }
  function draw(t){
-  if(mobile||document.hidden)return
-  const interval=mobile?100:40;
-  if(t-last<interval){raf=requestAnimationFrame(draw);return}last=t;
+  if(!document.body.contains(canvas)){cancelAnimationFrame(raf);return;}
+  if(document.hidden){raf=requestAnimationFrame(draw);return;}
+  if(t-lastFrame<(mobile?40:28)){raf=requestAnimationFrame(draw);return;}lastFrame=t;
   ctx.clearRect(0,0,w,h);
-  for(const p of stars){
-   ctx.globalAlpha=p.a;ctx.fillStyle='hsl('+p.hue+' 100% 74%)';
-   if(!mobile){ctx.shadowBlur=3;ctx.shadowColor=ctx.fillStyle}
-   ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
-   p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
+  for(const s of stars){
+   const tw=reduce?1:(.58+.42*Math.sin(t*s.speed+s.phase));
+   ctx.globalAlpha=s.a*tw;ctx.fillStyle='hsl('+s.hue+' 100% 75%)';ctx.shadowBlur=s.r>1.2?9:4;ctx.shadowColor='hsl('+s.hue+' 100% 65%)';
+   ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+   if(!reduce){s.x+=s.dx;s.y+=s.dy;if(s.x<-3)s.x=w+3;if(s.x>w+3)s.x=-3;if(s.y<-3)s.y=h+3;if(s.y>h+3)s.y=-3;}
   }
-  ctx.shadowBlur=0;ctx.globalAlpha=1;
-  // Mobile draws only a few short links; desktop retains constellation mesh.
-  const max=mobile?105:125,step=mobile?2:1;
-  for(let i=0;i<stars.length;i+=step){
-   const a=stars[i];let connected=0;
-   for(let j=i+1;j<stars.length&&connected<(mobile?1:3);j++){
-    const b=stars[j],dx=a.x-b.x,dy=a.y-b.y,d=dx*dx+dy*dy;
-    if(d<max*max){ctx.strokeStyle='hsla('+a.hue+' 100% 72% / '+((1-Math.sqrt(d)/max)*(mobile?.16:.17))+')';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();connected++}
+  ctx.globalAlpha=1;
+  const maxDist=mobile?76:112,limit=mobile?2:3;
+  for(let i=0;i<stars.length;i++){
+   let linked=0;const a=stars[i];
+   for(let j=i+1;j<stars.length&&linked<limit;j++){
+    const b=stars[j],dx=a.x-b.x,dy=a.y-b.y,dist=Math.hypot(dx,dy);
+    if(dist<maxDist){
+     const alpha=(1-dist/maxDist)*(mobile?.15:.22);
+     ctx.strokeStyle='hsla('+((a.hue+b.hue)/2)+' 100% 70% / '+alpha+')';ctx.lineWidth=.65;
+     ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();linked++;
+    }
    }
+  }
+  if(!reduce&&shooters.length<(mobile?1:3)&&Math.random()<(mobile?.012:.035))spawn();
+  for(let i=shooters.length-1;i>=0;i--){
+   const q=shooters[i],mag=Math.max(Math.hypot(q.vx,q.vy),1),px=q.x-q.vx*(q.tail/mag),py=q.y-q.vy*(q.tail/mag);
+   const fade=Math.sin(Math.min(1,q.life/q.max)*Math.PI)*.8,g=ctx.createLinearGradient(q.x,q.y,px,py);
+   g.addColorStop(0,'hsla('+q.hue+' 100% 90% / '+fade+')');g.addColorStop(.25,'hsla('+q.hue+' 100% 70% / '+(fade*.5)+')');g.addColorStop(1,'hsla('+q.hue+' 100% 70% / 0)');
+   ctx.strokeStyle=g;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(q.x,q.y);ctx.lineTo(px,py);ctx.stroke();
+   q.x+=q.vx;q.y+=q.vy;q.life++;if(q.life>q.max||q.x<-220||q.x>w+220||q.y<-220||q.y>h+220)shooters.splice(i,1);
   }
   raf=requestAnimationFrame(draw);
  }
- function addRings(){
-  return; /* Disabled: nested animated ring overlays created the visible double borders. */
-  const targets='button:not(:disabled),a[href],[role="button"],summary,.machine-card,.method-flow-card,.wallet-card,.panel,.section-card,.card,.claim-card,.pricing-card,.modal-box,.notice,.alert';
-  document.querySelectorAll(targets).forEach(el=>{
-   if(!(el instanceof HTMLElement)||el.closest('.dicky-ring-overlay'))return;
-   if(el.querySelector(':scope > .dicky-ring-overlay'))return;
-   if(el.matches('input,textarea,select,option,svg, path'))return;
-   const cs=getComputedStyle(el);
-   const hasBorder=['Top','Right','Bottom','Left'].some(side=>(parseFloat(cs['border'+side+'Width'])||0)>0&&!['none','hidden'].includes(cs['border'+side+'Style']));
-   if(!hasBorder)return;
-   if(cs.position==='static')el.style.position='relative';
-   const ring=document.createElement('span');ring.className='dicky-ring-overlay';ring.setAttribute('aria-hidden','true');
-   try{el.appendChild(ring)}catch(_){return}
+ // Add an independent animated border layer to each actionable control, without replacing its click handler or shine.
+ function addButtonBorders(){
+  document.querySelectorAll('button,a[href],[role="button"],input[type="button"],input[type="submit"],input[type="reset"]').forEach(el=>{
+   if(el.querySelector(':scope > .dicky-rainbow-border'))return;
+   const cs=getComputedStyle(el);if(cs.position==='static')el.style.position='relative';
+   if(!el.style.overflow)el.style.overflow='hidden';
+   const border=document.createElement('span');border.className='dicky-rainbow-border';border.setAttribute('aria-hidden','true');
+   el.appendChild(border);
   });
  }
- resize();addRings();if(!mobile)raf=requestAnimationFrame(draw);
- // Debounce observer work; only check when actual new elements appear.
- let pending=false;
- const observer=new MutationObserver(records=>{
-  if(pending||!records.some(r=>[...r.addedNodes].some(n=>n.nodeType===1&&!n.classList?.contains('dicky-ring-overlay'))))return;
-  pending=true;requestAnimationFrame(()=>{pending=false;addRings()});
- });
- observer.observe(document.body,{childList:true,subtree:true});
- addEventListener('resize',resize,{passive:true});
- document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(raf);else if(!mobile){last=0;raf=requestAnimationFrame(draw)}});
+ resize();addButtonBorders();raf=requestAnimationFrame(draw);
+ // Catch controls created later by modal/dialog flows.
+ const observer=new MutationObserver(()=>addButtonBorders());observer.observe(document.body,{childList:true,subtree:true});
+ window.addEventListener('resize',resize,{passive:true});
 })();</script>
 
 </body>
