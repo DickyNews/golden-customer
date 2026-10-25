@@ -1474,9 +1474,9 @@ body>.app{position:relative!important;z-index:1!important;background:transparent
 /* Fix top hero border and mobile canvas performance/layout. */
 .hero{border:1px solid rgba(60,220,255,.42);border-radius:24px;box-shadow:0 0 0 1px rgba(120,75,255,.08),inset 0 0 24px rgba(40,160,255,.035)}
 #starfield{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;z-index:1!important;pointer-events:none!important;display:block!important;visibility:visible!important;opacity:.92!important}
-body>.app{position:relative!important;z-index:1!important;background:transparent!important}
+body>.app{position:relative!important;z-index:2!important;background:transparent!important}
 @media(max-width:800px),(pointer:coarse){
- #starfield{position:absolute!important;opacity:.62!important}
+ #starfield{position:fixed!important;inset:0!important;opacity:.9!important}
   .dicky-ring-overlay{padding:.65px!important;filter:none!important;animation-duration:1.5s!important}
  .hero{border-radius:18px!important;box-shadow:0 0 0 1px rgba(70,210,255,.06)!important}
 }
