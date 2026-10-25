@@ -621,7 +621,8 @@ input:focus,textarea:focus,select:focus,.checker-url:focus{border-color:var(--ne
 @media (max-width:800px),(pointer:coarse){
   html{scroll-behavior:auto!important;scroll-padding-top:12px}
   body{background-attachment:scroll!important}
-  .stars,#starfield,.orb,.cursor-glow,.cursor-trail{display:none!important}
+  .stars,.orb,.cursor-glow,.cursor-trail{display:none!important}
+  #starfield{display:block!important;visibility:visible!important;opacity:.95!important}
   body:before{opacity:.055;background-size:48px 48px}
   .hero,.hero h1 span,.eyebrow:before,.social-owner-label,.hero-social,.hero-social:after,
   .card,.card:before,.step,.upload-icon,.drop:before,.progress i,.bar i,.wallet-progress .bar i,
@@ -1448,50 +1449,21 @@ body>.app{position:relative!important;z-index:1!important;background:transparent
  :where(button,a[href],[role="button"],input[type="button"],input[type="submit"],summary){animation:none!important}
 }
 
-/* GLOBAL MOVING NEON BORDER — apply across every card, field, column and button. */
-@keyframes dickyAllBordersCycle{
-  0%{border-color:#26f4ff;box-shadow:0 0 0 1px rgba(38,244,255,.65),0 0 7px rgba(38,244,255,.24)}
-  16%{border-color:#3d7bff;box-shadow:0 0 0 1px rgba(61,123,255,.7),0 0 9px rgba(61,123,255,.28)}
-  33%{border-color:#b04dff;box-shadow:0 0 0 1px rgba(176,77,255,.7),0 0 9px rgba(176,77,255,.28)}
-  50%{border-color:#ff40d6;box-shadow:0 0 0 1px rgba(255,64,214,.7),0 0 10px rgba(255,64,214,.3)}
-  66%{border-color:#ffd94a;box-shadow:0 0 0 1px rgba(255,217,74,.7),0 0 9px rgba(255,217,74,.25)}
-  83%{border-color:#46ffb5;box-shadow:0 0 0 1px rgba(70,255,181,.7),0 0 9px rgba(70,255,181,.25)}
-  100%{border-color:#26f4ff;box-shadow:0 0 0 1px rgba(38,244,255,.65),0 0 7px rgba(38,244,255,.24)}
+/* Continuous rotating neon outline: overlays only existing borders, never creates box borders. */
+@property --dicky-ring-angle{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes dickyRingRotate{to{--dicky-ring-angle:360deg}}
+.dicky-ring-overlay{
+ position:absolute!important;inset:0!important;display:block!important;box-sizing:border-box!important;
+ padding:2px!important;border:0!important;border-radius:inherit!important;
+ background:conic-gradient(from var(--dicky-ring-angle),#25f4ff 0deg,#477dff 65deg,#bd55ff 130deg,#ff43cf 190deg,#ffe35b 250deg,#4bffb8 310deg,#25f4ff 360deg)!important;
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
+ -webkit-mask-composite:xor!important;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;mask-composite:exclude!important;
+ pointer-events:none!important;z-index:20!important;opacity:1!important;animation:dickyRingRotate 3.4s linear infinite!important;
+ box-shadow:none!important;filter:drop-shadow(0 0 2px rgba(65,225,255,.35))!important;
 }
-:where(
-  .container,.hero,.section,.section-card,.card,.panel,.wallet,.wallet-card,
-  .wallet-panel,.machine-columns,.machine-card,.machine-details,
-  .method-flow-track,.method-flow-card,.method-flow-action,
-  .upload-card,.upload-panel,.upload-area,.drop-zone,.job-card,.history-card,
-  .claim-card,.claim-panel,.pricing-card,.price-card,.feature-card,
-  .stats-card,.stat-card,.modal,.modal-content,.dialog,.notice,.alert,
-  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
-  select,textarea,button:not(:disabled),a[href],[role="button"]:not([aria-disabled="true"]),
-  summary
-){
-  animation:dickyAllBordersCycle 8s linear infinite!important;
-}
-:where(.container,.hero,.section,.section-card,.card,.panel,.wallet,.wallet-card,
-.machine-columns,.machine-card,.method-flow-track,.method-flow-card,.upload-card,
-.upload-panel,.upload-area,.drop-zone,.job-card,.history-card,.claim-card,
-.claim-panel,.pricing-card,.price-card,.feature-card,.stats-card,.stat-card,
-.modal,.modal-content,.dialog,.notice,.alert){
-  border-style:solid!important;
-  border-width:1px!important;
-}
-:where(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),select,textarea){
-  border-style:solid!important;border-width:1px!important;
-}
-:where(button,a[href],[role="button"],summary){will-change:border-color,box-shadow}
-#starfield{z-index:0!important;opacity:1!important;visibility:visible!important;pointer-events:none!important}
-body>.app{z-index:1!important;position:relative!important;background:transparent!important}
-@media(prefers-reduced-motion:reduce){
- :where(.container,.hero,.section,.section-card,.card,.panel,.wallet,.wallet-card,
- .machine-columns,.machine-card,.method-flow-track,.method-flow-card,.method-flow-action,
- .upload-card,.upload-panel,.upload-area,.drop-zone,.job-card,.history-card,.claim-card,
- .claim-panel,.pricing-card,.price-card,.feature-card,.stats-card,.stat-card,.modal,
- .modal-content,.dialog,.notice,.alert,input,select,textarea,button,a[href],[role="button"],summary){animation:none!important}
-}
+@media(prefers-reduced-motion:reduce){.dicky-ring-overlay{animation:none!important}}
+#starfield{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;display:block!important;visibility:visible!important;opacity:1!important;z-index:0!important;pointer-events:none!important;background:transparent!important}
+body>.app{position:relative!important;z-index:1!important;background:transparent!important}
 </style>
 </head>
 <body>
@@ -2310,9 +2282,28 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
   }
   raf=requestAnimationFrame(draw);
  }
- // No DOM overlays are appended to buttons; CSS handles the border effect without affecting layout.
+ // Add border-only overlays to existing bordered UI elements; overlays never affect layout or clicks.
+ const ringTargets='button:not(:disabled),a[href],[role="button"],summary,input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),select,textarea,.card,.wallet-card,.panel,.section-card,.machine-card,.method-flow-card,.method-flow-action,.upload-area,.drop-zone,.job-card,.history-card,.claim-card,.pricing-card,.price-card,.feature-card,.stats-card,.stat-card,.modal,.modal-content,.dialog,.notice,.alert';
+ function addRings(){
+  document.querySelectorAll(ringTargets).forEach(el=>{
+   if(el.querySelector(':scope > .dicky-ring-overlay'))return;
+   const cs=getComputedStyle(el);
+   // Do not draw rings around borderless layout wrappers; this prevents stray/patched rectangular outlines.
+   const hasBorder=['Top','Right','Bottom','Left'].some(side=>{
+    const width=parseFloat(cs['border'+side+'Width'])||0;
+    const style=cs['border'+side+'Style'];
+    const color=cs['border'+side+'Color'];
+    return width>0&&style!=='none'&&style!=='hidden'&&color!=='rgba(0, 0, 0, 0)'&&color!=='transparent';
+   });
+   if(!hasBorder)return;
+   if(cs.position==='static')el.style.position='relative';
+   const ring=document.createElement('span');ring.className='dicky-ring-overlay';ring.setAttribute('aria-hidden','true');
+   el.appendChild(ring);
+  });
+ }
  document.querySelectorAll('.dicky-rainbow-border').forEach(el=>el.remove());
- resize();raf=requestAnimationFrame(draw);
+ resize();addRings();raf=requestAnimationFrame(draw);
+ const ringObserver=new MutationObserver(()=>addRings());ringObserver.observe(document.body,{childList:true,subtree:true});
  window.addEventListener('resize',resize,{passive:true});
 })();</script>
 
