@@ -1561,6 +1561,18 @@ body{overflow-x:hidden!important}
 @media(max-width:480px){.footer-social-owner{padding:20px 14px!important}.footer-social-links{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}.footer-social-links .hero-social{min-height:50px!important;padding:10px 7px!important;font-size:13px!important}.analytics .card{padding:16px!important}.section{padding-bottom:42px!important}}
 @media(prefers-reduced-motion:reduce){.dicky-ring-overlay{animation:none!important}html{scroll-behavior:auto!important}}
 
+
+/* HOTFIX 2026-10-25: single borders and reliable touch scrolling */
+.dicky-ring-overlay{display:none!important;visibility:hidden!important;animation:none!important}
+html{height:auto!important;min-height:100%!important;overflow-y:auto!important;overscroll-behavior-y:auto!important;touch-action:pan-y!important}
+body{height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:visible!important;overscroll-behavior-y:auto!important;touch-action:pan-y!important}
+.app{height:auto!important;min-height:100vh!important;overflow:visible!important;overflow-x:clip!important;touch-action:pan-y!important}
+@media(max-width:800px),(pointer:coarse){
+ html,body{height:auto!important;min-height:100%!important;overflow-y:auto!important;overscroll-behavior-y:auto!important;touch-action:pan-y!important}
+ body{position:static!important}
+ .app{height:auto!important;min-height:100dvh!important;overflow:visible!important;overflow-x:clip!important;touch-action:pan-y!important}
+ .card,.analytics-upload,.analytics>.card,.section,.grid>.card,.method-flow-card,.machine-card,.wallet-card,.panel,.section-card,.claim-card,.pricing-card,.modal-box,.footer-social-owner{box-shadow:0 8px 24px rgba(0,0,0,.2)!important}
+}
 </style>
 </head>
 <body>
@@ -2367,6 +2379,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
   raf=requestAnimationFrame(draw);
  }
  function addRings(){
+  return; /* Disabled: nested animated ring overlays created the visible double borders. */
   const targets='button:not(:disabled),a[href],[role="button"],summary,.machine-card,.method-flow-card,.wallet-card,.panel,.section-card,.card,.claim-card,.pricing-card,.modal-box,.notice,.alert';
   document.querySelectorAll(targets).forEach(el=>{
    if(!(el instanceof HTMLElement)||el.closest('.dicky-ring-overlay'))return;
