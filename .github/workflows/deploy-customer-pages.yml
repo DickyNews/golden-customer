@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "index.html"
+      - "_headers"
       - "analytics-config.js"
       - "functions/**"
       - ".github/workflows/deploy-customer-pages.yml"
@@ -30,6 +31,7 @@ jobs:
           set -eu
           mkdir -p dist/functions
           cp index.html dist/
+          cp _headers dist/
           cp analytics-config.js dist/
           cp -R functions/. dist/functions/
 
