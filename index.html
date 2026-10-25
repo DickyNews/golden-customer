@@ -1450,18 +1450,22 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   inset:0!important;
   box-sizing:border-box!important;
   display:block!important;
-  padding:3px!important;
+  padding:2.5px!important;
   border:0!important;
   border-radius:inherit!important;
   background:conic-gradient(from var(--dicky-spiral-angle),
-    #ffffff 0deg,#62f3ff 12deg,#477dff 32deg,#9b70ff 48deg,
-    transparent 66deg,transparent 88deg,
-    #ff4edb 104deg,#ffffff 116deg,#ff4edb 128deg,
-    transparent 148deg,transparent 174deg,
-    #ffd84d 192deg,#fff4ad 205deg,#42ffb4 220deg,
-    transparent 244deg,transparent 270deg,
-    #62f3ff 288deg,#477dff 308deg,#ffffff 322deg,
-    transparent 340deg,transparent 360deg)!important;
+    #050505 0deg,#050505 3deg,
+    #ffffff 4deg,#62f3ff 13deg,#477dff 32deg,#9b70ff 49deg,
+    transparent 68deg,transparent 90deg,
+    #050505 91deg,#050505 94deg,
+    #ff4edb 95deg,#ffffff 108deg,#ff4edb 129deg,
+    transparent 150deg,transparent 176deg,
+    #050505 177deg,#050505 180deg,
+    #ffd84d 181deg,#fff4ad 196deg,#42ffb4 222deg,
+    transparent 246deg,transparent 272deg,
+    #050505 273deg,#050505 276deg,
+    #62f3ff 277deg,#477dff 307deg,#ffffff 324deg,
+    transparent 342deg,transparent 357deg,#050505 358deg,#050505 360deg)!important;
   -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)!important;
   -webkit-mask-composite:xor!important;
   mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)!important;
@@ -1469,8 +1473,8 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   pointer-events:none!important;
   z-index:20!important;
   opacity:1!important;
-  filter:drop-shadow(0 0 2px rgba(98,243,255,.85)) drop-shadow(0 0 5px rgba(155,112,255,.48))!important;
-  animation:dickySpiralBorderTurn 1.65s linear infinite!important;
+  filter:drop-shadow(0 0 1px rgba(0,0,0,.95)) drop-shadow(0 0 1.5px rgba(98,243,255,.8))!important;
+  animation:dickySpiralBorderTurn 2.2s linear infinite!important;
 }
 @media(prefers-reduced-motion:reduce){
  .dicky-spiral-border{animation:none!important}
