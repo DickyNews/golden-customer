@@ -1470,6 +1470,16 @@ body>.app{position:relative!important;z-index:1!important;background:transparent
  .dicky-ring-overlay{padding:.75px!important;filter:none!important;animation-duration:5.5s!important;opacity:.92!important}
  #starfield{opacity:.78!important}
 }
+
+/* Fix top hero border and mobile canvas performance/layout. */
+.hero{border:1px solid rgba(60,220,255,.42);border-radius:24px;box-shadow:0 0 0 1px rgba(120,75,255,.08),inset 0 0 24px rgba(40,160,255,.035)}
+#starfield{position:absolute!important;left:0!important;top:0!important;width:100%!important;height:100%!important;min-height:100%!important;z-index:0!important;pointer-events:none!important;display:block!important;opacity:.8!important}
+body>.app{position:relative!important;z-index:1!important;background:transparent!important}
+@media(max-width:800px),(pointer:coarse){
+ #starfield{position:absolute!important;opacity:.62!important}
+ .dicky-ring-overlay{padding:.65px!important;filter:none!important;animation-duration:6s!important}
+ .hero{border-radius:18px!important;box-shadow:0 0 0 1px rgba(70,210,255,.06)!important}
+}
 </style>
 </head>
 <body>
@@ -2224,93 +2234,68 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
 </script>
 
 <script>
-/* Colourful animated constellation background — responsive desktop and mobile. */
+/* Lightweight responsive constellation background + border overlays. */
 (function(){
- const id='starfield';
- let canvas=document.getElementById(id);
- if(!canvas){canvas=document.createElement('canvas');canvas.id=id;canvas.setAttribute('aria-hidden','true');document.body.prepend(canvas);}
+ const mobile=matchMedia('(max-width:800px), (pointer:coarse)').matches;
+ const canvas=document.getElementById('starfield')||document.createElement('canvas');
+ canvas.id='starfield';canvas.setAttribute('aria-hidden','true');
+ if(!canvas.parentNode)document.body.prepend(canvas);
  const ctx=canvas.getContext('2d',{alpha:true});if(!ctx)return;
- let w=0,h=0,dpr=1,stars=[],shooters=[],raf=0,lastFrame=0;
- const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- const mobile=window.matchMedia&&window.matchMedia('(max-width: 800px), (pointer: coarse)').matches;
- const palette=[185,205,225,255,280,315,42,145];
+ let w=0,h=0,dpr=1,stars=[],raf=0,last=0,paused=false;
+ const colors=[185,205,225,255,280,315,42,145];
  function resize(){
-  dpr=Math.min(window.devicePixelRatio||1,mobile?0.75:1.25);w=window.innerWidth;h=window.innerHeight;
-  canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
-  canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);
-  const count=Math.min(mobile?48:300,Math.max(mobile?32:140,Math.floor(w*h/(mobile?24000:5000))));
-  stars=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,ox:Math.random()*w,oy:Math.random()*h,
-   r:Math.random()<.91?Math.random()*.9+.25:Math.random()*1.7+1.1,a:Math.random()*.6+.25,
-   hue:palette[Math.floor(Math.random()*palette.length)]+(Math.random()*16-8),phase:Math.random()*6.28,
-   speed:Math.random()*.0014+.00025,dx:(Math.random()-.5)*(mobile?.12:.22),dy:(Math.random()-.5)*(mobile?.10:.18)}));
- }
- function spawn(){
-  if(mobile&&Math.random()>.35)return;
-  const edge=Math.floor(Math.random()*4);let x,y,ang;
-  if(edge===0){x=Math.random()*w;y=-20;ang=.3+Math.random()*1.1}
-  else if(edge===1){x=w+20;y=Math.random()*h;ang=2+Math.random()*1.1}
-  else if(edge===2){x=Math.random()*w;y=h+20;ang=4+Math.random()*1.1}
-  else{x=-20;y=Math.random()*h;ang=5.2+Math.random()*1.1}
-  const v=mobile?1.8+Math.random()*3:2.5+Math.random()*5;
-  shooters.push({x,y,vx:Math.cos(ang)*v,vy:Math.sin(ang)*v,life:0,max:50+Math.random()*65,tail:mobile?40+Math.random()*70:60+Math.random()*150,hue:palette[Math.floor(Math.random()*palette.length)]});
+  dpr=Math.min(devicePixelRatio||1,mobile?.55:1);
+  w=innerWidth;h=Math.max(document.documentElement.clientHeight,innerHeight);
+  canvas.width=Math.max(1,Math.floor(w*dpr));canvas.height=Math.max(1,Math.floor(h*dpr));
+  canvas.style.width=w+'px';canvas.style.height='100%';ctx.setTransform(dpr,0,0,dpr,0,0);
+  const n=mobile?24:170;
+  stars=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*(mobile?.8:1.4)+.25,
+   hue:colors[Math.floor(Math.random()*colors.length)],a:Math.random()*.45+.25,dx:(Math.random()-.5)*(mobile?.08:.18),dy:(Math.random()-.5)*(mobile?.08:.18)}));
  }
  function draw(t){
-  if(!document.body.contains(canvas)){cancelAnimationFrame(raf);return;}
-  if(document.hidden){raf=requestAnimationFrame(draw);return;}
-  if(t-lastFrame<(mobile?66:33)){raf=requestAnimationFrame(draw);return;}lastFrame=t;
+  if(document.hidden){raf=requestAnimationFrame(draw);return}
+  const interval=mobile?100:40;
+  if(t-last<interval){raf=requestAnimationFrame(draw);return}last=t;
   ctx.clearRect(0,0,w,h);
-  for(const s of stars){
-   const tw=reduce?1:(.58+.42*Math.sin(t*s.speed+s.phase));
-   ctx.globalAlpha=s.a*tw;ctx.fillStyle='hsl('+s.hue+' 100% 75%)';ctx.shadowBlur=mobile?0:(s.r>1.2?5:2);ctx.shadowColor='hsl('+s.hue+' 100% 65%)';
-   ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
-   if(!reduce){s.x+=s.dx;s.y+=s.dy;if(s.x<-3)s.x=w+3;if(s.x>w+3)s.x=-3;if(s.y<-3)s.y=h+3;if(s.y>h+3)s.y=-3;}
+  for(const p of stars){
+   ctx.globalAlpha=p.a;ctx.fillStyle='hsl('+p.hue+' 100% 74%)';
+   if(!mobile){ctx.shadowBlur=3;ctx.shadowColor=ctx.fillStyle}
+   ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+   p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
   }
-  ctx.globalAlpha=1;
-  const maxDist=mobile?64:112,limit=mobile?1:3;
-  for(let i=0;i<stars.length;i++){
-   let linked=0;const a=stars[i];
-   for(let j=i+1;j<stars.length&&linked<limit;j++){
-    const b=stars[j],dx=a.x-b.x,dy=a.y-b.y,dist=Math.hypot(dx,dy);
-    if(dist<maxDist){
-     const alpha=(1-dist/maxDist)*(mobile?.15:.22);
-     ctx.strokeStyle='hsla('+((a.hue+b.hue)/2)+' 100% 70% / '+alpha+')';ctx.lineWidth=.65;
-     ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();linked++;
-    }
+  ctx.shadowBlur=0;ctx.globalAlpha=1;
+  // Mobile draws only a few short links; desktop retains constellation mesh.
+  const max=mobile?90:125,step=mobile?3:1;
+  for(let i=0;i<stars.length;i+=step){
+   const a=stars[i];let connected=0;
+   for(let j=i+1;j<stars.length&&connected<(mobile?1:3);j++){
+    const b=stars[j],dx=a.x-b.x,dy=a.y-b.y,d=dx*dx+dy*dy;
+    if(d<max*max){ctx.strokeStyle='hsla('+a.hue+' 100% 72% / '+((1-Math.sqrt(d)/max)*(mobile?.07:.17))+')';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();connected++}
    }
-  }
-  if(!mobile&&!reduce&&shooters.length<3&&Math.random()<.035)spawn();
-  for(let i=shooters.length-1;i>=0;i--){
-   const q=shooters[i],mag=Math.max(Math.hypot(q.vx,q.vy),1),px=q.x-q.vx*(q.tail/mag),py=q.y-q.vy*(q.tail/mag);
-   const fade=Math.sin(Math.min(1,q.life/q.max)*Math.PI)*.8,g=ctx.createLinearGradient(q.x,q.y,px,py);
-   g.addColorStop(0,'hsla('+q.hue+' 100% 90% / '+fade+')');g.addColorStop(.25,'hsla('+q.hue+' 100% 70% / '+(fade*.5)+')');g.addColorStop(1,'hsla('+q.hue+' 100% 70% / 0)');
-   ctx.strokeStyle=g;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(q.x,q.y);ctx.lineTo(px,py);ctx.stroke();
-   q.x+=q.vx;q.y+=q.vy;q.life++;if(q.life>q.max||q.x<-220||q.x>w+220||q.y<-220||q.y>h+220)shooters.splice(i,1);
   }
   raf=requestAnimationFrame(draw);
  }
- // Add border-only overlays to existing bordered UI elements; overlays never affect layout or clicks.
- const ringTargets='button:not(:disabled),a[href],[role="button"],summary,input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),select,textarea,.card,.wallet-card,.panel,.section-card,.machine-card,.method-flow-card,.method-flow-action,.upload-area,.drop-zone,.job-card,.history-card,.claim-card,.pricing-card,.price-card,.feature-card,.stats-card,.stat-card,.modal,.modal-content,.dialog,.notice,.alert';
  function addRings(){
-  document.querySelectorAll(ringTargets).forEach(el=>{
+  const targets='button:not(:disabled),a[href],[role="button"],summary,input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),select,textarea,.hero,.container,.machine-card,.method-flow-card,.wallet-card,.panel,.section-card,.card,.claim-card,.pricing-card,.modal,.modal-content,.notice,.alert';
+  document.querySelectorAll(targets).forEach(el=>{
    if(el.querySelector(':scope > .dicky-ring-overlay'))return;
    const cs=getComputedStyle(el);
-   // Do not draw rings around borderless layout wrappers; this prevents stray/patched rectangular outlines.
-   const hasBorder=['Top','Right','Bottom','Left'].some(side=>{
-    const width=parseFloat(cs['border'+side+'Width'])||0;
-    const style=cs['border'+side+'Style'];
-    const color=cs['border'+side+'Color'];
-    return width>0&&style!=='none'&&style!=='hidden'&&color!=='rgba(0, 0, 0, 0)'&&color!=='transparent';
-   });
+   const hasBorder=['Top','Right','Bottom','Left'].some(side=>(parseFloat(cs['border'+side+'Width'])||0)>0&&!['none','hidden'].includes(cs['border'+side+'Style']));
    if(!hasBorder)return;
    if(cs.position==='static')el.style.position='relative';
-   const ring=document.createElement('span');ring.className='dicky-ring-overlay';ring.setAttribute('aria-hidden','true');
-   el.appendChild(ring);
+   const ring=document.createElement('span');ring.className='dicky-ring-overlay';ring.setAttribute('aria-hidden','true');el.appendChild(ring);
   });
  }
- document.querySelectorAll('.dicky-rainbow-border').forEach(el=>el.remove());
  resize();addRings();raf=requestAnimationFrame(draw);
- const ringObserver=new MutationObserver(()=>addRings());ringObserver.observe(document.body,{childList:true,subtree:true});
- window.addEventListener('resize',resize,{passive:true});
+ // Debounce observer work; only check when actual new elements appear.
+ let pending=false;
+ const observer=new MutationObserver(records=>{
+  if(pending||!records.some(r=>[...r.addedNodes].some(n=>n.nodeType===1&&!n.classList?.contains('dicky-ring-overlay'))))return;
+  pending=true;requestAnimationFrame(()=>{pending=false;addRings()});
+ });
+ observer.observe(document.body,{childList:true,subtree:true});
+ addEventListener('resize',resize,{passive:true});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(raf);else{last=0;raf=requestAnimationFrame(draw)}});
 })();</script>
 
 </body>
