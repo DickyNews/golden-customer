@@ -1,15 +1,11 @@
 name: Deploy TikTok Analytics Worker
 on:
-  push:
-    branches: [main]
-    paths:
-      - "analytics-worker/**"
-      - ".github/workflows/deploy-tiktok-analytics.yml"
   workflow_dispatch:
 permissions:
   contents: write
 jobs:
   deploy:
+    if: vars.ENABLE_SEPARATE_TIKTOK_WORKER_DEPLOY == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
