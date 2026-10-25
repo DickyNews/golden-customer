@@ -1790,7 +1790,7 @@ async function uploadVideo(f){
         save.style.display='none';document.body.appendChild(save);save.click();save.remove();
         setProgress(100,'Unduhan selesai');
         a.textContent='UNDUHAN SELESAI · 100%';
-        document.getElementById('modalTitle').textContent='Unduhan selesai';
+        document.getElementById('modalTitle').textContent='Unduhan selesai 100%';
         document.getElementById('modalText').textContent='Seluruh data video sudah diterima browser. Mengonfirmasi pembersihan file server…';
         if(jobId){
           const ack=await fetch(`${GOLDEN_PLATFORM.apiBase}${GOLDEN_PLATFORM.endpoints.job}${encodeURIComponent(jobId)}/download/ack`,{
@@ -1805,7 +1805,7 @@ async function uploadVideo(f){
         downloadComplete=true;
         a.disabled=true;
         close.style.display='block';
-        document.getElementById('modalText').textContent='Unduhan mencapai 100%. File hasil sudah dikirim ke browser dan konfirmasi pembersihan server berhasil.';
+        document.getElementById('modalText').textContent='Terima kasih 😊';
       }catch(e){
         let failureNote='';
         if(!transferComplete&&jobId){
