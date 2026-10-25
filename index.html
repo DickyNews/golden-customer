@@ -1448,14 +1448,20 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 .dicky-spiral-border {
   position:absolute!important;
   inset:0!important;
+  box-sizing:border-box!important;
   display:block!important;
-  padding:2px!important;
+  padding:3px!important;
   border:0!important;
   border-radius:inherit!important;
   background:conic-gradient(from var(--dicky-spiral-angle),
-    #62f3ff 0deg,#477dff 52deg,#9b70ff 104deg,
-    #ff4edb 156deg,#ffd84d 208deg,#42ffb4 260deg,
-    #62f3ff 312deg,#477dff 360deg)!important;
+    #ffffff 0deg,#62f3ff 12deg,#477dff 32deg,#9b70ff 48deg,
+    transparent 66deg,transparent 88deg,
+    #ff4edb 104deg,#ffffff 116deg,#ff4edb 128deg,
+    transparent 148deg,transparent 174deg,
+    #ffd84d 192deg,#fff4ad 205deg,#42ffb4 220deg,
+    transparent 244deg,transparent 270deg,
+    #62f3ff 288deg,#477dff 308deg,#ffffff 322deg,
+    transparent 340deg,transparent 360deg)!important;
   -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)!important;
   -webkit-mask-composite:xor!important;
   mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)!important;
@@ -1463,7 +1469,8 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   pointer-events:none!important;
   z-index:20!important;
   opacity:1!important;
-  animation:dickySpiralBorderTurn 2.4s linear infinite!important;
+  filter:drop-shadow(0 0 2px rgba(98,243,255,.85)) drop-shadow(0 0 5px rgba(155,112,255,.48))!important;
+  animation:dickySpiralBorderTurn 1.65s linear infinite!important;
 }
 @media(prefers-reduced-motion:reduce){
  .dicky-spiral-border{animation:none!important}
