@@ -1583,6 +1583,7 @@ input,button,select,textarea{max-width:100%}
 .wallet-cost-label,#buy{display:none!important}
 .wallet-bottom{margin-top:8px!important}
 </style>
+<style id="ACCOUNT_PACKAGE_DETAIL_UI">#claimBox[hidden],#customerSubscriptionCurrent[hidden]{display:none!important}#customerSubscriptionCurrent{line-height:1.7}#customerSubscriptionCurrent .active-plan-card{padding:16px;border:1px solid rgba(98,243,255,.32);border-radius:14px;background:linear-gradient(145deg,rgba(20,67,86,.3),rgba(18,18,45,.65))}#customerSubscriptionCurrent .active-plan-title{font-size:16px;font-weight:850;color:#91f6ff;margin-bottom:10px}#customerSubscriptionCurrent .active-plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}#customerSubscriptionCurrent .active-plan-stat{padding:10px;border:1px solid rgba(255,255,255,.1);border-radius:10px;background:rgba(0,0,0,.14)}#customerSubscriptionCurrent .active-plan-stat small{display:block;color:#aab7d2;font-size:10px;text-transform:uppercase;letter-spacing:.06em}#customerSubscriptionCurrent .active-plan-stat b{display:block;margin-top:4px;font-size:14px;overflow-wrap:anywhere}</style>
 </head>
 <body>
 <!--
@@ -1709,7 +1710,7 @@ input,button,select,textarea{max-width:100%}
     <div class="drop" id="drop"><div class="upload-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 16V4m-5 5 5-5 5 5M4 17v3h16v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><strong id="dropTitle">Pilih mode di atas</strong><p id="dropText">Klik salah satu tombol proses untuk memilih file video.</p><p class="android-files-note"><strong>Android:</strong> pilih video melalui pemilih file di perangkat, misalnya <b>Files / File Manager</b>.</p><p class="ios-files-note"><strong>Khusus iPhone:</strong> pilih video dari aplikasi <b>File (Files)</b>.</p><input id="file" class="file" type="file" accept="*/*"></div>
   </div>
   <aside class="side">
-    <div class="card wallet-card"><div class="wallet-title"><h2>Wallet</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Paket tersedia</span><b>0</b><em>akses pemrosesan video</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Isi Paket</span><b>0</b><em>permintaan paket</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Status paket</span><strong>belum ada paket aktif</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span class="wallet-cost-label">Biaya sekali proses <strong id="priceSummary">PAKET LANGGANAN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Isi Paket</button><button class="btn btn-secondary" id="customerLogout" type="button" hidden>Logout</button></div></div><div class="claim-box"><div class="claim-label">CLAIM AKUN</div><div class="claim-row" style="display:grid;grid-template-columns:1fr;gap:10px"><input id="claimUsernameInput" type="text" placeholder="Masukkan username customer" autocomplete="username"><input id="claimKeyInput" type="text" placeholder="Masukkan Claim Key ID" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan username yang diberikan admin dan Claim Key ID milik username tersebut.</div></div></div>
+    <div class="card wallet-card"><div class="wallet-title"><h2 id="accountPanelTitle">Akun</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Paket tersedia</span><b>0</b><em>akses pemrosesan video</em></div><div class="wallet-stat"><span>Encode terpakai</span><b>0</b><em>kali encode</em></div><div class="wallet-stat"><span>Isi Paket</span><b>0</b><em>permintaan paket</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Status paket</span><strong>belum ada paket aktif</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span class="wallet-cost-label">Biaya sekali proses <strong id="priceSummary">PAKET LANGGANAN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Isi Paket</button><button class="btn btn-secondary" id="customerLogout" type="button" hidden>Logout</button></div></div><div class="claim-box" id="claimBox"><div class="claim-label">CLAIM AKUN</div><div class="claim-row" style="display:grid;grid-template-columns:1fr;gap:10px"><input id="claimUsernameInput" type="text" placeholder="Masukkan username customer" autocomplete="username"><input id="claimKeyInput" type="text" placeholder="Masukkan Claim Key ID" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan username yang diberikan admin dan Claim Key ID milik username tersebut.</div></div></div>
     
   </aside>
 </section>
@@ -1792,7 +1793,7 @@ const file=document.getElementById('file'),drop=document.getElementById('drop'),
 const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:false};let maxFileSizeBytes=300*1024*1024;
 function renderPrices(){
   const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
-  if(sdr)sdr.textContent='PAKET LANGGANAN';
+  if(sdr)sdr.textContent='✓ USER VIP AKTIF';
   if(hdr)hdr.textContent='KLIK DISINI UNTUK MENDAPATKAN MESIN HDR';
   if(summary)summary.textContent='Langganan';
   sdrBtn.disabled=!serviceActive.sdr;hdrBtn.disabled=false;
@@ -2131,7 +2132,9 @@ function setCustomerAuth(auth,balance=null){
   const hideHistory=!customerAuthenticated;
   if(historySection){historySection.classList.toggle("hidden",hideHistory);historySection.setAttribute("aria-hidden",String(hideHistory));}
   const b=document.getElementById("walletAuthBadge");
-  if(b){b.textContent=!customerAuthenticated?"BELUM LOGIN":"AKUN TERHUBUNG";b.className="badge "+(customerAuthenticated?"":"warn");}
+  if(b){b.textContent=!customerAuthenticated?"BELUM LOGIN":"PAKET AKTIF";b.className="badge "+(customerAuthenticated?"":"warn");}
+  const panelTitle=document.getElementById("accountPanelTitle");const claimBox=document.getElementById("claimBox");const accountDetails=document.getElementById("customerSubscriptionCurrent");
+  if(panelTitle)panelTitle.textContent=customerAuthenticated?"Detail Paket Aktif":"Akun";if(claimBox)claimBox.hidden=customerAuthenticated;if(accountDetails)accountDetails.hidden=!customerAuthenticated;
   if(!customerAuthenticated&&historyList)historyList.replaceChildren();
 }
 function customerAuthHeaders(extra={}){const token=localStorage.getItem('golden_customer_session_token');return token?{...extra,Authorization:'Bearer '+token}:{...extra};}
@@ -2394,7 +2397,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
 <script id="GOLDEN_SUBSCRIPTION_CUSTOMER_UI_V1">
 (function(){
  const API='https://103-235-74-92.sslip.io';
- const walletTitle=document.querySelector('.wallet-title h2');if(walletTitle)walletTitle.textContent='Akun';
+ const walletTitle=document.getElementById('accountPanelTitle');if(walletTitle)walletTitle.textContent=localStorage.getItem('golden_customer_session_token')?'Detail Paket Aktif':'Akun';
  const plansEl=document.getElementById('customerSubscriptionPlans');
  if(!plansEl)return;
  const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -2419,7 +2422,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
    if(!s){el.innerHTML='<span style="color:#ffc66d">Belum ada paket langganan aktif pada akun ini.</span>';return}
    if(typeof maxFileSizeBytes!=='undefined')maxFileSizeBytes=Math.min(maxFileSizeBytes,Number(s.max_file_size_bytes)||maxFileSizeBytes);
    const exp=new Date(s.expires_at).toLocaleString('id-ID');
-   el.innerHTML='<div style="padding:14px;border:1px solid rgba(98,243,255,.25);border-radius:12px;background:rgba(98,243,255,.045)"><b>'+esc(s.plan_name)+'</b> · Aktif sampai '+esc(exp)+'<br>Sisa proses: <b>'+Number(s.processes_remaining).toLocaleString('id-ID')+'/'+Number(s.process_quota).toLocaleString('id-ID')+'</b> · Maks. '+esc(s.max_file_size_mb)+' MB/video</div>';
+   el.innerHTML='<div class="active-plan-card"><div class="active-plan-title">✓ '+esc(s.plan_name||'Paket Langganan')+'</div><div>Status: <b style="color:#80efb2">AKTIF</b></div><div class="active-plan-grid"><div class="active-plan-stat"><small>Sisa proses</small><b>'+Number(s.processes_remaining??0).toLocaleString('id-ID')+' / '+Number(s.process_quota??0).toLocaleString('id-ID')+'</b></div><div class="active-plan-stat"><small>Maks. ukuran video</small><b>'+esc(s.max_file_size_mb??Math.round(Number(s.max_file_size_bytes||0)/1048576))+' MB</b></div><div class="active-plan-stat"><small>Masa aktif sampai</small><b>'+esc(exp)+'</b></div><div class="active-plan-stat"><small>Durasi paket</small><b>'+esc(s.duration_days??'—')+' hari</b></div></div></div>';
   }catch(e){el.textContent='Tidak dapat memuat status langganan saat ini.'}
  }
  window.goldenRefreshSubscription=loadCurrent;
