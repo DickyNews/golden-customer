@@ -1351,38 +1351,54 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   border-color:#000!important;
 }
 
-/* Dicky News — continuous animated border for every interactive button */
+/* Dicky News — rotating spiral/rainbow border for every enabled control */
 @property --dicky-border-angle {
   syntax: "<angle>";
   inherits: false;
   initial-value: 0deg;
 }
 @keyframes dickyInfiniteBorderFlow {
+  from { --dicky-border-angle: 0deg; }
   to { --dicky-border-angle: 360deg; }
 }
-:where(button:not(:disabled), .btn:not(:disabled), .mode-btn:not(:disabled),
-a.button, [role="button"]:not([aria-disabled="true"]),
-input[type="button"]:not(:disabled), input[type="submit"]:not(:disabled)) {
-  border: 1px solid transparent !important;
+:where(
+  button:not(:disabled),
+  .btn:not(:disabled),
+  .mode-btn:not(:disabled),
+  a.button,
+  .hero-social,
+  .nav-actions a,
+  .wallet-actions a,
+  .footer-social-links a,
+  .pill,
+  [role="button"]:not([aria-disabled="true"]),
+  input[type="button"]:not(:disabled),
+  input[type="submit"]:not(:disabled),
+  input[type="reset"]:not(:disabled)
+) {
+  border: 2px solid transparent !important;
   border-image: conic-gradient(from var(--dicky-border-angle),
-    #62f3ff 0deg, #9b70ff 75deg, #ff4edb 145deg,
-    #e7b83f 220deg, #62f3ff 300deg, #62f3ff 360deg) 1 !important;
-  animation: dickyInfiniteBorderFlow 3.2s linear infinite !important;
+    #62f3ff 0deg, #477dff 60deg, #9b70ff 120deg,
+    #ff4edb 180deg, #e7b83f 240deg, #42ffb4 300deg,
+    #62f3ff 360deg) 1 !important;
+  animation: dickyInfiniteBorderFlow 2.8s linear infinite !important;
   will-change: border-image-source;
 }
-:where(button:disabled, .btn:disabled, .mode-btn:disabled,
-[role="button"][aria-disabled="true"], input:disabled) {
+:where(
+  button:disabled, .btn:disabled, .mode-btn:disabled,
+  [role="button"][aria-disabled="true"],
+  input:disabled, input[aria-disabled="true"]
+) {
   animation: none !important;
 }
 @media (prefers-reduced-motion: reduce) {
-  :where(button, .btn, .mode-btn, a.button, [role="button"],
-  input[type="button"], input[type="submit"]) {
+  :where(button, .btn, .mode-btn, a.button, .hero-social,
+  .nav-actions a, .wallet-actions a, .footer-social-links a, .pill,
+  [role="button"], input[type="button"], input[type="submit"], input[type="reset"]) {
     animation: none !important;
   }
 }
-
-
-/* FINAL FIX: prevent the step-3 description from splitting into flex columns on desktop. */
+  /* FINAL FIX: prevent the step-3 description from splitting into flex columns on desktop. */
 @media (min-width: 801px) {
   #method-flow .method-flow-card p {
     display: block !important;
