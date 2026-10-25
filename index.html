@@ -3089,5 +3089,59 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
 }
 </style>
 
+
+<style id="VIP_ULTIMATE_BUTTON_TEXT_GRADIENT_V2">
+/* Final override: remove legacy yellow fills and align every processing button
+   and its text with the VIP ULTIMATE purple gradient. */
+.grid>.card.upload .free-inject-btn,
+.grid>.card.upload .free-inject-btn:link,
+.grid>.card.upload .free-inject-btn:visited,
+.grid>.card.upload .free-inject-btn:hover,
+.grid>.card.upload .free-inject-btn:focus,
+.grid>.card.upload .free-inject-btn:active,
+.grid>.card.upload .machine-card>.mode-btn,
+.grid>.card.upload .machine-card>.mode-btn:link,
+.grid>.card.upload .machine-card>.mode-btn:visited,
+.grid>.card.upload .machine-card>.mode-btn:hover,
+.grid>.card.upload .machine-card>.mode-btn:focus,
+.grid>.card.upload .machine-card>.mode-btn:active{
+  background:#a833ed!important;
+  background-image:linear-gradient(100deg,#771bd0 0%,#a833ed 48%,#d95bff 100%)!important;
+  color:#fff!important;-webkit-text-fill-color:#fff!important;
+  border:1px solid #f0b8ff!important;
+  text-shadow:none!important;mix-blend-mode:normal!important;
+}
+.grid>.card.upload .free-inject-btn *,
+.grid>.card.upload .machine-card>.mode-btn *,
+.grid>.card.upload .machine-card>.mode-btn small,
+.grid>.card.upload .machine-card>.mode-btn #sdrPrice,
+.grid>.card.upload .machine-card>.mode-btn #hdrPrice{
+  color:#fff!important;-webkit-text-fill-color:#fff!important;
+  opacity:1!important;text-shadow:none!important;
+}
+.grid>.card.upload .free-inject-btn::before,
+.grid>.card.upload .free-inject-btn::after,
+.grid>.card.upload .machine-card>.mode-btn::before,
+.grid>.card.upload .machine-card>.mode-btn::after{
+  color:#fff!important;-webkit-text-fill-color:#fff!important;
+  border-color:rgba(255,255,255,.65)!important;
+}
+.grid>.card.upload .free-inject-btn:hover,
+.grid>.card.upload .machine-card>.mode-btn:hover,
+.grid>.card.upload .machine-card>.mode-btn:focus-visible{
+  background-image:linear-gradient(100deg,#8520df 0%,#b53df0 48%,#e477ff 100%)!important;
+  border-color:#fff1ff!important;
+  box-shadow:0 0 0 1px rgba(240,184,255,.18),0 0 24px rgba(217,91,255,.34),inset 0 1px rgba(255,255,255,.22)!important;
+}
+.grid>.card.upload .free-inject-btn:active,
+.grid>.card.upload .machine-card>.mode-btn:active{
+  background-image:linear-gradient(100deg,#6815ba 0%,#9a2ed8 48%,#c64bec 100%)!important;
+}
+.grid>.card.upload .machine-card.inject-machine,
+.grid>.card.upload .machine-card.hdr-machine{
+  background:linear-gradient(145deg,rgba(35,12,51,.96),rgba(12,7,19,.98))!important;
+}
+</style>
+
 </body>
 </html>
