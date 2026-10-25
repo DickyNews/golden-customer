@@ -1573,6 +1573,20 @@ body{height:auto!important;min-height:100%!important;overflow-x:hidden!important
  .app{height:auto!important;min-height:100dvh!important;overflow:visible!important;overflow-x:clip!important;touch-action:pan-y!important}
  .card,.analytics-upload,.analytics>.card,.section,.grid>.card,.method-flow-card,.machine-card,.wallet-card,.panel,.section-card,.claim-card,.pricing-card,.modal-box,.footer-social-owner{box-shadow:0 8px 24px rgba(0,0,0,.2)!important}
 }
+
+/* VISUAL HOTFIX: restore animated card borders, remove the oversized section frame */
+.section{border:0!important;outline:0!important;box-shadow:none!important}
+.card,.step,.machine-card,.method-flow-card,.wallet-card,.panel,.section-card,.claim-card,.pricing-card,.modal-box,.footer-social-owner{
+ border:2px solid #22f5ff!important;
+ animation:dickyBorderGlow 5s linear infinite!important;
+}
+.dicky-ring-overlay{display:none!important;visibility:hidden!important;animation:none!important}
+@media(max-width:800px),(pointer:coarse){
+ .section{border:0!important;outline:0!important;box-shadow:none!important}
+ .card,.step,.machine-card,.method-flow-card,.wallet-card,.panel,.section-card,.claim-card,.pricing-card,.modal-box,.footer-social-owner{
+  border-width:2px!important;animation:dickyBorderGlow 5s linear infinite!important;
+ }
+}
 </style>
 </head>
 <body>
