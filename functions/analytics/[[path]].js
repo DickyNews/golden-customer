@@ -1,4 +1,5 @@
-const UPSTREAM = "https://golden-tiktok-analytics.alinkdicky45.workers.dev/public/tiktok-analytics";
+import analyticsWorker from "../../analytics-worker/worker.js";
+
 const MAX_INPUT_LENGTH = 2048;
 const MAX_RESPONSE_BYTES = 1024 * 1024;
 const BASE_HEADERS = {
@@ -63,15 +64,15 @@ export async function onRequest({ request }) {
     return json({ error: "Masukkan URL video TikTok HTTPS yang valid." }, 400);
   }
 
-  const upstream = new URL(UPSTREAM);
-  upstream.searchParams.set("url", input);
+  const internalUrl = new URL("https://golden-tiktok-analytics.alinkdicky45.workers.dev/public/tiktok-analytics");
+  internalUrl.searchParams.set("url", input);
   try {
-    const response = await fetch(upstream.toString(), {
+    // Run the hardened analytics module inside Pages; no external Worker API token is required.
+    const internalRequest = new Request(internalUrl.toString(), {
       method: "GET",
-      headers: { "accept": "application/json" },
-      redirect: "manual",
-      signal: AbortSignal.timeout(16000)
+      headers: { "accept": "application/json", "origin": incoming.origin }
     });
+    const response = await analyticsWorker.fetch(internalRequest);
     if (response.status >= 300 && response.status < 400) {
       try { await response.body?.cancel(); } catch {}
       return json({ error: "Redirect analytics ditolak." }, 502);
