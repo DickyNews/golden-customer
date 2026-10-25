@@ -1521,6 +1521,46 @@ body{overflow-x:clip!important;overscroll-behavior-y:contain}
 }
 @media(max-width:380px){.footer-social-links{grid-template-columns:1fr}}
 
+
+/* FINAL CLEAN LAYOUT — stable scrolling and consistent animated borders */
+html{scroll-behavior:smooth!important;scroll-padding-top:22px}
+body{overflow-x:hidden!important}
+.section,.card,.step,.machine-card,.method-flow-card,.hero-social,.signal,.wallet-stat,.feature,
+.scroll-reveal,.scroll-reveal-visible{
+ opacity:1!important;visibility:visible!important;transform:none!important;
+ transition:none!important;animation:none!important;will-change:auto!important
+}
+.card,.analytics-upload,.analytics>.card,.section,.grid>.card,.method-flow-card,.machine-card,
+.wallet-card,.panel,.section-card,.claim-card,.pricing-card,.modal-box,.footer-social-owner{
+ border:2px solid rgba(72,213,255,.58)!important;
+ box-shadow:0 0 0 1px rgba(138,79,255,.18),0 0 22px rgba(36,194,255,.07),inset 0 0 18px rgba(42,115,255,.035)!important;
+}
+.card{height:auto;min-height:0}
+.analytics{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);align-items:start;gap:20px}
+.analytics-upload{min-height:0!important}
+.checker-drop{min-height:260px!important;height:auto!important}
+.analytics>.card{min-width:0;align-self:start}
+.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.dicky-ring-overlay{
+ position:absolute!important;inset:0!important;display:block!important;box-sizing:border-box!important;
+ padding:2px!important;border:0!important;border-radius:inherit!important;
+ background:conic-gradient(from var(--dicky-ring-angle),#25f4ff 0deg,#477dff 65deg,#bd55ff 130deg,#ff43cf 190deg,#ffe35b 250deg,#4bffb8 310deg,#25f4ff 360deg)!important;
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
+ -webkit-mask-composite:xor!important;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;mask-composite:exclude!important;
+ pointer-events:none!important;z-index:3!important;opacity:1!important;animation:dickyRingRotate 1.8s linear infinite!important;
+ box-shadow:none!important;filter:drop-shadow(0 0 3px rgba(65,225,255,.28))!important;
+}
+.footer{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:22px!important;padding:30px 0 24px!important;border-top:0!important}
+.footer-social-owner{width:100%;box-sizing:border-box;text-align:center;padding:26px 24px 28px!important;border-radius:22px!important;background:linear-gradient(135deg,rgba(10,19,35,.92),rgba(21,10,32,.92))!important}
+.footer-social-owner .social-owner-label{margin:0 0 22px!important;font-size:18px!important;letter-spacing:.16em!important}
+.footer-social-links{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px!important;width:100%}
+.footer-social-links .hero-social{display:flex!important;position:relative!important;width:100%!important;min-width:0!important;max-width:none!important;min-height:54px!important;box-sizing:border-box!important;gap:10px!important;padding:13px 14px!important;margin:0!important;border:2px solid rgba(74,222,255,.72)!important;border-radius:16px!important;font-size:14px!important;font-weight:750!important;white-space:nowrap!important}
+.footer-social-links .social-brand-icon{width:22px!important;height:22px!important;flex:0 0 22px!important}
+.footer-copyright{width:100%;box-sizing:border-box;padding:18px 8px 4px!important;border-top:2px solid rgba(72,213,255,.42)!important;text-align:center;color:#aeb8d7;font-size:14px!important}
+@media(max-width:900px){.analytics{grid-template-columns:minmax(0,1fr)!important}.footer-social-links{grid-template-columns:repeat(2,minmax(0,1fr))!important}.footer-social-links .hero-social{white-space:normal!important}}
+@media(max-width:480px){.footer-social-owner{padding:20px 14px!important}.footer-social-links{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}.footer-social-links .hero-social{min-height:50px!important;padding:10px 7px!important;font-size:13px!important}.analytics .card{padding:16px!important}.section{padding-bottom:42px!important}}
+@media(prefers-reduced-motion:reduce){.dicky-ring-overlay{animation:none!important}html{scroll-behavior:auto!important}}
+
 </style>
 </head>
 <body>
@@ -1556,24 +1596,7 @@ body{overflow-x:clip!important;overscroll-behavior-y:contain}
 
 
 <a class="hero-social tutorial-social" href="https://youtu.be/fzS84EMb26M" target="_blank" rel="noopener noreferrer" aria-label="Video Tutorial Dicky News Method"><svg class="social-brand-icon youtube-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg><span>Video Tutorial Dicky News Method</span><svg class="ui-icon social-link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-<div class="social-owner-label">SOCIAL MEDIA OWNER</div>
-<a class="hero-social whatsapp-social owner-whatsapp-social" href="https://wa.me/6289616438173?text=Halo%20Bang%2C%20Saya%20mau%20Top%20Up%20Coin" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Dicky News Official">
-  <svg class="social-brand-icon whatsapp-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.223-.57-.347M12.047 2a10 10 0 0 0-8.6 15.1L2 22l5.05-1.4A10 10 0 1 0 12.047 2z"/></svg>
-  <span>WhatsApp : Dicky News Official</span><svg class="ui-icon social-link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</a>
-
-<a class="hero-social youtube-social" href="https://www.youtube.com/@dickynews" target="_blank" rel="noopener noreferrer" aria-label="Kunjungi channel YouTube Dicky News">
-  <svg class="social-brand-icon youtube-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-  <span>YouTube : Dicky News</span><span class="social-divider">|</span><span class="youtube-subs">400K Subscribers</span><svg class="ui-icon social-link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</a>
-<a class="hero-social tiktok-social" href="https://www.tiktok.com/@dickynewsofficial" target="_blank" rel="noopener noreferrer" aria-label="Kunjungi TikTok Dicky News Method">
-  <svg class="social-brand-icon tiktok-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-  <span>TikTok : Dicky News Method</span><svg class="ui-icon social-link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</a>
-<a class="hero-social instagram-social" href="https://www.instagram.com/dickynews" target="_blank" rel="noopener noreferrer" aria-label="Kunjungi Instagram @dickynews">
-  <svg class="social-brand-icon instagram-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>
-  <span>Instagram : @dickynews</span><svg class="ui-icon social-link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</a></section>
+</section>
 <div class="method-flow-attention" role="note" aria-label="Perhatian">
   <strong>PERHATIAN</strong>
   <p>Abaikan processing flow di bawah jika kamu tidak mau ribet mengatur bitrate. Kamu bisa langsung proses video pada mesin Inject HD TikTok, dan hasilnya bisa langsung kamu upload ke TikTok dengan 2 Opsi, VIDEO NON HDR bisa langsung pakai TIKTOK WEB, dan VIDEO HDR Dolby Vision pakai ZERNIO. di ZERNIO kamu bisa upload VIDEO NON HDR &amp; VIDEO HDR Dolby Vision. TIKTOK WEB khusus upload VIDEO NON HDR jika kamu tidak mau ribet pakai ZERNIO.</p>
@@ -2202,21 +2225,7 @@ async function loadJobHistory(){
 }
 if(refreshHistoryBtn)refreshHistoryBtn.addEventListener('click',loadJobHistory);
 
-loadPublicSettings();(async()=>{const ok=await loadWallet();if(ok)await loadJobHistory();else if(historyList)historyList.replaceChildren();})();/* One-shot scroll reveals: no animation restart on every scroll, alternate gentle side entrances. */
-const revealTargets=document.querySelectorAll('.section,.card,.step,.machine-card,.method-flow-card,.hero-social,.signal,.wallet-stat,.feature');
-if('IntersectionObserver' in window){
- const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
-  if(!entry.isIntersecting)return;
-  entry.target.classList.add('scroll-reveal-visible');
-  revealObserver.unobserve(entry.target);
- }),{threshold:.08,rootMargin:'0px 0px -4% 0px'});
- revealTargets.forEach((el,index)=>{
-  el.classList.add('scroll-reveal');
-  el.dataset.revealDirection=(index%4===1?'left':index%4===3?'right':'up');
-  revealObserver.observe(el);
- });
-}else{revealTargets.forEach(el=>el.classList.add('scroll-reveal-visible'))}
-const checkerUrl=document.getElementById('checkerUrl'),checkerChoose=document.getElementById('checkerChoose'),checkerTitle=document.getElementById('checkerTitle'),checkerText=document.getElementById('checkerText'),analysisStatus=document.getElementById('analysisStatus');
+loadPublicSettings();(async()=>{const ok=await loadWallet();if(ok)await loadJobHistory();else if(historyList)historyList.replaceChildren();})();const checkerUrl=document.getElementById('checkerUrl'),checkerChoose=document.getElementById('checkerChoose'),checkerTitle=document.getElementById('checkerTitle'),checkerText=document.getElementById('checkerText'),analysisStatus=document.getElementById('analysisStatus');
 async function runTikTokAnalytics(){
  const url=String(checkerUrl?.value||'').trim();
  if(!url){checkerText.textContent='Tempel link video TikTok terlebih dahulu.';checkerUrl?.focus();return}
@@ -2358,14 +2367,17 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
   raf=requestAnimationFrame(draw);
  }
  function addRings(){
-  const targets='button:not(:disabled),a[href],[role="button"],summary,input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),select,textarea,.machine-card,.method-flow-card,.wallet-card,.panel,.section-card,.card,.claim-card,.pricing-card,.modal,.modal-content,.notice,.alert';
+  const targets='button:not(:disabled),a[href],[role="button"],summary,.machine-card,.method-flow-card,.wallet-card,.panel,.section-card,.card,.claim-card,.pricing-card,.modal-box,.notice,.alert';
   document.querySelectorAll(targets).forEach(el=>{
+   if(!(el instanceof HTMLElement)||el.closest('.dicky-ring-overlay'))return;
    if(el.querySelector(':scope > .dicky-ring-overlay'))return;
+   if(el.matches('input,textarea,select,option,svg, path'))return;
    const cs=getComputedStyle(el);
    const hasBorder=['Top','Right','Bottom','Left'].some(side=>(parseFloat(cs['border'+side+'Width'])||0)>0&&!['none','hidden'].includes(cs['border'+side+'Style']));
    if(!hasBorder)return;
    if(cs.position==='static')el.style.position='relative';
-   const ring=document.createElement('span');ring.className='dicky-ring-overlay';ring.setAttribute('aria-hidden','true');el.appendChild(ring);
+   const ring=document.createElement('span');ring.className='dicky-ring-overlay';ring.setAttribute('aria-hidden','true');
+   try{el.appendChild(ring)}catch(_){return}
   });
  }
  resize();addRings();if(!mobile)raf=requestAnimationFrame(draw);
