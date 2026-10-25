@@ -1458,7 +1458,7 @@ body>.app{position:relative!important;z-index:1!important;background:transparent
  background:conic-gradient(from var(--dicky-ring-angle),#25f4ff 0deg,#477dff 65deg,#bd55ff 130deg,#ff43cf 190deg,#ffe35b 250deg,#4bffb8 310deg,#25f4ff 360deg)!important;
  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
  -webkit-mask-composite:xor!important;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;mask-composite:exclude!important;
- pointer-events:none!important;z-index:20!important;opacity:1!important;animation:dickyRingRotate 3.4s linear infinite!important;
+ pointer-events:none!important;z-index:20!important;opacity:1!important;animation:dickyRingRotate 2s linear infinite!important;
  box-shadow:none!important;filter:drop-shadow(0 0 2px rgba(65,225,255,.35))!important;
 }
 @media(prefers-reduced-motion:reduce){.dicky-ring-overlay{animation:none!important}}
@@ -1467,17 +1467,17 @@ body>.app{position:relative!important;z-index:1!important;background:transparent
 
 /* Mobile performance: thinner ring, less canvas work, no expensive glow filters. */
 @media(max-width:800px), (pointer:coarse){
- .dicky-ring-overlay{padding:.75px!important;filter:none!important;animation-duration:5.5s!important;opacity:.92!important}
+  .dicky-ring-overlay{padding:.65px!important;filter:none!important;animation-duration:1.5s!important;opacity:.96!important}
  #starfield{opacity:.78!important}
 }
 
 /* Fix top hero border and mobile canvas performance/layout. */
 .hero{border:1px solid rgba(60,220,255,.42);border-radius:24px;box-shadow:0 0 0 1px rgba(120,75,255,.08),inset 0 0 24px rgba(40,160,255,.035)}
-#starfield{position:absolute!important;left:0!important;top:0!important;width:100%!important;height:100%!important;min-height:100%!important;z-index:0!important;pointer-events:none!important;display:block!important;opacity:.8!important}
+#starfield{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;z-index:1!important;pointer-events:none!important;display:block!important;visibility:visible!important;opacity:.92!important}
 body>.app{position:relative!important;z-index:1!important;background:transparent!important}
 @media(max-width:800px),(pointer:coarse){
  #starfield{position:absolute!important;opacity:.62!important}
- .dicky-ring-overlay{padding:.65px!important;filter:none!important;animation-duration:6s!important}
+  .dicky-ring-overlay{padding:.65px!important;filter:none!important;animation-duration:1.5s!important}
  .hero{border-radius:18px!important;box-shadow:0 0 0 1px rgba(70,210,255,.06)!important}
 }
 </style>
@@ -2244,13 +2244,13 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
  let w=0,h=0,dpr=1,stars=[],raf=0,last=0,paused=false;
  const colors=[185,205,225,255,280,315,42,145];
  function resize(){
-  dpr=Math.min(devicePixelRatio||1,mobile?.55:1);
-  w=innerWidth;h=Math.max(document.documentElement.clientHeight,innerHeight);
+  dpr=Math.min(devicePixelRatio||1,mobile?.7:1);
+  w=innerWidth;h=innerHeight;
   canvas.width=Math.max(1,Math.floor(w*dpr));canvas.height=Math.max(1,Math.floor(h*dpr));
   canvas.style.width=w+'px';canvas.style.height='100%';ctx.setTransform(dpr,0,0,dpr,0,0);
   const n=mobile?24:170;
   stars=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*(mobile?.8:1.4)+.25,
-   hue:colors[Math.floor(Math.random()*colors.length)],a:Math.random()*.45+.25,dx:(Math.random()-.5)*(mobile?.08:.18),dy:(Math.random()-.5)*(mobile?.08:.18)}));
+   hue:colors[Math.floor(Math.random()*colors.length)],a:Math.random()*(mobile?.5:.45)+(mobile?.4:.25),dx:(Math.random()-.5)*(mobile?.08:.18),dy:(Math.random()-.5)*(mobile?.08:.18)}));
  }
  function draw(t){
   if(document.hidden)return
@@ -2265,12 +2265,12 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
   }
   ctx.shadowBlur=0;ctx.globalAlpha=1;
   // Mobile draws only a few short links; desktop retains constellation mesh.
-  const max=mobile?90:125,step=mobile?3:1;
+  const max=mobile?105:125,step=mobile?2:1;
   for(let i=0;i<stars.length;i+=step){
    const a=stars[i];let connected=0;
    for(let j=i+1;j<stars.length&&connected<(mobile?1:3);j++){
     const b=stars[j],dx=a.x-b.x,dy=a.y-b.y,d=dx*dx+dy*dy;
-    if(d<max*max){ctx.strokeStyle='hsla('+a.hue+' 100% 72% / '+((1-Math.sqrt(d)/max)*(mobile?.07:.17))+')';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();connected++}
+    if(d<max*max){ctx.strokeStyle='hsla('+a.hue+' 100% 72% / '+((1-Math.sqrt(d)/max)*(mobile?.16:.17))+')';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();connected++}
    }
   }
   raf=requestAnimationFrame(draw);
