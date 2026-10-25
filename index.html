@@ -1752,6 +1752,51 @@ body{overflow-x:hidden}
  .hero>.hero-social{font-size:10.5px!important;padding:7px 8px!important}
 }
 </style>
+<style id="UNIFIED_CUSTOMER_SECTION_BORDERS">
+/* One shared page grid: align the outside edges of all primary sections */
+:root{--page-max-width:1160px;--page-gutter:24px}
+html,body{max-width:100%;overflow-x:hidden}
+.app,main{width:100%;max-width:100%;min-width:0;overflow-x:clip}
+.hero,.method-flow-attention,.method-flow,#bitrate-ideal,main>.grid,#subscriptionPanel,#payment-options,#job-history,#tiktok-analytics,.footer,.section{
+ width:calc(100% - var(--page-gutter)*2)!important;
+ max-width:var(--page-max-width)!important;
+ margin-left:auto!important;margin-right:auto!important;
+ box-sizing:border-box!important;
+}
+.hero,.method-flow-attention,.method-flow,#bitrate-ideal,main>.grid,#subscriptionPanel,#payment-options,#job-history,#tiktok-analytics{position:relative;left:auto!important;right:auto!important}
+#bitrate-ideal{padding:20px!important}
+main>.grid{display:grid!important;grid-template-columns:minmax(0,1.45fr) minmax(300px,.95fr)!important;align-items:start!important;gap:16px!important}
+main>.grid>.upload,main>.grid>.side{width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important;box-sizing:border-box!important}
+main>.grid>.side>.wallet-card{width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+#subscriptionPanel{margin-top:14px!important;margin-bottom:14px!important;padding:16px!important}
+#payment-options{margin-top:14px!important;margin-bottom:14px!important;padding:0!important}
+#payment-options .payment-options-panel{width:100%!important;max-width:100%!important;margin:0!important;box-sizing:border-box!important}
+#method-flow .method-flow-track{width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+#method-flow .method-flow-card{box-sizing:border-box!important}
+#tiktok-analytics>.analytics{width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+.footer{padding-left:0!important;padding-right:0!important}
+@media(min-width:801px){
+ :root{--page-gutter:24px}
+ .hero{padding:22px 24px 18px!important}
+}
+@media(max-width:800px),(pointer:coarse){
+ :root{--page-gutter:12px}
+ .hero,.method-flow-attention,.method-flow,#bitrate-ideal,main>.grid,#subscriptionPanel,#payment-options,#job-history,#tiktok-analytics,.footer,.section{
+  width:calc(100% - 24px)!important;max-width:720px!important;
+ }
+ main>.grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+ main>.grid>.upload,main>.grid>.side{width:100%!important;max-width:100%!important;min-width:0!important}
+ #bitrate-ideal{padding:14px!important}
+ #subscriptionPanel{padding:12px!important}
+ #payment-options{padding:0!important}
+ #payment-options .payment-options-panel{padding:12px!important}
+ #method-flow .method-flow-track{padding-left:2px!important;padding-right:2px!important}
+}
+@media(max-width:420px){
+ :root{--page-gutter:10px}
+ .hero,.method-flow-attention,.method-flow,#bitrate-ideal,main>.grid,#subscriptionPanel,#payment-options,#job-history,#tiktok-analytics,.footer,.section{width:calc(100% - 20px)!important}
+}
+</style>
 </head>
 <body>
 <!--
