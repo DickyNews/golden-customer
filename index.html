@@ -1865,6 +1865,7 @@ const freeInjectBtn=document.getElementById('freeInjectBtn');
 const freeInjectFile=document.getElementById('freeInjectFile');
 let freeMaxFileSizeMb=50;
 let freeMaxBytes=freeMaxFileSizeMb*1024*1024;
+let freeMaxSettingsLoaded=false;
 async function loadFreeMaxSettings(){
   try{
     const response=await fetch(GOLDEN_PLATFORM.apiBase+'/public/free-inject/settings',{cache:'no-store',headers:{Accept:'application/json'}});
@@ -1874,6 +1875,7 @@ async function loadFreeMaxSettings(){
     if(Number.isFinite(candidate)&&candidate>=1&&candidate<=4096){
       freeMaxFileSizeMb=candidate;
       freeMaxBytes=candidate*1024*1024;
+      freeMaxSettingsLoaded=true;
     }
   }catch(e){
     /* Backend tetap menjadi sumber validasi final jika pengaturan publik tidak dapat dimuat. */
@@ -1935,7 +1937,13 @@ async function uploadFreeVideo(f){
 }
 if(freeInjectBtn&&freeInjectFile){
   freeInjectBtn.addEventListener('click',()=>{if(!customerAuthenticated)freeInjectFile.click();});
-  freeInjectFile.addEventListener('change',()=>{const f=freeInjectFile.files&&freeInjectFile.files[0];if(f)uploadFreeVideo(f);});
+  freeInjectFile.addEventListener('change',()=>{
+    const f=freeInjectFile.files&&freeInjectFile.files[0];
+    if(!f)return;
+    /* Precheck on file selection, before any upload request is created. */
+    if(freeMaxSettingsLoaded&&f.size>freeMaxBytes){showFreeSizeLimit();freeInjectFile.value='';return;}
+    uploadFreeVideo(f);
+  });
 }
 
 async function uploadVideo(f){
