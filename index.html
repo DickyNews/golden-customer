@@ -1481,6 +1481,32 @@ html,body{background:#050609!important;background-attachment:scroll!important}
   .card,.panel,.section-card,.analytics-upload,.analytics-panel,.wallet-card,.claim-card,.pricing-card,.method-flow-card,.history-card,.payment-method,.payment-card,.feature-card,.checker-panel{border-width:2px!important}
 }
 
+
+/* BORDER CLEANUP: wrappers stay borderless; only actual content cards get the embossed frame */
+section.section,
+#payment-options.section,
+#history.section,
+#analytics.section,
+.section:has(>.payment-options-panel){
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+}
+#payment-options.section{padding:0!important}
+#payment-options .payment-options-panel{
+  border:2px solid #c8cdd4!important;
+  border-radius:22px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -2px 0 rgba(0,0,0,.14),0 8px 22px rgba(0,0,0,.22)!important;
+}
+#history.section>.history-card,
+#history.section>.panel,
+#analytics.section>.analytics-panel,
+#analytics.section>.panel{
+  border:2px solid rgba(112,224,255,.58)!important;
+  border-radius:22px!important;
+}
+
 </style>
 </head>
 <body>
