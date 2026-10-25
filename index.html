@@ -1955,7 +1955,7 @@ if(freeInjectBtn&&freeInjectFile){
 async function uploadVideo(f){
   if(processing)return;
   processing=true;
-  modal.classList.add('show');close.style.display='block';close.textContent='Tutup Tampilan Proses';
+  modal.classList.add('show');close.style.display='none';close.textContent='Tutup';
   document.getElementById('modalTitle').textContent=selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD';
   setProgress(0,'Menyiapkan upload');
   try{
@@ -1987,6 +1987,7 @@ async function uploadVideo(f){
     close.style.display='none';
     document.getElementById('modalTitle').textContent='Mengunduh hasil video';
     document.getElementById('modalText').textContent='Proses berhasil. Unduhan akan dimulai otomatis.';
+    close.style.display='block';close.textContent='Tutup Tampilan Proses';
     const old=document.getElementById('downloadResult');if(old)old.remove();
     const a=document.createElement('button');a.id='downloadResult';
     a.type='button';
