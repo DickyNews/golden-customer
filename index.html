@@ -2383,6 +2383,22 @@ function setProgress(p,label){
   document.getElementById('modalText').textContent=label+' '+Math.round(n)+'%.';
 }
 
+function formatApiDetail(value,fallback='Permintaan ke server gagal.') {
+  if(value==null||value==='')return fallback;
+  if(typeof value==='string')return value;
+  if(Array.isArray(value)){
+    const parts=value.map(item=>{
+      if(typeof item==='string')return item;
+      if(!item||typeof item!=='object')return String(item??'');
+      const message=item.msg||item.message||item.error||item.detail;
+      const location=Array.isArray(item.loc)?item.loc.filter(Boolean).join(' → '):'';
+      return [location,message].filter(Boolean).join(': ')||JSON.stringify(item);
+    }).filter(Boolean);
+    return parts.join(' | ')||fallback;
+  }
+  if(typeof value==='object')return String(value.message||value.msg||value.error||value.detail||JSON.stringify(value));
+  return String(value);
+}
 function extractJobId(d){
   return d?.job_id ?? d?.id ?? d?.job?.id ?? d?.job?.job_id ?? d?.data?.job_id ?? d?.data?.id ?? null;
 }
@@ -2403,7 +2419,7 @@ async function pollJob(jobId){
     await new Promise(r=>setTimeout(r,2000));
     const r=await fetch(GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.job+encodeURIComponent(jobId),{credentials:'include',headers:customerAuthHeaders()});
     let d={};try{d=await r.json()}catch(e){}
-    if(!r.ok)throw new Error(d.detail||('HTTP '+r.status));
+    if(!r.ok)throw new Error(formatApiDetail(d.detail,'HTTP '+r.status));
     const p=normalizeProgress(d);
     if(p!==null)setProgress(p,p>=100?'Proses selesai':'Golden Engine sedang memproses');
     const url=extractDownload(d);
@@ -2465,7 +2481,7 @@ async function uploadFreeVideo(f){
     const fd=new FormData();fd.append('file',f,f.name);
     const response=await fetch(GOLDEN_PLATFORM.apiBase+'/public/free-inject/jobs',{method:'POST',body:fd,cache:'no-store'});
     const data=await response.json().catch(()=>({}));
-    if(!response.ok){if(response.status===413||data.detail==='FREE_MAX_50MB'){showFreeSizeLimit();return;}throw new Error(data.detail||('HTTP '+response.status));}
+    if(!response.ok){if(response.status===413||data.detail==='FREE_MAX_50MB'){showFreeSizeLimit();return;}throw new Error(formatApiDetail(data.detail,'HTTP '+response.status));}
     jobId=data.job_id;token=data.token;
     if(!jobId||!token)throw new Error('Server belum memberikan akses job gratis.');
     let downloadUrl=null;
@@ -2473,7 +2489,7 @@ async function uploadFreeVideo(f){
       await new Promise(resolve=>setTimeout(resolve,2000));
       const statusResponse=await fetch(GOLDEN_PLATFORM.apiBase+'/public/free-inject/jobs/'+encodeURIComponent(jobId)+'?token='+encodeURIComponent(token),{cache:'no-store'});
       const statusData=await statusResponse.json().catch(()=>({}));
-      if(!statusResponse.ok)throw new Error(statusData.detail||('HTTP '+statusResponse.status));
+      if(!statusResponse.ok)throw new Error(formatApiDetail(statusData.detail,'HTTP '+statusResponse.status));
       const status=String(statusData.status||'').toLowerCase();
       modalText.textContent=statusData.progress_label||({queued:'Video masuk antrean, menunggu Golden Engine…',processing:'Golden Engine sedang memproses video…',running:'Golden Engine sedang memproses video…'}[status]||'Golden Engine sedang memproses video…');
       if(statusData.download_url&&(status==='completed'||status==='complete'||status==='done'||status==='success')){downloadUrl=statusData.download_url;break;}
@@ -2515,14 +2531,17 @@ async function uploadVideo(f){
     const response=await new Promise((resolve,reject)=>{
       xhr.open('POST',GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.upload,true);
       xhr.withCredentials=true;
+      xhr.timeout=15*60*1000;
       const sessionToken=localStorage.getItem('golden_customer_session_token');if(sessionToken)xhr.setRequestHeader('Authorization','Bearer '+sessionToken);
       xhr.upload.onprogress=e=>{
         if(e.lengthComputable)setProgress((e.loaded/e.total)*35,'Mengunggah video');
       };
-      xhr.onerror=()=>reject(new Error('Koneksi ke Golden API terputus.'));
+      xhr.onerror=()=>reject(new Error('Browser gagal menyelesaikan koneksi ke Golden API. Periksa jaringan, TLS/CORS, lalu cek status job sebelum mengunggah ulang.'));
+      xhr.ontimeout=()=>reject(new Error('Upload melewati batas waktu 15 menit. Periksa status job sebelum mencoba lagi agar tidak membuat job ganda.'));
+      xhr.onabort=()=>reject(new Error('Upload dibatalkan oleh browser. Periksa status job sebelum mencoba lagi.'));
       xhr.onload=()=>{
         let d={};try{d=JSON.parse(xhr.responseText||'{}')}catch(e){}
-        if(xhr.status<200||xhr.status>=300)return reject(new Error(d.detail||('HTTP '+xhr.status)));
+        if(xhr.status<200||xhr.status>=300)return reject(new Error(formatApiDetail(d.detail,'HTTP '+xhr.status)));
         resolve(d);
       };
       xhr.send(fd);
