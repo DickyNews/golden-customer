@@ -1426,6 +1426,35 @@ input[type="button"]:not(:disabled), input[type="submit"]:not(:disabled)) {
 :where(button,a[href],[role="button"],input[type="button"],input[type="submit"],input[type="reset"]){isolation:isolate}
 :where(button,a[href],[role="button"],input[type="button"],input[type="submit"],input[type="reset"]):focus-visible{outline:2px solid #fff!important;outline-offset:3px!important}
 @media(prefers-reduced-motion:reduce){.dicky-rainbow-border{animation:none;opacity:.7}}
+
+/* NEON CONSTELLATION THEME — strong visible theme, not just subtle shine. */
+#starfield{position:fixed!important;inset:0!important;z-index:0!important;pointer-events:none!important;background:transparent!important;opacity:1!important}
+html,body{background:#02030a!important;background-image:radial-gradient(ellipse at 50% 0%,rgba(21,35,76,.55),transparent 58%)!important}
+body,#app,.app,.shell,main{background-color:transparent!important}
+.card,.wallet-card,.upload,.section-card,.panel,.method-flow-card,.method-flow-track,.machine-card{
+ background:linear-gradient(145deg,rgba(5,13,30,.88),rgba(10,7,27,.88))!important;
+ border-color:rgba(61,221,255,.58)!important;
+ box-shadow:0 0 0 1px rgba(98,243,255,.08),0 0 22px rgba(34,210,255,.12),inset 0 1px rgba(255,255,255,.09)!important;
+ backdrop-filter:blur(12px) saturate(135%)!important;-webkit-backdrop-filter:blur(12px) saturate(135%)!important;
+}
+.machine-card{border-radius:22px!important}
+.machine-card.inject-machine,.machine-card.hdr-machine{background:linear-gradient(145deg,rgba(4,14,32,.94),rgba(17,8,35,.94))!important;border:1px solid rgba(85,228,255,.68)!important}
+.machine-details>summary,.method-flow-action,.btn,.wallet-actions a{
+ border-color:rgba(79,231,255,.9)!important;
+ box-shadow:0 0 10px rgba(0,220,255,.18),inset 0 0 12px rgba(98,243,255,.08)!important;
+}
+.method-flow-card:hover,.machine-card:hover,.card:hover{border-color:#ff4dde!important;box-shadow:0 0 24px rgba(255,78,221,.18),0 0 36px rgba(38,198,255,.12)!important}
+.free-inject-btn,#freeInjectBtn,#sdrBtn,#hdrBtn,.machine-card.inject-machine>.mode-btn,.machine-card.hdr-machine>.mode-btn{
+ background:linear-gradient(110deg,#ffe23e 0%,#ffcf00 38%,#fff078 50%,#ffbf00 68%,#ffe23e 100%)!important;
+ border:2px solid #fff2a6!important;color:#080812!important;-webkit-text-fill-color:#080812!important;
+ box-shadow:0 0 12px rgba(255,213,32,.42),0 0 28px rgba(255,213,32,.17),inset 0 1px rgba(255,255,255,.7)!important;
+}
+.dicky-rainbow-border{inset:0!important;padding:2px!important;opacity:1!important;filter:drop-shadow(0 0 4px rgba(72,220,255,.3))}
+.dicky-rainbow-border{background:conic-gradient(from var(--dicky-border-angle,0deg),#20f4ff,#427cff,#bb54ff,#ff42d0,#ffe45b,#42ffb4,#20f4ff)!important}
+@media(max-width:800px){
+ #starfield{opacity:.95!important}
+ .card,.wallet-card,.upload,.section-card,.panel,.method-flow-card,.machine-card{background:linear-gradient(145deg,rgba(4,12,27,.9),rgba(12,7,29,.91))!important}
+}
 </style>
 </head>
 <body>
@@ -2246,12 +2275,15 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
  }
  // Add an independent animated border layer to each actionable control, without replacing its click handler or shine.
  function addButtonBorders(){
-  document.querySelectorAll('button,a[href],[role="button"],input[type="button"],input[type="submit"],input[type="reset"]').forEach(el=>{
+  // Never append children to input elements; doing so throws and would stop the animation loop.
+  document.querySelectorAll('button,a[href],[role="button"]').forEach(el=>{
    if(el.querySelector(':scope > .dicky-rainbow-border'))return;
-   const cs=getComputedStyle(el);if(cs.position==='static')el.style.position='relative';
-   if(!el.style.overflow)el.style.overflow='hidden';
-   const border=document.createElement('span');border.className='dicky-rainbow-border';border.setAttribute('aria-hidden','true');
-   el.appendChild(border);
+   try{
+    const cs=getComputedStyle(el);if(cs.position==='static')el.style.position='relative';
+    if(cs.overflow==='visible')el.style.overflow='hidden';
+    const border=document.createElement('span');border.className='dicky-rainbow-border';border.setAttribute('aria-hidden','true');
+    el.appendChild(border);
+   }catch(e){}
   });
  }
  resize();addButtonBorders();raf=requestAnimationFrame(draw);
