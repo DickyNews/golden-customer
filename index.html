@@ -1480,6 +1480,31 @@ body>.app{position:relative!important;z-index:2!important;background:transparent
   .dicky-ring-overlay{padding:.65px!important;filter:none!important;animation-duration:1.5s!important}
  .hero{border-radius:18px!important;box-shadow:0 0 0 1px rgba(70,210,255,.06)!important}
 }
+
+/* FINAL SCROLL + ANIMATION STABILITY PASS */
+html{scroll-behavior:smooth!important;scroll-padding-top:24px}
+body{overflow-x:clip!important;overscroll-behavior-y:contain}
+#starfield{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;pointer-events:none!important;z-index:0!important}
+.dicky-ring-overlay{pointer-events:none!important;display:block!important;mix-blend-mode:screen;will-change:background;animation-duration:2.4s!important}
+.scroll-reveal{opacity:0;transform:translate3d(0,16px,0);transition:opacity .55s ease,transform .65s cubic-bezier(.2,.7,.2,1);transition-delay:0ms;will-change:opacity,transform}
+.scroll-reveal[data-reveal-direction="left"]{transform:translate3d(-18px,0,0)}
+.scroll-reveal[data-reveal-direction="right"]{transform:translate3d(18px,0,0)}
+.scroll-reveal[data-reveal-direction="up"]{transform:translate3d(0,16px,0)}
+.scroll-reveal.scroll-reveal-visible{opacity:1;transform:translate3d(0,0,0);will-change:auto}
+@media(max-width:800px),(pointer:coarse){
+ html{scroll-behavior:smooth!important;scroll-padding-top:12px}
+ #starfield,.stars{display:none!important;visibility:hidden!important;opacity:0!important}
+ .dicky-ring-overlay{animation-duration:2.8s!important;filter:none!important;mix-blend-mode:normal}
+ .scroll-reveal{transform:translate3d(0,10px,0);transition-duration:.38s}
+ .scroll-reveal[data-reveal-direction="left"],.scroll-reveal[data-reveal-direction="right"]{transform:translate3d(0,10px,0)}
+ .scroll-reveal.scroll-reveal-visible{transform:translate3d(0,0,0)}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto!important}
+ .scroll-reveal,.scroll-reveal[data-reveal-direction="left"],.scroll-reveal[data-reveal-direction="right"],.scroll-reveal[data-reveal-direction="up"]{opacity:1!important;transform:none!important;transition:none!important;will-change:auto!important}
+ .dicky-ring-overlay{animation:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -2138,7 +2163,20 @@ async function loadJobHistory(){
 }
 if(refreshHistoryBtn)refreshHistoryBtn.addEventListener('click',loadJobHistory);
 
-loadPublicSettings();(async()=>{const ok=await loadWallet();if(ok)await loadJobHistory();else if(historyList)historyList.replaceChildren();})();const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.style.animation='rise .7s ease both'}),{threshold:.12});document.querySelectorAll('.section,.card,.step').forEach(el=>revealObserver.observe(el));
+loadPublicSettings();(async()=>{const ok=await loadWallet();if(ok)await loadJobHistory();else if(historyList)historyList.replaceChildren();})();/* One-shot scroll reveals: no animation restart on every scroll, alternate gentle side entrances. */
+const revealTargets=document.querySelectorAll('.section,.card,.step,.machine-card,.method-flow-card,.hero-social,.signal,.wallet-stat,.feature');
+if('IntersectionObserver' in window){
+ const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+  if(!entry.isIntersecting)return;
+  entry.target.classList.add('scroll-reveal-visible');
+  revealObserver.unobserve(entry.target);
+ }),{threshold:.08,rootMargin:'0px 0px -4% 0px'});
+ revealTargets.forEach((el,index)=>{
+  el.classList.add('scroll-reveal');
+  el.dataset.revealDirection=(index%4===1?'left':index%4===3?'right':'up');
+  revealObserver.observe(el);
+ });
+}else{revealTargets.forEach(el=>el.classList.add('scroll-reveal-visible'))}
 const checkerUrl=document.getElementById('checkerUrl'),checkerChoose=document.getElementById('checkerChoose'),checkerTitle=document.getElementById('checkerTitle'),checkerText=document.getElementById('checkerText'),analysisStatus=document.getElementById('analysisStatus');
 async function runTikTokAnalytics(){
  const url=String(checkerUrl?.value||'').trim();
@@ -2252,7 +2290,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
   dpr=Math.min(devicePixelRatio||1,mobile?.7:1);
   w=innerWidth;h=innerHeight;
   canvas.width=Math.max(1,Math.floor(w*dpr));canvas.height=Math.max(1,Math.floor(h*dpr));
-  canvas.style.width=w+'px';canvas.style.height='100%';ctx.setTransform(dpr,0,0,dpr,0,0);
+  canvas.style.width=w+'px';canvas.style.height='100vh';ctx.setTransform(dpr,0,0,dpr,0,0);
   const n=mobile?24:170;
   stars=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*(mobile?.8:1.4)+.25,
    hue:colors[Math.floor(Math.random()*colors.length)],a:Math.random()*(mobile?.5:.45)+(mobile?.4:.25),dx:(Math.random()-.5)*(mobile?.08:.18),dy:(Math.random()-.5)*(mobile?.08:.18)}));
@@ -2281,7 +2319,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
   raf=requestAnimationFrame(draw);
  }
  function addRings(){
-  const targets='button:not(:disabled),a[href],[role="button"],summary,input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),select,textarea,.hero,.container,.machine-card,.method-flow-card,.wallet-card,.panel,.section-card,.card,.claim-card,.pricing-card,.modal,.modal-content,.notice,.alert';
+  const targets='button:not(:disabled),a[href],[role="button"],summary,input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),select,textarea,.machine-card,.method-flow-card,.wallet-card,.panel,.section-card,.card,.claim-card,.pricing-card,.modal,.modal-content,.notice,.alert';
   document.querySelectorAll(targets).forEach(el=>{
    if(el.querySelector(':scope > .dicky-ring-overlay'))return;
    const cs=getComputedStyle(el);
