@@ -2136,7 +2136,7 @@ function setCustomerAuth(auth,balance=null){
   const hideHistory=!customerAuthenticated;
   if(historySection){historySection.classList.toggle("hidden",hideHistory);historySection.setAttribute("aria-hidden",String(hideHistory));}
   const b=document.getElementById("walletAuthBadge");
-  if(b){b.textContent=!customerAuthenticated?"BELUM LOGIN":(Number(balance)===0?"SALDO HABIS":"TERHUBUNG");b.className="badge "+(customerAuthenticated&&Number(balance)>0?"":"warn");}
+  if(b){b.textContent=!customerAuthenticated?"BELUM LOGIN":"AKUN TERHUBUNG";b.className="badge "+(customerAuthenticated?"":"warn");}
   if(!customerAuthenticated&&historyList)historyList.replaceChildren();
 }
 function customerAuthHeaders(extra={}){const token=localStorage.getItem('golden_customer_session_token');return token?{...extra,Authorization:'Bearer '+token}:{...extra};}
@@ -2150,10 +2150,10 @@ function setWallet(d){
   if(walletStats[0])walletStats[0].textContent=balance;
   if(walletStats[1])walletStats[1].textContent=used;
   if(walletStats[2])walletStats[2].textContent=topup;
-  if(walletBadge){walletBadge.textContent=balance===0?"SALDO HABIS":"TERHUBUNG";walletBadge.className="badge "+(balance===0?"warn":"")}
+  if(walletBadge){walletBadge.textContent="AKUN TERHUBUNG";walletBadge.className="badge"}
   setCustomerAuth(true,balance);
-  if(walletProgressHead)walletProgressHead.textContent=balance+' coin';
-  if(walletProgressBar)walletProgressBar.style.width=balance>0?'100%':'0%';
+  if(walletProgressHead)walletProgressHead.textContent='Paket langganan';
+  if(walletProgressBar)walletProgressBar.style.width='0%';
 }
 async function loadWallet(){
   try{
