@@ -1879,6 +1879,26 @@ main>.grid>.side>.wallet-card{width:100%!important;max-width:100%!important;box-
 }
 </style>
 
+<style id="VIP_SITE_EDGE_ALIGNMENT_V5">
+/* Align VIP outer border exactly with the main page content columns */
+#vip-packages.vip-package-panel{
+ width:min(var(--site-content-max,1160px),calc(100% - var(--site-gutter,28px)*2))!important;
+ max-width:var(--site-content-max,1160px)!important;
+ margin-left:auto!important;margin-right:auto!important;
+ box-sizing:border-box!important;
+}
+@media(max-width:800px),(pointer:coarse){
+ #vip-packages.vip-package-panel{
+  width:calc(100% - 24px)!important;
+  max-width:720px!important;
+  margin-left:auto!important;margin-right:auto!important;
+ }
+}
+@media(max-width:420px){
+ #vip-packages.vip-package-panel{width:calc(100% - 24px)!important}
+}
+</style>
+
 </head>
 <body>
 <!--
