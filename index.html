@@ -1884,6 +1884,8 @@ function updateFreeInjectVisibility(){const wrap=document.getElementById('freeIn
 function showFreeSizeLimit(){
   const limitLabel=(Number.isInteger(freeMaxFileSizeMb)?String(freeMaxFileSizeMb):String(Number(freeMaxFileSizeMb.toFixed(2))))+'MB';
   showModal('Batas Inject Gratis','Ukuran Maksimal Mode Gratis adalah '+limitLabel+', silahkan order coin atau langganan untuk menuju tidak terbatas dan melampauinya.');
+  close.style.display='block';
+  close.textContent='Tutup';
   const box=document.querySelector('.modal-box');
   const old=document.getElementById('freeTopupLink');if(old)old.remove();
   const link=document.createElement('a');link.id='freeTopupLink';link.className='btn btn-primary free-topup-link';
@@ -1898,7 +1900,7 @@ async function uploadFreeVideo(f){
   await freeMaxSettingsPromise;
   if(f.size>freeMaxBytes){showFreeSizeLimit();freeInjectFile.value='';return;}
   if(!/\.(mp4|mov)$/i.test(f.name)){showModal('Format Video Tidak Didukung','Pilih video MP4 atau MOV.');freeInjectFile.value='';return;}
-  processing=true;modal.classList.add('show');close.style.display='none';
+  processing=true;modal.classList.add('show');close.style.display='block';close.textContent='Tutup Tampilan Proses';
   document.getElementById('modalTitle').textContent='Inject Gratis · Dicky News Method';
   const modalText=document.getElementById('modalText');modalText.textContent='Mengunggah video…';
   let token=null,jobId=null;
@@ -1939,7 +1941,7 @@ if(freeInjectBtn&&freeInjectFile){
 async function uploadVideo(f){
   if(processing)return;
   processing=true;
-  modal.classList.add('show');close.style.display='none';
+  modal.classList.add('show');close.style.display='block';close.textContent='Tutup Tampilan Proses';
   document.getElementById('modalTitle').textContent=selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD';
   setProgress(0,'Menyiapkan upload');
   try{
@@ -2092,7 +2094,7 @@ async function uploadVideo(f){
 file.onchange=()=>{const f=file.files[0];if(!f)return;const supportedVideoExt=/\.(mp4|mov|m4v)$/i.test(f.name);const supportedVideoMime=!f.type||/^video\/(mp4|quicktime|x-m4v)$/i.test(f.type);if(!supportedVideoExt||!supportedVideoMime){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Format Video Tidak Didukung';document.getElementById('modalText').textContent='Pilih video MP4 atau MOV dari Recent/Terkini atau penyimpanan perangkat.';return}if(!serviceActive[selectedMode]){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Layanan Tidak Tersedia';document.getElementById('modalText').textContent='Mode yang dipilih sedang dinonaktifkan oleh admin.';return}title.textContent=f.name;text.textContent=(f.size/1048576).toFixed(1)+' MB · '+(selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD')+' · '+selectedPrice+' COIN';if(f.size>maxFileSizeBytes){modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Ukuran Video Melebihi Batas';document.getElementById('modalText').textContent='Ukuran file '+(f.size/1048576).toFixed(1)+' MB, sedangkan batas layanan '+(maxFileSizeBytes/1048576).toFixed(0)+' MB. Pilih file yang lebih kecil.';return}uploadVideo(f);};
 
 ['dragenter','dragover'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>{if(e.dataTransfer.files.length){file.files=e.dataTransfer.files;file.dispatchEvent(new Event('change'))}});
-close.onclick=()=>{modal.classList.remove('show');const result=document.getElementById('downloadResult');if(result)result.remove();};buy.onclick=()=>{window.open('https://wa.me/6289616438173?text='+encodeURIComponent('Halo Bang, Saya Mau Topup Coin'),'_blank','noopener')};document.getElementById('claimKey').onclick=()=>{const key=document.getElementById('claimKeyInput').value.trim();if(!key){document.getElementById('claimKeyInput').focus();return}modal.classList.add('show');document.getElementById('modalTitle').textContent='Claim Akun';document.getElementById('modalText').textContent='Key diterima. Verifikasi akun akan dilakukan oleh API server.'};
+close.onclick=()=>{modal.classList.remove('show');close.textContent='Tutup';const result=document.getElementById('downloadResult');if(result)result.remove();};buy.onclick=()=>{window.open('https://wa.me/6289616438173?text='+encodeURIComponent('Halo Bang, Saya Mau Topup Coin'),'_blank','noopener')};document.getElementById('claimKey').onclick=()=>{const key=document.getElementById('claimKeyInput').value.trim();if(!key){document.getElementById('claimKeyInput').focus();return}modal.classList.add('show');document.getElementById('modalTitle').textContent='Claim Akun';document.getElementById('modalText').textContent='Key diterima. Verifikasi akun akan dilakukan oleh API server.'};
 const stars=document.getElementById('stars');for(let i=0;i<78;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--l',(55+Math.random()*155)+'px');s.style.setProperty('--r',(-68+Math.random()*136)+'deg');s.style.setProperty('--x1',(-260+Math.random()*520)+'px');s.style.setProperty('--y1',(-210+Math.random()*420)+'px');s.style.setProperty('--x2',(-520+Math.random()*1040)+'px');s.style.setProperty('--y2',(-410+Math.random()*820)+'px');s.style.setProperty('--x3',(-300+Math.random()*600)+'px');s.style.setProperty('--y3',(-240+Math.random()*480)+'px');s.style.setProperty('--m',(12+Math.random()*20)+'s');s.style.setProperty('--d',(1.5+Math.random()*3)+'s');s.style.animationDelay=(-Math.random()*32)+'s';stars.appendChild(s)}
 document.querySelectorAll('.stars .star').forEach(s=>{s.style.setProperty('--x1',(-110+Math.random()*220)+'px');s.style.setProperty('--y1',(-90+Math.random()*180)+'px');s.style.setProperty('--x2',(-180+Math.random()*360)+'px');s.style.setProperty('--y2',(-150+Math.random()*300)+'px');s.style.setProperty('--x3',(-110+Math.random()*220)+'px');s.style.setProperty('--y3',(-90+Math.random()*180)+'px');s.style.setProperty('--m',(9+Math.random()*13)+'s');s.style.animationDelay=(-Math.random()*20)+'s'});
 
