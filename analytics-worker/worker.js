@@ -4,8 +4,8 @@
  */
 const ALLOWED_ORIGINS = new Set([
   "https://dickynews.github.io",
-  "http://localhost:8788",
-  "http://127.0.0.1:8788"
+  "https://dickynewsmethod.pages.dev",
+  "https://golden-customer.pages.dev"
 ]);
 const JSON_HEADERS = { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" };
 
@@ -138,6 +138,54 @@ function baseResult(input) {
 async function fetchWithTimeout(url, init = {}, ms = 9000) {
   return fetch(url, { ...init, signal: AbortSignal.timeout(ms) });
 }
+async function fetchTikTokPage(input) {
+  let current = new URL(input);
+  const init = {
+    redirect: "manual",
+    headers: { "user-agent": "Mozilla/5.0 (compatible; DickyNewsAnalytics/1.0; +https://dickynews.github.io/)" }
+  };
+  for (let hop = 0; hop <= 4; hop++) {
+    if (!validTikTokUrl(current.href)) throw new Error("Redirect di luar domain TikTok ditolak.");
+    const response = await fetchWithTimeout(current.href, init, 5000);
+    if ([301, 302, 303, 307, 308].includes(response.status)) {
+      const location = response.headers.get("location");
+      if (!location) return response;
+      const next = new URL(location, current);
+      try { await response.body?.cancel(); } catch {}
+      if (!validTikTokUrl(next.href)) throw new Error("Redirect di luar domain TikTok ditolak.");
+      current = next;
+      continue;
+    }
+    if (!validTikTokUrl(response.url || current.href)) {
+      try { await response.body?.cancel(); } catch {}
+      throw new Error("Host respons tidak diizinkan.");
+    }
+    return response;
+  }
+  throw new Error("Terlalu banyak redirect TikTok.");
+}
+async function readTextLimited(response, maxBytes = 4 * 1024 * 1024) {
+  const declared = Number(response.headers.get("content-length") || 0);
+  if (declared > maxBytes) {
+    try { await response.body?.cancel(); } catch {}
+    throw new Error("Halaman TikTok terlalu besar untuk dianalisis.");
+  }
+  if (!response.body) return "";
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let total = 0, text = "";
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > maxBytes) {
+      try { await reader.cancel(); } catch {}
+      throw new Error("Halaman TikTok melewati batas ukuran analisis.");
+    }
+    text += decoder.decode(value, { stream: true });
+  }
+  return text + decoder.decode();
+}
 export default {
   async fetch(request) {
     const url = new URL(request.url);
@@ -157,14 +205,11 @@ export default {
     const result = baseResult(input);
     let canonicalUrl = input;
     try {
-      const page = await fetchWithTimeout(input, {
-        redirect: "follow",
-        headers: { "user-agent": "Mozilla/5.0 (compatible; DickyNewsAnalytics/1.0; +https://dickynews.github.io/)" }
-      }, 9000);
+      const page = await fetchTikTokPage(input);
       canonicalUrl = page.url || input;
       result.visibility = page.ok ? "Halaman publik dapat diakses" : "Halaman publik tidak dapat diakses (HTTP " + page.status + ")";
       if (page.ok) {
-        const html = await page.text();
+        const html = await readTextLimited(page);
         const title = html.match(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']*)/i) ||
           html.match(/<meta[^>]+content=["']([^"']*)["'][^>]+property=["']og:title["']/i);
         const image = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']*)/i) ||
