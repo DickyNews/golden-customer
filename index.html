@@ -1752,6 +1752,13 @@ input,button,select,textarea{max-width:100%}
   <div id="historyList" class="history-list"><div class="history-empty">Memuat riwayat dari server…</div></div>
 </section>
 <section class="section" id="tiktok-analytics"><h2>TikTok Analytics</h2><p class="section-intro">Tempel link video TikTok yang sudah di-upload. Analyzer akan mengambil data dari hasil upload TikTok melalui backend Dicky News, lalu menampilkan rincian teknis dan sinyal distribusi video.</p><div class="analytics"><div class="card analytics-upload"><div class="card-head"><div><h2>Analyze TikTok Result</h2><div class="mini">Masukkan URL video TikTok publik.</div></div><div class="pill">LIVE CHECK</div></div><div class="drop checker-drop" id="checkerDrop"><div class="upload-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4M8 11h6M11 8v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><img id="videoPreview" class="video-preview" alt="Pratinjau video TikTok" hidden><strong id="checkerTitle">Paste TikTok video link</strong><p id="checkerText">Contoh: https://www.tiktok.com/@username/video/...</p><input id="checkerUrl" class="checker-url" type="url" placeholder="https://www.tiktok.com/@username/video/..." autocomplete="off"><button class="btn btn-primary" id="checkerChoose">Analyze TikTok</button></div></div><div class="card"><div class="card-head"><div><h2>TikTok Result Details</h2><div class="mini">Data yang dikembalikan analyzer.</div></div><span class="badge neutral" id="analysisStatus">READY</span></div><div class="metric-grid"><div class="metric"><span>Resolution / Definisi</span><b id="mResolution">—</b></div><div class="metric"><span>Frame Rate</span><b id="mFps">—</b></div><div class="metric"><span>Format Video</span><b id="mFormat">—</b></div><div class="metric"><span>Bitrate</span><b id="mBitrate">—</b></div><div class="metric"><span>Codec</span><b id="mCodec">—</b></div><div class="metric"><span>File Size</span><b id="mSize">—</b></div><div class="metric"><span>Container</span><b id="mContainer">—</b></div></div><div class="metric-grid analytics-extra"><div class="metric"><span>Views</span><b id="mViews">—</b></div><div class="metric"><span>Likes</span><b id="mLikes">—</b></div><div class="metric"><span>Comments</span><b id="mComments">—</b></div><div class="metric"><span>Shares</span><b id="mShares">—</b></div><div class="metric"><span>Duration</span><b id="mDuration">—</b></div><div class="metric"><span>Published</span><b id="mCreated">—</b></div><div class="metric"><span>Music</span><b id="mMusic">—</b></div><div class="metric"><span>Video ID</span><b id="mVideoId">—</b></div></div><div class="signal-list"><div class="signal"><span class="signal-label">TikTok Region</span><span class="badge neutral" id="sRegion">—</span></div><div class="signal"><span class="signal-label">Review Status</span><span class="badge neutral" id="sReview">—</span></div><div class="signal"><span class="signal-label">Visibility</span><span class="badge neutral" id="sVisibility">—</span></div><div class="signal"><span class="signal-label">Index Visibility</span><span class="badge neutral" id="sIndex">—</span></div></div></div></div></section>
+
+<section class="card subscription-panel" id="subscriptionPanel" style="margin:24px 0;padding:22px;border:1px solid rgba(98,243,255,.4);border-radius:20px;background:linear-gradient(145deg,rgba(20,25,30,.98),rgba(7,9,11,.98));box-shadow:inset 0 1px rgba(255,255,255,.09),0 12px 32px rgba(0,0,0,.22)">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h2 style="margin:0 0 6px">Paket Langganan Golden HD</h2><p style="margin:0;color:#aab3bb">Kuota proses, batas ukuran video, dan masa aktif dikelola langsung oleh server.</p></div><span id="subscriptionStatusBadge" class="badge">MEMUAT PAKET</span></div>
+  <div id="customerSubscriptionCurrent" style="margin:16px 0;color:#e8edf2">Memuat status langganan…</div>
+  <div id="customerSubscriptionPlans" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px"><p>Memuat daftar paket dari server…</p></div>
+  <p id="customerSubscriptionNote" style="margin:14px 0 0;color:#9aa4ad;font-size:13px">Pembelian/aktivasi paket dikonfirmasi admin. Paket yang tampil mengikuti konfigurasi server terbaru.</p>
+</section>
 </main>
 <footer class="container footer"><span>© 2026 Dicky News</span><span>Golden API aktif · TikTok Analytics menunggu endpoint backend</span></footer>
 </div>
@@ -2379,6 +2386,39 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true});
   else install();
+})();
+</script>
+
+<script id="GOLDEN_SUBSCRIPTION_CUSTOMER_UI_V1">
+(function(){
+ const API='https://103-235-74-92.sslip.io';
+ const plansEl=document.getElementById('customerSubscriptionPlans');
+ if(!plansEl)return;
+ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const money=n=>'Rp'+Number(n||0).toLocaleString('id-ID');
+ async function load(){
+  try{
+   const r=await fetch(API+'/public/subscription/plans',{cache:'no-store'});
+   if(!r.ok)throw new Error('HTTP '+r.status);
+   const d=await r.json(),plans=Array.isArray(d.plans)?d.plans:[];
+   plansEl.innerHTML=plans.map(p=>'<article style="padding:16px;border:1px solid rgba(255,255,255,.16);border-radius:15px;background:rgba(255,255,255,.035);display:flex;flex-direction:column;gap:8px"><b>'+esc(p.name)+'</b><strong style="font-size:22px;color:#62f3ff">'+money(p.price_idr)+'</strong><span>'+Number(p.process_quota).toLocaleString('id-ID')+' proses</span><span>Maks. '+esc(p.max_file_size_mb)+' MB/video</span><span>'+esc(p.duration_days)+' hari</span><a href="https://wa.me/6289616438173?text='+encodeURIComponent('Halo, saya ingin berlangganan '+p.name+' Golden HD seharga '+money(p.price_idr)+'.')+'" target="_blank" rel="noopener noreferrer" style="margin-top:6px;text-align:center;text-decoration:none;padding:10px;border-radius:10px;background:#62f3ff;color:#061014;font-weight:800">Pilih Paket</a></article>').join('')||'<p>Belum ada paket aktif.</p>';
+   const badge=document.getElementById('subscriptionStatusBadge');badge.textContent='PAKET TERSINKRON';badge.className='badge ok';
+  }catch(e){document.getElementById('subscriptionStatusBadge').textContent='API TIDAK TERSEDIA';plansEl.innerHTML='<p>Daftar paket belum dapat dimuat. Coba segarkan halaman.</p>'}
+ }
+ async function loadCurrent(){
+  const el=document.getElementById('customerSubscriptionCurrent');
+  const token=localStorage.getItem('golden_customer_session_token');
+  if(!token){el.textContent='Login untuk melihat status paket dan sisa kuota akun Anda.';return}
+  try{
+   const r=await fetch(API+'/customer/subscription',{credentials:'include',cache:'no-store',headers:{Authorization:'Bearer '+token}});
+   if(!r.ok){el.textContent='Status langganan belum tersedia untuk sesi ini.';return}
+   const d=await r.json(),s=d.subscription;
+   if(!s){el.innerHTML='<span style="color:#ffc66d">Belum ada paket langganan aktif pada akun ini.</span>';return}
+   const exp=new Date(s.expires_at).toLocaleString('id-ID');
+   el.innerHTML='<div style="padding:14px;border:1px solid rgba(98,243,255,.25);border-radius:12px;background:rgba(98,243,255,.045)"><b>'+esc(s.plan_name)+'</b> · Aktif sampai '+esc(exp)+'<br>Sisa proses: <b>'+Number(s.processes_remaining).toLocaleString('id-ID')+'/'+Number(s.process_quota).toLocaleString('id-ID')+'</b> · Maks. '+esc(s.max_file_size_mb)+' MB/video</div>';
+  }catch(e){el.textContent='Tidak dapat memuat status langganan saat ini.'}
+ }
+ load();loadCurrent();
 })();
 </script>
 </body>
