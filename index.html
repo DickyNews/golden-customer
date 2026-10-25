@@ -2201,6 +2201,7 @@ claimBtn.onclick=async()=>{
       return;
     }
     await loadJobHistory();
+    if(window.goldenRefreshSubscription)await window.goldenRefreshSubscription();
     const balance=Number(d?.coin_balance ?? d?.customer?.coin_balance ?? d?.customer?.coins ?? d?.customer?.balance ?? walletStats[0]?.textContent ?? 0);
     document.getElementById('modalTitle').textContent='Akun Berhasil Terhubung';
     document.getElementById('modalText').textContent='Claim berhasil. Akun berhasil terhubung. Status paket langganan tersedia pada panel paket.';
