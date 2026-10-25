@@ -1942,6 +1942,77 @@ main>.grid>.side>.wallet-card{width:100%!important;max-width:100%!important;box-
   <p id="customerSubscriptionNote" style="margin:14px 0 0;color:#9aa4ad;font-size:13px">Pembelian/aktivasi paket dikonfirmasi admin. Paket yang tampil mengikuti konfigurasi server terbaru.</p>
 </section>
 
+
+<style id="GOLDEN_VIP_PACKAGES_V1">
+.vip-package-panel{margin:16px 0 26px;padding:24px;border:1px solid rgba(231,190,76,.72);border-radius:22px;background:radial-gradient(ellipse at 50% -30%,rgba(213,165,50,.16),transparent 60%),linear-gradient(145deg,#12120f,#08090e 62%,#100d19);box-shadow:inset 0 1px rgba(255,255,255,.1),0 16px 42px rgba(0,0,0,.3),0 0 22px rgba(217,177,64,.08);color:#f7f8fc}
+.vip-package-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.vip-package-brand{display:flex;align-items:center;gap:13px;min-width:0}
+.vip-crown{width:44px;height:44px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#5d4b1b,#1b1a13);border:1px solid rgba(255,216,105,.5);color:#ffdb70;font-size:26px}
+.vip-package-title{margin:0;font-size:clamp(22px,3vw,30px);font-weight:900;letter-spacing:-.5px}
+.vip-package-title .vip-gold{color:#ffda70}
+.vip-package-subtitle{margin:5px 0 0;color:#b7c0cc;line-height:1.55}
+.vip-unlimited-pill{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,214,95,.55);border-radius:999px;padding:8px 13px;color:#ffdb70;background:rgba(255,208,77,.08);font-size:12px;font-weight:900;letter-spacing:.5px;white-space:nowrap}
+.vip-tier-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.vip-tier{position:relative;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;min-width:0;padding:19px;border-radius:20px;background:linear-gradient(145deg,rgba(7,20,39,.98),rgba(4,9,20,.98));border:1px solid rgba(66,194,255,.8);box-shadow:inset 0 1px rgba(255,255,255,.12),0 0 20px rgba(25,155,255,.12)}
+.vip-tier:after{content:"";position:absolute;z-index:-1;width:160px;height:160px;border-radius:50%;right:-75px;bottom:48px;background:var(--vip-glow);filter:blur(44px);opacity:.42;pointer-events:none}
+.vip-tier.maximum{--vip-glow:#e5b641;background:linear-gradient(145deg,rgba(35,29,11,.98),rgba(13,11,7,.98));border-color:rgba(242,197,78,.9);box-shadow:inset 0 1px rgba(255,255,255,.13),0 0 22px rgba(223,176,44,.12)}
+.vip-tier.ultimate{--vip-glow:#ba52ff;background:linear-gradient(145deg,rgba(31,10,47,.98),rgba(10,6,20,.98));border-color:rgba(211,87,255,.9);box-shadow:inset 0 1px rgba(255,255,255,.13),0 0 24px rgba(191,59,255,.13)}
+.vip-tier.premium{--vip-glow:#168cff}
+.vip-tier-top{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.vip-tier-icon{flex:0 0 54px;width:54px;height:54px;display:grid;place-items:center;border-radius:50%;font-size:30px;background:radial-gradient(circle,rgba(41,179,255,.2),rgba(0,0,0,.25));border:1px solid rgba(82,197,255,.48);color:#6bdcff}
+.maximum .vip-tier-icon{color:#ffda72;border-color:rgba(255,211,92,.55);background:radial-gradient(circle,rgba(242,194,69,.18),rgba(0,0,0,.25))}
+.ultimate .vip-tier-icon{color:#e28cff;border-color:rgba(215,104,255,.55);background:radial-gradient(circle,rgba(205,73,255,.18),rgba(0,0,0,.25))}
+.vip-tier-name{margin:0;font-size:clamp(15px,1.5vw,21px);font-weight:950;line-height:1.2}
+.vip-tier-label{margin-top:5px;color:#b9c5d4;font-size:13px}
+.vip-tier-rank{margin-left:auto;align-self:flex-start;border:1px solid rgba(94,206,255,.55);border-radius:999px;padding:5px 8px;font-size:11px;font-weight:900;white-space:nowrap;color:#6ee4ff}
+.maximum .vip-tier-rank{color:#ffdc75;border-color:rgba(255,218,117,.6)}
+.ultimate .vip-tier-rank{color:#e5a0ff;border-color:rgba(225,142,255,.6)}
+.vip-tier-price{font-size:clamp(24px,2.5vw,34px);font-weight:950;letter-spacing:-.6px;color:#49d5ff;margin:0 0 3px}
+.maximum .vip-tier-price{color:#ffdc75}.ultimate .vip-tier-price{color:#e17aff}
+.vip-tier-desc{margin:0 0 14px;color:#c4cfde;font-size:13px}
+.vip-tier-features{display:grid;gap:10px;margin:0 0 19px;padding:0;list-style:none;color:#d5deea;font-size:14px;line-height:1.35;flex:1}
+.vip-tier-features li{display:flex;align-items:flex-start;gap:9px}
+.vip-tier-features .vip-feature-icon{width:17px;flex:0 0 17px;font-weight:900;color:#50d8ff}
+.maximum .vip-feature-icon{color:#ffda70}.ultimate .vip-feature-icon{color:#df83ff}
+.vip-tier-cta{display:flex;justify-content:center;align-items:center;gap:8px;text-align:center;text-decoration:none!important;border-radius:13px;padding:13px 10px;font-weight:950;color:#03131c!important;background:linear-gradient(100deg,#1d8be9,#64e8ff);border:1px solid rgba(174,246,255,.8);box-shadow:0 5px 18px rgba(27,161,255,.22);transition:filter .15s ease,transform .15s ease}
+.vip-tier-cta:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.maximum .vip-tier-cta{background:linear-gradient(100deg,#a9771d,#ffe28a);color:#201604!important;border-color:#ffedb5;box-shadow:0 5px 18px rgba(218,169,42,.2)}
+.ultimate .vip-tier-cta{background:linear-gradient(100deg,#7b18e6,#e05aff);color:#fff!important;border-color:#efb6ff;box-shadow:0 5px 18px rgba(191,59,255,.22)}
+.vip-benefits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:15px;padding:15px 10px 2px;border-top:1px solid rgba(255,255,255,.12)}
+.vip-benefit{display:flex;align-items:center;justify-content:center;gap:9px;color:#e4eaf3;font-size:12px;line-height:1.35}
+.vip-benefit-icon{font-size:20px;color:#63dfff}.vip-benefit strong{display:block;color:#fff;font-size:12px}.vip-benefit small{display:block;color:#aeb9c9;font-size:11px;margin-top:2px}
+.vip-package-footnote{margin:15px 0 0;color:#8f9bac;font-size:12px;line-height:1.55}
+@media(max-width:900px){.vip-tier-grid{grid-template-columns:1fr}.vip-tier{padding:17px}.vip-benefits{grid-template-columns:repeat(2,minmax(0,1fr))}.vip-tier-name{font-size:20px}.vip-tier-price{font-size:30px}}
+@media(prefers-reduced-motion:reduce){.vip-tier-cta{transition:none}}
+</style>
+<section class="vip-package-panel" id="vip-packages" aria-labelledby="vip-packages-title">
+ <div class="vip-package-head">
+  <div class="vip-package-brand"><div class="vip-crown" aria-hidden="true">♛</div><div><h2 class="vip-package-title" id="vip-packages-title">Paket <span class="vip-gold">VIP</span> Golden HD</h2><p class="vip-package-subtitle">Untuk kreator aktif, pengguna berat, dan kebutuhan profesional. Token tanpa kuota paket dengan batas penggunaan internal.</p></div></div>
+  <span class="vip-unlimited-pill"><span aria-hidden="true">∞</span> UNLIMITED TOKEN</span>
+ </div>
+ <div class="vip-tier-grid">
+  <article class="vip-tier premium">
+   <div class="vip-tier-top"><div class="vip-tier-icon" aria-hidden="true">♛</div><div><h3 class="vip-tier-name">VIP PREMIUM</h3><div class="vip-tier-label">Unlimited Token Video</div></div><span class="vip-tier-rank">VIP 1</span></div>
+   <p class="vip-tier-price">Rp59.900</p><p class="vip-tier-desc">Masa aktif 30 hari</p>
+   <ul class="vip-tier-features"><li><span class="vip-feature-icon">∞</span><span>Token video tanpa kuota paket</span></li><li><span class="vip-feature-icon">▶</span><span>Pemrosesan video tanpa batas jumlah token</span></li><li><span class="vip-feature-icon">▣</span><span>Maks. 175 MB/video</span></li><li><span class="vip-feature-icon">◷</span><span>Masa aktif 30 hari</span></li></ul>
+   <a class="vip-tier-cta" href="https://wa.me/6289616438173?text=Halo%2C%20saya%20ingin%20berlangganan%20Golden%20VIP%20Premium%20Rp59.900%20selama%2030%20hari." target="_blank" rel="noopener noreferrer">♛ Pilih VIP Premium <span aria-hidden="true">›</span></a>
+  </article>
+  <article class="vip-tier maximum">
+   <div class="vip-tier-top"><div class="vip-tier-icon" aria-hidden="true">♛</div><div><h3 class="vip-tier-name">VIP MAXIMUM</h3><div class="vip-tier-label">Unlimited Token Video</div></div><span class="vip-tier-rank">VIP 2</span></div>
+   <p class="vip-tier-price">Rp119.900</p><p class="vip-tier-desc">Masa aktif 30 hari</p>
+   <ul class="vip-tier-features"><li><span class="vip-feature-icon">∞</span><span>Token video tanpa kuota paket</span></li><li><span class="vip-feature-icon">▶</span><span>Pemrosesan video tanpa batas jumlah token</span></li><li><span class="vip-feature-icon">▣</span><span>Maks. 475 MB/video</span></li><li><span class="vip-feature-icon">◷</span><span>Masa aktif 30 hari</span></li></ul>
+   <a class="vip-tier-cta" href="https://wa.me/6289616438173?text=Halo%2C%20saya%20ingin%20berlangganan%20Golden%20VIP%20Maximum%20Rp119.900%20selama%2030%20hari." target="_blank" rel="noopener noreferrer">♛ Pilih VIP Maximum <span aria-hidden="true">›</span></a>
+  </article>
+  <article class="vip-tier ultimate">
+   <div class="vip-tier-top"><div class="vip-tier-icon" aria-hidden="true">♛</div><div><h3 class="vip-tier-name">VIP ULTIMATE</h3><div class="vip-tier-label">Unlimited Token Video</div></div><span class="vip-tier-rank">VIP 3</span></div>
+   <p class="vip-tier-price">Rp279.900</p><p class="vip-tier-desc">Masa aktif 30 hari</p>
+   <ul class="vip-tier-features"><li><span class="vip-feature-icon">∞</span><span>Token video tanpa kuota paket</span></li><li><span class="vip-feature-icon">▶</span><span>Pemrosesan video tanpa batas jumlah token</span></li><li><span class="vip-feature-icon">▣</span><span>Maks. 1,45 GB/video</span></li><li><span class="vip-feature-icon">◷</span><span>Masa aktif 30 hari</span></li></ul>
+   <a class="vip-tier-cta" href="https://wa.me/6289616438173?text=Halo%2C%20saya%20ingin%20berlangganan%20Golden%20VIP%20Ultimate%20Rp279.900%20selama%2030%20hari." target="_blank" rel="noopener noreferrer">♛ Pilih VIP Ultimate <span aria-hidden="true">›</span></a>
+  </article>
+ </div>
+ <div class="vip-benefits"><div class="vip-benefit"><span class="vip-benefit-icon">ϟ</span><span><strong>Kecepatan tinggi</strong><small>Pemrosesan cepat dan stabil</small></span></div><div class="vip-benefit"><span class="vip-benefit-icon">⬡</span><span><strong>Kualitas terjaga</strong><small>Tanpa encoding ulang</small></span></div><div class="vip-benefit"><span class="vip-benefit-icon">▣</span><span><strong>Kompatibel</strong><small>Mendukung berbagai perangkat</small></span></div><div class="vip-benefit"><span class="vip-benefit-icon">♙</span><span><strong>Aktivasi admin</strong><small>Konfirmasi sebelum aktif</small></span></div></div>
+ <p class="vip-package-footnote">Paket VIP diaktifkan setelah konfirmasi admin. Penggunaan tetap tunduk pada batas operasional internal layanan. Batas bandwidth internal tidak ditampilkan di halaman pelanggan.</p>
+</section>
 <section class="section payment-options-section" id="payment-options" aria-labelledby="payment-options-title">
   <div class="payment-options-panel">
     <div class="payment-options-heading">
