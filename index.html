@@ -3286,6 +3286,60 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
   .grid > .card.upload .machine-card > .mode-btn small { font-size: 9px !important; }
 }
 
+
+/* Final mobile cleanup: keep the mode arrow clear of button labels and retain only device guidance. */
+@media (max-width: 700px) {
+  .grid > .card.upload .machine-card > .mode-btn,
+  .grid > .card.upload .free-inject-btn {
+    position: relative !important;
+    box-sizing: border-box !important;
+    padding-left: 14px !important;
+    padding-right: 48px !important;
+    text-align: center !important;
+    overflow-wrap: anywhere !important;
+  }
+  .grid > .card.upload .machine-card > .mode-btn::after,
+  .grid > .card.upload .free-inject-btn::after {
+    right: 10px !important;
+    left: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 22px !important;
+    height: 22px !important;
+    box-sizing: border-box !important;
+  }
+  .grid > .card.upload .machine-card > .mode-btn small {
+    max-width: 100% !important;
+    padding-inline: 0 !important;
+  }
+  .grid > .card.upload #drop {
+    display: block !important;
+    box-sizing: border-box !important;
+    min-height: 0 !important;
+    padding: 18px 16px !important;
+    margin-top: 18px !important;
+    text-align: left !important;
+    background: linear-gradient(145deg,rgba(35,12,51,.72),rgba(12,7,19,.78)) !important;
+  }
+  .grid > .card.upload #drop .upload-icon,
+  .grid > .card.upload #drop #dropTitle,
+  .grid > .card.upload #drop #dropText {
+    display: none !important;
+  }
+  .grid > .card.upload #drop .android-files-note,
+  .grid > .card.upload #drop .ios-files-note {
+    display: block !important;
+    margin: 8px 0 !important;
+    text-align: left !important;
+    line-height: 1.55 !important;
+    overflow-wrap: anywhere !important;
+  }
+  .grid > .card.upload #drop .android-files-note:last-of-type,
+  .grid > .card.upload #drop .ios-files-note:last-of-type {
+    margin-bottom: 0 !important;
+  }
+}
+
 </style>
 
 </body>
