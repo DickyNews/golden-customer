@@ -1454,7 +1454,7 @@ body>.app{position:relative!important;z-index:1!important;background:transparent
 @keyframes dickyRingRotate{to{--dicky-ring-angle:360deg}}
 .dicky-ring-overlay{
  position:absolute!important;inset:0!important;display:block!important;box-sizing:border-box!important;
- padding:2px!important;border:0!important;border-radius:inherit!important;
+ padding:1px!important;border:0!important;border-radius:inherit!important;
  background:conic-gradient(from var(--dicky-ring-angle),#25f4ff 0deg,#477dff 65deg,#bd55ff 130deg,#ff43cf 190deg,#ffe35b 250deg,#4bffb8 310deg,#25f4ff 360deg)!important;
  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
  -webkit-mask-composite:xor!important;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;mask-composite:exclude!important;
@@ -1464,6 +1464,12 @@ body>.app{position:relative!important;z-index:1!important;background:transparent
 @media(prefers-reduced-motion:reduce){.dicky-ring-overlay{animation:none!important}}
 #starfield{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;display:block!important;visibility:visible!important;opacity:1!important;z-index:0!important;pointer-events:none!important;background:transparent!important}
 body>.app{position:relative!important;z-index:1!important;background:transparent!important}
+
+/* Mobile performance: thinner ring, less canvas work, no expensive glow filters. */
+@media(max-width:800px), (pointer:coarse){
+ .dicky-ring-overlay{padding:.75px!important;filter:none!important;animation-duration:5.5s!important;opacity:.92!important}
+ #starfield{opacity:.78!important}
+}
 </style>
 </head>
 <body>
@@ -2229,10 +2235,10 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
  const mobile=window.matchMedia&&window.matchMedia('(max-width: 800px), (pointer: coarse)').matches;
  const palette=[185,205,225,255,280,315,42,145];
  function resize(){
-  dpr=Math.min(window.devicePixelRatio||1,mobile?1.15:1.5);w=window.innerWidth;h=window.innerHeight;
+  dpr=Math.min(window.devicePixelRatio||1,mobile?0.75:1.25);w=window.innerWidth;h=window.innerHeight;
   canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
   canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);
-  const count=Math.min(mobile?180:520,Math.max(mobile?90:220,Math.floor(w*h/(mobile?6500:2800))));
+  const count=Math.min(mobile?48:300,Math.max(mobile?32:140,Math.floor(w*h/(mobile?24000:5000))));
   stars=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,ox:Math.random()*w,oy:Math.random()*h,
    r:Math.random()<.91?Math.random()*.9+.25:Math.random()*1.7+1.1,a:Math.random()*.6+.25,
    hue:palette[Math.floor(Math.random()*palette.length)]+(Math.random()*16-8),phase:Math.random()*6.28,
@@ -2251,16 +2257,16 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
  function draw(t){
   if(!document.body.contains(canvas)){cancelAnimationFrame(raf);return;}
   if(document.hidden){raf=requestAnimationFrame(draw);return;}
-  if(t-lastFrame<(mobile?40:28)){raf=requestAnimationFrame(draw);return;}lastFrame=t;
+  if(t-lastFrame<(mobile?66:33)){raf=requestAnimationFrame(draw);return;}lastFrame=t;
   ctx.clearRect(0,0,w,h);
   for(const s of stars){
    const tw=reduce?1:(.58+.42*Math.sin(t*s.speed+s.phase));
-   ctx.globalAlpha=s.a*tw;ctx.fillStyle='hsl('+s.hue+' 100% 75%)';ctx.shadowBlur=s.r>1.2?9:4;ctx.shadowColor='hsl('+s.hue+' 100% 65%)';
+   ctx.globalAlpha=s.a*tw;ctx.fillStyle='hsl('+s.hue+' 100% 75%)';ctx.shadowBlur=mobile?0:(s.r>1.2?5:2);ctx.shadowColor='hsl('+s.hue+' 100% 65%)';
    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
    if(!reduce){s.x+=s.dx;s.y+=s.dy;if(s.x<-3)s.x=w+3;if(s.x>w+3)s.x=-3;if(s.y<-3)s.y=h+3;if(s.y>h+3)s.y=-3;}
   }
   ctx.globalAlpha=1;
-  const maxDist=mobile?76:112,limit=mobile?2:3;
+  const maxDist=mobile?64:112,limit=mobile?1:3;
   for(let i=0;i<stars.length;i++){
    let linked=0;const a=stars[i];
    for(let j=i+1;j<stars.length&&linked<limit;j++){
@@ -2272,7 +2278,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
     }
    }
   }
-  if(!reduce&&shooters.length<(mobile?1:3)&&Math.random()<(mobile?.012:.035))spawn();
+  if(!mobile&&!reduce&&shooters.length<3&&Math.random()<.035)spawn();
   for(let i=shooters.length-1;i>=0;i--){
    const q=shooters[i],mag=Math.max(Math.hypot(q.vx,q.vy),1),px=q.x-q.vx*(q.tail/mag),py=q.y-q.vy*(q.tail/mag);
    const fade=Math.sin(Math.min(1,q.life/q.max)*Math.PI)*.8,g=ctx.createLinearGradient(q.x,q.y,px,py);
