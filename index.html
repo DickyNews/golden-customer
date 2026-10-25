@@ -3427,6 +3427,43 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
   .grid > .card.upload .machine-details .machine-notes { font-size: 11px !important; }
 }
 
+
+/* Final mobile polish: compact cards, truly centered text, remove arrow icons. */
+@media (max-width: 700px) {
+  .grid > .card.upload .machine-card > .mode-btn {
+    min-height: 104px !important;
+    padding: 12px 10px !important;
+    text-align: center !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: clamp(11px, 3.2vw, 13px) !important;
+    line-height: 1.22 !important;
+  }
+  .grid > .card.upload .machine-card > .mode-btn::before,
+  .grid > .card.upload .machine-card > .mode-btn::after {
+    content: none !important;
+    display: none !important;
+  }
+  .grid > .card.upload .machine-card > .mode-btn small {
+    text-align: center !important;
+    margin-top: 5px !important;
+    font-size: clamp(10px, 2.9vw, 11px) !important;
+    line-height: 1.22 !important;
+  }
+  .grid > .card.upload .machine-card {
+    padding: 7px !important;
+    border-radius: 22px !important;
+  }
+}
+@media (max-width: 390px) {
+  .grid > .card.upload .machine-card > .mode-btn {
+    min-height: 98px !important;
+    padding: 10px 6px !important;
+    font-size: 10.5px !important;
+  }
+  .grid > .card.upload .machine-card > .mode-btn small { font-size: 10px !important; }
+}
+
 </style>
 
 </body>
