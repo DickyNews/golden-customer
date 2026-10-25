@@ -3002,5 +3002,92 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
 </script>
 <script id="ATTENTION_TOGGLE_SCRIPT">document.addEventListener('click',function(e){const btn=e.target.closest('.attention-toggle');if(!btn)return;const extra=document.getElementById('attentionExtra');if(!extra)return;const opening=extra.hidden;extra.hidden=!opening;btn.setAttribute('aria-expanded',String(opening));btn.innerHTML=opening?'Lebih sedikit <span aria-hidden="true">⌃</span>':'Selengkapnya <span aria-hidden="true">⌄</span>';});</script>
 <script id="ANALYTICS_COLLAPSE_SCRIPT">(()=>{const btn=document.getElementById("analyticsToggle");const panel=document.getElementById("analyticsExpandable");if(!btn||!panel)return;btn.addEventListener("click",()=>{const open=panel.hidden;panel.hidden=!open;btn.setAttribute("aria-expanded",String(open));btn.innerHTML=open?'Lebih sedikit <span aria-hidden="true">⌃</span>':'Selengkapnya <span aria-hidden="true">⌄</span>';if(open)panel.scrollIntoView({behavior:"smooth",block:"nearest"});});})();</script>
+
+<style id="VIP_ULTIMATE_PROCESSING_COLUMN_THEME_V1">
+/* VIP ULTIMATE visual theme for the video-processing column only.
+   Keep existing controls, event handlers, and animation declarations intact. */
+.grid>.card.upload{
+  position:relative!important;isolation:isolate!important;min-width:0!important;
+  border:1px solid rgba(217,91,255,.72)!important;border-radius:20px!important;
+  background:
+    radial-gradient(ellipse at 82% 8%,rgba(168,51,237,.15),transparent 42%),
+    linear-gradient(145deg,#100819 0%,#0b0711 55%,#14091c 100%)!important;
+  color:#fff1ff!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.07),0 0 0 1px rgba(119,27,208,.12),0 12px 34px rgba(0,0,0,.28),0 0 25px rgba(168,51,237,.09)!important;
+}
+.grid>.card.upload>.card-head .mini,
+.grid>.card.upload>.mode-title{color:#e9b4ff!important}
+.grid>.card.upload>.card-head .pill{
+  border-color:rgba(217,91,255,.55)!important;background:rgba(119,27,208,.14)!important;color:#f0b8ff!important
+}
+.grid>.card.upload .free-inject-wrap,
+.grid>.card.upload .machine-columns,
+.grid>.card.upload #drop{min-width:0!important}
+.grid>.card.upload .free-inject-btn,
+.grid>.card.upload .machine-card>.mode-btn{
+  border-color:#f0b8ff!important;
+  background:linear-gradient(100deg,#771bd0,#d95bff)!important;
+  color:#fff!important;-webkit-text-fill-color:#fff!important;
+  text-shadow:none!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.18),0 5px 16px rgba(119,27,208,.22)!important;
+}
+.grid>.card.upload .free-inject-btn small,
+.grid>.card.upload .machine-card>.mode-btn small{
+  color:#fff1ff!important;-webkit-text-fill-color:#fff1ff!important
+}
+.grid>.card.upload .machine-card,
+.grid>.card.upload .machine-card.inject-machine,
+.grid>.card.upload .machine-card.hdr-machine{
+  min-width:0!important;border:1px solid rgba(217,91,255,.48)!important;border-top:2px solid #d95bff!important;
+  border-radius:16px!important;
+  background:linear-gradient(145deg,rgba(35,12,51,.96),rgba(12,7,19,.98))!important;
+  color:#f2e3ff!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.055),0 8px 22px rgba(0,0,0,.2)!important
+}
+.grid>.card.upload .machine-card:hover{
+  border-color:#e7a0ff!important;box-shadow:0 0 22px rgba(168,51,237,.16),0 12px 28px rgba(0,0,0,.26)!important
+}
+.grid>.card.upload .machine-card>.mode-btn:hover,
+.grid>.card.upload .free-inject-btn:hover{
+  border-color:#f8dfff!important;box-shadow:0 0 22px rgba(217,91,255,.3),inset 0 1px rgba(255,255,255,.2)!important
+}
+.grid>.card.upload .machine-details>summary{
+  border-color:rgba(217,91,255,.38)!important;background:rgba(119,27,208,.12)!important;color:#f0b8ff!important
+}
+.grid>.card.upload .machine-notes{color:#f2e3ff!important}
+.grid>.card.upload .machine-notes li::marker,
+.grid>.card.upload .hdr-machine .machine-notes li::marker{color:#e7a0ff!important}
+.grid>.card.upload .free-inject-caption,
+.grid>.card.upload .free-location-optin,
+.grid>.card.upload .free-location-optin small{color:#cdb5df!important}
+.grid>.card.upload .free-location-optin{
+  border-color:rgba(217,91,255,.28)!important;background:rgba(119,27,208,.08)!important
+}
+.grid>.card.upload #drop{
+  border:1px solid rgba(217,91,255,.58)!important;border-radius:17px!important;
+  background:linear-gradient(145deg,rgba(35,12,51,.82),rgba(10,7,16,.96))!important;
+  color:#fff1ff!important;box-shadow:inset 0 1px rgba(255,255,255,.07),0 0 22px rgba(168,51,237,.08)!important
+}
+.grid>.card.upload #drop .upload-icon::after{
+  border-color:#d95bff!important;color:#f0b8ff!important;background:rgba(119,27,208,.2)!important
+}
+.grid>.card.upload #drop p{color:#d4c2e4!important}
+.grid>.card.upload #drop strong{color:#fff1ff!important}
+.grid>.card.upload .free-inject-btn,
+.grid>.card.upload .machine-card>.mode-btn,
+.grid>.card.upload #drop .upload-icon::after{
+  max-width:100%!important;overflow-wrap:anywhere
+}
+@media(max-width:700px){
+  .grid>.card.upload{padding:14px!important;border-radius:17px!important}
+  .grid>.card.upload .machine-columns{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  .grid>.card.upload .machine-card{padding:10px!important}
+  .grid>.card.upload .machine-card>.mode-btn{padding:12px 8px!important;font-size:12px!important}
+}
+@media(max-width:420px){
+  .grid>.card.upload .machine-columns{grid-template-columns:minmax(0,1fr)!important}
+}
+</style>
+
 </body>
 </html>
