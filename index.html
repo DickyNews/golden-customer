@@ -1445,16 +1445,14 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
   position:absolute!important;inset:0!important;display:block!important;box-sizing:border-box!important;
   padding:1.5px!important;border:0!important;border-radius:inherit!important;
   background:conic-gradient(from var(--dicky-video-border-angle),
-    transparent 0deg 325deg,
-    #00f6ff 326deg 350deg,
-    #eaffff 351deg 355deg,
-    #00f6ff 356deg 360deg)!important;
+    transparent 0deg 325deg,#00f6ff 326deg 350deg,#eaffff 351deg 355deg,#00f6ff 356deg 360deg)!important;
   -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)!important;
   -webkit-mask-composite:xor!important;
   mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)!important;
-  mask-composite:exclude!important;pointer-events:none!important;z-index:40!important;opacity:1!important;
-  filter:drop-shadow(0 0 2px rgba(0,246,255,.7))!important;
+  mask-composite:exclude!important;
+  pointer-events:none!important;z-index:40!important;opacity:1!important;
   animation:dickyVideoBorderTravel 4.8s linear infinite!important;
+  contain:strict!important;
 }
 @media(prefers-reduced-motion:reduce){.dicky-video-border{animation:none!important}}
 
@@ -2300,7 +2298,6 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true});
   else install();
-  new MutationObserver(install).observe(document.documentElement,{childList:true,subtree:true});
 })();
 </script>
 </body>
