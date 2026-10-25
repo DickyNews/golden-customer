@@ -1863,10 +1863,27 @@ async function pollJob(jobId){
 
 const freeInjectBtn=document.getElementById('freeInjectBtn');
 const freeInjectFile=document.getElementById('freeInjectFile');
-const FREE_MAX_BYTES=50*1024*1024;
+let freeMaxFileSizeMb=50;
+let freeMaxBytes=freeMaxFileSizeMb*1024*1024;
+async function loadFreeMaxSettings(){
+  try{
+    const response=await fetch(GOLDEN_PLATFORM.apiBase+'/public/free-inject/settings',{cache:'no-store',headers:{Accept:'application/json'}});
+    if(!response.ok)return;
+    const data=await response.json();
+    const candidate=Number(data.max_file_size_mb??data.max_mb??(Number(data.max_file_size_bytes)>0?Number(data.max_file_size_bytes)/1048576:NaN));
+    if(Number.isFinite(candidate)&&candidate>=1&&candidate<=4096){
+      freeMaxFileSizeMb=candidate;
+      freeMaxBytes=candidate*1024*1024;
+    }
+  }catch(e){
+    /* Backend tetap menjadi sumber validasi final jika pengaturan publik tidak dapat dimuat. */
+  }
+}
+const freeMaxSettingsPromise=loadFreeMaxSettings();
 function updateFreeInjectVisibility(){const wrap=document.getElementById('freeInjectWrap');if(wrap)wrap.hidden=!!customerAuthenticated;}
 function showFreeSizeLimit(){
-  showModal('Batas Inject Gratis','free max 50mb, silahkan order coin untuk menuju tidak terbatas dan melampauinya');
+  const limitLabel=(Number.isInteger(freeMaxFileSizeMb)?String(freeMaxFileSizeMb):String(Number(freeMaxFileSizeMb.toFixed(2))))+'MB';
+  showModal('Batas Inject Gratis','Ukuran Maksimal Mode Gratis adalah '+limitLabel+', silahkan order coin atau langganan untuk menuju tidak terbatas dan melampauinya.');
   const box=document.querySelector('.modal-box');
   const old=document.getElementById('freeTopupLink');if(old)old.remove();
   const link=document.createElement('a');link.id='freeTopupLink';link.className='btn btn-primary free-topup-link';
@@ -1878,7 +1895,8 @@ function showFreeSizeLimit(){
 async function uploadFreeVideo(f){
   if(processing||customerAuthenticated)return;
   if(!f)return;
-  if(f.size>FREE_MAX_BYTES){showFreeSizeLimit();freeInjectFile.value='';return;}
+  await freeMaxSettingsPromise;
+  if(f.size>freeMaxBytes){showFreeSizeLimit();freeInjectFile.value='';return;}
   if(!/\.(mp4|mov)$/i.test(f.name)){showModal('Format Video Tidak Didukung','Pilih video MP4 atau MOV.');freeInjectFile.value='';return;}
   processing=true;modal.classList.add('show');close.style.display='none';
   document.getElementById('modalTitle').textContent='Inject Gratis · Dicky News Method';
