@@ -2253,7 +2253,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
    hue:colors[Math.floor(Math.random()*colors.length)],a:Math.random()*.45+.25,dx:(Math.random()-.5)*(mobile?.08:.18),dy:(Math.random()-.5)*(mobile?.08:.18)}));
  }
  function draw(t){
-  if(document.hidden){raf=requestAnimationFrame(draw);return}
+  if(document.hidden)return
   const interval=mobile?100:40;
   if(t-last<interval){raf=requestAnimationFrame(draw);return}last=t;
   ctx.clearRect(0,0,w,h);
