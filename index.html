@@ -2402,7 +2402,7 @@ function setCustomerAuth(auth,balance=null){
 }
 function customerAuthHeaders(extra={}){const token=localStorage.getItem('golden_customer_session_token');return token?{...extra,Authorization:'Bearer '+token}:{...extra};}
 function showModal(titleText,textText){modal.classList.add('show');document.getElementById('modalTitle').textContent=titleText;document.getElementById('modalText').textContent=textText}
-function closeModal(){modal.classList.remove('show')}
+function closeModal(){modal.classList.remove('show');const subscriptionAction=document.getElementById('goToSubscription');if(subscriptionAction)subscriptionAction.hidden=true;}
 function setWallet(d){
   const wallet=d?.wallet ?? d;
   const balance=Number(wallet?.coin_balance ?? wallet?.coins ?? wallet?.balance ?? d?.customer?.coin_balance ?? d?.coin_balance ?? 0);
