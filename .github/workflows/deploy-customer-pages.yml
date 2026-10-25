@@ -8,6 +8,7 @@ on:
       - "_headers"
       - "analytics-config.js"
       - "functions/**"
+      - "analytics-worker/**"
       - ".github/workflows/deploy-customer-pages.yml"
   workflow_dispatch:
 
@@ -29,10 +30,11 @@ jobs:
       - name: Prepare static site and Pages Functions
         run: |
           set -eu
-          mkdir -p dist/functions
+          mkdir -p dist/functions dist/analytics-worker
           cp index.html dist/
           cp _headers dist/
           cp analytics-config.js dist/
+          cp analytics-worker/worker.js dist/analytics-worker/worker.js
           cp -R functions/. dist/functions/
 
       - name: Ensure Cloudflare Pages project exists
