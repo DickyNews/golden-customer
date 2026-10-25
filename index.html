@@ -2314,7 +2314,7 @@ const file=document.getElementById('file'),drop=document.getElementById('drop'),
 const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:false};let maxFileSizeBytes=300*1024*1024;
 function renderPrices(){
   const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
-  if(sdr)sdr.textContent=customerAuthenticated?'✓ USER VIP AKTIF':'';
+  if(sdr)sdr.textContent='✓ USER VIP AKTIF';
   if(hdr)hdr.textContent='KLIK DISINI UNTUK MENDAPATKAN MESIN HDR';
   if(summary)summary.textContent='Langganan';
   sdrBtn.disabled=!serviceActive.sdr;hdrBtn.disabled=false;
@@ -2691,8 +2691,6 @@ let customerAuthenticated=false;
 const historySection=document.getElementById("job-history");
 function setCustomerAuth(auth,balance=null){
   customerAuthenticated=!!auth;
-  document.body.classList.toggle('customer-authenticated',customerAuthenticated);
-  const sdrPriceLabel=document.getElementById('sdrPrice');if(sdrPriceLabel)sdrPriceLabel.textContent=customerAuthenticated?'✓ USER VIP AKTIF':'';
   updateFreeInjectVisibility();
   if(logoutBtn)logoutBtn.hidden=!customerAuthenticated;
   const hideHistory=!customerAuthenticated;
@@ -3175,6 +3173,5 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
 }
 </style>
 
-<style id="VIP_LABEL_REQUIRES_LOGIN">#sdrPrice::after,.machine-card.inject-machine>.mode-btn small::after{content:none!important;display:none!important}body.customer-authenticated #sdrPrice::after,body.customer-authenticated .machine-card.inject-machine>.mode-btn small::after{content:"✓ USER VIP AKTIF"!important;display:inline-block!important}</style>
 </body>
 </html>
