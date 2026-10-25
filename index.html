@@ -3340,6 +3340,93 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
   }
 }
 
+
+/* Mobile machine cards: centered labels, safe arrow clearance, readable expanded notes. */
+@media (max-width: 700px) {
+  .grid > .card.upload .machine-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+  .grid > .card.upload .machine-card {
+    min-width: 0 !important;
+    padding: 9px !important;
+    box-sizing: border-box !important;
+  }
+  .grid > .card.upload .machine-card > .mode-btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 116px !important;
+    height: auto !important;
+    padding: 12px 35px 12px 9px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: clamp(11px, 3.5vw, 14px) !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+  }
+  .grid > .card.upload .machine-card > .mode-btn small {
+    display: block !important;
+    width: 100% !important;
+    margin: 6px 0 0 !important;
+    font-size: clamp(10px, 3vw, 12px) !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    overflow-wrap: break-word !important;
+  }
+  .grid > .card.upload .machine-card > .mode-btn::after {
+    right: 7px !important;
+    left: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 21px !important;
+    height: 21px !important;
+    font-size: 13px !important;
+  }
+  .grid > .card.upload .machine-details .machine-notes,
+  .grid > .card.upload .machine-details .machine-notes li,
+  .grid > .card.upload .machine-details .machine-notes li * {
+    color: #f5f1ff !important;
+  }
+  .grid > .card.upload .machine-details .machine-notes {
+    box-sizing: border-box !important;
+    padding-left: 18px !important;
+    margin: 12px 0 2px !important;
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+    overflow-wrap: anywhere !important;
+  }
+  .grid > .card.upload .machine-details .machine-notes li {
+    padding-left: 2px !important;
+    margin-bottom: 8px !important;
+  }
+  .grid > .card.upload .machine-details .machine-notes li::marker {
+    color: #e9a1ff !important;
+  }
+  .grid > .card.upload .machine-details > summary {
+    color: #f5c5ff !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+    padding-inline: 4px !important;
+  }
+}
+@media (max-width: 390px) {
+  .grid > .card.upload .machine-columns { gap: 8px !important; }
+  .grid > .card.upload .machine-card { padding: 7px !important; }
+  .grid > .card.upload .machine-card > .mode-btn {
+    min-height: 120px !important;
+    padding: 10px 31px 10px 7px !important;
+    font-size: 11px !important;
+  }
+  .grid > .card.upload .machine-card > .mode-btn small { font-size: 10px !important; }
+  .grid > .card.upload .machine-details .machine-notes { font-size: 11px !important; }
+}
+
 </style>
 
 </body>
