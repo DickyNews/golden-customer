@@ -1507,6 +1507,24 @@ section.section,
   border-radius:22px!important;
 }
 
+
+/* HERO TOP FRAME: one clean, continuous embossed-glass border */
+.hero{
+  position:relative!important;
+  box-sizing:border-box!important;
+  border:2px solid rgba(104,220,255,.58)!important;
+  border-radius:30px!important;
+  outline:1px solid rgba(255,255,255,.07)!important;
+  outline-offset:-6px!important;
+  background:linear-gradient(145deg,rgba(13,25,32,.96) 0%,rgba(12,13,23,.97) 52%,rgba(27,12,25,.96) 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -2px 0 rgba(0,0,0,.62),0 12px 30px rgba(0,0,0,.22)!important;
+  overflow:hidden!important;
+  margin:10px auto 30px!important;
+}
+@media(max-width:800px){
+ .hero{border-width:1.5px!important;border-radius:22px!important;margin:8px auto 24px!important;outline-offset:-4px!important}
+}
+
 </style>
 </head>
 <body>
