@@ -1920,6 +1920,34 @@ main>.grid>.side>.wallet-card{width:100%!important;max-width:100%!important;box-
 }
 </style>
 
+
+<style id="REGULAR_PACKAGES_WIDE_SINGLE_LINE_V3">
+/* Wider regular package cards: prevent feature descriptions wrapping into tall columns */
+#subscriptionPanel #customerSubscriptionPlans.subscription-plans-strip{gap:10px!important}
+#subscriptionPanel #customerSubscriptionPlans.subscription-plans-strip>article{
+ flex:0 0 340px!important;width:340px!important;min-width:340px!important;max-width:340px!important;
+ padding:12px!important;gap:5px!important;box-sizing:border-box!important
+}
+#subscriptionPanel #customerSubscriptionPlans.subscription-plans-strip>article>div{
+ font-size:11px!important;line-height:1.2!important;gap:5px!important
+}
+#subscriptionPanel #customerSubscriptionPlans.subscription-plans-strip>article>div>span{
+ white-space:nowrap!important;letter-spacing:-.1px!important
+}
+#subscriptionPanel #customerSubscriptionPlans.subscription-plans-strip>article>div>b{font-size:10px!important}
+@media(max-width:700px){
+ #subscriptionPanel #customerSubscriptionPlans.subscription-plans-strip>article{
+  flex-basis:320px!important;width:320px!important;min-width:320px!important;max-width:320px!important
+ }
+}
+@media(max-width:360px){
+ #subscriptionPanel #customerSubscriptionPlans.subscription-plans-strip>article{
+  flex-basis:300px!important;width:300px!important;min-width:300px!important;max-width:300px!important
+ }
+ #subscriptionPanel #customerSubscriptionPlans.subscription-plans-strip>article>div{font-size:10px!important}
+}
+</style>
+
 </head>
 <body>
 <!--
