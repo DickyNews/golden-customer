@@ -22,7 +22,7 @@ function reply(request, payload, status = 200) {
 function validTikTokUrl(input) {
   try {
     const u = new URL(input);
-    return ["http:", "https:"].includes(u.protocol) &&
+    return u.protocol === "https:" &&
       (u.hostname === "tiktok.com" || u.hostname.endsWith(".tiktok.com"));
   } catch { return false; }
 }
