@@ -2724,10 +2724,22 @@ function setWallet(d){
 async function loadWallet(){
   try{
     const r=await fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.wallet,{credentials:"include",cache:"no-store",headers:customerAuthHeaders()});
-    if(r.status===401||r.status===403){setCustomerAuth(false);if(walletBadge){walletBadge.textContent="BELUM LOGIN";walletBadge.className="badge warn";}return false;}
-    if(!r.ok){setCustomerAuth(false);return false;}
+    if(r.status===401||r.status===403){
+      setCustomerAuth(false);
+      if(walletBadge){walletBadge.textContent="SESI PERLU LOGIN ULANG";walletBadge.className="badge warn";}
+      return false;
+    }
+    if(!r.ok){
+      // Server errors are not proof that the customer's session has expired.
+      if(walletBadge){walletBadge.textContent="API SEMENTARA BERMASALAH";walletBadge.className="badge warn";}
+      return false;
+    }
     const d=await r.json();setWallet(d);return true;
-  }catch(e){setCustomerAuth(false);return false;}
+  }catch(e){
+    // Network/CORS failures must not be treated as an explicit logout.
+    if(walletBadge){walletBadge.textContent="KONEKSI API TERGANGGU";walletBadge.className="badge warn";}
+    return false;
+  }
 }
 if(logoutBtn)logoutBtn.addEventListener('click',async()=>{
   logoutBtn.disabled=true;
