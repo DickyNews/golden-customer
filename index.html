@@ -3319,7 +3319,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
    if(typeof maxFileSizeBytes!=='undefined')maxFileSizeBytes=Math.min(maxFileSizeBytes,Number(s.max_file_size_bytes)||maxFileSizeBytes);
    const exp=new Date(s.expires_at).toLocaleString('id-ID');
    const planLabel=String(s.plan_name||s.plan_code||'Paket Langganan');const summary=document.getElementById('priceSummary');if(summary){summary.textContent=planLabel;summary.dataset.activePlan='true';summary.title='Paket layanan aktif: '+planLabel;}
-   el.innerHTML='<div class="active-plan-card"><div class="active-plan-title">✓ '+esc(s.plan_name||'Paket Langganan')+'</div><div>Status: <b style="color:#80efb2">AKTIF</b></div><div class="active-plan-grid"><div class="active-plan-stat"><small>Sisa token video</small><b>'+((String(s.plan_code||'').toLowerCase().startsWith('vip_')||String(s.plan_name||'').toUpperCase().startsWith('VIP '))?'Unlimited Token':Number(s.processes_remaining??0).toLocaleString('id-ID')+' / '+Number(s.process_quota??0).toLocaleString('id-ID'))+'</b></div><div class="active-plan-stat"><small>Maks. ukuran video</small><b>'+esc(s.max_file_size_mb??Math.round(Number(s.max_file_size_bytes||0)/1048576))+' MB</b></div><div class="active-plan-stat"><small>Masa aktif sampai</small><b>'+esc(exp)+'</b></div><div class="active-plan-stat"><small>Durasi paket</small><b>'+esc(s.duration_days??'—')+' hari</b></div></div></div>';
+   el.innerHTML='<div class="active-plan-card active-plan-compact"><span class="active-plan-check" aria-hidden="true">✓</span><span class="active-plan-name">'+esc(s.plan_name||s.plan_code||'Paket Langganan')+'</span></div>';
   }catch(e){el.textContent='Tidak dapat memuat status langganan saat ini.'}
  }
  window.goldenRefreshSubscription=loadCurrent;
@@ -4555,6 +4555,35 @@ html body #customerSubscriptionCurrent .active-plan-empty{
 }
 @media(max-width:360px){
  html body #customerSubscriptionCurrent .active-plan-grid{grid-template-columns:minmax(0,1fr)!important}
+}
+</style>
+
+
+<style id="rtxfury-one-line-active-plan-2026">
+/* Compact account summary: show only the authenticated customer's active package name. */
+html body .app .wallet-card{height:auto!important;min-height:0!important;padding:16px!important;margin:14px auto 10px!important;border:1px solid rgba(118,185,0,.45)!important;border-radius:18px!important;background:linear-gradient(145deg,#0b0e08,#070907 72%)!important;box-shadow:inset 0 1px rgba(255,255,255,.04)!important}
+html body .app .wallet-card .wallet-title{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;margin:0!important;padding:0!important;border:0!important}
+html body .app .wallet-card .wallet-title h2{font-size:clamp(15px,2vw,19px)!important;line-height:1.3!important;letter-spacing:.035em!important}
+html body .app .wallet-card .wallet-grid,html body .app .wallet-card .wallet-progress{display:none!important}
+html body .app .wallet-card .wallet-bottom{display:flex!important;justify-content:flex-end!important;align-items:center!important;gap:8px!important;margin:0!important;padding:0!important;border:0!important}
+html body .app .wallet-card .wallet-cost-label{display:none!important}
+html body .app .wallet-card .wallet-actions{margin-left:auto!important}
+html body .app .wallet-card #customerLogout{margin:0!important}
+html body .app .wallet-card #claimBox{margin-top:14px!important}
+html body #customerSubscriptionCurrent{margin:8px auto 18px!important;line-height:1.3!important}
+html body #customerSubscriptionCurrent .active-plan-card.active-plan-compact{
+ display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;
+ width:100%!important;min-height:54px!important;box-sizing:border-box!important;margin:0 auto!important;
+ padding:12px 18px!important;border:1px solid rgba(118,185,0,.52)!important;border-radius:14px!important;
+ background:linear-gradient(100deg,rgba(118,185,0,.12),rgba(10,13,8,.98) 55%,rgba(118,185,0,.08))!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.045)!important;text-align:center!important;
+}
+html body #customerSubscriptionCurrent .active-plan-check{flex:0 0 auto!important;color:#8ac919!important;font-size:21px!important;font-weight:950!important;line-height:1!important}
+html body #customerSubscriptionCurrent .active-plan-name{min-width:0!important;color:#f1f5e9!important;font-size:clamp(15px,2.2vw,19px)!important;font-weight:800!important;line-height:1.35!important;overflow-wrap:anywhere!important}
+@media(max-width:600px){
+ html body .app .wallet-card{padding:13px!important}
+ html body .app .wallet-card .wallet-title h2{font-size:14px!important}
+ html body #customerSubscriptionCurrent .active-plan-card.active-plan-compact{min-height:48px!important;padding:10px 12px!important}
 }
 </style>
 
