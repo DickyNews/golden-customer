@@ -3804,6 +3804,16 @@ html body .app .hero-main-headline strong.nvidia-accent {
 #tiktok-analytics #checkerTitle{font-size:16px;font-weight:800;color:#f4f8ef;line-height:1.35;overflow-wrap:anywhere}
 #tiktok-analytics #checkerText{font-size:12px;line-height:1.55;color:#a4ad9b;margin:5px 0 0;overflow-wrap:anywhere}
 #tiktok-analytics .analytics-dashboard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:15px;align-items:start}
+#tiktok-analytics .analytics-dashboard{grid-template-areas:"engagement technical" "engine engine"}
+#tiktok-analytics .analytics-engagement{grid-area:engagement}
+#tiktok-analytics .analytics-technical{grid-area:technical}
+#tiktok-analytics .analytics-engine{grid-area:engine}
+#tiktok-analytics .analytics-dashboard:not(.is-expanded) .analytics-technical,#tiktok-analytics .analytics-dashboard:not(.is-expanded) .analytics-engine{display:none}
+#tiktok-analytics .analytics-details-toggle{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:46px;margin:14px 0 0;padding:11px 16px;border:1px solid rgba(118,185,0,.38);border-radius:13px;background:linear-gradient(135deg,rgba(118,185,0,.12),rgba(255,255,255,.025));color:#b9ef78;font-size:13px;font-weight:800;letter-spacing:.01em;cursor:pointer;transition:background .18s,border-color .18s}
+#tiktok-analytics .analytics-details-toggle:hover{background:rgba(118,185,0,.18);border-color:rgba(165,239,54,.7)}
+#tiktok-analytics .analytics-details-toggle span{font-size:18px;line-height:1;transition:transform .18s}
+#tiktok-analytics .analytics-details-toggle[aria-expanded="true"] span{transform:rotate(180deg)}
+#tiktok-analytics .analytics-dashboard:not(.is-expanded){grid-template-areas:"engagement"}
 #tiktok-analytics .analytics-panel{min-width:0;padding:19px!important;border:1px solid rgba(118,185,0,.28)!important;border-radius:17px!important;background:linear-gradient(145deg,#11170d,#090d08 70%)!important;box-shadow:inset 0 1px rgba(255,255,255,.055),inset 0 -2px rgba(0,0,0,.6),0 8px 22px rgba(0,0,0,.2)!important}
 #tiktok-analytics .analytics-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:13px;margin-bottom:14px;border-bottom:1px solid rgba(118,185,0,.2)}
 #tiktok-analytics .analytics-panel-head h3{margin:0;font-size:16px;font-weight:800;letter-spacing:-.02em;color:#f4f8ef}
@@ -4129,6 +4139,7 @@ html body .app .hero-main-headline strong.nvidia-accent {
       <p class="analytics-footnote">Data yang tidak dipublikasikan atau tidak dapat diverifikasi akan ditandai “Tidak tersedia”, bukan ditebak.</p>
     </article>
   </div>
+  <button class="analytics-details-toggle" id="analyticsDetailsToggle" type="button" aria-expanded="false" aria-controls="tiktokAnalyticsDetails">Tampilkan selengkapnya <span aria-hidden="true">⌄</span></button>
 </section>
 
 
@@ -4136,6 +4147,22 @@ html body .app .hero-main-headline strong.nvidia-accent {
 <footer class="container footer"><span>© 2026 Dicky News</span><span>Golden API aktif · TikTok Analyzer menggunakan metadata publik</span></footer>
 </div>
 <div class="modal" id="modal"><div class="modal-box"><h3 id="modalTitle">Memproses...</h3><p class="mini" id="modalText">Demo frontend. Backend Golden Engine akan dihubungkan setelah VPS siap.</p><div class="progress"><i></i></div><button class="btn btn-secondary" style="margin-top:18px;width:100%" id="close">Tutup</button></div></div>
+<script id="GOLDEN_ANALYTICS_DETAILS_TOGGLE">
+(function(){
+  var root=document.getElementById("tiktok-analytics");
+  var dashboard=root&&root.querySelector(".analytics-dashboard");
+  var button=document.getElementById("analyticsDetailsToggle");
+  if(!dashboard||!button)return;
+  dashboard.id="tiktokAnalyticsDetails";
+  function setExpanded(expanded){
+    dashboard.classList.toggle("is-expanded",expanded);
+    button.setAttribute("aria-expanded",String(expanded));
+    button.innerHTML=expanded?'Tampilkan lebih sedikit <span aria-hidden="true">⌃</span>':'Tampilkan selengkapnya <span aria-hidden="true">⌄</span>';
+  }
+  setExpanded(false);
+  button.addEventListener("click",function(){setExpanded(!dashboard.classList.contains("is-expanded"));});
+})();
+</script>
 <script src="./analytics-config.js"></script>
 <script>
 /* ============================================================
