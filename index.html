@@ -3750,8 +3750,54 @@ html body .app .hero-main-headline strong.nvidia-accent {
 }
 </style>
 
+
+<style id="DICKY_NVIDIA_STORM_LOADER_CSS">
+#nvidiaStormLoader{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;overflow:hidden;background:#030503;color:#f5f8f1;opacity:1;visibility:visible;isolation:isolate;transition:opacity .42s ease,visibility .42s ease}
+#nvidiaStormLoader.is-done{opacity:0;visibility:hidden;pointer-events:none}
+#nvidiaStormLoader .storm-backdrop{position:absolute;inset:0;overflow:hidden;background:radial-gradient(ellipse at 50% 48%,rgba(48,91,0,.22),transparent 48%),linear-gradient(135deg,#020302,#070b04 52%,#020302)}
+#nvidiaStormLoader .storm-grid{position:absolute;inset:-50%;opacity:.22;background-image:linear-gradient(rgba(118,185,0,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(118,185,0,.12) 1px,transparent 1px);background-size:44px 44px;transform:perspective(500px) rotateX(58deg) scale(1.6);mask-image:linear-gradient(transparent,black 35%,transparent 85%);animation:stormGridDrift 3.8s linear infinite!important}
+#nvidiaStormLoader .storm-core{position:absolute;width:min(56vw,340px);aspect-ratio:1;border:1px solid rgba(118,185,0,.25);border-radius:50%;box-shadow:0 0 36px rgba(118,185,0,.09),inset 0 0 32px rgba(118,185,0,.06);animation:stormCorePulse 1.8s ease-in-out infinite!important}
+#nvidiaStormLoader .storm-core:before,#nvidiaStormLoader .storm-core:after{content:"";position:absolute;inset:11%;border:1px solid rgba(118,185,0,.48);border-radius:50%;border-top-color:#a6ff00;border-bottom-color:rgba(0,255,160,.6);animation:stormSpin 2.1s linear infinite!important}
+#nvidiaStormLoader .storm-core:after{inset:24%;border-color:rgba(0,255,170,.45);border-left-color:#76b900;animation-duration:1.35s!important;animation-direction:reverse!important}
+#nvidiaStormLoader .storm-bolt{position:absolute;left:50%;top:50%;width:1px;height:56vh;background:linear-gradient(transparent,#76b900 38%,#c7ff5e 50%,#00ffc8 54%,transparent);filter:drop-shadow(0 0 7px #76b900);transform-origin:center;opacity:0;animation:stormBolt .95s ease-out infinite!important}
+#nvidiaStormLoader .storm-bolt.b2{transform:rotate(48deg);animation-delay:.31s!important}
+#nvidiaStormLoader .storm-bolt.b3{transform:rotate(-52deg);animation-delay:.62s!important}
+#nvidiaStormLoader .storm-content{position:relative;z-index:2;display:flex;align-items:center;flex-direction:column;gap:13px;padding:24px;text-align:center}
+#nvidiaStormLoader .storm-mark{display:grid;place-items:center;width:68px;height:68px;border:1px solid rgba(118,185,0,.7);border-radius:20px;background:linear-gradient(145deg,rgba(118,185,0,.22),rgba(0,255,170,.04));box-shadow:0 0 34px rgba(118,185,0,.18),inset 0 0 20px rgba(118,185,0,.08);font-size:31px;font-weight:900;color:#a5ff00;text-shadow:0 0 18px rgba(118,185,0,.65);animation:stormMarkPulse 1.4s ease-in-out infinite!important}
+#nvidiaStormLoader .storm-brand{font-size:clamp(18px,3vw,25px);font-weight:900;letter-spacing:.16em;color:#f5f8f1}
+#nvidiaStormLoader .storm-brand span{color:#76b900}
+#nvidiaStormLoader .storm-caption{font-size:11px;letter-spacing:.22em;color:#a9bd98;text-transform:uppercase}
+#nvidiaStormLoader .storm-track{width:min(270px,68vw);height:3px;overflow:hidden;border-radius:9px;background:rgba(118,185,0,.16);box-shadow:0 0 12px rgba(118,185,0,.12)}
+#nvidiaStormLoader .storm-progress{height:100%;width:42%;border-radius:9px;background:linear-gradient(90deg,#76b900,#c8ff50,#00ffc8);box-shadow:0 0 14px #76b900;animation:stormProgress 1.15s ease-in-out infinite!important}
+#nvidiaStormLoader .storm-status{font-size:10px;letter-spacing:.16em;color:#76b900;text-transform:uppercase}
+@keyframes stormGridDrift{from{transform:perspective(500px) rotateX(58deg) scale(1.6) translateY(0)}to{transform:perspective(500px) rotateX(58deg) scale(1.6) translateY(44px)}}
+@keyframes stormCorePulse{0%,100%{transform:scale(.94);opacity:.65}50%{transform:scale(1.04);opacity:1}}
+@keyframes stormSpin{to{transform:rotate(360deg)}}
+@keyframes stormBolt{0%,100%{opacity:0;transform:translate(-50%,-50%) scaleY(.25)}18%{opacity:.85}48%{opacity:.16;transform:translate(-50%,-50%) scaleY(1)}}
+@keyframes stormMarkPulse{0%,100%{box-shadow:0 0 20px rgba(118,185,0,.12),inset 0 0 12px rgba(118,185,0,.05)}50%{box-shadow:0 0 38px rgba(118,185,0,.32),inset 0 0 20px rgba(118,185,0,.14)}}
+@keyframes stormProgress{0%{transform:translateX(-115%)}100%{transform:translateX(250%)}}
+@media(prefers-reduced-motion:reduce){#nvidiaStormLoader .storm-grid,#nvidiaStormLoader .storm-core,#nvidiaStormLoader .storm-core:before,#nvidiaStormLoader .storm-core:after,#nvidiaStormLoader .storm-bolt,#nvidiaStormLoader .storm-mark,#nvidiaStormLoader .storm-progress{animation:none!important}#nvidiaStormLoader .storm-progress{width:100%}}
+</style>
 </head>
 <body>
+
+<div id="nvidiaStormLoader" role="status" aria-label="Memuat Dicky News Golden HD" aria-live="polite">
+ <div class="storm-backdrop" aria-hidden="true"><div class="storm-grid"></div><i class="storm-bolt"></i><i class="storm-bolt b2"></i><i class="storm-bolt b3"></i></div>
+ <div class="storm-core" aria-hidden="true"></div>
+ <div class="storm-content"><div class="storm-mark" aria-hidden="true">ϟ</div><div class="storm-brand">DICKY NEWS <span>GOLDEN HD</span></div><div class="storm-caption">NVIDIA STORM SYSTEM</div><div class="storm-track"><div class="storm-progress"></div></div><div class="storm-status">INITIALIZING ENGINE</div></div>
+</div>
+<script id="DICKY_NVIDIA_STORM_LOADER_JS">
+(function(){
+ const loader=document.getElementById('nvidiaStormLoader');if(!loader)return;
+ let finished=false;
+ const started=Date.now();
+ function dismiss(){if(finished)return;finished=true;const wait=Math.max(0,1050-(Date.now()-started));setTimeout(()=>{loader.classList.add('is-done');setTimeout(()=>loader.remove(),500)},wait)}
+ window.addEventListener('load',dismiss,{once:true});
+ setTimeout(dismiss,2300);
+})();
+</script>
+
+
 <!--
   DICKY NEWS GOLDEN PLATFORM — CUSTOMER WEB
   ============================================================
