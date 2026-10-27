@@ -3569,5 +3569,36 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
 }
 </style>
 
+
+<script id="GOLDEN_VIP_PUBLIC_SYNC_V1">
+(async function(){
+ const grid=document.querySelector('#vip-packages .vip-tier-grid');
+ if(!grid)return;
+ const api=(window.GOLDEN_PLATFORM&&window.GOLDEN_PLATFORM.apiBase)||'https://103-235-74-92.sslip.io';
+ const tiers=['premium','maximum','ultimate'];
+ const fmt=n=>'Rp'+Number(n||0).toLocaleString('id-ID');
+ const safe=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+ const featureItems=[
+  'Unlimited Token','Unlimited Upload','1080P 60 FPS — Active','2K 60 FPS — Active',
+  '4K 60 FPS — Active','Ultra HDR with Dolby Vision — Active',
+  "120 FPS processing follows your video's frame rate profile",
+  'All frame rates follow your source video by default'
+ ];
+ try{
+  const r=await fetch(api+'/public/vip/plans',{cache:'no-store',headers:{Accept:'application/json'}});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  const d=await r.json(),plans=Array.isArray(d.plans)?d.plans:[];
+  if(!plans.length)return;
+  grid.innerHTML=plans.map((p,i)=>{
+   const tier=tiers[i]||tiers[tiers.length-1],rank=i+1;
+   const features=Array.isArray(p.features)&&p.features.length?p.features:featureItems;
+   const size=Number(p.max_file_size_mb||0),sizeText=size>=1024?(size/1024).toLocaleString('id-ID',{maximumFractionDigits:2})+' GB':size+' MB';
+   const msg='Halo, saya ingin berlangganan Golden VIP '+p.name+' '+fmt(p.price_idr)+' selama '+p.duration_days+' hari.';
+   const li=(icon,label,extra='')=>'<li class="'+extra+'"><span class="vip-feature-icon">'+icon+'</span><span>'+safe(label)+'</span></li>';
+   return '<article class="vip-tier '+tier+'"><div class="vip-tier-top"><div class="vip-tier-icon" aria-hidden="true">♛</div><div><h3 class="vip-tier-name">VIP '+safe(p.name).toUpperCase()+'</h3><div class="vip-tier-label">Unlimited Token Video</div></div><span class="vip-tier-rank">VIP '+rank+'</span></div><p class="vip-tier-price">'+fmt(p.price_idr)+'</p><p class="vip-tier-desc">Masa aktif '+Number(p.duration_days)+' hari</p><ul class="vip-tier-features">'+li('∞','Unlimited Token')+li('▶','Unlimited Upload')+li('▣','Maks. '+safe(sizeText)+'/video')+li('◷','Masa aktif '+Number(p.duration_days)+' hari')+'<li class="vip-feature-heading" style="list-style:none"><span>Video Features</span></li>'+features.map(f=>li('✓',typeof f==='string'?f:(f.label||f.name||''),'vip-feature-extra')).join('')+'</ul><a class="vip-tier-cta" href="https://wa.me/6289616438173?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener noreferrer">♛ Pilih VIP '+safe(p.name)+' <span aria-hidden="true">›</span></a></article>';
+  }).join('');
+ }catch(e){console.warn('VIP public sync gagal; mempertahankan kartu VIP bawaan.',e)}
+})();
+</script>
 </body>
 </html>
