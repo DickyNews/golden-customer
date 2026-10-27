@@ -3005,7 +3005,7 @@ function setCustomerAuth(auth,balance=null){
   if(historySection){historySection.classList.toggle("hidden",hideHistory);historySection.setAttribute("aria-hidden",String(hideHistory));}
   const b=document.getElementById("walletAuthBadge");
   if(b){b.textContent=!customerAuthenticated?"BELUM LOGIN":"PAKET AKTIF";b.className="badge "+(customerAuthenticated?"":"warn");}
-  const panelTitle=document.getElementById("accountPanelTitle");const claimBox=document.getElementById("claimBox");const accountDetails=document.getElementById("customerSubscriptionCurrent");
+  const panelTitle=document.getElementById("accountPanelTitle");const claimBox=document.getElementById("claimBox");const accountDetails=document.getElementById("customerSubscriptionCurrent");const walletCard=document.querySelector(".wallet-card");if(walletCard)walletCard.classList.toggle("account-authenticated",customerAuthenticated);
   if(panelTitle)panelTitle.textContent=customerAuthenticated?"Detail Paket Aktif":"Akun";if(claimBox)claimBox.hidden=customerAuthenticated;if(accountDetails)accountDetails.hidden=!customerAuthenticated;
   if(!customerAuthenticated&&historyList)historyList.replaceChildren();
 }
@@ -3319,7 +3319,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
    if(typeof maxFileSizeBytes!=='undefined')maxFileSizeBytes=Math.min(maxFileSizeBytes,Number(s.max_file_size_bytes)||maxFileSizeBytes);
    const exp=new Date(s.expires_at).toLocaleString('id-ID');
    const planLabel=String(s.plan_name||s.plan_code||'Paket Langganan');const summary=document.getElementById('priceSummary');if(summary){summary.textContent=planLabel;summary.dataset.activePlan='true';summary.title='Paket layanan aktif: '+planLabel;}
-   el.innerHTML='<div class="active-plan-card active-plan-compact"><span class="active-plan-check" aria-hidden="true">✓</span><span class="active-plan-name">'+esc(s.plan_name||s.plan_code||'Paket Langganan')+'</span></div>';
+   el.innerHTML='<div class="active-plan-card active-plan-compact"><span class="active-plan-check" aria-hidden="true">✓</span><span class="active-plan-name">'+esc(s.plan_name||s.plan_code||'Paket Langganan')+'</span><span class="active-plan-logout-slot"></span></div>';const logoutControl=document.getElementById('customerLogout');const logoutSlot=el.querySelector('.active-plan-logout-slot');if(logoutControl&&logoutSlot){logoutSlot.appendChild(logoutControl);logoutControl.hidden=!document.querySelector('.wallet-card')?.classList.contains('account-authenticated');}
   }catch(e){el.textContent='Tidak dapat memuat status langganan saat ini.'}
  }
  window.goldenRefreshSubscription=loadCurrent;
@@ -4584,6 +4584,32 @@ html body #customerSubscriptionCurrent .active-plan-name{min-width:0!important;c
  html body .app .wallet-card{padding:13px!important}
  html body .app .wallet-card .wallet-title h2{font-size:14px!important}
  html body #customerSubscriptionCurrent .active-plan-card.active-plan-compact{min-height:48px!important;padding:10px 12px!important}
+}
+</style>
+
+
+<style id="rtxfury-remove-duplicate-account-panel-2026">
+/* Authenticated view: package identity + logout live together in the package row. */
+html body .app .wallet-card.account-authenticated{display:none!important}
+html body #customerSubscriptionCurrent{margin:12px auto 18px!important}
+html body #customerSubscriptionCurrent .active-plan-card.active-plan-compact{
+ display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;
+ gap:12px!important;min-height:56px!important;padding:10px 12px!important;
+}
+html body #customerSubscriptionCurrent .active-plan-name{flex:0 1 auto!important;text-align:left!important}
+html body #customerSubscriptionCurrent .active-plan-logout-slot{display:inline-flex!important;flex:0 0 auto!important;align-items:center!important;justify-content:center!important}
+html body #customerSubscriptionCurrent #customerLogout{
+ display:inline-flex!important;position:static!important;visibility:visible!important;opacity:1!important;
+ align-items:center!important;justify-content:center!important;min-height:38px!important;margin:0!important;
+ padding:8px 14px!important;border:1px solid rgba(118,185,0,.58)!important;border-radius:10px!important;
+ background:#11170b!important;color:#f2f5ec!important;font-size:13px!important;font-weight:750!important;
+ line-height:1.2!important;white-space:nowrap!important;box-shadow:none!important;cursor:pointer!important;
+}
+html body #customerSubscriptionCurrent #customerLogout[hidden]{display:none!important}
+@media(max-width:420px){
+ html body #customerSubscriptionCurrent .active-plan-card.active-plan-compact{gap:8px!important;padding:9px 10px!important}
+ html body #customerSubscriptionCurrent .active-plan-name{font-size:14px!important}
+ html body #customerSubscriptionCurrent #customerLogout{min-height:35px!important;padding:7px 10px!important;font-size:12px!important}
 }
 </style>
 
