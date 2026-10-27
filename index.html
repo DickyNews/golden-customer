@@ -3983,5 +3983,77 @@ input,select,textarea{min-height:40px;border-radius:10px!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 
+
+<style id="rtxfury-nvidia-theme-2026">
+/* RTXFury-inspired theme: graphite black, restrained NVIDIA green, neutral glass. */
+:root{
+ --bg:#050506!important;--surface:#0D0D12!important;--surface2:#15151B!important;
+ --line:rgba(255,255,255,.10)!important;--text:#F5F5F7!important;--muted:#9E9EA6!important;
+ --accent:#76B900!important;--accent2:#8AC919!important;--glow:rgba(118,185,0,.10)!important;
+ --green:#76B900!important;--green-bright:#8AC919!important;--green-dim:rgba(118,185,0,.09)!important;
+}
+html,body{background:#050506!important;color:#F5F5F7!important}
+body{background-image:none!important}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid #76B900!important;outline-offset:3px}
+.grid>.card.upload{
+ border-color:rgba(118,185,0,.38)!important;
+ background:linear-gradient(145deg,rgba(118,185,0,.055),transparent 45%),#0D0D12!important;
+ box-shadow:0 0 0 1px rgba(118,185,0,.035)!important;
+}
+.grid>.card.upload .machine-columns{gap:10px!important}
+.grid>.card.upload .machine-card,
+.grid>.card.upload .machine-card.inject-machine,
+.grid>.card.upload .machine-card.hdr-machine{
+ background:linear-gradient(160deg,rgba(118,185,0,.075),rgba(13,13,18,.98) 62%)!important;
+ border:1px solid rgba(118,185,0,.35)!important;
+ box-shadow:none!important;
+}
+.grid>.card.upload .machine-card>.mode-btn,
+.grid>.card.upload .machine-card>.mode-btn:link,
+.grid>.card.upload .machine-card>.mode-btn:visited,
+.grid>.card.upload .machine-card>.mode-btn:hover,
+.grid>.card.upload .machine-card>.mode-btn:focus,
+.grid>.card.upload .machine-card>.mode-btn:active{
+ background:#10130b!important;
+ background-image:linear-gradient(135deg,#18230b 0%,#0d1109 68%,#0b0c0b 100%)!important;
+ border:1px solid rgba(118,185,0,.7)!important;
+ color:#F5F5F7!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 5px 18px rgba(0,0,0,.28)!important;
+}
+.grid>.card.upload .machine-card>.mode-btn::before,
+.grid>.card.upload .machine-card>.mode-btn::after{border-color:#76B900!important;box-shadow:none!important}
+.grid>.card.upload .machine-card>.mode-btn *,
+.grid>.card.upload .machine-card>.mode-btn small,
+.grid>.card.upload .machine-card>.mode-btn #sdrPrice,
+.grid>.card.upload .machine-card>.mode-btn #hdrPrice{color:#F5F5F7!important}
+.grid>.card.upload .machine-details,
+.grid>.card.upload .machine-details>summary{
+ border-color:rgba(118,185,0,.32)!important;color:#8AC919!important;
+}
+.grid>.card.upload .machine-notes{color:#C9D0C0!important}
+.grid>.card.upload .machine-notes li::marker,
+.grid>.card.upload .hdr-machine .machine-notes li::marker{color:#8AC919!important}
+.grid>.card.upload .machine-card:hover{border-color:rgba(138,201,25,.65)!important;box-shadow:0 8px 24px rgba(0,0,0,.25)!important}
+.grid>.card.upload .machine-card>.mode-btn:hover{filter:brightness(1.12)!important}
+.grid>.card.upload .machine-card>.mode-btn:active{filter:brightness(.94)!important}
+.vip-tier-cta,.maximum .vip-tier-cta,.ultimate .vip-tier-cta{
+ background:linear-gradient(135deg,#76B900,#8AC919)!important;color:#101407!important;
+ border:1px solid rgba(180,230,95,.7)!important;box-shadow:0 5px 18px rgba(118,185,0,.14)!important;
+}
+.vip-tier-icon,.maximum .vip-tier-icon,.ultimate .vip-tier-icon{
+ color:#8AC919!important;border-color:rgba(118,185,0,.5)!important;
+ background:radial-gradient(circle,rgba(118,185,0,.12),rgba(0,0,0,.25))!important;
+}
+#vip-packages .vip-tier-grid::-webkit-scrollbar-thumb{background:#76B900!important}
+button:not(:disabled):hover,.btn:hover,.btn-primary:hover{filter:brightness(1.08)}
+/* Replace the former purple/cyan neon edge details with quiet green highlights. */
+.grid>.card.upload .machine-card,
+.grid>.card.upload .machine-card::before,
+.grid>.card.upload .machine-card::after{--machine-accent:#76B900!important}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+}
+</style>
+
 </body>
 </html>
