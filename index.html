@@ -4355,5 +4355,81 @@ html body .app .grid>.card.upload .machine-columns>.machine-card>.machine-detail
 }
 </style>
 
+
+<style id="rtxfury-sitewide-nvidia-except-packages">
+/* SITE-WIDE NVIDIA palette. Intentionally preserve subscription/package panels. */
+:root{
+ --accent:#76B900!important;--accent2:#8AC919!important;--green:#76B900!important;
+ --green-bright:#8AC919!important;--purple:#76B900!important;--pink:#8AC919!important;
+ --cyan:#8AC919!important;--glow:rgba(118,185,0,.12)!important;
+ --text-accent:#8AC919!important;
+}
+body{
+ background:#050605!important;color:#f0f2ed!important;
+}
+body :where(*):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ scrollbar-color:#76B900 #0c0e0a;
+}
+body :where(a,button,input,select,textarea,summary):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ accent-color:#76B900;
+}
+body :where(a,button,input,select,textarea,summary):focus-visible{
+ outline-color:#8AC919!important;
+}
+body :where(.app,.container,.main,.content,.page,.section,.card,.panel,.box,.modal,.dialog,.drawer,.dropdown,.popover,.tooltip,.notice,.alert,.empty-state,.upload-empty,.drop,.machine-details,.machine-card,.social-card,.social-pill,.social-link,.feature-card,.stat-card,.status-card,.info-card,.history-card,.job-card,.result-card,.file-card,.settings-card,.login-card,.auth-card,.wallet-card,.balance-card,.table-wrap,.table-container,.form-group,.input-wrap,.field,.nav,.navbar,.header,.footer):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ border-color:rgba(118,185,0,.28)!important;
+}
+body :where(.card,.panel,.box,.modal,.dialog,.drawer,.dropdown,.popover,.tooltip,.notice,.alert,.empty-state,.upload-empty,.drop,.machine-details,.feature-card,.stat-card,.status-card,.info-card,.history-card,.job-card,.result-card,.file-card,.settings-card,.login-card,.auth-card,.wallet-card,.balance-card,.table-wrap,.table-container):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ box-shadow:0 8px 24px rgba(0,0,0,.18)!important;
+}
+body :where(.btn,.button,.btn-primary,.btn-secondary,.primary-button,.secondary-button,.action-btn,.submit-btn,.login-btn,.logout-btn,.copy-btn,.download-btn,.upload-btn,.social-pill,.social-link,.tab,.tab-button,.nav-link,.pagination button,.modal button,[role=button]):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ border-color:rgba(118,185,0,.55)!important;
+ transition:background-color .16s ease,border-color .16s ease,color .16s ease,box-shadow .16s ease!important;
+}
+body :where(.btn-primary,.primary-button,.submit-btn,.login-btn,.upload-btn,.download-btn,.action-primary,[data-variant=primary]):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ background:#76B900!important;background-image:linear-gradient(135deg,#76B900,#8AC919)!important;
+ color:#101407!important;-webkit-text-fill-color:#101407!important;
+ box-shadow:0 4px 14px rgba(118,185,0,.12)!important;
+}
+body :where(.btn-secondary,.secondary-button,.action-secondary,.logout-btn,.copy-btn,.social-pill,.social-link,.tab,.tab-button,.nav-link,[role=button]):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ background-color:#10130c!important;color:#e9eee2!important;-webkit-text-fill-color:#e9eee2!important;
+}
+body :where(a,button,.link,.accent,.highlight,.eyebrow,.section-label,.section-kicker,.icon,.icon-wrap,.badge,.pill,.chip,.status-badge,.check,.plus,.price-accent,.feature-icon,.social-icon,.nav-icon,.tab.active,.tab-button.active,.nav-link.active):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ --accent:#76B900!important;
+}
+body :where(.badge,.pill,.chip,.status-badge,.eyebrow,.section-label,.section-kicker,.accent,.highlight,.icon-wrap,.feature-icon,.social-icon,.nav-icon,.tab.active,.tab-button.active,.nav-link.active):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ border-color:rgba(118,185,0,.42)!important;color:#8AC919!important;-webkit-text-fill-color:#8AC919!important;
+}
+body :where(input,select,textarea):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ background-color:#0c0e0a!important;color:#f0f2ed!important;
+ border-color:rgba(118,185,0,.3)!important;box-shadow:none!important;
+}
+body :where(input,select,textarea):focus:not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ border-color:#76B900!important;box-shadow:0 0 0 3px rgba(118,185,0,.12)!important;
+}
+body :where(progress,meter):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ accent-color:#76B900!important;
+}
+body :where(hr,.divider,.separator):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+ border-color:rgba(118,185,0,.2)!important;
+}
+body :where(svg):not(#subscriptionPanel svg):not(#vip-packages svg):not(.active-plan-card svg) [stroke="#a855f7"],
+body :where(svg):not(#subscriptionPanel svg):not(#vip-packages svg):not(.active-plan-card svg) [stroke="#c084fc"],
+body :where(svg):not(#subscriptionPanel svg):not(#vip-packages svg):not(.active-plan-card svg) [stroke="#d946ef"],
+body :where(svg):not(#subscriptionPanel svg):not(#vip-packages svg):not(.active-plan-card svg) [stroke="#22d3ee"]{stroke:#76B900!important}
+body :where(svg):not(#subscriptionPanel svg):not(#vip-packages svg):not(.active-plan-card svg) [fill="#a855f7"],
+body :where(svg):not(#subscriptionPanel svg):not(#vip-packages svg):not(.active-plan-card svg) [fill="#c084fc"],
+body :where(svg):not(#subscriptionPanel svg):not(#vip-packages svg):not(.active-plan-card svg) [fill="#d946ef"]{fill:#76B900!important}
+body :where(*):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *):focus-visible{
+ outline-color:#8AC919!important;
+}
+body ::selection{background:rgba(118,185,0,.35)!important;color:#fff!important}
+@media(prefers-reduced-motion:reduce){
+ body :where(*):not(#subscriptionPanel *):not(#vip-packages *):not(.active-plan-card *){
+  scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;
+ }
+}
+</style>
+
 </body>
 </html>
