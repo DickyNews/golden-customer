@@ -2438,7 +2438,7 @@ html,body,.app,.app>.container,.app main.container{background:#000!important;bac
         </details>
       </article>
     </div>
-    <div class="drop" id="drop"><div class="upload-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 16V4m-5 5 5-5 5 5M4 17v3h16v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><strong id="dropTitle">Pilih mode di atas</strong><p id="dropText">Klik salah satu tombol proses untuk memilih file video.</p><p class="android-files-note"><strong>Android:</strong> pilih video melalui pemilih file di perangkat, misalnya <b>Files / File Manager</b>.</p><p class="ios-files-note"><strong>Khusus iPhone:</strong> pilih video dari aplikasi <b>File (Files)</b>.</p><input id="file" class="file" type="file" accept="*/*"></div>
+    <div class="drop" id="drop"><div class="upload-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 16V4m-5 5 5-5 5 5M4 17v3h16v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><strong id="dropTitle"></strong><p id="dropText"></p><p class="android-files-note"><strong>Android:</strong> pilih video melalui pemilih file di perangkat, misalnya <b>Files / File Manager</b>.</p><p class="ios-files-note"><strong>Khusus iPhone:</strong> pilih video dari aplikasi <b>File (Files)</b>.</p><input id="file" class="file" type="file" accept="*/*"></div>
   </div>
   <aside class="side">
     <div class="card wallet-card"><div class="wallet-title"><h2 id="accountPanelTitle">Akun</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Status akses</span><b>Belum login</b><em>login untuk melihat status akun</em></div><div class="wallet-stat"><span>Total pemrosesan</span><b>0</b><em>job yang tercatat</em></div><div class="wallet-stat"><span>Paket dibeli</span><b>0</b><em>riwayat pembelian paket</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Status langganan</span><strong>Belum ada langganan aktif</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span class="wallet-cost-label">Model layanan <strong id="priceSummary">LANGGANAN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Isi Paket</button><button class="btn btn-secondary" id="customerLogout" type="button" hidden>Logout</button></div></div><div class="claim-box" id="claimBox"><div class="claim-label">CLAIM AKUN</div><div class="claim-row" style="display:grid;grid-template-columns:1fr;gap:10px"><input id="claimUsernameInput" type="text" placeholder="Masukkan username customer" autocomplete="username"><input id="claimKeyInput" type="text" placeholder="Masukkan Claim Key ID" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan username yang diberikan admin dan Claim Key ID milik username tersebut.</div></div></div>
@@ -4429,6 +4429,15 @@ body ::selection{background:rgba(118,185,0,.35)!important;color:#fff!important}
   scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;
  }
 }
+</style>
+
+
+<style id="rtxfury-remove-idle-upload-copy-2026">
+/* Hide empty upload placeholder only; selected file name/size reappear via JS. */
+html body #drop #dropTitle:empty,
+html body #drop #dropText:empty{display:none!important}
+html body #drop #dropTitle:not(:empty),
+html body #drop #dropText:not(:empty){display:block}
 </style>
 
 </body>
