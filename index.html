@@ -4731,7 +4731,7 @@ async function runTikTokAnalytics(){
  if(!url){checkerText.textContent='Tempel link video TikTok terlebih dahulu.';checkerUrl?.focus();return}
  let parsedUrl;try{parsedUrl=new URL(url)}catch{checkerText.textContent='Link harus berupa URL TikTok yang valid.';return}
  if(!['http:','https:'].includes(parsedUrl.protocol)||!(parsedUrl.hostname==='tiktok.com'||parsedUrl.hostname.endsWith('.tiktok.com'))){checkerText.textContent='Gunakan link TikTok yang valid.';return}
- const apiBase=String(window.GOLDEN_TIKTOK_ANALYTICS_API||'').trim().replace(/\\/+$/,'');
+ const apiBase=String(window.GOLDEN_TIKTOK_ANALYTICS_API||'').trim().replace(/\/+$/,'');
  if(!apiBase){checkerTitle.textContent='Analyzer belum diaktifkan';checkerText.textContent='URL Worker belum dikonfigurasi.';analysisStatus.textContent='CONFIG REQUIRED';analysisStatus.className='badge warn';return}
  checkerChoose.disabled=true;checkerTitle.textContent='Menganalisis video…';checkerText.textContent='Mengambil metadata yang tersedia dari sumber publik.';analysisStatus.textContent='ANALYZING';analysisStatus.className='badge warn';
  const preview=document.getElementById('videoPreview');if(preview){preview.hidden=true;preview.removeAttribute('src')}
