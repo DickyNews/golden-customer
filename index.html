@@ -4008,11 +4008,84 @@ html body .app .hero-main-headline strong.nvidia-accent {
   
   <div id="historyList" class="history-list"><div class="history-empty">Memuat riwayat dari server…</div></div>
 </section>
-<section class="section" id="tiktok-analytics"><h2>TikTok Analytics</h2><p class="section-intro analytics-intro">Analisis informasi teknis dan statistik video TikTok melalui tautan publik.</p><button class="analytics-toggle" id="analyticsToggle" type="button" aria-expanded="false" aria-controls="analyticsExpandable">Selengkapnya <span aria-hidden="true">⌄</span></button><div id="analyticsExpandable" hidden><p class="section-intro analytics-long-intro">Tempel link video TikTok yang sudah di-upload. Analyzer akan mengambil data dari hasil upload TikTok melalui backend Dicky News, lalu menampilkan rincian teknis dan sinyal distribusi video.</p><div class="analytics"><div class="card analytics-upload"><div class="card-head"><div><h2>Analyze TikTok Result</h2><div class="mini">Masukkan URL video TikTok publik.</div></div><div class="pill">LIVE CHECK</div></div><div class="drop checker-drop" id="checkerDrop"><div class="upload-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4M8 11h6M11 8v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><img id="videoPreview" class="video-preview" alt="Pratinjau video TikTok" hidden><strong id="checkerTitle">Paste TikTok video link</strong><p id="checkerText">Contoh: https://www.tiktok.com/@username/video/...</p><input id="checkerUrl" class="checker-url" type="url" placeholder="https://www.tiktok.com/@username/video/..." autocomplete="off"><button class="btn btn-primary" id="checkerChoose">Analyze TikTok</button></div></div><div class="card"><div class="card-head"><div><h2>TikTok Result Details</h2><div class="mini">Data yang dikembalikan analyzer.</div></div><span class="badge neutral" id="analysisStatus">READY</span></div><div class="metric-grid"><div class="metric"><span>Resolution / Definisi</span><b id="mResolution">—</b></div><div class="metric"><span>Frame Rate</span><b id="mFps">—</b></div><div class="metric"><span>Format Video</span><b id="mFormat">—</b></div><div class="metric"><span>Bitrate</span><b id="mBitrate">—</b></div><div class="metric"><span>Codec</span><b id="mCodec">—</b></div><div class="metric"><span>File Size</span><b id="mSize">—</b></div><div class="metric"><span>Container</span><b id="mContainer">—</b></div></div><div class="metric-grid analytics-extra"><div class="metric"><span>Views</span><b id="mViews">—</b></div><div class="metric"><span>Likes</span><b id="mLikes">—</b></div><div class="metric"><span>Comments</span><b id="mComments">—</b></div><div class="metric"><span>Shares</span><b id="mShares">—</b></div><div class="metric"><span>Duration</span><b id="mDuration">—</b></div><div class="metric"><span>Published</span><b id="mCreated">—</b></div><div class="metric"><span>Music</span><b id="mMusic">—</b></div><div class="metric"><span>Video ID</span><b id="mVideoId">—</b></div></div><div class="signal-list"><div class="signal"><span class="signal-label">TikTok Region</span><span class="badge neutral" id="sRegion">—</span></div><div class="signal"><span class="signal-label">Review Status</span><span class="badge neutral" id="sReview">—</span></div><div class="signal"><span class="signal-label">Visibility</span><span class="badge neutral" id="sVisibility">—</span></div><div class="signal"><span class="signal-label">Index Visibility</span><span class="badge neutral" id="sIndex">—</span></div></div></div></div></div></section>
+<section class="section" id="tiktok-analytics">
+  <div class="analytics-heading">
+    <div class="analytics-kicker"><span class="analytics-led"></span> RTX ULTIMATE · PUBLIC DATA</div>
+    <h2>TikTok Analyzer</h2>
+    <p class="section-intro">Periksa metadata publik, statistik engagement, dan spesifikasi media dari video TikTok.</p>
+  </div>
+  <div class="analytics-search card">
+    <div class="analytics-search-icon" aria-hidden="true">⌕</div>
+    <div class="analytics-search-field">
+      <label for="checkerUrl">URL video TikTok</label>
+      <input id="checkerUrl" class="checker-url" type="url" placeholder="https://www.tiktok.com/@username/video/..." autocomplete="url" inputmode="url">
+    </div>
+    <button class="btn btn-primary analytics-run" id="checkerChoose" type="button">Analyze video</button>
+  </div>
+  <div class="analytics-result-head">
+    <div class="analytics-video-identity">
+      <img id="videoPreview" class="video-preview" alt="Thumbnail video TikTok" hidden>
+      <div><div class="analytics-overline">VIDEO ANALYSIS</div><h3 id="checkerTitle">Siap menganalisis video</h3><p id="checkerText">Tempel URL video TikTok publik, lalu tekan Analyze video.</p></div>
+    </div>
+    <span class="badge neutral" id="analysisStatus">READY</span>
+  </div>
+  <div class="analytics-dashboard">
+    <article class="analytics-panel analytics-engagement">
+      <div class="analytics-panel-head"><h3>Engagement</h3><span>PUBLIC COUNTS</span></div>
+      <div class="analytics-stats">
+        <div class="analytics-stat"><span>Views</span><b id="mViews">—</b></div>
+        <div class="analytics-stat"><span>Likes</span><b id="mLikes">—</b></div>
+        <div class="analytics-stat"><span>Comments</span><b id="mComments">—</b></div>
+        <div class="analytics-stat"><span>Shares</span><b id="mShares">—</b></div>
+        <div class="analytics-stat"><span>Saves</span><b id="mSaves">—</b></div>
+        <div class="analytics-stat"><span>Downloads</span><b id="mDownloads">—</b></div>
+      </div>
+      <div class="analytics-rate"><span>Engagement rate</span><b id="mEngagementRate">—</b></div>
+      <p class="analytics-footnote">Rumus: (likes + comments + shares + saves) ÷ views. Hanya dihitung bila semua data yang diperlukan tersedia.</p>
+    </article>
+    <article class="analytics-panel analytics-technical">
+      <div class="analytics-panel-head"><h3>What TikTok serves</h3><span>MEDIA SPECS</span></div>
+      <div class="analytics-specs">
+        <div><span>Resolution</span><b id="mResolution">—</b></div>
+        <div><span>Dimensions</span><b id="mDimensions">—</b></div>
+        <div><span>Codec</span><b id="mCodec">—</b></div>
+        <div><span>Frame rate</span><b id="mFps">—</b></div>
+        <div><span>Bitrate</span><b id="mBitrate">—</b></div>
+        <div><span>File size</span><b id="mSize">—</b></div>
+        <div><span>Format</span><b id="mFormat">—</b></div>
+        <div><span>Container</span><b id="mContainer">—</b></div>
+        <div><span>Duration</span><b id="mDuration">—</b></div>
+        <div><span>Sound</span><b id="mMusic">—</b></div>
+        <div><span>Published</span><b id="mCreated">—</b></div>
+        <div><span>Video ID</span><b id="mVideoId">—</b></div>
+      </div>
+    </article>
+    <article class="analytics-panel analytics-engine">
+      <div class="analytics-panel-head"><h3>Engine &amp; status</h3><span>VERIFICATION</span></div>
+      <div class="analytics-specs">
+        <div><span>Engine</span><b>RTX ULTIMATE · TikTok public metadata</b></div>
+        <div><span>Analysis status</span><b id="mEngineStatus">Waiting for analysis</b></div>
+        <div><span>Region</span><b id="sRegion">—</b></div>
+        <div><span>Review status</span><b id="sReview">—</b></div>
+        <div><span>Visibility</span><b id="sVisibility">—</b></div>
+        <div><span>Index visibility</span><b id="sIndex">—</b></div>
+        <div><span>Data sources</span><b id="mDataSource">—</b></div>
+        <div><span>Last checked</span><b id="mAnalyzedAt">—</b></div>
+      </div>
+      <div class="analytics-actions">
+        <button class="btn btn-secondary" id="analyticsOpenTikTok" type="button" hidden>Buka di TikTok ↗</button>
+        <button class="btn btn-secondary" id="analyticsCopyCaption" type="button" hidden>Salin caption</button>
+        <a class="btn btn-secondary" id="analyticsDownloadServed" hidden rel="noopener noreferrer">Download served</a>
+        <a class="btn btn-secondary" id="analyticsDownloadOriginal" hidden rel="noopener noreferrer">Download original</a>
+      </div>
+      <p class="analytics-footnote">Data yang tidak dipublikasikan atau tidak dapat diverifikasi akan ditandai “Tidak tersedia”, bukan ditebak.</p>
+    </article>
+  </div>
+</section>
 
 
 </main>
-<footer class="container footer"><span>© 2026 Dicky News</span><span>Golden API aktif · TikTok Analytics menunggu endpoint backend</span></footer>
+<footer class="container footer"><span>© 2026 Dicky News</span><span>Golden API aktif · TikTok Analyzer menggunakan metadata publik</span></footer>
 </div>
 <div class="modal" id="modal"><div class="modal-box"><h3 id="modalTitle">Memproses...</h3><p class="mini" id="modalText">Demo frontend. Backend Golden Engine akan dihubungkan setelah VPS siap.</p><div class="progress"><i></i></div><button class="btn btn-secondary" style="margin-top:18px;width:100%" id="close">Tutup</button></div></div>
 <script src="./analytics-config.js"></script>
@@ -4594,27 +4667,52 @@ if(refreshHistoryBtn)refreshHistoryBtn.addEventListener('click',loadJobHistory);
 
 loadPublicSettings();(async()=>{const ok=await loadWallet();if(ok)await loadJobHistory();else if(historyList)historyList.replaceChildren();})();/* Scroll reveal disabled: keep content static while scrolling. */
 const checkerUrl=document.getElementById('checkerUrl'),checkerChoose=document.getElementById('checkerChoose'),checkerTitle=document.getElementById('checkerTitle'),checkerText=document.getElementById('checkerText'),analysisStatus=document.getElementById('analysisStatus');
+function setAnalyticsText(id,value,formatNumber=false){
+ const el=document.getElementById(id);if(!el)return;
+ if(value===null||value===undefined||value===''){el.textContent='Tidak tersedia';return}
+ if(formatNumber&&typeof value==='number'){el.textContent=value.toLocaleString('id-ID');return}
+ el.textContent=String(value);
+}
+function setAnalyticsLink(id,value,label){
+ const el=document.getElementById(id);if(!el)return;
+ let valid=false;try{const u=new URL(String(value||''));valid=(u.protocol==='https:'||u.protocol==='http:')}catch{}
+ el.hidden=!valid;if(valid){el.href=String(value);if(label)el.textContent=label}
+}
 async function runTikTokAnalytics(){
  const url=String(checkerUrl?.value||'').trim();
  if(!url){checkerText.textContent='Tempel link video TikTok terlebih dahulu.';checkerUrl?.focus();return}
  let parsedUrl;try{parsedUrl=new URL(url)}catch{checkerText.textContent='Link harus berupa URL TikTok yang valid.';return}
  if(!['http:','https:'].includes(parsedUrl.protocol)||!(parsedUrl.hostname==='tiktok.com'||parsedUrl.hostname.endsWith('.tiktok.com'))){checkerText.textContent='Gunakan link TikTok yang valid.';return}
- const apiBase=String(window.GOLDEN_TIKTOK_ANALYTICS_API||'').trim().replace(/\/+$/,'');
+ const apiBase=String(window.GOLDEN_TIKTOK_ANALYTICS_API||'').trim().replace(/\\/+$/,'');
  if(!apiBase){checkerTitle.textContent='Analyzer belum diaktifkan';checkerText.textContent='URL Worker belum dikonfigurasi.';analysisStatus.textContent='CONFIG REQUIRED';analysisStatus.className='badge warn';return}
- checkerChoose.disabled=true;checkerTitle.textContent='Mengambil data TikTok...';checkerText.textContent='Memeriksa metadata publik video.';analysisStatus.textContent='ANALYZING';analysisStatus.className='badge warn';
+ checkerChoose.disabled=true;checkerTitle.textContent='Menganalisis video…';checkerText.textContent='Mengambil metadata yang tersedia dari sumber publik.';analysisStatus.textContent='ANALYZING';analysisStatus.className='badge warn';
+ const preview=document.getElementById('videoPreview');if(preview){preview.hidden=true;preview.removeAttribute('src')}
+ ['analyticsOpenTikTok','analyticsCopyCaption','analyticsDownloadServed','analyticsDownloadOriginal'].forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=true});
  try{
   const response=await fetch(apiBase+'/public/tiktok-analytics?url='+encodeURIComponent(url),{method:'GET',mode:'cors',cache:'no-store',headers:{'Accept':'application/json'}});
   const data=await response.json().catch(()=>null);if(!response.ok)throw new Error(data?.error||('HTTP '+response.status));if(!data||typeof data!=='object')throw new Error('Respons API tidak valid.');
-  const resolutionText=[data.resolution,data.resolution_label].filter(Boolean).join(" · ");
-  const map={mResolution:resolutionText,mFps:data.fps,mFormat:data.video_format,mBitrate:data.bitrate,mCodec:data.codec,mSize:data.file_size,mContainer:data.container,sRegion:data.region,sReview:data.review_status,sVisibility:data.visibility,sIndex:data.index_visibility,mViews:data.play_count,mLikes:data.like_count,mComments:data.comment_count,mShares:data.share_count,mDuration:data.duration,mCreated:data.created_at?new Date(data.created_at).toLocaleString('id-ID'):'',mMusic:[data.music_title,data.music_author].filter(Boolean).join(' — '),mVideoId:data.video_id};
-  Object.entries(map).forEach(([id,value])=>{const el=document.getElementById(id);if(el)el.textContent=(value===null||value===undefined||value==='')?'Tidak tersedia':(typeof value==='number'?value.toLocaleString('id-ID'):value)});
-  const preview=document.getElementById('videoPreview');
-  if(preview){if(data.thumbnail){preview.src=data.thumbnail;preview.hidden=false;preview.onerror=()=>{preview.hidden=true;preview.removeAttribute('src')}}else{preview.hidden=true;preview.removeAttribute('src')}}
-  checkerTitle.textContent=data.title||'Analisis metadata selesai';
-  const notes=[data.author?'Kreator: '+data.author:'',data.description&&data.description!==data.title?'Deskripsi: '+data.description:'',data.aspect_ratio?'Rasio: '+data.aspect_ratio:'',data.data_source?.length?'Sumber: '+data.data_source.join(', '):'',data.limitations?.length?data.limitations.join(' '):''];
-  checkerText.textContent=notes.filter(Boolean).join(' ')||'Metadata publik tidak tersedia untuk link ini.';
-  analysisStatus.textContent=data.status==='partial'?'PARTIAL RESULT':data.status==='unavailable'?'DATA UNAVAILABLE':'LIVE RESULT';analysisStatus.className=data.status==='unavailable'?'badge warn':'badge';
- }catch(error){checkerTitle.textContent='Analisis gagal';checkerText.textContent='Permintaan gagal: '+(error?.message||'gangguan jaringan atau CORS')+'.';analysisStatus.textContent='REQUEST FAILED';analysisStatus.className='badge warn'}
+  const resolution=[data.resolution_label,data.resolution].filter(Boolean).join(' · ');
+  const dimensions=data.width&&data.height?(data.width+' × '+data.height):(data.dimensions||'');
+  const music=[data.music_title,data.music_author].filter(Boolean).join(' — ');
+  const values={mResolution:resolution,mDimensions:dimensions,mFps:data.fps??data.fps_value,mFormat:data.video_format,mBitrate:data.bitrate,mCodec:data.codec,mSize:data.file_size,mContainer:data.container,mViews:data.play_count,mLikes:data.like_count,mComments:data.comment_count,mShares:data.share_count,mSaves:data.save_count??data.collect_count??data.favorite_count,mDownloads:data.download_count,mDuration:data.duration,mCreated:data.created_at?new Date(data.created_at).toLocaleString('id-ID'):'',mMusic:music,mVideoId:data.video_id,sRegion:data.region,sReview:data.review_status,sVisibility:data.visibility,sIndex:data.index_visibility,mEngineStatus:data.status||'unknown',mDataSource:Array.isArray(data.data_source)?data.data_source.join(', '):data.data_source,mAnalyzedAt:data.analyzed_at?new Date(data.analyzed_at).toLocaleString('id-ID'):'—'};
+  Object.entries(values).forEach(([id,value])=>setAnalyticsText(id,value,['mViews','mLikes','mComments','mShares','mSaves','mDownloads'].includes(id)&&typeof value==='number'));
+  const counts=[data.like_count,data.comment_count,data.share_count,(data.save_count??data.collect_count??data.favorite_count)];
+  const views=Number(data.play_count);
+  const rateEl=document.getElementById('mEngagementRate');
+  if(rateEl){if(Number.isFinite(views)&&views>0&&counts.every(v=>v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v))))rateEl.textContent=((counts.reduce((sum,v)=>sum+Number(v),0)/views)*100).toLocaleString('id-ID',{maximumFractionDigits:2})+'%';else rateEl.textContent='Tidak tersedia'}
+  if(preview&&data.thumbnail){try{const imageUrl=new URL(data.thumbnail);if(imageUrl.protocol==='https:'){preview.src=imageUrl.href;preview.hidden=false;preview.onerror=()=>{preview.hidden=true;preview.removeAttribute('src')}}}catch{}}
+  checkerTitle.textContent=data.title||data.author||'Hasil analisis video';
+  const notes=[data.author?'Kreator: '+data.author:'',data.description&&data.description!==data.title?'Caption: '+data.description:'',data.aspect_ratio?'Rasio: '+data.aspect_ratio:'',Array.isArray(data.limitations)&&data.limitations.length?'Catatan akurasi: '+data.limitations.join(' '):''];
+  checkerText.textContent=notes.filter(Boolean).join(' · ')||'Analisis selesai. Periksa status dan sumber data di bawah.';
+  const status=String(data.status||'unknown').toLowerCase();
+  analysisStatus.textContent=status==='partial'?'PARTIAL DATA':status==='unavailable'?'DATA UNAVAILABLE':status==='success'?'VERIFIED RESULT':'RESULT RECEIVED';
+  analysisStatus.className=status==='unavailable'?'badge warn':'badge';
+  setAnalyticsLink('analyticsOpenTikTok',data.input_url||url,'Buka di TikTok ↗');
+  const copy=document.getElementById('analyticsCopyCaption');
+  if(copy&&data.description){copy.hidden=false;copy.onclick=()=>{if(navigator.clipboard?.writeText)navigator.clipboard.writeText(data.description).then(()=>{copy.textContent='Caption disalin'}).catch(()=>{checkerText.textContent='Tidak dapat menyalin otomatis; pilih caption pada teks di atas.'})}}
+  setAnalyticsLink('analyticsDownloadServed',data.download_served_url||data.served_url,'Download served');
+  setAnalyticsLink('analyticsDownloadOriginal',data.download_original_url||data.original_url,'Download original');
+ }catch(error){checkerTitle.textContent='Analisis gagal';checkerText.textContent='Permintaan gagal: '+(error?.message||'gangguan jaringan atau CORS')+'.';analysisStatus.textContent='REQUEST FAILED';analysisStatus.className='badge warn';setAnalyticsText('mEngineStatus','Request failed')}
  finally{checkerChoose.disabled=false}
 }
 if(checkerChoose)checkerChoose.addEventListener('click',runTikTokAnalytics);
