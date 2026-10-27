@@ -3000,12 +3000,12 @@ const historySection=document.getElementById("job-history");
 function setCustomerAuth(auth,balance=null){
   customerAuthenticated=!!auth;
   updateFreeInjectVisibility();
-  if(logoutBtn)logoutBtn.hidden=!customerAuthenticated;
+  if(logoutBtn){logoutBtn.hidden=!customerAuthenticated;logoutBtn.removeAttribute("hidden");logoutBtn.style.setProperty("display",customerAuthenticated?"inline-flex":"none","important");}
   const hideHistory=!customerAuthenticated;
   if(historySection){historySection.classList.toggle("hidden",hideHistory);historySection.setAttribute("aria-hidden",String(hideHistory));}
   const b=document.getElementById("walletAuthBadge");
   if(b){b.textContent=!customerAuthenticated?"BELUM LOGIN":"PAKET AKTIF";b.className="badge "+(customerAuthenticated?"":"warn");}
-  const panelTitle=document.getElementById("accountPanelTitle");const claimBox=document.getElementById("claimBox");const accountDetails=document.getElementById("customerSubscriptionCurrent");const walletCard=document.querySelector(".wallet-card");if(walletCard)walletCard.classList.toggle("account-authenticated",customerAuthenticated);const movedLogout=document.getElementById("customerLogout");if(movedLogout&&movedLogout.closest(".active-plan-logout-slot"))movedLogout.hidden=!customerAuthenticated;
+  const panelTitle=document.getElementById("accountPanelTitle");const claimBox=document.getElementById("claimBox");const accountDetails=document.getElementById("customerSubscriptionCurrent");const walletCard=document.querySelector(".wallet-card");if(walletCard)walletCard.classList.toggle("account-authenticated",customerAuthenticated);const movedLogout=document.getElementById("customerLogout");if(movedLogout&&movedLogout.closest(".active-plan-logout-slot")){movedLogout.hidden=!customerAuthenticated;movedLogout.style.setProperty("display",customerAuthenticated?"inline-flex":"none","important");}
   if(panelTitle)panelTitle.textContent=customerAuthenticated?"Detail Paket Aktif":"Akun";if(claimBox)claimBox.hidden=customerAuthenticated;if(accountDetails)accountDetails.hidden=!customerAuthenticated;
   if(!customerAuthenticated&&historyList)historyList.replaceChildren();
 }
@@ -3319,7 +3319,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
    if(typeof maxFileSizeBytes!=='undefined')maxFileSizeBytes=Math.min(maxFileSizeBytes,Number(s.max_file_size_bytes)||maxFileSizeBytes);
    const exp=new Date(s.expires_at).toLocaleString('id-ID');
    const planLabel=String(s.plan_name||s.plan_code||'Paket Langganan');const summary=document.getElementById('priceSummary');if(summary){summary.textContent=planLabel;summary.dataset.activePlan='true';summary.title='Paket layanan aktif: '+planLabel;}
-   el.innerHTML='<div class="active-plan-card active-plan-compact"><span class="active-plan-check" aria-hidden="true">✓</span><span class="active-plan-name">'+esc(s.plan_name||s.plan_code||'Paket Langganan')+'</span><span class="active-plan-logout-slot"></span></div>';const logoutControl=document.getElementById('customerLogout');const logoutSlot=el.querySelector('.active-plan-logout-slot');if(logoutControl&&logoutSlot){logoutSlot.appendChild(logoutControl);logoutControl.hidden=!document.querySelector('.wallet-card')?.classList.contains('account-authenticated');}
+   el.innerHTML='<div class="active-plan-card active-plan-compact"><span class="active-plan-check" aria-hidden="true">✓</span><span class="active-plan-name">'+esc(s.plan_name||s.plan_code||'Paket Langganan')+'</span><span class="active-plan-logout-slot"></span></div>';const logoutControl=document.getElementById('customerLogout');const logoutSlot=el.querySelector('.active-plan-logout-slot');if(logoutControl&&logoutSlot){logoutSlot.appendChild(logoutControl);const tokenPresent=!!localStorage.getItem("golden_customer_session_token");logoutControl.hidden=!(customerAuthenticated||tokenPresent);logoutControl.style.setProperty("display",(customerAuthenticated||tokenPresent)?"inline-flex":"none","important");}
   }catch(e){el.textContent='Tidak dapat memuat status langganan saat ini.'}
  }
  window.goldenRefreshSubscription=loadCurrent;
@@ -4605,7 +4605,7 @@ html body #customerSubscriptionCurrent #customerLogout{
  background:#11170b!important;color:#f2f5ec!important;font-size:13px!important;font-weight:750!important;
  line-height:1.2!important;white-space:nowrap!important;box-shadow:none!important;cursor:pointer!important;
 }
-html body #customerSubscriptionCurrent #customerLogout[hidden]{display:none!important}
+html body #customerSubscriptionCurrent #customerLogout[hidden]{display:inline-flex!important} html body #customerSubscriptionCurrent #customerLogout{visibility:visible!important;opacity:1!important}
 @media(max-width:420px){
  html body #customerSubscriptionCurrent .active-plan-card.active-plan-compact{gap:8px!important;padding:9px 10px!important}
  html body #customerSubscriptionCurrent .active-plan-name{font-size:14px!important}
