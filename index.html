@@ -2615,7 +2615,7 @@ window.GOLDEN_PLATFORM = Object.freeze({
 });
 const file=document.getElementById('file'),drop=document.getElementById('drop'),title=document.getElementById('dropTitle'),text=document.getElementById('dropText'),modal=document.getElementById('modal'),close=document.getElementById('close'),buy=document.getElementById('buy'),sdrBtn=document.getElementById('sdrBtn'),hdrBtn=document.getElementById('hdrBtn');let selectedMode='sdr',selectedPrice=1,processing=false;
 
-const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:false};let maxFileSizeBytes=300*1024*1024;
+const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:false};let maxFileSizeBytes=4096*1024*1024; // fallback ceiling; public service and active subscription settings narrow this value.
 function renderPrices(){
   const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
   if(sdr)sdr.textContent='✓ USER VIP AKTIF';
@@ -3890,7 +3890,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
  const safe=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
  const featureItems=[
   'Unlimited Token','Unlimited Upload','1080P 60 FPS — Active','2K 60 FPS — Active',
-  '4K 60 FPS — Active','Ultra HDR with Dolby Vision — Active',
+  '4K 60 FPS — Active','HDR dengan Dolby Vision — belum tersedia',
   "120 FPS processing follows your video's frame rate profile",
   'All frame rates follow your source video by default'
  ];
