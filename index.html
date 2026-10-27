@@ -3005,7 +3005,7 @@ function setCustomerAuth(auth,balance=null){
   if(historySection){historySection.classList.toggle("hidden",hideHistory);historySection.setAttribute("aria-hidden",String(hideHistory));}
   const b=document.getElementById("walletAuthBadge");
   if(b){b.textContent=!customerAuthenticated?"BELUM LOGIN":"PAKET AKTIF";b.className="badge "+(customerAuthenticated?"":"warn");}
-  const panelTitle=document.getElementById("accountPanelTitle");const claimBox=document.getElementById("claimBox");const accountDetails=document.getElementById("customerSubscriptionCurrent");const walletCard=document.querySelector(".wallet-card");if(walletCard)walletCard.classList.toggle("account-authenticated",customerAuthenticated);
+  const panelTitle=document.getElementById("accountPanelTitle");const claimBox=document.getElementById("claimBox");const accountDetails=document.getElementById("customerSubscriptionCurrent");const walletCard=document.querySelector(".wallet-card");if(walletCard)walletCard.classList.toggle("account-authenticated",customerAuthenticated);const movedLogout=document.getElementById("customerLogout");if(movedLogout&&movedLogout.closest(".active-plan-logout-slot"))movedLogout.hidden=!customerAuthenticated;
   if(panelTitle)panelTitle.textContent=customerAuthenticated?"Detail Paket Aktif":"Akun";if(claimBox)claimBox.hidden=customerAuthenticated;if(accountDetails)accountDetails.hidden=!customerAuthenticated;
   if(!customerAuthenticated&&historyList)historyList.replaceChildren();
 }
