@@ -4124,5 +4124,92 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,su
 ::selection{background:rgba(118,185,0,.35)!important;color:#fff!important}
 </style>
 
+
+<style id="rtxfury-purple-removal-hardfix">
+/* High-specificity hard override for legacy machine styles carrying !important. */
+html body .app .grid>.card.upload .machine-columns .machine-card.inject-machine,
+html body .app .grid>.card.upload .machine-columns .machine-card.hdr-machine{
+ background:linear-gradient(150deg,rgba(118,185,0,.09),#0d0f0b 72%)!important;
+ background-color:#0d0f0b!important;
+ border:1px solid rgba(118,185,0,.48)!important;
+ border-top:2px solid #76B900!important;
+ box-shadow:0 8px 22px rgba(0,0,0,.24)!important;
+ color:#f5f5f7!important;
+}
+html body .app .grid>.card.upload .machine-columns .machine-card.inject-machine>#sdrBtn,
+html body .app .grid>.card.upload .machine-columns .machine-card.hdr-machine>#hdrBtn,
+html body .app .grid>.card.upload #freeInjectBtn,
+html body .app .grid>.card.upload .machine-columns .machine-card>.mode-btn,
+html body .app .grid>.card.upload .machine-columns .machine-card>.mode-btn:link,
+html body .app .grid>.card.upload .machine-columns .machine-card>.mode-btn:visited,
+html body .app .grid>.card.upload .machine-columns .machine-card>.mode-btn:hover,
+html body .app .grid>.card.upload .machine-columns .machine-card>.mode-btn:focus,
+html body .app .grid>.card.upload .machine-columns .machine-card>.mode-btn:active{
+ background:#10140b!important;
+ background-image:linear-gradient(145deg,#1a260d 0%,#11170b 58%,#0b0d09 100%)!important;
+ border:1px solid #76B900!important;
+ border-radius:15px!important;
+ color:#f5f5f7!important;
+ -webkit-text-fill-color:#f5f5f7!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.08),0 4px 12px rgba(0,0,0,.24)!important;
+ text-shadow:none!important;
+}
+html body .app .grid>.card.upload .machine-columns .machine-card.inject-machine>#sdrBtn small,
+html body .app .grid>.card.upload .machine-columns .machine-card.inject-machine>#sdrBtn #sdrPrice,
+html body .app .grid>.card.upload .machine-columns .machine-card.inject-machine>#sdrBtn small::after,
+html body .app .grid>.card.upload .machine-columns .machine-card.hdr-machine>#hdrBtn small,
+html body .app .grid>.card.upload .machine-columns .machine-card.hdr-machine>#hdrBtn #hdrPrice,
+html body .app .grid>.card.upload .machine-columns .machine-card.hdr-machine>#hdrBtn small::after{
+ color:#8AC919!important;-webkit-text-fill-color:#8AC919!important;text-shadow:none!important;
+}
+html body .app .grid>.card.upload .machine-columns .machine-card.inject-machine>#sdrBtn::before,
+html body .app .grid>.card.upload .machine-columns .machine-card.hdr-machine>#hdrBtn::before,
+html body .app .grid>.card.upload #freeInjectBtn::before,
+html body .app .grid>.card.upload .machine-columns .machine-card.inject-machine>#sdrBtn::after,
+html body .app .grid>.card.upload .machine-columns .machine-card.hdr-machine>#hdrBtn::after,
+html body .app .grid>.card.upload #freeInjectBtn::after{
+ border-color:#76B900!important;color:#8AC919!important;-webkit-text-fill-color:#8AC919!important;
+}
+html body .app .grid>.card.upload .machine-details>summary,
+html body .app .grid>.card.upload .machine-details>summary:hover{
+ background:rgba(118,185,0,.055)!important;
+ border:1px solid rgba(118,185,0,.4)!important;
+ color:#8AC919!important;-webkit-text-fill-color:#8AC919!important;
+}
+html body .app .grid>.card.upload .machine-notes,
+html body .app .grid>.card.upload .machine-notes li,
+html body .app .grid>.card.upload .machine-notes li *{
+ color:#d7ddcf!important;-webkit-text-fill-color:#d7ddcf!important;text-shadow:none!important;
+}
+html body .app .grid>.card.upload .machine-notes li::marker,
+html body .app .grid>.card.upload .hdr-machine .machine-notes li::marker{color:#8AC919!important}
+html body .app .grid>.card.upload>.card-head .mini,
+html body .app .grid>.card.upload .card-head .mini,
+html body .app .grid>.card.upload .mode-title{
+ color:#f0f2ed!important;-webkit-text-fill-color:#f0f2ed!important;
+}
+html body .app .grid>.card.upload .upload-empty,
+html body .app .grid>.card.upload .drop,
+html body .app .grid>.card.upload .machine-notes,
+html body .app .grid>.card.upload .machine-details{
+ background-color:#0d0e0b!important;
+}
+html body .app .grid>.card.upload .upload-empty{
+ background-image:linear-gradient(145deg,rgba(118,185,0,.045),rgba(12,13,11,.98))!important;
+ border-color:rgba(118,185,0,.28)!important;
+}
+html body .app .grid>.card.upload .upload-icon{
+ color:#8AC919!important;background:rgba(118,185,0,.08)!important;box-shadow:none!important;
+}
+html body .app .grid>.card.upload .machine-card>.mode-btn:hover,
+html body .app .grid>.card.upload #freeInjectBtn:hover{
+ filter:brightness(1.1)!important;border-color:#8AC919!important;transform:none!important;
+}
+html body .app .grid>.card.upload .machine-card>.mode-btn:focus-visible,
+html body .app .grid>.card.upload #freeInjectBtn:focus-visible{
+ outline:2px solid #8AC919!important;outline-offset:3px!important;
+}
+</style>
+
 </body>
 </html>
