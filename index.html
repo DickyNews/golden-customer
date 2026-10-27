@@ -2442,7 +2442,7 @@ html,body,.app,.app>.container,.app main.container{background:#000!important;bac
       </article>
   </div>
   <aside class="side">
-    <div class="card wallet-card"><div class="wallet-title"><h2 id="accountPanelTitle">Akun</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Status akses</span><b>Belum login</b><em>login untuk melihat status akun</em></div><div class="wallet-stat"><span>Total pemrosesan</span><b>0</b><em>job yang tercatat</em></div><div class="wallet-stat"><span>Paket dibeli</span><b>0</b><em>riwayat pembelian paket</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Status langganan</span><strong>Belum ada langganan aktif</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span class="wallet-cost-label">Model layanan <strong id="priceSummary">LANGGANAN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Isi Paket</button><button class="btn btn-secondary" id="customerLogout" type="button" hidden>Logout</button></div></div><div class="claim-box" id="claimBox"><div class="claim-label">CLAIM AKUN</div><div class="claim-row" style="display:grid;grid-template-columns:1fr;gap:10px"><input id="claimUsernameInput" type="text" placeholder="Masukkan username customer" autocomplete="username"><input id="claimKeyInput" type="text" placeholder="Masukkan Claim Key ID" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan username yang diberikan admin dan Claim Key ID milik username tersebut.</div></div></div>
+    <div class="card wallet-card"><div class="wallet-title"><h2 id="accountPanelTitle">Akun</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Status akses</span><b>Belum login</b><em>login untuk melihat status akun</em></div><div class="wallet-stat"><span>Total pemrosesan</span><b>0</b><em>job yang tercatat</em></div><div class="wallet-stat"><span>Paket dibeli</span><b>0</b><em>riwayat pembelian paket</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Status langganan</span><strong>Belum ada langganan aktif</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span class="wallet-cost-label">Paket layanan <strong id="priceSummary">Belum ada paket</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Isi Paket</button><button class="btn btn-secondary" id="customerLogout" type="button" hidden>Logout</button></div></div><div class="claim-box" id="claimBox"><div class="claim-label">CLAIM AKUN</div><div class="claim-row" style="display:grid;grid-template-columns:1fr;gap:10px"><input id="claimUsernameInput" type="text" placeholder="Masukkan username customer" autocomplete="username"><input id="claimKeyInput" type="text" placeholder="Masukkan Claim Key ID" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan username yang diberikan admin dan Claim Key ID milik username tersebut.</div></div></div>
     
   </aside>
 </section>
@@ -2621,7 +2621,7 @@ function renderPrices(){
   const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
   if(sdr)sdr.textContent='✓ USER VIP AKTIF';
   if(hdr)hdr.textContent='KLIK DISINI HDR';
-  if(summary)summary.textContent='Langganan';
+  if(summary&&!summary.dataset.activePlan)summary.textContent='Belum ada paket';
   sdrBtn.disabled=!serviceActive.sdr;hdrBtn.disabled=false;
   sdrBtn.title=serviceActive.sdr?'':'Layanan ini sedang dinonaktifkan oleh admin.';hdrBtn.title='Klik untuk mendapatkan mesin HDR.';
   sdrBtn.setAttribute('aria-disabled',String(!serviceActive.sdr));hdrBtn.setAttribute('aria-disabled','false');
@@ -3310,14 +3310,15 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
  async function loadCurrent(){
   const el=document.getElementById('customerSubscriptionCurrent');
   const token=localStorage.getItem('golden_customer_session_token');
-  if(!token){el.textContent='Login untuk melihat status paket dan sisa kuota akun Anda.';return}
+  if(!token){el.textContent='Login untuk melihat status paket dan sisa kuota akun Anda.';const summary=document.getElementById('priceSummary');if(summary){summary.textContent='Belum login';summary.dataset.activePlan='';}return}
   try{
    const r=await fetch(API+'/customer/subscription',{credentials:'include',cache:'no-store',headers:{Authorization:'Bearer '+token}});
    if(!r.ok){el.textContent='Status langganan belum tersedia untuk sesi ini.';return}
    const d=await r.json(),s=d.subscription;
-   if(!s){el.innerHTML='<span style="color:#ffc66d">Belum ada paket langganan aktif pada akun ini.</span>';return}
+   if(!s){el.innerHTML='<div class="active-plan-empty">Belum ada paket langganan aktif pada akun ini.</div>';const summary=document.getElementById('priceSummary');if(summary){summary.textContent='Belum ada paket';summary.dataset.activePlan='';}return}
    if(typeof maxFileSizeBytes!=='undefined')maxFileSizeBytes=Math.min(maxFileSizeBytes,Number(s.max_file_size_bytes)||maxFileSizeBytes);
    const exp=new Date(s.expires_at).toLocaleString('id-ID');
+   const planLabel=String(s.plan_name||s.plan_code||'Paket Langganan');const summary=document.getElementById('priceSummary');if(summary){summary.textContent=planLabel;summary.dataset.activePlan='true';summary.title='Paket layanan aktif: '+planLabel;}
    el.innerHTML='<div class="active-plan-card"><div class="active-plan-title">✓ '+esc(s.plan_name||'Paket Langganan')+'</div><div>Status: <b style="color:#80efb2">AKTIF</b></div><div class="active-plan-grid"><div class="active-plan-stat"><small>Sisa token video</small><b>'+((String(s.plan_code||'').toLowerCase().startsWith('vip_')||String(s.plan_name||'').toUpperCase().startsWith('VIP '))?'Unlimited Token':Number(s.processes_remaining??0).toLocaleString('id-ID')+' / '+Number(s.process_quota??0).toLocaleString('id-ID'))+'</b></div><div class="active-plan-stat"><small>Maks. ukuran video</small><b>'+esc(s.max_file_size_mb??Math.round(Number(s.max_file_size_bytes||0)/1048576))+' MB</b></div><div class="active-plan-stat"><small>Masa aktif sampai</small><b>'+esc(exp)+'</b></div><div class="active-plan-stat"><small>Durasi paket</small><b>'+esc(s.duration_days??'—')+' hari</b></div></div></div>';
   }catch(e){el.textContent='Tidak dapat memuat status langganan saat ini.'}
  }
@@ -4463,6 +4464,98 @@ html body .app .grid>.card.upload .card-head .mini{color:#e6e9e1!important}
 <style id="rtxfury-hide-hdr-preserve-html-2026">
 /* HDR machine is intentionally hidden, not deleted. Keep the complete .hdr-machine HTML and its details below as a recoverable backup. */
 html body .app .grid>.card.upload .hdr-machine{display:none!important;visibility:hidden!important}
+</style>
+
+
+<style id="rtxfury-active-package-nvidia-polish-2026">
+/* Centered NVIDIA treatment for active package detail only; plan purchase cards remain unchanged. */
+html body .app .wallet-card{
+ width:100%!important;max-width:100%!important;margin:14px auto!important;
+ padding:clamp(16px,3vw,24px)!important;box-sizing:border-box!important;
+ border:1px solid rgba(118,185,0,.48)!important;border-radius:18px!important;
+ background:linear-gradient(145deg,#0b0e08 0%,#080a07 58%,#0d1109 100%)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.045),0 10px 28px rgba(0,0,0,.22)!important;
+}
+html body .app .wallet-card .wallet-title{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ flex-wrap:wrap!important;gap:10px!important;padding-bottom:14px!important;margin:0 0 14px!important;
+ border-bottom:1px solid rgba(118,185,0,.22)!important;
+}
+html body .app .wallet-card .wallet-title h2{color:#f1f4ed!important;font-size:clamp(18px,2.2vw,22px)!important;line-height:1.25!important}
+html body .app .wallet-card #walletAuthBadge{
+ border:1px solid rgba(118,185,0,.5)!important;background:rgba(118,185,0,.09)!important;
+ color:#8ac919!important;border-radius:999px!important;padding:7px 12px!important;
+}
+html body .app .wallet-card .wallet-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important}
+html body .app .wallet-card .wallet-stat{
+ min-width:0!important;box-sizing:border-box!important;text-align:center!important;
+ padding:14px 10px!important;border:1px solid rgba(118,185,0,.22)!important;
+ border-radius:13px!important;background:#0b0e09!important;box-shadow:none!important;
+}
+html body .app .wallet-card .wallet-stat.primary{
+ background:linear-gradient(145deg,rgba(118,185,0,.11),rgba(8,10,7,.95))!important;
+ border-color:rgba(118,185,0,.42)!important;
+}
+html body .app .wallet-card .wallet-stat span{color:#aeb7a3!important;line-height:1.4!important}
+html body .app .wallet-card .wallet-stat b{display:block!important;color:#8ac919!important;font-size:clamp(16px,2vw,20px)!important;line-height:1.3!important;overflow-wrap:anywhere!important}
+html body .app .wallet-card .wallet-stat em{color:#aeb7a3!important;line-height:1.4!important}
+html body .app .wallet-card .wallet-progress{margin:16px 0!important}
+html body .app .wallet-card .wallet-progress-head{display:flex!important;justify-content:space-between!important;align-items:center!important;gap:12px!important;flex-wrap:wrap!important;color:#aeb7a3!important;font-size:12px!important}
+html body .app .wallet-card .wallet-progress-head strong{color:#8ac919!important;text-align:right!important}
+html body .app .wallet-card .wallet-progress .bar{height:6px!important;background:#1a2112!important;border:1px solid rgba(118,185,0,.15)!important}
+html body .app .wallet-card .wallet-progress .bar i{background:linear-gradient(90deg,#76b900,#8ac919)!important;box-shadow:none!important;animation:none!important}
+html body .app .wallet-card .wallet-bottom{
+ display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+ gap:10px!important;text-align:center!important;padding:15px 0 0!important;
+ border-top:1px solid rgba(118,185,0,.22)!important;color:#aeb7a3!important;
+}
+html body .app .wallet-card .wallet-cost-label{display:flex!important;flex-direction:column!important;align-items:center!important;gap:7px!important;line-height:1.4!important}
+html body .app .wallet-card #priceSummary{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ min-height:36px!important;max-width:100%!important;padding:7px 16px!important;
+ border:1px solid rgba(118,185,0,.48)!important;border-radius:999px!important;
+ background:rgba(118,185,0,.09)!important;color:#8ac919!important;
+ font-size:14px!important;font-weight:800!important;text-align:center!important;overflow-wrap:anywhere!important;
+}
+html body .app .wallet-card .wallet-actions{justify-content:center!important;flex-wrap:wrap!important}
+html body .app .wallet-card .wallet-actions .btn{border-color:rgba(118,185,0,.48)!important}
+html body #customerSubscriptionCurrent{margin:14px auto!important;width:100%!important;max-width:100%!important;line-height:1.55!important}
+html body #customerSubscriptionCurrent .active-plan-card{
+ width:100%!important;box-sizing:border-box!important;margin:0 auto!important;padding:clamp(14px,2.5vw,22px)!important;
+ border:1px solid rgba(118,185,0,.48)!important;border-radius:17px!important;
+ background:linear-gradient(145deg,#0c1108,#0a0d09 55%,#0e130a)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.04)!important;
+}
+html body #customerSubscriptionCurrent .active-plan-title{
+ color:#8ac919!important;font-size:clamp(18px,2.2vw,23px)!important;font-weight:850!important;
+ text-align:left!important;line-height:1.3!important;margin-bottom:12px!important;
+}
+html body #customerSubscriptionCurrent .active-plan-card>div:nth-child(2){color:#e7ebdf!important;font-size:15px!important}
+html body #customerSubscriptionCurrent .active-plan-card>div:nth-child(2) b{color:#8ac919!important}
+html body #customerSubscriptionCurrent .active-plan-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin-top:14px!important}
+html body #customerSubscriptionCurrent .active-plan-stat{
+ min-width:0!important;box-sizing:border-box!important;min-height:84px!important;
+ display:flex!important;flex-direction:column!important;justify-content:center!important;gap:7px!important;
+ padding:13px!important;border:1px solid rgba(118,185,0,.22)!important;border-radius:12px!important;
+ background:rgba(4,6,3,.58)!important;text-align:left!important;
+}
+html body #customerSubscriptionCurrent .active-plan-stat small{color:#aeb7a3!important;font-size:10px!important;line-height:1.4!important;letter-spacing:.07em!important}
+html body #customerSubscriptionCurrent .active-plan-stat b{display:block!important;margin:0!important;color:#f0f3eb!important;font-size:clamp(13px,1.6vw,16px)!important;line-height:1.4!important;overflow-wrap:anywhere!important}
+html body #customerSubscriptionCurrent .active-plan-empty{
+ padding:18px!important;border:1px solid rgba(118,185,0,.25)!important;border-radius:13px!important;
+ background:#0b0e09!important;color:#c6cdbd!important;text-align:center!important;
+}
+@media(max-width:600px){
+ html body .app .wallet-card .wallet-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ html body .app .wallet-card .wallet-stat{padding:12px 8px!important}
+ html body .app .wallet-card .wallet-progress-head{align-items:flex-start!important}
+ html body .app .wallet-card .wallet-progress-head strong{text-align:left!important}
+ html body #customerSubscriptionCurrent .active-plan-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ html body #customerSubscriptionCurrent .active-plan-stat{padding:10px!important;min-height:78px!important}
+}
+@media(max-width:360px){
+ html body #customerSubscriptionCurrent .active-plan-grid{grid-template-columns:minmax(0,1fr)!important}
+}
 </style>
 
 </body>
