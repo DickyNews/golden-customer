@@ -4289,5 +4289,71 @@ html body .app .grid>.card.upload .machine-columns .machine-card.hdr-machine>#hd
 }
 </style>
 
+
+<style id="rtxfury-machine-label-alignment-2026">
+/* Align the two machine choices on identical title/subtitle baselines. */
+html body .app .grid>.card.upload .machine-columns{
+ align-items:stretch!important;
+}
+html body .app .grid>.card.upload .machine-columns>.machine-card{
+ display:flex!important;flex-direction:column!important;
+ align-items:stretch!important;justify-content:flex-start!important;
+ min-width:0!important;height:100%!important;box-sizing:border-box!important;
+}
+html body .app .grid>.card.upload .machine-columns>.machine-card>.mode-btn,
+html body .app .grid>.card.upload .machine-columns>.machine-card>#sdrBtn,
+html body .app .grid>.card.upload .machine-columns>.machine-card>#hdrBtn{
+ display:flex!important;flex-direction:column!important;
+ align-items:center!important;justify-content:center!important;
+ gap:18px!important;text-align:center!important;
+ width:100%!important;min-height:clamp(190px,23vw,240px)!important;
+ height:clamp(190px,23vw,240px)!important;
+ padding:24px 16px!important;box-sizing:border-box!important;
+ line-height:1.25!important;white-space:normal!important;
+}
+html body .app .grid>.card.upload .machine-columns>.machine-card>#sdrBtn,
+html body .app .grid>.card.upload .machine-columns>.machine-card>#hdrBtn{
+ font-size:clamp(17px,2.1vw,22px)!important;font-weight:800!important;
+ letter-spacing:-.015em!important;
+}
+html body .app .grid>.card.upload .machine-columns>.machine-card>#sdrBtn small,
+html body .app .grid>.card.upload .machine-columns>.machine-card>#hdrBtn small{
+ display:block!important;position:static!important;
+ width:100%!important;min-height:1.35em!important;height:auto!important;
+ margin:0!important;padding:0!important;
+ font-size:clamp(13px,1.55vw,16px)!important;
+ line-height:1.35!important;font-weight:750!important;
+ letter-spacing:.035em!important;text-align:center!important;
+ white-space:normal!important;overflow-wrap:anywhere!important;
+}
+html body .app .grid>.card.upload .machine-columns>.machine-card>#hdrBtn small::after{
+ display:block!important;font-size:inherit!important;line-height:inherit!important;
+}
+html body .app .grid>.card.upload .machine-columns>.machine-card>.machine-details{
+ margin-top:12px!important;flex:0 0 auto!important;
+}
+html body .app .grid>.card.upload .machine-columns>.machine-card>.machine-details>summary{
+ min-height:52px!important;display:flex!important;align-items:center!important;
+ justify-content:center!important;text-align:center!important;box-sizing:border-box!important;
+}
+@media(max-width:700px){
+ html body .app .grid>.card.upload .machine-columns>.machine-card>#sdrBtn,
+ html body .app .grid>.card.upload .machine-columns>.machine-card>#hdrBtn{
+  min-height:158px!important;height:158px!important;gap:14px!important;padding:18px 12px!important;
+ }
+ html body .app .grid>.card.upload .machine-columns>.machine-card>#sdrBtn small,
+ html body .app .grid>.card.upload .machine-columns>.machine-card>#hdrBtn small{
+  font-size:clamp(11px,3.3vw,14px)!important;
+ }
+}
+@media(max-width:380px){
+ html body .app .grid>.card.upload .machine-columns>.machine-card>#sdrBtn,
+ html body .app .grid>.card.upload .machine-columns>.machine-card>#hdrBtn{
+  min-height:146px!important;height:146px!important;gap:11px!important;padding:14px 9px!important;
+  font-size:15px!important;
+ }
+}
+</style>
+
 </body>
 </html>
