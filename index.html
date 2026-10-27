@@ -2408,7 +2408,7 @@ html,body,.app,.app>.container,.app main.container{background:#000!important;bac
     <div id="freeInjectWrap" class="free-inject-wrap"><button class="mode-btn free-inject-btn" id="freeInjectBtn" type="button">INJECT GRATIS</button><p class="free-inject-caption">Coba Dicky News Method tanpa login. Pilih video MP4 atau MOV dari Files / File Manager.</p><input id="freeInjectFile" type="file" accept="*/*" hidden></div>
     <div class="mode-buttons machine-columns">
       <article class="machine-card inject-machine">
-        <button class="mode-btn active" id="sdrBtn" type="button">INJECT TIKTOK HD <small id="sdrPrice">PAKET LANGGANAN</small></button>
+        <button class="mode-btn active" id="sdrBtn" type="button">INJECT HD ULTIMATE <small id="sdrPrice">PAKET LANGGANAN</small></button>
         <details class="machine-details">
           <summary>Baca selengkapnya</summary>
           <ul class="machine-notes">
@@ -2422,6 +2422,9 @@ html,body,.app,.app>.container,.app main.container{background:#000!important;bac
           </ul>
         </details>
       </article>
+
+    </div>
+    <div class="drop" id="drop"><strong id="dropTitle"></strong><p id="dropText"></p><p class="android-files-note"><strong>Android:</strong> pilih video melalui pemilih file di perangkat, misalnya <b>Files / File Manager</b>.</p><p class="ios-files-note"><strong>Khusus iPhone:</strong> pilih video dari aplikasi <b>File (Files)</b>.</p><input id="file" class="file" type="file" accept="*/*"></div>
       <article class="machine-card hdr-machine">
         <button class="mode-btn hdr-soon" id="hdrBtn" type="button" aria-disabled="false" title="Klik untuk mendapatkan mesin HDR">MESIN HDR <small id="hdrPrice" class="soon-label">KLIK DISINI</small></button>
         <details class="machine-details">
@@ -2437,8 +2440,6 @@ html,body,.app,.app>.container,.app main.container{background:#000!important;bac
           </ul>
         </details>
       </article>
-    </div>
-    <div class="drop" id="drop"><div class="upload-icon"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 16V4m-5 5 5-5 5 5M4 17v3h16v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><strong id="dropTitle"></strong><p id="dropText"></p><p class="android-files-note"><strong>Android:</strong> pilih video melalui pemilih file di perangkat, misalnya <b>Files / File Manager</b>.</p><p class="ios-files-note"><strong>Khusus iPhone:</strong> pilih video dari aplikasi <b>File (Files)</b>.</p><input id="file" class="file" type="file" accept="*/*"></div>
   </div>
   <aside class="side">
     <div class="card wallet-card"><div class="wallet-title"><h2 id="accountPanelTitle">Akun</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Status akses</span><b>Belum login</b><em>login untuk melihat status akun</em></div><div class="wallet-stat"><span>Total pemrosesan</span><b>0</b><em>job yang tercatat</em></div><div class="wallet-stat"><span>Paket dibeli</span><b>0</b><em>riwayat pembelian paket</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Status langganan</span><strong>Belum ada langganan aktif</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span class="wallet-cost-label">Model layanan <strong id="priceSummary">LANGGANAN</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Isi Paket</button><button class="btn btn-secondary" id="customerLogout" type="button" hidden>Logout</button></div></div><div class="claim-box" id="claimBox"><div class="claim-label">CLAIM AKUN</div><div class="claim-row" style="display:grid;grid-template-columns:1fr;gap:10px"><input id="claimUsernameInput" type="text" placeholder="Masukkan username customer" autocomplete="username"><input id="claimKeyInput" type="text" placeholder="Masukkan Claim Key ID" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan username yang diberikan admin dan Claim Key ID milik username tersebut.</div></div></div>
@@ -4438,6 +4439,24 @@ html body #drop #dropTitle:empty,
 html body #drop #dropText:empty{display:none!important}
 html body #drop #dropTitle:not(:empty),
 html body #drop #dropText:not(:empty){display:block}
+</style>
+
+
+<style id="rtxfury-final-layout-reorder-2026">
+html body .app .grid>.card.upload .mode-buttons.machine-columns{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:12px!important;width:100%!important;margin:12px auto 0!important}
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine{width:min(100%,680px)!important;max-width:680px!important;min-width:0!important;margin:0 auto!important;box-sizing:border-box!important}
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>.mode-btn{width:100%!important;min-height:126px!important;height:126px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:10px!important;padding:20px!important;text-align:center!important;box-sizing:border-box!important}
+html body .app .grid>.card.upload #drop{width:100%!important;box-sizing:border-box!important;margin:18px auto 0!important;min-height:220px!important;padding:24px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
+html body .app .grid>.card.upload #drop .upload-icon{display:none!important}
+html body .app .grid>.card.upload #drop #dropTitle:empty,html body .app .grid>.card.upload #drop #dropText:empty{display:none!important}
+html body .app .grid>.card.upload .hdr-machine{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:min(100%,680px)!important;max-width:680px!important;min-width:0!important;margin:16px auto 0!important;box-sizing:border-box!important}
+html body .app .grid>.card.upload .hdr-machine>#hdrBtn{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:100%!important;min-height:96px!important;height:auto!important;padding:20px!important;box-sizing:border-box!important;text-align:center!important}
+html body .app .grid>.card.upload .hdr-machine>#hdrBtn::before,html body .app .grid>.card.upload .inject-machine>#sdrBtn::before,html body .app .grid>.card.upload .hdr-machine>#hdrBtn::after,html body .app .grid>.card.upload .inject-machine>#sdrBtn::after{content:none!important;display:none!important}
+html body .app .grid>.card.upload .hdr-machine .machine-details,html body .app .grid>.card.upload .inject-machine .machine-details{width:100%!important;box-sizing:border-box!important}
+html body .app .grid>.card.upload .hdr-machine .machine-details>summary,html body .app .grid>.card.upload .inject-machine .machine-details>summary{min-height:48px!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important}
+html body .app .grid>.card.upload .hdr-machine .machine-notes,html body .app .grid>.card.upload .inject-machine .machine-notes{text-align:left!important;line-height:1.65!important}
+html body .app .grid>.card.upload .card-head .mini{color:#e6e9e1!important}
+@media(max-width:700px){html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine,html body .app .grid>.card.upload .hdr-machine{width:100%!important;max-width:100%!important}html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>.mode-btn{height:112px!important;min-height:112px!important;padding:16px 12px!important}html body .app .grid>.card.upload #drop{min-height:180px!important;padding:18px!important}html body .app .grid>.card.upload .hdr-machine>#hdrBtn{min-height:84px!important;padding:16px!important}}
 </style>
 
 </body>
