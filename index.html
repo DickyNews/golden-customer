@@ -5171,27 +5171,27 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
 :root{--dn-scroll-green:#76b900;--dn-scroll-lime:#a5ef36}
 html{scroll-behavior:smooth;scroll-padding-top:86px}
 #dnScrollProgress{position:fixed;inset:0 0 auto;height:3px;z-index:2147483000;pointer-events:none;background:rgba(255,255,255,.035)}
-#dnScrollProgressFill{height:100%;width:0;transform-origin:left center;background:linear-gradient(90deg,#426b00,#76b900 55%,#c1ff62);box-shadow:0 0 9px rgba(118,185,0,.42);will-change:width}
-#dnScrollRail{position:fixed;z-index:2147482000;right:max(15px,calc((100vw - 1440px)/2));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:11px;padding:13px 9px;border:1px solid rgba(118,185,0,.22);border-radius:22px;background:rgba(8,11,7,.74);box-shadow:0 8px 30px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.045);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:opacity .25s,border-color .25s}
-#dnScrollRail:before{content:"";position:absolute;top:20px;bottom:20px;left:50%;width:1px;background:linear-gradient(180deg,transparent,rgba(118,185,0,.38),transparent);pointer-events:none}
-.dn-scroll-dot{position:relative;display:grid;place-items:center;width:20px;height:20px;padding:0;border:0;border-radius:50%;background:transparent;color:#78816e;cursor:pointer;transition:color .22s,transform .22s}
-.dn-scroll-dot:before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;box-shadow:0 0 0 3px rgba(255,255,255,.025);transition:width .22s,height .22s,background .22s,box-shadow .22s}
+#dnScrollProgressFill{height:100%;width:0;transform-origin:left center;background:linear-gradient(90deg,#426b00,#76b900 55%,#c1ff62);box-shadow:0 0 9px rgba(118,185,0,.38);will-change:width}
+#dnScrollRail{position:fixed;z-index:2147482000;right:max(17px,calc((100vw - 1440px)/2));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px 4px;border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;transition:opacity .25s}
+#dnScrollRail:before{content:"";position:absolute;top:13px;bottom:13px;left:50%;width:1px;background:linear-gradient(180deg,transparent,rgba(118,185,0,.36) 18%,rgba(118,185,0,.36) 82%,transparent);pointer-events:none}
+.dn-scroll-dot{position:relative;z-index:1;display:grid;place-items:center;width:16px;height:14px;padding:0;border:0;border-radius:3px;background:transparent;color:#65705c;cursor:pointer;transition:color .2s ease,transform .2s ease}
+.dn-scroll-dot:before{content:"";width:4px;height:4px;border-radius:50%;background:currentColor;box-shadow:none;transition:width .2s ease,height .2s ease,border-radius .2s ease,background .2s ease,box-shadow .2s ease}
 .dn-scroll-dot:hover,.dn-scroll-dot:focus-visible{color:#c9f78c;outline:none}
-.dn-scroll-dot[aria-current="location"]{color:#a5ef36;transform:scale(1.12)}
-.dn-scroll-dot[aria-current="location"]:before{width:7px;height:7px;background:#a5ef36;box-shadow:0 0 0 4px rgba(118,185,0,.13),0 0 12px rgba(165,239,54,.42)}
+.dn-scroll-dot[aria-current="location"]{color:#a5ef36;transform:scale(1.04)}
+.dn-scroll-dot[aria-current="location"]:before{width:13px;height:3px;border-radius:3px;background:#a5ef36;box-shadow:0 0 8px rgba(165,239,54,.35)}
 .dn-scroll-dot:focus-visible{outline:1px solid #a5ef36;outline-offset:3px}
-.dn-scroll-dot .dn-scroll-tooltip{position:absolute;right:30px;top:50%;transform:translate(4px,-50%);white-space:nowrap;padding:7px 10px;border:1px solid rgba(118,185,0,.28);border-radius:8px;background:rgba(7,10,6,.94);color:#eaf4df;font:700 10px/1.2 system-ui,sans-serif;letter-spacing:.06em;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s}
+.dn-scroll-dot .dn-scroll-tooltip{position:absolute;right:24px;top:50%;transform:translate(4px,-50%);white-space:nowrap;padding:7px 9px;border:1px solid rgba(118,185,0,.24);border-radius:5px;background:rgba(8,10,8,.96);color:#edf4e5;font:650 10px/1.2 system-ui,sans-serif;letter-spacing:.045em;opacity:0;pointer-events:none;transition:opacity .16s ease,transform .16s ease}
 .dn-scroll-dot:hover .dn-scroll-tooltip,.dn-scroll-dot:focus-visible .dn-scroll-tooltip{opacity:1;transform:translate(0,-50%)}
 #dnScrollReadout{position:fixed;z-index:2147482000;left:max(14px,calc((100vw - 1440px)/2));top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:11px;pointer-events:none;color:#9ca795;font-family:system-ui,sans-serif}
 #dnScrollReadout .dn-scroll-line{position:relative;width:2px;height:86px;border-radius:2px;background:rgba(255,255,255,.11);overflow:hidden}
-#dnScrollReadout .dn-scroll-line span{position:absolute;top:0;left:0;width:100%;height:0;background:linear-gradient(180deg,#a5ef36,#76b900);box-shadow:0 0 8px rgba(118,185,0,.45)}
+#dnScrollReadout .dn-scroll-line span{position:absolute;top:0;left:0;width:100%;height:0;background:linear-gradient(180deg,#a5ef36,#76b900);box-shadow:0 0 8px rgba(118,185,0,.4)}
 #dnScrollReadout .dn-scroll-copy{display:flex;flex-direction:column;gap:5px;max-width:105px}
 #dnScrollReadout .dn-scroll-overline{font-size:8px;font-weight:800;letter-spacing:.2em;color:#83b64a}
 #dnScrollReadout .dn-scroll-number{font-size:17px;font-weight:800;letter-spacing:-.05em;color:#edf4e5;font-variant-numeric:tabular-nums}
 #dnScrollReadout .dn-scroll-name{font-size:9px;line-height:1.35;font-weight:650;letter-spacing:.04em;color:#a4ad9b;overflow-wrap:anywhere}
-@media(max-width:1100px){#dnScrollReadout{left:8px}#dnScrollReadout .dn-scroll-copy{display:none}#dnScrollReadout .dn-scroll-line{height:62px}#dnScrollRail{right:8px;gap:8px;padding:10px 6px}}
-@media(max-width:700px){#dnScrollRail{right:5px;gap:5px;padding:7px 3px;border-radius:16px;background:rgba(7,10,6,.72)}.dn-scroll-dot{width:16px;height:16px}#dnScrollReadout{left:5px}#dnScrollReadout .dn-scroll-line{height:48px;width:2px}#dnScrollProgress{height:2px}}
-@media(max-width:420px){#dnScrollRail{top:auto;bottom:18px;transform:none;gap:4px;padding:6px 3px}.dn-scroll-dot{width:14px;height:14px}#dnScrollReadout{top:auto;bottom:20px;transform:none}}
+@media(max-width:1100px){#dnScrollReadout{left:8px}#dnScrollReadout .dn-scroll-copy{display:none}#dnScrollReadout .dn-scroll-line{height:62px}#dnScrollRail{right:8px;gap:8px;padding:9px 3px}}
+@media(max-width:700px){#dnScrollRail{right:5px;gap:5px;padding:7px 2px}#dnScrollRail:before{top:8px;bottom:8px}.dn-scroll-dot{width:13px;height:12px}#dnScrollReadout{left:5px}#dnScrollReadout .dn-scroll-line{height:48px;width:2px}#dnScrollProgress{height:2px}}
+@media(max-width:420px){#dnScrollRail{top:auto;bottom:18px;transform:none;gap:4px;padding:6px 2px}.dn-scroll-dot{width:12px;height:11px}#dnScrollReadout{top:auto;bottom:20px;transform:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#dnScrollProgressFill,.dn-scroll-dot,.dn-scroll-dot:before,.dn-scroll-dot .dn-scroll-tooltip,#dnScrollRail{transition:none!important}}
 </style>
 <script id="DICKY-RTX-SCROLL-CHROME-JS">
