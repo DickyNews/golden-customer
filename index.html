@@ -5259,39 +5259,43 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
 })();
 </script>
 <style id="nvidia-edge-pulse-style">
-/* Stable, visible NVIDIA edge pulse. Remove the unrelated lightning streaks from the intro loader. */
+/* NVIDIA edge FLOW only: a bright traveling light, with no static rail. */
 #nvidiaStormLoader .storm-bolt{display:none!important;animation:none!important;opacity:0!important}
 .dn-nvidia-edge-pulse{
-  position:fixed!important;top:0!important;bottom:0!important;width:3px!important;
+  position:fixed!important;top:0!important;bottom:0!important;width:4px!important;
   z-index:2147483000!important;display:block!important;visibility:visible!important;
   opacity:1!important;overflow:hidden!important;pointer-events:none!important;
-  user-select:none!important;isolation:isolate!important;
-  background:rgba(118,185,0,.18)!important;
-  box-shadow:0 0 6px rgba(118,185,0,.3)!important;
+  user-select:none!important;isolation:isolate!important;background:transparent!important;
+  box-shadow:none!important;
 }
 .dn-nvidia-edge-pulse:after{
-  content:"";position:absolute;left:0;right:0;top:-28%;height:28%;min-height:105px;
-  background:linear-gradient(180deg,transparent 0%,rgba(118,185,0,.38) 18%,#76b900 46%,#d6ff78 58%,#a5ef36 68%,rgba(118,185,0,.42) 84%,transparent 100%);
-  box-shadow:0 0 9px rgba(118,185,0,.85),0 0 17px rgba(118,185,0,.5);
-  opacity:.95;
-  animation:dnNvidiaEdgeTravel 3.2s linear infinite;
+  content:"";position:absolute;left:0;right:0;top:0;height:24vh;min-height:130px;max-height:240px;
+  background:linear-gradient(180deg,transparent 0%,rgba(118,185,0,.12) 12%,#76b900 36%,#d7ff76 50%,#a5ef36 61%,rgba(118,185,0,.78) 76%,rgba(118,185,0,.12) 94%,transparent 100%);
+  box-shadow:0 0 8px 2px rgba(118,185,0,.82),0 0 18px 4px rgba(118,185,0,.48);
+  opacity:1;transform:translate3d(0,115vh,0);
+  animation:dnNvidiaEdgeFlow 2.6s linear infinite;
+  will-change:transform;
 }
 #dnNvidiaEdgePulseLeft{left:0!important}
 #dnNvidiaEdgePulseRight{right:0!important}
-#dnNvidiaEdgePulseRight:after{animation-delay:-1.6s}
-@keyframes dnNvidiaEdgeTravel{
-  0%{top:105%;opacity:.1}
-  8%{opacity:1}
-  88%{opacity:1}
-  100%{top:-30%;opacity:.1}
+#dnNvidiaEdgePulseRight:after{animation-delay:-1.3s}
+@keyframes dnNvidiaEdgeFlow{
+  0%{transform:translate3d(0,115vh,0);opacity:.2}
+  7%{opacity:1}
+  90%{opacity:1}
+  100%{transform:translate3d(0,-135vh,0);opacity:.15}
+}
+@media(min-width:701px){
+  .dn-nvidia-edge-pulse{width:4px!important}
+  .dn-nvidia-edge-pulse:after{height:26vh;min-height:150px;max-height:280px;box-shadow:0 0 10px 3px rgba(118,185,0,.9),0 0 22px 5px rgba(118,185,0,.52)}
 }
 @media(max-width:700px){
-  .dn-nvidia-edge-pulse{width:2px!important;background:rgba(118,185,0,.34)!important;box-shadow:0 0 5px rgba(118,185,0,.45)!important}
-  .dn-nvidia-edge-pulse:after{height:24%;min-height:90px;box-shadow:0 0 8px rgba(118,185,0,.9),0 0 12px rgba(118,185,0,.48);animation-duration:2.7s}
-  #dnNvidiaEdgePulseRight:after{animation-delay:-1.35s}
+  .dn-nvidia-edge-pulse{width:3px!important}
+  .dn-nvidia-edge-pulse:after{height:22vh;min-height:105px;max-height:190px;box-shadow:0 0 9px 2px rgba(118,185,0,.95),0 0 17px 4px rgba(118,185,0,.58);animation-duration:2.15s}
+  #dnNvidiaEdgePulseRight:after{animation-delay:-1.075s}
 }
 @media(prefers-reduced-motion:reduce){
-  .dn-nvidia-edge-pulse:after{animation:none!important;top:38%;height:24%;min-height:90px;opacity:1}
+  .dn-nvidia-edge-pulse:after{animation:none!important;top:38%;height:24vh;min-height:110px;transform:none;opacity:1}
 }
 </style>
 <script id="nvidia-edge-pulse-script">
