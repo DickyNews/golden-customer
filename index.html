@@ -5170,11 +5170,11 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
 <style id="DICKY-RTX-SCROLL-CHROME">
 :root{--dn-scroll-green:#76b900;--dn-scroll-lime:#a5ef36}
 html{scroll-behavior:smooth;scroll-padding-top:86px}
-#dnScrollProgress{position:fixed;inset:0 0 auto;height:3px;z-index:2147483000;pointer-events:none;background:rgba(255,255,255,.035)}
+#dnScrollProgress{position:fixed;left:0;right:auto;top:0;width:100vw;height:3px;z-index:2147483000;pointer-events:none;background:rgba(255,255,255,.14);overflow:hidden;border-radius:0}
 #dnScrollProgressFill{height:100%;width:0;transform-origin:left center;background:linear-gradient(90deg,#426b00,#76b900 55%,#c1ff62);box-shadow:0 0 9px rgba(118,185,0,.38);will-change:width}
-#dnScrollRail{position:fixed;z-index:2147482000;right:max(22px,calc((100vw - 1440px)/2));top:50%;transform:translateY(-50%);width:3px;height:min(42vh,340px);min-height:150px;overflow:hidden;border-radius:4px;background:rgba(255,255,255,.14);box-shadow:0 0 0 1px rgba(255,255,255,.025);pointer-events:none}
+#dnScrollRail{position:fixed;z-index:2147482000;right:0;top:0;bottom:0;transform:none;width:3px;height:100vh;height:100dvh;min-height:0;overflow:hidden;border-radius:0;background:rgba(255,255,255,.14);box-shadow:none;pointer-events:none}
 #dnScrollRail:before{content:none}
-#dnScrollRailFill{position:absolute;left:0;right:0;bottom:0;height:0;border-radius:4px;background:linear-gradient(0deg,#426b00 0%,#76b900 58%,#c1ff62 100%);box-shadow:0 0 9px rgba(118,185,0,.42);will-change:height}
+#dnScrollRailFill{position:absolute;left:0;right:0;bottom:0;height:0;border-radius:0;background:linear-gradient(0deg,#426b00 0%,#76b900 58%,#c1ff62 100%);box-shadow:0 0 9px rgba(118,185,0,.42);will-change:height}
 #dnScrollReadout{position:fixed;z-index:2147482000;left:max(14px,calc((100vw - 1440px)/2));top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:11px;pointer-events:none;color:#9ca795;font-family:system-ui,sans-serif}
 #dnScrollReadout .dn-scroll-line{position:relative;width:2px;height:86px;border-radius:2px;background:rgba(255,255,255,.11);overflow:hidden}
 #dnScrollReadout .dn-scroll-line span{position:absolute;top:0;left:0;width:100%;height:0;background:linear-gradient(180deg,#a5ef36,#76b900);box-shadow:0 0 8px rgba(118,185,0,.4)}
@@ -5182,9 +5182,9 @@ html{scroll-behavior:smooth;scroll-padding-top:86px}
 #dnScrollReadout .dn-scroll-overline{font-size:8px;font-weight:800;letter-spacing:.2em;color:#83b64a}
 #dnScrollReadout .dn-scroll-number{font-size:17px;font-weight:800;letter-spacing:-.05em;color:#edf4e5;font-variant-numeric:tabular-nums}
 #dnScrollReadout .dn-scroll-name{font-size:9px;line-height:1.35;font-weight:650;letter-spacing:.04em;color:#a4ad9b;overflow-wrap:anywhere}
-@media(max-width:1100px){#dnScrollReadout{left:8px}#dnScrollReadout .dn-scroll-copy{display:none}#dnScrollReadout .dn-scroll-line{height:62px}#dnScrollRail{right:12px;width:2px;height:min(34vh,260px);min-height:120px}}
-@media(max-width:700px){#dnScrollRail{right:7px;height:24vh;min-height:100px;width:2px}#dnScrollReadout{left:5px}#dnScrollReadout .dn-scroll-line{height:48px;width:2px}#dnScrollProgress{height:2px}}
-@media(max-width:420px){#dnScrollRail{top:auto;bottom:18px;transform:none;height:18vh;min-height:78px}#dnScrollReadout{top:auto;bottom:20px;transform:none}}
+@media(max-width:1100px){#dnScrollReadout{left:8px}#dnScrollReadout .dn-scroll-copy{display:none}#dnScrollReadout .dn-scroll-line{height:62px}}
+@media(max-width:700px){#dnScrollReadout{left:5px}#dnScrollReadout .dn-scroll-line{height:48px;width:2px}#dnScrollProgress{height:2px}#dnScrollRail{width:2px}}
+@media(max-width:420px){#dnScrollReadout{top:auto;bottom:20px;transform:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#dnScrollProgressFill,#dnScrollRailFill{transition:none!important}}
 </style>
 <script id="DICKY-RTX-SCROLL-CHROME-JS">
