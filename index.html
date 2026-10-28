@@ -4901,5 +4901,30 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
 }
 </style>
 
+
+<style id="compact-density-fix-v3">
+/* Final high-specificity override: remove the oversized HD Ultimate button height. */
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn,
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn:link,
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn:visited,
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn:hover,
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn:focus,
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn:active {
+  height:76px!important; min-height:76px!important; max-height:76px!important;
+  flex:0 0 76px!important; gap:5px!important; padding:8px 10px!important;
+  line-height:1.15!important; transform:none!important;
+}
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn small {
+  min-height:0!important; height:auto!important; margin:0!important; padding:0!important;
+  line-height:1.2!important; font-size:12px!important;
+}
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>.machine-details {
+  margin-top:4px!important;
+}
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>.machine-details>summary {
+  min-height:38px!important; padding:5px 10px!important;
+}
+</style>
+
 </body>
 </html>
