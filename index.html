@@ -5170,7 +5170,7 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
 <style id="DICKY-RTX-SCROLL-CHROME">
 :root{--dn-scroll-green:#76b900;--dn-scroll-lime:#a5ef36}
 html{scroll-behavior:smooth;scroll-padding-top:86px}
-#dnScrollProgress{position:fixed;left:0;right:auto;top:0;width:100vw;height:3px;z-index:2147483000;pointer-events:none;background:rgba(255,255,255,.14);overflow:hidden;border-radius:0}
+#dnScrollProgress{position:fixed;left:0;right:0;top:0;width:auto;height:3px;margin:0;padding:0;z-index:2147483000;pointer-events:none;background:rgba(255,255,255,.14);overflow:hidden;border-radius:0}
 #dnScrollProgressFill{height:100%;width:0;transform-origin:left center;background:linear-gradient(90deg,#426b00,#76b900 55%,#c1ff62);box-shadow:0 0 9px rgba(118,185,0,.38);will-change:width}
 #dnScrollRail{position:fixed;z-index:2147482000;right:0;top:0;bottom:0;transform:none;width:3px;height:100vh;height:100dvh;min-height:0;overflow:hidden;border-radius:0;background:rgba(255,255,255,.14);box-shadow:none;pointer-events:none}
 #dnScrollRail:before{content:none}
@@ -5182,7 +5182,7 @@ html{scroll-behavior:smooth;scroll-padding-top:86px}
 #dnScrollReadout .dn-scroll-overline{font-size:8px;font-weight:800;letter-spacing:.2em;color:#83b64a}
 #dnScrollReadout .dn-scroll-number{font-size:17px;font-weight:800;letter-spacing:-.05em;color:#edf4e5;font-variant-numeric:tabular-nums}
 #dnScrollReadout .dn-scroll-name{font-size:9px;line-height:1.35;font-weight:650;letter-spacing:.04em;color:#a4ad9b;overflow-wrap:anywhere}
-@media(max-width:1100px){#dnScrollReadout{left:8px}#dnScrollReadout .dn-scroll-copy{display:none}#dnScrollReadout .dn-scroll-line{height:62px}}
+@media(max-width:1100px){#dnScrollReadout{left:8px;gap:0}#dnScrollReadout .dn-scroll-copy{display:flex;gap:3px;max-width:54px}#dnScrollReadout .dn-scroll-overline{font-size:7px;letter-spacing:.12em}#dnScrollReadout .dn-scroll-number{font-size:12px}#dnScrollReadout .dn-scroll-name{font-size:7px;max-width:54px}#dnScrollReadout .dn-scroll-line{height:42px}}
 @media(max-width:700px){#dnScrollReadout{left:5px}#dnScrollReadout .dn-scroll-line{height:48px;width:2px}#dnScrollProgress{height:2px}#dnScrollRail{width:2px}}
 @media(max-width:420px){#dnScrollReadout{top:auto;bottom:20px;transform:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#dnScrollProgressFill,#dnScrollRailFill{transition:none!important}}
