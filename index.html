@@ -4958,5 +4958,46 @@ html body .app .grid>.card.upload > .drop {
 }
 </style>
 
+
+<style id="compact-drop-empty-space-v2">
+/* Remove the remaining blank vertical space above Android/iPhone instructions. */
+html body .app .grid>.card.upload > #drop {
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+  align-items:stretch!important;
+  min-height:0!important;
+  height:auto!important;
+  gap:0!important;
+  padding:4px 8px!important;
+  margin-top:3px!important;
+}
+html body .app .grid>.card.upload > #drop > #dropTitle:empty,
+html body .app .grid>.card.upload > #drop > #dropText:empty {
+  display:none!important;
+  margin:0!important;
+  padding:0!important;
+  height:0!important;
+  min-height:0!important;
+}
+html body .app .grid>.card.upload > #drop > #dropTitle:empty + #dropText:empty {
+  display:none!important;
+}
+html body .app .grid>.card.upload > #drop .android-files-note,
+html body .app .grid>.card.upload > #drop .ios-files-note {
+  margin:3px auto 0!important;
+  padding:5px 7px!important;
+  font-size:10.5px!important;
+  line-height:1.25!important;
+  min-height:0!important;
+}
+html body .app .grid>.card.upload > #drop .ios-files-note {
+  margin-top:3px!important;
+}
+html body .app .grid>.card.upload > #drop input#file {
+  margin-top:2px!important;
+}
+</style>
+
 </body>
 </html>
