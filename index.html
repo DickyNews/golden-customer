@@ -5258,5 +5258,42 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
   schedule();
 })();
 </script>
+<style id="nvidia-edge-pulse-style">
+/* Subtle NVIDIA-green breathing glow on both viewport edges. */
+.dn-nvidia-edge-pulse{
+  position:fixed;top:0;bottom:0;width:2px;z-index:2147482500;
+  pointer-events:none;user-select:none;opacity:.48;
+  background:linear-gradient(180deg,transparent 0%,rgba(118,185,0,.12) 12%,rgba(118,185,0,.68) 50%,rgba(165,239,54,.2) 84%,transparent 100%);
+  transform:scaleY(.94);transform-origin:center;
+  animation:dnNvidiaEdgeBreathe 4.2s ease-in-out infinite;
+  will-change:opacity,transform,filter;
+}
+#dnNvidiaEdgePulseLeft{left:0;box-shadow:2px 0 12px rgba(118,185,0,.16),1px 0 3px rgba(165,239,54,.24)}
+#dnNvidiaEdgePulseRight{right:0;animation-delay:-2.1s;box-shadow:-2px 0 12px rgba(118,185,0,.16),-1px 0 3px rgba(165,239,54,.24)}
+@keyframes dnNvidiaEdgeBreathe{
+  0%,100%{opacity:.28;transform:scaleY(.91);filter:brightness(.82)}
+  50%{opacity:.82;transform:scaleY(1);filter:brightness(1.18)}
+}
+@media(max-width:700px){
+  .dn-nvidia-edge-pulse{width:1px;opacity:.4;animation-duration:4.8s}
+  #dnNvidiaEdgePulseLeft{box-shadow:1px 0 6px rgba(118,185,0,.15)}
+  #dnNvidiaEdgePulseRight{box-shadow:-1px 0 6px rgba(118,185,0,.15);animation-delay:-2.4s}
+}
+@media(prefers-reduced-motion:reduce){
+  .dn-nvidia-edge-pulse{animation:none!important;opacity:.4;transform:none;filter:none;will-change:auto}
+}
+</style>
+<script id="nvidia-edge-pulse-script">
+(function(){
+  if(document.getElementById('dnNvidiaEdgePulseLeft')||document.getElementById('dnNvidiaEdgePulseRight'))return;
+  ['Left','Right'].forEach(function(side){
+    var edge=document.createElement('div');
+    edge.id='dnNvidiaEdgePulse'+side;
+    edge.className='dn-nvidia-edge-pulse';
+    edge.setAttribute('aria-hidden','true');
+    document.body.appendChild(edge);
+  });
+})();
+</script>
 </body>
 </html>
