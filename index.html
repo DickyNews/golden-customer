@@ -5167,7 +5167,31 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
 }
 </style>
 
-<style id="DICKY-RTX-SCROLL-CHROME">/* Side scroll indicators and top progress animation intentionally removed. */</style>
-<script id="DICKY-RTX-SCROLL-CHROME-JS">/* Side scroll indicators and top progress animation intentionally removed. */</script>
+<style id="DICKY-RTX-SCROLL-CHROME">
+/* Keep the slim NVIDIA-inspired top reading progress bar only. */
+#dnScrollProgress{position:fixed;left:0;right:0;top:0;width:auto;height:3px;margin:0;padding:0;z-index:2147483000;pointer-events:none;background:rgba(255,255,255,.08);overflow:hidden;border-radius:0}
+#dnScrollProgressFill{height:100%;width:0;transform-origin:left center;background:linear-gradient(90deg,#426b00,#76b900 55%,#c1ff62);box-shadow:0 0 9px rgba(118,185,0,.38);will-change:width}
+@media(max-width:700px){#dnScrollProgress{height:2px}}
+@media(prefers-reduced-motion:reduce){#dnScrollProgressFill{transition:none!important}}
+</style>
+<script id="DICKY-RTX-SCROLL-CHROME-JS">
+(function(){
+  if(document.getElementById('dnScrollProgress'))return;
+  var top=document.createElement('div');top.id='dnScrollProgress';top.setAttribute('aria-hidden','true');top.innerHTML='<div id="dnScrollProgressFill"></div>';
+  document.body.appendChild(top);
+  var fill=document.getElementById('dnScrollProgressFill'),queued=false;
+  function update(){
+    queued=false;
+    var doc=document.documentElement,max=Math.max(1,doc.scrollHeight-window.innerHeight),y=Math.max(0,window.scrollY||doc.scrollTop),pct=Math.min(100,Math.max(0,y/max*100));
+    fill.style.width=pct.toFixed(2)+'%';
+  }
+  function requestUpdate(){if(queued)return;queued=true;window.requestAnimationFrame(update);}
+  window.addEventListener('scroll',requestUpdate,{passive:true});
+  window.addEventListener('resize',requestUpdate,{passive:true});
+  window.addEventListener('load',requestUpdate,{once:true});
+  if('ResizeObserver'in window){var ro=new ResizeObserver(requestUpdate);ro.observe(document.body);}
+  update();
+})();
+</script>
 </body>
 </html>
