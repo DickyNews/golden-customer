@@ -5259,28 +5259,40 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
 })();
 </script>
 <style id="nvidia-edge-pulse-style">
-/* Subtle NVIDIA-green breathing glow on both viewport edges. */
+/* Visible edge rails with a traveling NVIDIA-green light pulse. */
 .dn-nvidia-edge-pulse{
-  position:fixed;top:0;bottom:0;width:2px;z-index:2147482500;
-  pointer-events:none;user-select:none;opacity:.48;
-  background:linear-gradient(180deg,transparent 0%,rgba(118,185,0,.12) 12%,rgba(118,185,0,.68) 50%,rgba(165,239,54,.2) 84%,transparent 100%);
-  transform:scaleY(.94);transform-origin:center;
-  animation:dnNvidiaEdgeBreathe 4.2s ease-in-out infinite;
-  will-change:opacity,transform,filter;
+  position:fixed!important;top:0!important;bottom:0!important;width:3px!important;
+  z-index:2147483646!important;display:block!important;visibility:visible!important;
+  opacity:1!important;overflow:hidden!important;pointer-events:none!important;
+  user-select:none!important;contain:strict!important;
+  background:linear-gradient(180deg,rgba(118,185,0,.05),rgba(118,185,0,.22),rgba(118,185,0,.05))!important;
+  box-shadow:0 0 5px rgba(118,185,0,.25)!important;
+  transform:none!important;filter:none!important;
 }
-#dnNvidiaEdgePulseLeft{left:0;box-shadow:2px 0 12px rgba(118,185,0,.16),1px 0 3px rgba(165,239,54,.24)}
-#dnNvidiaEdgePulseRight{right:0;animation-delay:-2.1s;box-shadow:-2px 0 12px rgba(118,185,0,.16),-1px 0 3px rgba(165,239,54,.24)}
-@keyframes dnNvidiaEdgeBreathe{
-  0%,100%{opacity:.28;transform:scaleY(.91);filter:brightness(.82)}
-  50%{opacity:.82;transform:scaleY(1);filter:brightness(1.18)}
+.dn-nvidia-edge-pulse:after{
+  content:"";position:absolute;left:0;right:0;top:0;height:23%;min-height:90px;
+  background:linear-gradient(180deg,transparent 0%,#426b00 22%,#76b900 53%,#c7ff63 72%,rgba(165,239,54,.15) 90%,transparent 100%);
+  box-shadow:0 0 10px rgba(118,185,0,.85),0 0 20px rgba(118,185,0,.45);
+  opacity:1;transform:translateY(110%);
+  animation:dnNvidiaEdgeTravel 2.8s cubic-bezier(.45,0,.55,1) infinite;
+  will-change:transform;
+}
+#dnNvidiaEdgePulseLeft{left:0!important}
+#dnNvidiaEdgePulseRight{right:0!important}
+#dnNvidiaEdgePulseRight:after{animation-delay:-1.4s}
+@keyframes dnNvidiaEdgeTravel{
+  0%{transform:translateY(110%);opacity:.25}
+  12%{opacity:1}
+  82%{opacity:1}
+  100%{transform:translateY(-115%);opacity:.2}
 }
 @media(max-width:700px){
-  .dn-nvidia-edge-pulse{width:1px;opacity:.4;animation-duration:4.8s}
-  #dnNvidiaEdgePulseLeft{box-shadow:1px 0 6px rgba(118,185,0,.15)}
-  #dnNvidiaEdgePulseRight{box-shadow:-1px 0 6px rgba(118,185,0,.15);animation-delay:-2.4s}
+  .dn-nvidia-edge-pulse{width:2px!important;background:rgba(118,185,0,.42)!important;box-shadow:0 0 4px rgba(118,185,0,.48)!important}
+  .dn-nvidia-edge-pulse:after{height:28%;min-height:100px;box-shadow:0 0 8px rgba(118,185,0,.95),0 0 14px rgba(118,185,0,.55);animation-duration:2.4s}
+  #dnNvidiaEdgePulseRight:after{animation-delay:-1.2s}
 }
 @media(prefers-reduced-motion:reduce){
-  .dn-nvidia-edge-pulse{animation:none!important;opacity:.4;transform:none;filter:none;will-change:auto}
+  .dn-nvidia-edge-pulse:after{animation:none!important;top:38%;height:24%;min-height:90px;transform:none;opacity:.95}
 }
 </style>
 <script id="nvidia-edge-pulse-script">
