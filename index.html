@@ -5172,16 +5172,9 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
 html{scroll-behavior:smooth;scroll-padding-top:86px}
 #dnScrollProgress{position:fixed;inset:0 0 auto;height:3px;z-index:2147483000;pointer-events:none;background:rgba(255,255,255,.035)}
 #dnScrollProgressFill{height:100%;width:0;transform-origin:left center;background:linear-gradient(90deg,#426b00,#76b900 55%,#c1ff62);box-shadow:0 0 9px rgba(118,185,0,.38);will-change:width}
-#dnScrollRail{position:fixed;z-index:2147482000;right:max(17px,calc((100vw - 1440px)/2));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px 4px;border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;transition:opacity .25s}
-#dnScrollRail:before{content:"";position:absolute;top:13px;bottom:13px;left:50%;width:1px;background:linear-gradient(180deg,transparent,rgba(118,185,0,.36) 18%,rgba(118,185,0,.36) 82%,transparent);pointer-events:none}
-.dn-scroll-dot{position:relative;z-index:1;display:grid;place-items:center;width:16px;height:14px;padding:0;border:0;border-radius:3px;background:transparent;color:#65705c;cursor:pointer;transition:color .2s ease,transform .2s ease}
-.dn-scroll-dot:before{content:"";width:4px;height:4px;border-radius:50%;background:currentColor;box-shadow:none;transition:width .2s ease,height .2s ease,border-radius .2s ease,background .2s ease,box-shadow .2s ease}
-.dn-scroll-dot:hover,.dn-scroll-dot:focus-visible{color:#c9f78c;outline:none}
-.dn-scroll-dot[aria-current="location"]{color:#a5ef36;transform:scale(1.04)}
-.dn-scroll-dot[aria-current="location"]:before{width:13px;height:3px;border-radius:3px;background:#a5ef36;box-shadow:0 0 8px rgba(165,239,54,.35)}
-.dn-scroll-dot:focus-visible{outline:1px solid #a5ef36;outline-offset:3px}
-.dn-scroll-dot .dn-scroll-tooltip{position:absolute;right:24px;top:50%;transform:translate(4px,-50%);white-space:nowrap;padding:7px 9px;border:1px solid rgba(118,185,0,.24);border-radius:5px;background:rgba(8,10,8,.96);color:#edf4e5;font:650 10px/1.2 system-ui,sans-serif;letter-spacing:.045em;opacity:0;pointer-events:none;transition:opacity .16s ease,transform .16s ease}
-.dn-scroll-dot:hover .dn-scroll-tooltip,.dn-scroll-dot:focus-visible .dn-scroll-tooltip{opacity:1;transform:translate(0,-50%)}
+#dnScrollRail{position:fixed;z-index:2147482000;right:max(22px,calc((100vw - 1440px)/2));top:50%;transform:translateY(-50%);width:3px;height:min(42vh,340px);min-height:150px;overflow:hidden;border-radius:4px;background:rgba(255,255,255,.14);box-shadow:0 0 0 1px rgba(255,255,255,.025);pointer-events:none}
+#dnScrollRail:before{content:none}
+#dnScrollRailFill{position:absolute;left:0;right:0;bottom:0;height:0;border-radius:4px;background:linear-gradient(0deg,#426b00 0%,#76b900 58%,#c1ff62 100%);box-shadow:0 0 9px rgba(118,185,0,.42);will-change:height}
 #dnScrollReadout{position:fixed;z-index:2147482000;left:max(14px,calc((100vw - 1440px)/2));top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:11px;pointer-events:none;color:#9ca795;font-family:system-ui,sans-serif}
 #dnScrollReadout .dn-scroll-line{position:relative;width:2px;height:86px;border-radius:2px;background:rgba(255,255,255,.11);overflow:hidden}
 #dnScrollReadout .dn-scroll-line span{position:absolute;top:0;left:0;width:100%;height:0;background:linear-gradient(180deg,#a5ef36,#76b900);box-shadow:0 0 8px rgba(118,185,0,.4)}
@@ -5189,10 +5182,10 @@ html{scroll-behavior:smooth;scroll-padding-top:86px}
 #dnScrollReadout .dn-scroll-overline{font-size:8px;font-weight:800;letter-spacing:.2em;color:#83b64a}
 #dnScrollReadout .dn-scroll-number{font-size:17px;font-weight:800;letter-spacing:-.05em;color:#edf4e5;font-variant-numeric:tabular-nums}
 #dnScrollReadout .dn-scroll-name{font-size:9px;line-height:1.35;font-weight:650;letter-spacing:.04em;color:#a4ad9b;overflow-wrap:anywhere}
-@media(max-width:1100px){#dnScrollReadout{left:8px}#dnScrollReadout .dn-scroll-copy{display:none}#dnScrollReadout .dn-scroll-line{height:62px}#dnScrollRail{right:8px;gap:8px;padding:9px 3px}}
-@media(max-width:700px){#dnScrollRail{right:5px;gap:5px;padding:7px 2px}#dnScrollRail:before{top:8px;bottom:8px}.dn-scroll-dot{width:13px;height:12px}#dnScrollReadout{left:5px}#dnScrollReadout .dn-scroll-line{height:48px;width:2px}#dnScrollProgress{height:2px}}
-@media(max-width:420px){#dnScrollRail{top:auto;bottom:18px;transform:none;gap:4px;padding:6px 2px}.dn-scroll-dot{width:12px;height:11px}#dnScrollReadout{top:auto;bottom:20px;transform:none}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#dnScrollProgressFill,.dn-scroll-dot,.dn-scroll-dot:before,.dn-scroll-dot .dn-scroll-tooltip,#dnScrollRail{transition:none!important}}
+@media(max-width:1100px){#dnScrollReadout{left:8px}#dnScrollReadout .dn-scroll-copy{display:none}#dnScrollReadout .dn-scroll-line{height:62px}#dnScrollRail{right:12px;width:2px;height:min(34vh,260px);min-height:120px}}
+@media(max-width:700px){#dnScrollRail{right:7px;height:24vh;min-height:100px;width:2px}#dnScrollReadout{left:5px}#dnScrollReadout .dn-scroll-line{height:48px;width:2px}#dnScrollProgress{height:2px}}
+@media(max-width:420px){#dnScrollRail{top:auto;bottom:18px;transform:none;height:18vh;min-height:78px}#dnScrollReadout{top:auto;bottom:20px;transform:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#dnScrollProgressFill,#dnScrollRailFill{transition:none!important}}
 </style>
 <script id="DICKY-RTX-SCROLL-CHROME-JS">
 (function(){
@@ -5211,25 +5204,18 @@ html{scroll-behavior:smooth;scroll-padding-top:86px}
   ].map(function(x){return {el:document.querySelector(x.selector),label:x.label}}).filter(function(x){return !!x.el});
   if(!items.length)return;
   var top=document.createElement('div');top.id='dnScrollProgress';top.setAttribute('aria-hidden','true');top.innerHTML='<div id="dnScrollProgressFill"></div>';
-  var rail=document.createElement('nav');rail.id='dnScrollRail';rail.setAttribute('aria-label','Navigasi posisi halaman');
+  var rail=document.createElement('div');rail.id='dnScrollRail';rail.setAttribute('aria-hidden','true');rail.innerHTML='<div id="dnScrollRailFill"></div>';
   var readout=document.createElement('div');readout.id='dnScrollReadout';readout.setAttribute('aria-hidden','true');readout.innerHTML='<div class="dn-scroll-line"><span></span></div><div class="dn-scroll-copy"><span class="dn-scroll-overline">SCROLL POSITION</span><span class="dn-scroll-number">00%</span><span class="dn-scroll-name">HOME</span></div>';
-  var buttons=[];
-  items.forEach(function(item,index){
-    var b=document.createElement('button');b.type='button';b.className='dn-scroll-dot';b.setAttribute('aria-label','Lompat ke '+item.label.toLowerCase());b.title=item.label;
-    b.innerHTML='<span class="dn-scroll-tooltip">'+item.label+'</span>';
-    b.addEventListener('click',function(){item.el.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});});
-    rail.appendChild(b);buttons.push(b);
-  });
   document.body.appendChild(top);document.body.appendChild(readout);document.body.appendChild(rail);
-  var fill=document.getElementById('dnScrollProgressFill'),line=readout.querySelector('.dn-scroll-line span'),number=readout.querySelector('.dn-scroll-number'),name=readout.querySelector('.dn-scroll-name');
+  var fill=document.getElementById('dnScrollProgressFill'),railFill=document.getElementById('dnScrollRailFill'),line=readout.querySelector('.dn-scroll-line span'),number=readout.querySelector('.dn-scroll-number'),name=readout.querySelector('.dn-scroll-name');
   var active=-1,queued=false;
   function update(){
     queued=false;
     var doc=document.documentElement,max=Math.max(1,doc.scrollHeight-window.innerHeight),y=Math.max(0,window.scrollY||doc.scrollTop),pct=Math.min(100,Math.max(0,y/max*100));
-    fill.style.width=pct.toFixed(2)+'%';line.style.height=pct.toFixed(2)+'%';number.textContent=String(Math.round(pct)).padStart(2,'0')+'%';
+    fill.style.width=pct.toFixed(2)+'%';railFill.style.height=pct.toFixed(2)+'%';line.style.height=pct.toFixed(2)+'%';number.textContent=String(Math.round(pct)).padStart(2,'0')+'%';
     var probe=y+Math.min(window.innerHeight*.34,230),next=0;
     items.forEach(function(item,i){if(item.el.getBoundingClientRect().top+y<=probe)next=i;});
-    if(next!==active){active=next;name.textContent=items[next].label;buttons.forEach(function(b,i){if(i===next)b.setAttribute('aria-current','location');else b.removeAttribute('aria-current');});}
+    if(next!==active){active=next;name.textContent=items[next].label;}
     rail.style.opacity=(y<10&&window.innerWidth<420)?'.76':'1';
   }
   function requestUpdate(){if(queued)return;queued=true;window.requestAnimationFrame(update);}
