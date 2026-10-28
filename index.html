@@ -5168,29 +5168,94 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
 </style>
 
 <style id="DICKY-RTX-SCROLL-CHROME">
-/* Keep the slim NVIDIA-inspired top reading progress bar only. */
-#dnScrollProgress{position:fixed;left:0;right:0;top:0;width:auto;height:3px;margin:0;padding:0;z-index:2147483000;pointer-events:none;background:rgba(255,255,255,.08);overflow:hidden;border-radius:0}
-#dnScrollProgressFill{height:100%;width:0;transform-origin:left center;background:linear-gradient(90deg,#426b00,#76b900 55%,#c1ff62);box-shadow:0 0 9px rgba(118,185,0,.38);will-change:width}
-@media(max-width:700px){#dnScrollProgress{height:2px}}
-@media(prefers-reduced-motion:reduce){#dnScrollProgressFill{transition:none!important}}
+/* Top-only scroll progress: stable geometry on desktop and mobile. */
+#dnScrollProgress{
+  position:fixed;top:0;left:0;right:0;width:auto;height:3px;
+  margin:0;padding:0;border:0;border-radius:0;
+  z-index:2147483000;display:block;overflow:hidden;
+  background:rgba(255,255,255,.10);
+  pointer-events:none;isolation:isolate;contain:strict;
+}
+#dnScrollProgressFill{
+  display:block;position:absolute;inset:0;
+  width:100%;height:100%;margin:0;padding:0;border:0;border-radius:0;
+  background:linear-gradient(90deg,#426b00 0%,#76b900 58%,#c1ff62 100%);
+  box-shadow:0 0 7px rgba(118,185,0,.32);
+  transform:scaleX(0);transform-origin:0 50%;
+  will-change:transform;backface-visibility:hidden;
+}
+@media(min-width:701px){
+  #dnScrollProgress{height:3px}
+}
+@media(max-width:700px){
+  #dnScrollProgress{height:2px}
+  #dnScrollProgressFill{box-shadow:0 0 4px rgba(118,185,0,.28)}
+}
+@media(prefers-reduced-motion:reduce){
+  #dnScrollProgressFill{will-change:auto}
+}
 </style>
 <script id="DICKY-RTX-SCROLL-CHROME-JS">
 (function(){
-  if(document.getElementById('dnScrollProgress'))return;
-  var top=document.createElement('div');top.id='dnScrollProgress';top.setAttribute('aria-hidden','true');top.innerHTML='<div id="dnScrollProgressFill"></div>';
-  document.body.appendChild(top);
-  var fill=document.getElementById('dnScrollProgressFill'),queued=false;
+  var existing=document.getElementById('dnScrollProgress');
+  if(existing){
+    var oldFill=document.getElementById('dnScrollProgressFill');
+    if(oldFill)oldFill.style.width='100%';
+    existing.remove();
+  }
+  var bar=document.createElement('div');
+  bar.id='dnScrollProgress';
+  bar.setAttribute('aria-hidden','true');
+  var fill=document.createElement('span');
+  fill.id='dnScrollProgressFill';
+  bar.appendChild(fill);
+  (document.body||document.documentElement).appendChild(bar);
+
+  var queued=false;
+  function getScrollMetrics(){
+    var root=document.scrollingElement||document.documentElement;
+    var body=document.body;
+    var totalHeight=Math.max(
+      root?root.scrollHeight:0,
+      document.documentElement?document.documentElement.scrollHeight:0,
+      body?body.scrollHeight:0
+    );
+    var viewportHeight=window.innerHeight||document.documentElement.clientHeight||1;
+    var maxScroll=Math.max(0,totalHeight-viewportHeight);
+    var y=window.scrollY;
+    if(typeof y!=='number'||!isFinite(y))y=root?root.scrollTop:0;
+    y=Math.max(0,Math.min(maxScroll,y||0));
+    return {y:y,max:maxScroll};
+  }
   function update(){
     queued=false;
-    var doc=document.documentElement,max=Math.max(1,doc.scrollHeight-window.innerHeight),y=Math.max(0,window.scrollY||doc.scrollTop),pct=Math.min(100,Math.max(0,y/max*100));
-    fill.style.width=pct.toFixed(2)+'%';
+    var m=getScrollMetrics();
+    var ratio=m.max>0?m.y/m.max:0;
+    ratio=Math.max(0,Math.min(1,ratio));
+    fill.style.transform='scaleX('+ratio.toFixed(5)+')';
+    fill.setAttribute('data-progress',String(Math.round(ratio*100)));
   }
-  function requestUpdate(){if(queued)return;queued=true;window.requestAnimationFrame(update);}
-  window.addEventListener('scroll',requestUpdate,{passive:true});
-  window.addEventListener('resize',requestUpdate,{passive:true});
-  window.addEventListener('load',requestUpdate,{once:true});
-  if('ResizeObserver'in window){var ro=new ResizeObserver(requestUpdate);ro.observe(document.body);}
-  update();
+  function schedule(){
+    if(queued)return;
+    queued=true;
+    window.requestAnimationFrame(update);
+  }
+  window.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',schedule,{passive:true});
+  window.addEventListener('orientationchange',schedule,{passive:true});
+  window.addEventListener('load',schedule,{once:true});
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',schedule,{passive:true});
+  }
+  if('ResizeObserver'in window){
+    var observer=new ResizeObserver(schedule);
+    observer.observe(document.documentElement);
+    if(document.body)observer.observe(document.body);
+  }
+  if(document.fonts&&document.fonts.ready){
+    document.fonts.ready.then(schedule).catch(function(){});
+  }
+  schedule();
 })();
 </script>
 </body>
