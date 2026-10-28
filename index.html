@@ -3912,7 +3912,29 @@ html body .app .hero-main-headline strong.nvidia-accent {
       </article>
 
     </div>
-    <div class="drop" id="drop"><strong id="dropTitle"></strong><p id="dropText"></p><p class="android-files-note"><strong>Android:</strong> pilih video melalui pemilih file di perangkat, misalnya <b>Files / File Manager</b>.</p><p class="ios-files-note"><strong>Khusus iPhone:</strong> pilih video dari aplikasi <b>File (Files)</b>.</p><input id="file" class="file" type="file" accept="*/*"></div>
+    <div class="drop" id="drop"><strong id="dropTitle"></strong><p id="dropText"></p><div class="upload-destination-guide" aria-label="Panduan upload HD ke platform">
+  <div class="upload-destination-title">PANDUAN UPLOAD HD</div>
+  <div class="upload-destination-flow">
+    <span class="upload-flow-node">Dicky News Method</span><span class="upload-flow-arrow" aria-hidden="true">→</span><span class="upload-flow-node">Pilih platform</span>
+  </div>
+  <div class="upload-destination-options">
+    <div class="upload-destination-option">
+      <div class="upload-destination-heading"><span aria-hidden="true">◆</span> Zernio Web</div>
+      <p>Bisa untuk upload video HD <strong>HDR maupun non-HDR</strong>.</p>
+      <a href="https://zernio.com/dashboard/posts-all" target="_blank" rel="noopener noreferrer">Buka Zernio Web ↗</a>
+    </div>
+    <div class="upload-destination-option">
+      <div class="upload-destination-heading"><span aria-hidden="true">▶</span> TikTok Web</div>
+      <p>Untuk upload video HD <strong>non-HDR saja</strong>.</p>
+      <a href="https://www.tiktok.com/tiktokstudio/upload?from=webapp&amp;tab=video" target="_blank" rel="noopener noreferrer">Buka TikTok Web ↗</a>
+    </div>
+  </div>
+  <ul class="upload-destination-rules">
+    <li>Bitrate video yang disarankan: <strong>10–30 Mbps</strong>.</li>
+    <li>Pastikan postingan langsung diatur ke <strong>Publik</strong>.</li>
+  </ul>
+</div>
+<p class="android-files-note"><strong>Android:</strong> pilih video melalui pemilih file di perangkat, misalnya <b>Files / File Manager</b>.</p><p class="ios-files-note"><strong>Khusus iPhone:</strong> pilih video dari aplikasi <b>File (Files)</b>.</p><input id="file" class="file" type="file" accept="*/*"></div>
       <article class="machine-card hdr-machine">
         <button class="mode-btn hdr-soon" id="hdrBtn" type="button" aria-disabled="false" title="Klik untuk mendapatkan mesin HDR">MESIN HDR <small id="hdrPrice" class="soon-label">KLIK DISINI</small></button>
         <details class="machine-details">
@@ -5020,6 +5042,28 @@ html body .app .grid>.card.upload > #drop .ios-files-note {
 html body .app .grid>.card.upload > #drop #file {
   margin-bottom:0!important;
 }
+</style>
+
+
+<style id="upload-destination-guide-style">
+html body .app .grid>.card.upload > #drop .upload-destination-guide {
+  width:100%;box-sizing:border-box;margin:0 0 5px;padding:8px;
+  border:1px solid rgba(118,185,0,.28);border-radius:12px;
+  background:linear-gradient(145deg,rgba(118,185,0,.055),rgba(15,17,13,.78));
+  color:#f2f2f2;font-size:11px;line-height:1.35;
+}
+.upload-destination-title{font-size:10px;font-weight:800;letter-spacing:.12em;color:#8ac919;margin:0 0 5px}
+.upload-destination-flow{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:7px}
+.upload-flow-node{padding:4px 7px;border:1px solid rgba(118,185,0,.3);border-radius:7px;font-weight:700;text-align:center}
+.upload-flow-arrow{color:#8ac919;font-weight:900}
+.upload-destination-options{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.upload-destination-option{min-width:0;padding:7px;border:1px solid rgba(255,255,255,.09);border-radius:9px;background:rgba(255,255,255,.025)}
+.upload-destination-heading{font-weight:800;color:#8ac919;font-size:11px;margin-bottom:3px}
+.upload-destination-option p{margin:0 0 5px;font-size:10.5px;line-height:1.35;color:#c9c9c9}
+.upload-destination-option a{display:inline-block;color:#62f3ff;font-weight:750;text-decoration:none;border-bottom:1px solid rgba(98,243,255,.4);padding-bottom:1px}
+.upload-destination-rules{margin:7px 0 0;padding:6px 0 0 15px;border-top:1px solid rgba(255,255,255,.09)}
+.upload-destination-rules li{margin:2px 0}
+@media(max-width:420px){.upload-destination-options{gap:5px}.upload-destination-option{padding:6px}.upload-destination-option p{font-size:10px}}
 </style>
 
 </body>
