@@ -4087,7 +4087,8 @@ async function loadPublicSettings(){
     for(const s of all){
       if(s.service_code===GOLDEN_PLATFORM.serviceCodes.sdr){if(Number.isFinite(Number(s.coin_cost)))servicePrices.sdr=Number(s.coin_cost);if(typeof s.is_active==='boolean')serviceActive.sdr=s.is_active;}
       if(s.service_code===GOLDEN_PLATFORM.serviceCodes.hdr){if(Number.isFinite(Number(s.coin_cost)))servicePrices.hdr=Number(s.coin_cost);serviceActive.hdr=false;}
-      if(Number.isFinite(Number(s.max_file_size_bytes))&&Number(s.max_file_size_bytes)>0)maxFileSizeBytes=Math.min(maxFileSizeBytes,Number(s.max_file_size_bytes));
+      // Only the selected SDR service controls customer upload size. Inactive HDR settings must never cap SDR uploads.
+      if(s.service_code===GOLDEN_PLATFORM.serviceCodes.sdr&&Number.isFinite(Number(s.max_file_size_bytes))&&Number(s.max_file_size_bytes)>0)maxFileSizeBytes=Math.min(maxFileSizeBytes,Number(s.max_file_size_bytes));
     }
     renderPrices();
   }catch(e){}
