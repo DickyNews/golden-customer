@@ -5259,71 +5259,52 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
 })();
 </script>
 <style id="nvidia-edge-pulse-style">
-/* Always-on-display inspired NVIDIA edge glow. CSS-only; preserve all page structure. */
+/* Keep only the crisp NVIDIA-green pulse line at each viewport edge; remove the wide haze. */
 #nvidiaStormLoader .storm-bolt{display:none!important;animation:none!important;opacity:0!important}
 .dn-nvidia-edge-pulse{
   position:fixed!important;top:0!important;bottom:0!important;
-  width:clamp(16px,2.2vw,30px)!important;height:100vh!important;height:100dvh!important;
+  width:8px!important;height:100vh!important;height:100dvh!important;
   display:block!important;visibility:visible!important;opacity:1!important;
-  overflow:hidden!important;pointer-events:none!important;user-select:none!important;
+  overflow:visible!important;pointer-events:none!important;user-select:none!important;
   z-index:2147483000!important;isolation:isolate!important;
   background:transparent!important;border:0!important;border-radius:0!important;
   box-shadow:none!important;contain:strict!important;
 }
 #dnNvidiaEdgePulseLeft{left:0!important;right:auto!important}
 #dnNvidiaEdgePulseRight{right:0!important;left:auto!important}
-.dn-nvidia-edge-pulse:before{
-  content:"";position:absolute;top:0;bottom:0;width:100%;opacity:.72;
-  background:linear-gradient(90deg,
-    rgba(118,185,0,0) 0%,
-    rgba(118,185,0,.04) 20%,
-    rgba(118,185,0,.22) 48%,
-    rgba(165,239,54,.6) 70%,
-    rgba(118,185,0,.12) 100%);
-  filter:blur(5px);
-  animation:dnNvidiaSideGlow 2.8s ease-in-out infinite;
-}
-#dnNvidiaEdgePulseLeft:before{left:0}
-#dnNvidiaEdgePulseRight:before{
-  right:0;transform:scaleX(-1);animation-delay:-1.4s;
-}
+.dn-nvidia-edge-pulse:before{display:none!important;content:none!important}
 .dn-nvidia-edge-pulse:after{
   content:"";position:absolute;top:0;bottom:0;width:2px;opacity:.8;
   background:linear-gradient(180deg,
     transparent 0%,
-    rgba(118,185,0,.12) 12%,
-    rgba(118,185,0,.55) 32%,
+    rgba(118,185,0,.18) 12%,
+    rgba(118,185,0,.7) 32%,
     #a5ef36 48%,
     #d5ff79 50%,
     #76b900 53%,
-    rgba(118,185,0,.45) 70%,
+    rgba(118,185,0,.55) 70%,
     transparent 100%);
-  filter:drop-shadow(0 0 4px rgba(118,185,0,.8)) drop-shadow(0 0 9px rgba(118,185,0,.45));
+  filter:drop-shadow(0 0 4px rgba(118,185,0,.9)) drop-shadow(0 0 8px rgba(118,185,0,.48));
   transform:scaleY(.72);
   transform-origin:center;
   animation:dnNvidiaSidePulse 2.8s ease-in-out infinite;
 }
 #dnNvidiaEdgePulseLeft:after{left:0}
 #dnNvidiaEdgePulseRight:after{right:0;animation-delay:-1.4s}
-@keyframes dnNvidiaSideGlow{
-  0%,100%{opacity:.28;filter:blur(6px);transform:scaleX(.72)}
-  50%{opacity:.9;filter:blur(4px);transform:scaleX(1)}
-}
 @keyframes dnNvidiaSidePulse{
-  0%,100%{opacity:.3;transform:scaleY(.62)}
+  0%,100%{opacity:.36;transform:scaleY(.66)}
   50%{opacity:1;transform:scaleY(1)}
 }
 @media(min-width:701px){
-  .dn-nvidia-edge-pulse{width:clamp(20px,2vw,32px)!important}
-  .dn-nvidia-edge-pulse:after{width:2px;filter:drop-shadow(0 0 5px rgba(118,185,0,.9)) drop-shadow(0 0 12px rgba(118,185,0,.5))}
+  .dn-nvidia-edge-pulse{width:8px!important}
+  .dn-nvidia-edge-pulse:after{width:2px;filter:drop-shadow(0 0 5px rgba(118,185,0,.95)) drop-shadow(0 0 10px rgba(118,185,0,.52))}
 }
 @media(max-width:700px){
-  .dn-nvidia-edge-pulse{width:20px!important}
-  .dn-nvidia-edge-pulse:before{filter:blur(4px)}
-  .dn-nvidia-edge-pulse:after{width:2px;filter:drop-shadow(0 0 5px rgba(118,185,0,.95)) drop-shadow(0 0 10px rgba(118,185,0,.6))}
+  .dn-nvidia-edge-pulse{width:6px!important}
+  .dn-nvidia-edge-pulse:after{width:2px;filter:drop-shadow(0 0 5px rgba(118,185,0,1)) drop-shadow(0 0 9px rgba(118,185,0,.6))}
 }
 @media(prefers-reduced-motion:reduce){
-  .dn-nvidia-edge-pulse:before,.dn-nvidia-edge-pulse:after{animation:none!important;opacity:.65;transform:none;filter:none}
+  .dn-nvidia-edge-pulse:after{animation:none!important;opacity:.75;transform:none;filter:none}
 }
 </style>
 <script id="nvidia-edge-pulse-script">
