@@ -4849,5 +4849,29 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
 
 
 
+
+<style id="compact-upload-density-fix">
+/* Compact the vertical whitespace marked in the customer screenshot. */
+.grid > .card.upload > .card-head { margin-bottom: 0 !important; }
+.grid > .card.upload > .mode-title { margin-top: 7px !important; margin-bottom: 5px !important; }
+.grid > .card.upload .free-inject-wrap { margin: 4px 0 7px !important; }
+.grid > .card.upload .free-inject-caption { margin-top: 5px !important; line-height: 1.4 !important; }
+.grid > .card.upload .machine-columns { margin-top: 5px !important; gap: 7px !important; }
+.grid > .card.upload .machine-card { padding: 6px !important; }
+.grid > .card.upload .machine-card > .mode-btn { flex: 0 0 78px !important; min-height: 78px !important; line-height: 1.25 !important; }
+.grid > .card.upload .machine-details { margin-top: 6px !important; }
+.grid > .card.upload .machine-details > summary { min-height: 32px !important; padding: 5px 10px !important; }
+.grid > .card.upload > .drop { flex: 0 0 auto !important; min-height: 0 !important; margin-top: 9px !important; padding: 12px 14px !important; gap: 0 !important; }
+.grid > .card.upload > .drop .android-files-note,
+.grid > .card.upload > .drop .ios-files-note { margin-top: 7px !important; line-height: 1.4 !important; }
+@media (max-width: 700px) {
+ .grid > .card.upload { padding-bottom: 12px !important; }
+ .grid > .card.upload > .mode-title { margin-top: 5px !important; }
+ .grid > .card.upload .free-inject-wrap { margin: 3px 0 6px !important; }
+ .grid > .card.upload .machine-card > .mode-btn { flex-basis: 74px !important; min-height: 74px !important; }
+ .grid > .card.upload > .drop { margin-top: 8px !important; padding: 10px 12px !important; }
+}
+</style>
+
 </body>
 </html>
