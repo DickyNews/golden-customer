@@ -4873,5 +4873,33 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
 }
 </style>
 
+
+<style id="compact-density-fix-v2">
+/* Further reduce oversized vertical gaps shown in the latest mobile screenshot. */
+#claimBox { padding-bottom: 10px !important; }
+#claimBox .claim-row { gap: 6px !important; }
+#claimBox .claim-row input { margin: 0 !important; }
+#claimBox .claim-row #claimKey { margin-top: 0 !important; }
+#claimBox .claim-help { margin-top: 6px !important; line-height: 1.35 !important; }
+.grid > .card.upload > .card-head .pill { display: none !important; }
+.grid > .card.upload > .mode-title { margin-top: 2px !important; margin-bottom: 2px !important; }
+.grid > .card.upload .free-inject-wrap { margin: 0 0 3px !important; }
+.grid > .card.upload .free-inject-caption { margin: 3px 0 0 !important; }
+.grid > .card.upload .machine-columns { margin-top: -4px !important; gap: 4px !important; }
+.grid > .card.upload .machine-card { padding: 4px !important; }
+.grid > .card.upload .machine-card > .mode-btn { flex: 0 0 68px !important; min-height: 68px !important; }
+.grid > .card.upload .machine-details { margin-top: 4px !important; }
+.grid > .card.upload .machine-details > summary { min-height: 28px !important; padding: 3px 8px !important; }
+.grid > .card.upload > .drop { margin-top: 5px !important; padding: 7px 10px !important; }
+.grid > .card.upload > .drop .android-files-note,
+.grid > .card.upload > .drop .ios-files-note { margin-top: 4px !important; padding: 8px 10px !important; }
+@media (max-width: 700px) {
+ #claimBox { padding-bottom: 8px !important; }
+ .grid > .card.upload { padding-top: 10px !important; padding-bottom: 8px !important; }
+ .grid > .card.upload .machine-card > .mode-btn { flex-basis: 64px !important; min-height: 64px !important; }
+ .grid > .card.upload > .drop { margin-top: 4px !important; padding: 6px 8px !important; }
+}
+</style>
+
 </body>
 </html>
