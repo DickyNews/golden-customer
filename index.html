@@ -5516,5 +5516,32 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
  .golden-scroll-left,.golden-scroll-rail{transition:none!important}
 }
 </style>
+
+<style id="DN_FIX_EDGE_LINES_STATIC_V2">
+/* The side-edge pulse was scaling vertically and looked like the green rails were jumping.
+   Keep both rails fixed to the viewport with constant dimensions and no animation. */
+.dn-nvidia-edge-pulse,
+#dnNvidiaEdgePulseLeft,
+#dnNvidiaEdgePulseRight{
+ position:fixed!important;top:0!important;bottom:0!important;
+ height:100vh!important;height:100dvh!important;
+ transform:none!important;translate:none!important;
+ animation:none!important;transition:none!important;
+ contain:strict!important;pointer-events:none!important;
+}
+#dnNvidiaEdgePulseLeft{left:0!important;right:auto!important}
+#dnNvidiaEdgePulseRight{right:0!important;left:auto!important}
+.dn-nvidia-edge-pulse:after,
+#dnNvidiaEdgePulseLeft:after,
+#dnNvidiaEdgePulseRight:after{
+ position:absolute!important;top:0!important;bottom:0!important;
+ height:100%!important;transform:none!important;scale:none!important;
+ animation:none!important;transition:none!important;
+ opacity:.72!important;transform-origin:center!important;
+}
+@media(prefers-reduced-motion:reduce){
+ .dn-nvidia-edge-pulse:after{animation:none!important;transform:none!important}
+}
+</style>
 </body>
 </html>
