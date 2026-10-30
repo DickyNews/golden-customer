@@ -4803,7 +4803,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
     const sizeText=size>=1024?(size/1024).toLocaleString('id-ID',{maximumFractionDigits:2})+' GB':size+' MB';
     const price=money(p.price_idr);
     const message='Halo, saya ingin berlangganan paket '+p.name+' Golden HD. Harga: '+price+'. Kuota: '+quota+' token/video. Maksimal ukuran file: '+sizeText+'/video. Masa aktif: '+days+' hari. Mohon informasi pembayaran dan aktivasi.';
-    return '<article style="padding:16px;border:1px solid rgba(255,255,255,.16);border-radius:15px;background:rgba(255,255,255,.035);display:flex;flex-direction:column;gap:8px"><b>'+esc(p.name)+'</b><strong style="font-size:22px;color:#62f3ff">'+price+'</strong><span>'+quota.toLocaleString('id-ID')+' Token Video</span><span>Maksimal '+quota.toLocaleString('id-ID')+' video diproses</span><span>Maks. '+esc(sizeText)+'/video</span><span>'+days+' hari</span><div style="margin-top:5px;padding-top:9px;border-top:1px solid rgba(255,255,255,.14);display:grid;gap:6px;font-size:12px;line-height:1.35"><b style="font-size:11px;letter-spacing:.5px">VIDEO FEATURES</b><span>✓　1080P 60 FPS — Active</span><span>✓　2K 60 FPS — Active</span><span>✓　4K 60 FPS — Active</span><span>✓　Ultra HDR with Dolby Vision — Active</span><span>✓　120 FPS processing follows your source video frame-rate profile</span><span>✓　All frame rates follow your source video by default</span></div><a href="https://wa.me/6289616438173?text='+encodeURIComponent(message)+'" target="_blank" rel="noopener noreferrer" style="margin-top:6px;text-align:center;text-decoration:none;padding:10px;border-radius:10px;background:#62f3ff;color:#061014;font-weight:800">Pilih Paket</a></article>';
+    return '<article style="padding:16px;border:1px solid rgba(255,255,255,.16);border-radius:15px;background:rgba(255,255,255,.035);display:flex;flex-direction:column;gap:8px"><b>'+esc(p.name)+'</b><div class="dn-package-price-wrap"><strong style="font-size:22px;color:#62f3ff">'+price+'</strong><small class="dn-usd-price" data-idr="'+Number(p.price_idr||0)+'">Menghitung USD…</small></div><span>'+quota.toLocaleString('id-ID')+' Token Video</span><span>Maksimal '+quota.toLocaleString('id-ID')+' video diproses</span><span>Maks. '+esc(sizeText)+'/video</span><span>'+days+' hari</span><div style="margin-top:5px;padding-top:9px;border-top:1px solid rgba(255,255,255,.14);display:grid;gap:6px;font-size:12px;line-height:1.35"><b style="font-size:11px;letter-spacing:.5px">VIDEO FEATURES</b><span>✓　1080P 60 FPS — Active</span><span>✓　2K 60 FPS — Active</span><span>✓　4K 60 FPS — Active</span><span>✓　Ultra HDR with Dolby Vision — Active</span><span>✓　120 FPS processing follows your source video frame-rate profile</span><span>✓　All frame rates follow your source video by default</span></div><a href="https://wa.me/6289616438173?text='+encodeURIComponent(message)+'" target="_blank" rel="noopener noreferrer" style="margin-top:6px;text-align:center;text-decoration:none;padding:10px;border-radius:10px;background:#62f3ff;color:#061014;font-weight:800">Pilih Paket</a></article>';
    }).join('')||'<p>Belum ada paket aktif.</p>';
    const badge=document.getElementById('subscriptionStatusBadge');badge.textContent='PAKET TERSINKRON';badge.className='badge ok';
   }catch(e){document.getElementById('subscriptionStatusBadge').textContent='API TIDAK TERSEDIA';plansEl.innerHTML='<p>Daftar paket belum dapat dimuat. Coba segarkan halaman.</p>'}
@@ -4912,7 +4912,7 @@ async function loadSubscriptionUsage(token){
    const size=Number(p.max_file_size_mb||0),sizeText=size>=1024?(size/1024).toLocaleString('id-ID',{maximumFractionDigits:2})+' GB':size+' MB';
    const msg='Halo, saya ingin berlangganan Golden VIP '+p.name+' '+fmt(p.price_idr)+' selama '+p.duration_days+' hari.';
    const li=(icon,label,extra='')=>'<li class="'+extra+'"><span class="vip-feature-icon">'+icon+'</span><span>'+safe(label)+'</span></li>';
-   return '<article class="vip-tier '+tier+'"><div class="vip-tier-top"><div class="vip-tier-icon" aria-hidden="true">♛</div><div><h3 class="vip-tier-name">VIP '+safe(p.name).toUpperCase()+'</h3><div class="vip-tier-label">Unlimited Token Video</div></div><span class="vip-tier-rank">VIP '+rank+'</span></div><p class="vip-tier-price">'+fmt(p.price_idr)+'</p><p class="vip-tier-desc">Masa aktif '+Number(p.duration_days)+' hari</p><ul class="vip-tier-features">'+li('∞','Unlimited Token')+li('▶','Unlimited Upload')+li('▣','Maks. '+safe(sizeText)+'/video')+li('◷','Masa aktif '+Number(p.duration_days)+' hari')+'<li class="vip-feature-heading" style="list-style:none"><span>Video Features</span></li>'+features.map(f=>li('✓',typeof f==='string'?f:(f.label||f.name||''),'vip-feature-extra')).join('')+'</ul><a class="vip-tier-cta" href="https://wa.me/6289616438173?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener noreferrer">♛ Pilih VIP '+safe(p.name)+' <span aria-hidden="true">›</span></a></article>';
+   return '<article class="vip-tier '+tier+'"><div class="vip-tier-top"><div class="vip-tier-icon" aria-hidden="true">♛</div><div><h3 class="vip-tier-name">VIP '+safe(p.name).toUpperCase()+'</h3><div class="vip-tier-label">Unlimited Token Video</div></div><span class="vip-tier-rank">VIP '+rank+'</span></div><p class="vip-tier-price">'+fmt(p.price_idr)+'</p><small class="dn-usd-price dn-vip-usd" data-idr="'+Number(p.price_idr||0)+'">Menghitung USD…</small><p class="vip-tier-desc">Masa aktif '+Number(p.duration_days)+' hari</p><ul class="vip-tier-features">'+li('∞','Unlimited Token')+li('▶','Unlimited Upload')+li('▣','Maks. '+safe(sizeText)+'/video')+li('◷','Masa aktif '+Number(p.duration_days)+' hari')+'<li class="vip-feature-heading" style="list-style:none"><span>Video Features</span></li>'+features.map(f=>li('✓',typeof f==='string'?f:(f.label||f.name||''),'vip-feature-extra')).join('')+'</ul><a class="vip-tier-cta" href="https://wa.me/6289616438173?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener noreferrer">♛ Pilih VIP '+safe(p.name)+' <span aria-hidden="true">›</span></a></article>';
   }).join('');
  }catch(e){console.warn('VIP public sync gagal; mempertahankan kartu VIP bawaan.',e)}
 })();
@@ -5748,5 +5748,58 @@ body{position:relative!important;min-height:100%!important}
  background:transparent!important;text-shadow:none!important;
 }
 </style>
+
+<style id="DN_DYNAMIC_USD_PACKAGE_PRICES_V1">
+.dn-package-price-wrap{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.dn-usd-price{display:block;color:#a8b99a;font-size:11px;font-weight:650;line-height:1.35;letter-spacing:.01em}
+#vip-packages .dn-vip-usd{margin:-1px 0 7px 1px;color:#a9b99c;font-size:11px}
+@media(max-width:480px){.dn-usd-price{font-size:10px}}
+</style>
+<script id="DN_DYNAMIC_USD_PACKAGE_PRICES_V1">
+(function(){
+ const FALLBACK_IDR_PER_USD=18128; // BI reference mid-rate, 30 Oct 2026; used only if live rate is unavailable.
+ let idrPerUsd=FALLBACK_IDR_PER_USD;
+ const moneyUSD=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2}).format(n);
+ function render(root){
+  (root||document).querySelectorAll('.dn-usd-price[data-idr]').forEach(el=>{
+   const idr=Number(el.getAttribute('data-idr'));
+   if(!Number.isFinite(idr)||idr<0)return;
+   const value=moneyUSD(idr/idrPerUsd);
+   const stamp=String(idrPerUsd);
+   if(el.dataset.rate===stamp&&el.textContent===('≈ '+value+' USD'))return;
+   el.textContent='≈ '+value+' USD';
+   el.dataset.rate=stamp;
+   el.title='Estimasi konversi; kurs referensi 1 USD = Rp'+Math.round(idrPerUsd).toLocaleString('id-ID');
+  });
+ }
+ async function refreshRate(){
+  try{
+   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),2500);
+   const response=await fetch('https://open.er-api.com/v6/latest/IDR',{cache:'no-store',signal:controller.signal});
+   clearTimeout(timer);
+   if(!response.ok)throw new Error('Kurs API HTTP '+response.status);
+   const data=await response.json(),usd=Number(data&&data.rates&&data.rates.USD);
+   if(data.result!=='success'||!Number.isFinite(usd)||usd<=0)throw new Error('Kurs USD tidak valid');
+   idrPerUsd=1/usd;
+  }catch(error){console.warn('Kurs USD memakai referensi cadangan:',error)}
+  render(document);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>render(document),{once:true});
+ else render(document);
+ const observer=new MutationObserver(records=>{
+  for(const record of records){
+   if(record.type==='childList'){
+    record.addedNodes.forEach(node=>{
+     if(node.nodeType!==1)return;
+     if(node.matches&&node.matches('.dn-usd-price[data-idr]'))render(node.parentNode||document);
+     else if(node.querySelectorAll)render(node);
+    });
+   }else if(record.type==='attributes')render(record.target.parentNode||document);
+  }
+ });
+ observer.observe(document.documentElement,{childList:true,subtree:true});
+ refreshRate();
+})();
+</script>
 </body>
 </html>
