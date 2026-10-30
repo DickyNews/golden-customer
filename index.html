@@ -5492,5 +5492,29 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
 <style id="DN_REMOVE_TOP_NAV_V3">
 .golden-scroll-topbar{display:none!important}
 </style>
+
+<style id="DN_STABILIZE_SIDE_SCROLL_GUIDES_V1">
+/* Keep the left/right scroll guides anchored; only opacity may change. */
+.golden-scroll-left{
+ position:fixed!important;left:16px!important;top:50%!important;bottom:auto!important;
+ transform:translateY(-50%)!important;translate:0 0!important;
+ transition:opacity .18s ease!important;animation:none!important;
+ will-change:opacity!important;
+}
+.golden-scroll-rail{
+ position:fixed!important;right:17px!important;top:50%!important;bottom:auto!important;
+ transform:translateY(-50%)!important;translate:0 0!important;
+ transition:opacity .18s ease!important;animation:none!important;
+ will-change:opacity!important;
+}
+.golden-scroll-left.is-visible,.golden-scroll-rail.is-visible{translate:0 0!important}
+@media(max-width:900px){
+ .golden-scroll-left{left:8px!important;right:auto!important;top:auto!important;bottom:14px!important;transform:none!important}
+ .golden-scroll-rail{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .golden-scroll-left,.golden-scroll-rail{transition:none!important}
+}
+</style>
 </body>
 </html>
