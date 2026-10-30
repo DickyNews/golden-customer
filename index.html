@@ -5569,5 +5569,29 @@ body{position:relative!important;min-height:100%!important}
  opacity:.72!important;filter:none!important;
 }
 </style>
+
+<style id="DN_RESTORE_VIEWPORT_EDGE_LINES_V4">
+/* Restore side accents to the visible browser viewport. Do not anchor them to document height. */
+.dn-nvidia-edge-pulse,
+#dnNvidiaEdgePulseLeft,
+#dnNvidiaEdgePulseRight{
+ position:fixed!important;
+ top:0!important;bottom:0!important;
+ height:auto!important;min-height:0!important;
+ transform:none!important;translate:none!important;
+ animation:none!important;transition:none!important;
+ contain:strict!important;pointer-events:none!important;
+}
+#dnNvidiaEdgePulseLeft{left:0!important;right:auto!important}
+#dnNvidiaEdgePulseRight{right:0!important;left:auto!important}
+.dn-nvidia-edge-pulse:after,
+#dnNvidiaEdgePulseLeft:after,
+#dnNvidiaEdgePulseRight:after{
+ top:0!important;bottom:0!important;height:auto!important;
+ transform:none!important;scale:none!important;
+ animation:none!important;transition:none!important;
+ opacity:.72!important;filter:none!important;
+}
+</style>
 </body>
 </html>
