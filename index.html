@@ -5543,5 +5543,31 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
  .dn-nvidia-edge-pulse:after{animation:none!important;transform:none!important}
 }
 </style>
+
+<style id="DN_ANCHOR_EDGE_LINES_TO_DOCUMENT_V3">
+/* Anchor the green side rails to the document, not the mobile visual viewport.
+   Mobile browser chrome expands/collapses the visual viewport and makes fixed 100vh rails appear to stretch. */
+html{position:relative!important}
+body{position:relative!important;min-height:100%!important}
+.dn-nvidia-edge-pulse,
+#dnNvidiaEdgePulseLeft,
+#dnNvidiaEdgePulseRight{
+ position:absolute!important;top:0!important;bottom:0!important;
+ height:auto!important;min-height:100%!important;
+ transform:none!important;translate:none!important;
+ animation:none!important;transition:none!important;
+ contain:strict!important;pointer-events:none!important;
+}
+#dnNvidiaEdgePulseLeft{left:0!important;right:auto!important}
+#dnNvidiaEdgePulseRight{right:0!important;left:auto!important}
+.dn-nvidia-edge-pulse:after,
+#dnNvidiaEdgePulseLeft:after,
+#dnNvidiaEdgePulseRight:after{
+ top:0!important;bottom:0!important;height:auto!important;
+ transform:none!important;scale:none!important;
+ animation:none!important;transition:none!important;
+ opacity:.72!important;filter:none!important;
+}
+</style>
 </body>
 </html>
