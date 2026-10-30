@@ -5662,5 +5662,65 @@ body{position:relative!important;min-height:100%!important}
 .dn-usage-note{display:block;margin-top:10px;color:#82907a;font-size:9px;line-height:1.45}
 @media(max-width:480px){.dn-active-plan{padding:14px}.dn-plan-head h3{font-size:19px}.dn-plan-days{min-width:68px;padding:9px}.dn-plan-days b{font-size:23px}.dn-plan-metric{padding:10px}.dn-plan-metric b{font-size:12px}.dn-usage-total{font-size:24px}}
 </style>
+
+<style id="DN_NVIDIA_PAYMENT_HISTORY_V1">
+/* Unified restrained NVIDIA graphite styling for payment methods and job history. */
+#payment-options .payment-options-panel{
+ background:linear-gradient(145deg,#0b1008 0%,#10170c 55%,#080b07 100%)!important;
+ color:#edf3e7!important;border:1px solid rgba(118,185,0,.42)!important;
+ border-radius:20px!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.045),0 12px 28px rgba(0,0,0,.3)!important;
+}
+#payment-options .payment-options-kicker{color:#91c83a!important}
+#payment-options .payment-options-heading h2{color:#f2f5ee!important}
+#payment-options .payment-options-heading p{color:#aab5a2!important}
+#payment-options .payment-option{
+ background:linear-gradient(145deg,#151d11,#0c110a)!important;
+ border:1px solid rgba(118,185,0,.3)!important;border-radius:14px!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.045),0 5px 14px rgba(0,0,0,.2)!important;
+ transition:border-color .18s ease,background .18s ease!important;
+}
+#payment-options .payment-option:hover{
+ background:linear-gradient(145deg,#1b2812,#10170b)!important;
+ border-color:rgba(118,185,0,.65)!important;
+}
+#payment-options .payment-option-name{color:#edf3e7!important}
+#payment-options .payment-logo-fallback{color:#e8f0df!important}
+#payment-options .payment-options-note{color:#9aa792!important}
+#payment-options .payment-option:focus-visible{outline:2px solid #76b900!important;outline-offset:3px!important}
+
+#job-history{
+ padding:20px!important;border:1px solid rgba(118,185,0,.38)!important;
+ border-radius:20px!important;background:linear-gradient(145deg,#090d07,#0d1309 60%,#080b07)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.04),0 12px 26px rgba(0,0,0,.25)!important;
+ color:#edf3e7!important;
+}
+#job-history .history-toolbar h2{color:#f2f5ee!important}
+#job-history #refreshHistory{
+ color:#eaf4df!important;background:linear-gradient(145deg,#19240e,#10170b)!important;
+ border:1px solid rgba(118,185,0,.55)!important;box-shadow:inset 0 1px rgba(255,255,255,.07),0 4px 12px rgba(0,0,0,.24)!important;
+}
+#job-history .history-item{
+ background:linear-gradient(145deg,rgba(22,32,14,.96),rgba(10,15,9,.98))!important;
+ border:1px solid rgba(118,185,0,.34)!important;border-radius:15px!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.04),0 5px 14px rgba(0,0,0,.18)!important;
+}
+#job-history .history-name{color:#f0f4eb!important}
+#job-history .history-meta{color:#a5b09c!important}
+#job-history .history-status.completed{
+ color:#a5db63!important;border-color:rgba(118,185,0,.4)!important;background:rgba(118,185,0,.1)!important;
+}
+#job-history .history-status.failed{
+ color:#ff9a9a!important;border-color:rgba(255,114,114,.3)!important;background:rgba(255,114,114,.08)!important;
+}
+#job-history .history-status.queued,#job-history .history-status.processing{
+ color:#c4df8d!important;border-color:rgba(166,205,95,.3)!important;background:rgba(118,185,0,.08)!important;
+}
+#job-history .history-empty{color:#a5b09c!important;border-color:rgba(118,185,0,.3)!important}
+@media(max-width:600px){
+ #job-history{padding:14px!important}
+ #payment-options .payment-options-panel{padding:14px!important}
+}
+</style>
 </body>
 </html>
