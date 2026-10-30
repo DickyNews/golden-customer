@@ -4502,6 +4502,19 @@ function setWallet(d){
   if(walletProgressHead)walletProgressHead.textContent='Akses langganan aktif';
   if(walletProgressBar)walletProgressBar.style.width='0%';
 }
+let customerLastActivity=Date.now();
+['pointerdown','keydown','touchstart','wheel','click'].forEach(eventName=>{
+  window.addEventListener(eventName,()=>{customerLastActivity=Date.now();},{passive:true});
+});
+function maintainActiveCustomerSession(){
+  const token=localStorage.getItem('golden_customer_session_token');
+  const recentlyActive=(Date.now()-customerLastActivity)<8*60*1000;
+  if(token&&document.visibilityState==='visible'&&(recentlyActive||processing))loadWallet();
+}
+setInterval(maintainActiveCustomerSession,3*60*1000);
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible')maintainActiveCustomerSession();
+});
 async function loadWallet(){
   try{
     const r=await fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.wallet,{credentials:"include",cache:"no-store",headers:customerAuthHeaders()});
