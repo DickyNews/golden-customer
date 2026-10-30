@@ -5399,24 +5399,20 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
  const progress=document.createElement('div');
  progress.className='golden-scroll-progress';progress.setAttribute('aria-hidden','true');
  progress.innerHTML='<i></i>';
- const top=document.createElement('nav');
- top.className='golden-scroll-topbar';top.setAttribute('aria-label','Navigasi halaman Dicky News Method');
- top.innerHTML='<a class="golden-scroll-brand" href="#top" aria-label="Kembali ke atas"><span class="golden-scroll-brand-mark">DN</span><span>DICKY NEWS METHOD</span></a><div class="golden-scroll-links">'+items.map(x=>'<a href="#'+x.id+'" data-scroll-target="'+x.id+'">'+x.label+'</a>').join('')+'</div>';
  const left=document.createElement('aside');
  left.className='golden-scroll-left';left.setAttribute('aria-live','polite');
  left.innerHTML='<span class="golden-scroll-kicker">SCROLL PROGRESS</span><strong class="golden-scroll-section">INTRODUCTION</strong><span class="golden-scroll-percent">0% · 0 / '+items.length+'</span>';
  const rail=document.createElement('nav');
  rail.className='golden-scroll-rail';rail.setAttribute('aria-label','Posisi bagian halaman');
  rail.innerHTML=items.map((x,i)=>'<a class="golden-scroll-dot" href="#'+x.id+'" data-scroll-target="'+x.id+'" aria-label="'+x.label+'" title="'+x.label+'"></a>').join('');
- document.body.append(progress,top,left,rail);
+ document.body.append(progress,left,rail);
  const bar=progress.querySelector('i'),sectionText=left.querySelector('.golden-scroll-section'),percentText=left.querySelector('.golden-scroll-percent');
- const links=[...top.querySelectorAll('[data-scroll-target]')],dots=[...rail.querySelectorAll('[data-scroll-target]')];
+ const dots=[...rail.querySelectorAll('[data-scroll-target]')];
  let active=0,scheduled=false;
  function activate(index){
   active=Math.max(0,Math.min(items.length-1,index));
   const label=items[active].label;
   sectionText.textContent=label;
-  links.forEach(a=>a.classList.toggle('is-active',a.dataset.scrollTarget===items[active].id));
   dots.forEach(a=>a.classList.toggle('is-active',a.dataset.scrollTarget===items[active].id));
  }
  function update(){
@@ -5430,7 +5426,6 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
   items.forEach((item,i)=>{const el=document.getElementById(item.id);if(el&&el.getBoundingClientRect().top<=y)next=i});
   activate(next);
   const show=window.scrollY>220;
-  top.classList.toggle('is-visible',show);
   left.classList.toggle('is-visible',window.scrollY>180);
   rail.classList.toggle('is-visible',window.scrollY>280);
  }
@@ -5444,7 +5439,7 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
   target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
   history.replaceState(null,'','#'+link.dataset.scrollTarget);
  }
- top.addEventListener('click',goTo);rail.addEventListener('click',goTo);
+ rail.addEventListener('click',goTo);
  window.addEventListener('scroll',schedule,{passive:true});
  window.addEventListener('resize',schedule,{passive:true});
  window.addEventListener('load',schedule,{once:true});
@@ -5492,6 +5487,10 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
  .golden-scroll-links{gap:14px!important}
  .golden-scroll-links a{font-size:9px!important;letter-spacing:.015em!important}
 }
+</style>
+
+<style id="DN_REMOVE_TOP_NAV_V3">
+.golden-scroll-topbar{display:none!important}
 </style>
 </body>
 </html>
