@@ -4463,7 +4463,7 @@ async function uploadVideo(f){
   }finally{processing=false;}
 }
 
-file.onchange=()=>{const f=file.files[0];if(!f)return;const supportedVideoExt=/\.(mp4|mov|m4v|webm|mkv)$/i.test(f.name);const supportedVideoMime=!f.type||/^video\/(mp4|quicktime|x-m4v|webm|x-matroska|matroska|mkv)$/i.test(f.type);if(!supportedVideoExt||!supportedVideoMime){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Format Video Tidak Didukung';document.getElementById('modalText').textContent='Pilih video MP4, MOV, WEBM, atau MKV dari Recent/Terkini atau penyimpanan perangkat.';return}if(!serviceActive[selectedMode]){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Layanan Tidak Tersedia';document.getElementById('modalText').textContent='Mode yang dipilih sedang dinonaktifkan oleh admin.';return}title.textContent=f.name;text.textContent=(f.size/1048576).toFixed(1)+' MB · '+(selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD')+' · Paket Langganan';if(f.size>maxFileSizeBytes){modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Ukuran Video Melebihi Batas';document.getElementById('modalText').textContent='Ukuran file '+(f.size/1048576).toFixed(1)+' MB, sedangkan batas layanan '+(maxFileSizeBytes/1048576).toFixed(0)+' MB. Pilih file yang lebih kecil.';return}uploadVideo(f);};
+file.onchange=()=>{const f=file.files[0];if(!f)return;const supportedVideoExt=/\.(mp4|mov|m4v|webm|mkv)$/i.test(f.name);const supportedVideoMime=!f.type||/^video\/(mp4|quicktime|x-m4v|webm|x-matroska|matroska|mkv)$/i.test(f.type);if(!supportedVideoExt||!supportedVideoMime){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Format Video Tidak Didukung';document.getElementById('modalText').textContent='Pilih video MP4, MOV, WEBM, atau MKV dari Recent/Terkini atau penyimpanan perangkat.';return}if(!serviceActive[selectedMode]){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Layanan Tidak Tersedia';document.getElementById('modalText').textContent='Mode yang dipilih sedang dinonaktifkan oleh admin.';return}title.textContent='Video siap diproses';text.textContent=(f.size/1048576).toFixed(1)+' MB · '+(selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD')+' · Paket Langganan';if(f.size>maxFileSizeBytes){modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Ukuran Video Melebihi Batas';document.getElementById('modalText').textContent='Ukuran file '+(f.size/1048576).toFixed(1)+' MB, sedangkan batas layanan '+(maxFileSizeBytes/1048576).toFixed(0)+' MB. Pilih file yang lebih kecil.';return}uploadVideo(f);};
 
 ['dragenter','dragover'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>{if(e.dataTransfer.files.length){file.files=e.dataTransfer.files;file.dispatchEvent(new Event('change'))}});
 close.onclick=()=>{modal.classList.remove('show');close.textContent='Tutup';const result=document.getElementById('downloadResult');if(result)result.remove();};buy.onclick=()=>{window.open('https://wa.me/6289616438173?text='+encodeURIComponent('Halo Bang, Saya Mau Isi Paket'),'_blank','noopener')};document.getElementById('claimKey').onclick=()=>{const key=document.getElementById('claimKeyInput').value.trim();if(!key){document.getElementById('claimKeyInput').focus();return}modal.classList.add('show');document.getElementById('modalTitle').textContent='Claim Akun';document.getElementById('modalText').textContent='Key diterima. Verifikasi akun akan dilakukan oleh API server.'};
@@ -5387,13 +5387,13 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
  if(window.__dickyGoldenScrollNav)return;
  window.__dickyGoldenScrollNav=true;
  const items=[
-  {id:'method-flow',label:'FLOW'},
+  {id:'method-flow',label:'ALUR'},
   {id:'bitrate-ideal',label:'BITRATE'},
   {id:'uploadSection',label:'UPLOAD'},
   {id:'subscriptionPanel',label:'PAKET'},
   {id:'vip-packages',label:'VIP'},
   {id:'payment-options',label:'PEMBAYARAN'},
-  {id:'tiktok-analytics',label:'ANALYTICS'}
+  {id:'tiktok-analytics',label:'ANALITIK'}
  ].filter(x=>document.getElementById(x.id));
  if(!items.length)return;
  const progress=document.createElement('div');
@@ -5451,5 +5451,47 @@ html body .app .grid>.card.upload > #drop .upload-destination-rules strong {
  update();
 })();
 </script>
+
+<style id="DN_NVIDIA_NAV_REFINEMENT_V2">
+/* Restrained NVIDIA-inspired navigation: matte graphite, one green active cue, no neon glass buttons. */
+.golden-scroll-topbar{
+  min-height:58px!important;padding:8px clamp(12px,3vw,30px)!important;
+  justify-content:flex-start!important;gap:clamp(12px,2vw,28px)!important;
+  background:rgba(8,10,9,.96)!important;border-bottom:1px solid rgba(118,185,0,.24)!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.32)!important;backdrop-filter:blur(16px)!important;
+}
+.golden-scroll-brand{font-size:11px!important;letter-spacing:.09em!important;color:#f0f2ed!important;gap:10px!important}
+.golden-scroll-brand-mark{width:29px!important;height:29px!important;border-radius:7px!important;background:#76b900!important;color:#10150b!important;box-shadow:none!important}
+.golden-scroll-links{justify-content:flex-start!important;gap:clamp(12px,2vw,25px)!important;overflow-x:auto!important}
+.golden-scroll-links a{
+  position:relative!important;padding:11px 1px!important;border:0!important;border-radius:0!important;
+  background:transparent!important;color:#aeb4aa!important;font-size:11px!important;
+  font-weight:650!important;letter-spacing:.045em!important;box-shadow:none!important;
+}
+.golden-scroll-links a:hover,.golden-scroll-links a.is-active{
+  color:#f3f6ef!important;border:0!important;background:transparent!important;
+}
+.golden-scroll-links a.is-active:after{
+  content:"";position:absolute;left:0;right:0;bottom:2px;height:2px;
+  background:#76b900;border-radius:2px;box-shadow:0 0 8px rgba(118,185,0,.28);
+}
+.golden-scroll-progress>i{background:#76b900!important;box-shadow:0 0 7px rgba(118,185,0,.35)!important}
+.golden-scroll-left,.golden-scroll-rail{background:rgba(10,13,10,.94)!important;border-color:rgba(118,185,0,.2)!important;box-shadow:0 8px 24px rgba(0,0,0,.28)!important}
+.golden-scroll-kicker{color:#8fbd45!important}
+.golden-scroll-dot:hover,.golden-scroll-dot.is-active{background:#76b900!important;border-color:#a4d65b!important;box-shadow:0 0 8px rgba(118,185,0,.28)!important}
+@media(max-width:900px){
+ .golden-scroll-topbar{gap:12px!important;padding:7px 12px!important}
+ .golden-scroll-brand{font-size:9px!important}
+ .golden-scroll-links{gap:15px!important}
+ .golden-scroll-links a{font-size:10px!important;padding:10px 0!important}
+}
+@media(max-width:480px){
+ .golden-scroll-topbar{gap:10px!important;padding:7px 10px!important}
+ .golden-scroll-brand span:last-child{display:none!important}
+ .golden-scroll-brand-mark{width:27px!important;height:27px!important}
+ .golden-scroll-links{gap:14px!important}
+ .golden-scroll-links a{font-size:9px!important;letter-spacing:.015em!important}
+}
+</style>
 </body>
 </html>
