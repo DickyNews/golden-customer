@@ -4435,7 +4435,7 @@ async function uploadVideo(f){
         }
         hideProgress();
         document.getElementById('modalTitle').textContent='Unduhan belum selesai';
-        document.getElementById('modalText').textContent='Unduhan gagal: +(e.message||'Kesalahan jaringan')+'.'+failureNote+(transferComplete?' Transfer video sudah diterima browser; refund tidak diminta.':' Tekan tombol untuk mencoba lagi.');
+        document.getElementById('modalText').textContent='Unduhan gagal: '+(e.message||'Kesalahan jaringan')+'.'+failureNote+(transferComplete?' Transfer video sudah diterima browser; refund tidak diminta.':' Tekan tombol untuk mencoba lagi.');
         a.textContent='COBA UNDUH LAGI';
         close.style.display='block';
       }finally{
