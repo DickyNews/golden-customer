@@ -4813,7 +4813,7 @@ async function loadSubscriptionUsage(token){
  const cacheKey='dn_subscription_usage_v1';
  try{
   const cached=window.__dnUsageCache;
-  let totals=cached&&Date.now()-cached.at<60000?cached.data:null;
+  let totals=cached&&cached.token===token&&Date.now()-cached.at<60000?cached.data:null;
   if(!totals){
    let offset=0,scanned=0,completed=0,input=0,output=0,partial=false;
    while(scanned<5000){
@@ -4832,7 +4832,7 @@ async function loadSubscriptionUsage(token){
    }
    if(scanned>=5000)partial=true;
    totals={completed,input,output,total:input+output,partial};
-   window.__dnUsageCache={at:Date.now(),data:totals};
+   window.__dnUsageCache={at:Date.now(),token,data:totals};
   }
   const fmt=n=>{n=Math.max(0,Number(n)||0);if(n>=1024**3)return (n/1024**3).toLocaleString('id-ID',{maximumFractionDigits:2})+' GB';if(n>=1024**2)return (n/1024**2).toLocaleString('id-ID',{maximumFractionDigits:1})+' MB';if(n>=1024)return (n/1024).toLocaleString('id-ID',{maximumFractionDigits:1})+' KB';return n.toLocaleString('id-ID')+' B';};
   box.innerHTML='<div class="dn-usage-title">TOTAL DATA USAGE</div><div class="dn-usage-total">'+fmt(totals.total)+'</div><div class="dn-usage-breakdown"><span>Input video <b>'+fmt(totals.input)+'</b></span><span>Output hasil <b>'+fmt(totals.output)+'</b></span><span>Job selesai <b>'+totals.completed.toLocaleString('id-ID')+'</b></span></div>'+(totals.partial?'<small class="dn-usage-note">Ringkasan dibatasi 5.000 riwayat terbaru.</small>':'<small class="dn-usage-note">Akumulasi seluruh riwayat job selesai yang tersedia.</small>');
