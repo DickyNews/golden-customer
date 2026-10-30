@@ -4808,6 +4808,36 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
    const badge=document.getElementById('subscriptionStatusBadge');badge.textContent='PAKET TERSINKRON';badge.className='badge ok';
   }catch(e){document.getElementById('subscriptionStatusBadge').textContent='API TIDAK TERSEDIA';plansEl.innerHTML='<p>Daftar paket belum dapat dimuat. Coba segarkan halaman.</p>'}
  }
+async function loadSubscriptionUsage(token){
+ const box=document.getElementById('dnSubscriptionUsage');if(!box)return;
+ const cacheKey='dn_subscription_usage_v1';
+ try{
+  const cached=window.__dnUsageCache;
+  let totals=cached&&Date.now()-cached.at<60000?cached.data:null;
+  if(!totals){
+   let offset=0,scanned=0,completed=0,input=0,output=0,partial=false;
+   while(scanned<5000){
+    const r=await fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.upload+'?limit=100&offset='+offset,{credentials:'include',cache:'no-store',headers:{Authorization:'Bearer '+token}});
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    const payload=await r.json();
+    const rows=Array.isArray(payload)?payload:(Array.isArray(payload.jobs)?payload.jobs:[]);
+    for(const job of rows){
+     const status=String(job.status||'').toLowerCase();
+     if(['completed','complete','done'].includes(status)){
+      completed++;input+=Number(job.input_size_bytes)||0;output+=Number(job.output_size_bytes)||0;
+     }
+    }
+    scanned+=rows.length;offset+=rows.length;
+    if(rows.length<100)break;
+   }
+   if(scanned>=5000)partial=true;
+   totals={completed,input,output,total:input+output,partial};
+   window.__dnUsageCache={at:Date.now(),data:totals};
+  }
+  const fmt=n=>{n=Math.max(0,Number(n)||0);if(n>=1024**3)return (n/1024**3).toLocaleString('id-ID',{maximumFractionDigits:2})+' GB';if(n>=1024**2)return (n/1024**2).toLocaleString('id-ID',{maximumFractionDigits:1})+' MB';if(n>=1024)return (n/1024).toLocaleString('id-ID',{maximumFractionDigits:1})+' KB';return n.toLocaleString('id-ID')+' B';};
+  box.innerHTML='<div class="dn-usage-title">TOTAL DATA USAGE</div><div class="dn-usage-total">'+fmt(totals.total)+'</div><div class="dn-usage-breakdown"><span>Input video <b>'+fmt(totals.input)+'</b></span><span>Output hasil <b>'+fmt(totals.output)+'</b></span><span>Job selesai <b>'+totals.completed.toLocaleString('id-ID')+'</b></span></div>'+(totals.partial?'<small class="dn-usage-note">Ringkasan dibatasi 5.000 riwayat terbaru.</small>':'<small class="dn-usage-note">Akumulasi seluruh riwayat job selesai yang tersedia.</small>');
+ }catch(e){box.innerHTML='<div class="dn-usage-title">TOTAL DATA USAGE</div><div class="dn-usage-total">Belum tersedia</div><small class="dn-usage-note">Data penggunaan belum dapat dimuat. Informasi paket dan kuota tetap aktif.</small>';}
+}
  async function loadCurrent(){
   const el=document.getElementById('customerSubscriptionCurrent');
   const token=localStorage.getItem('golden_customer_session_token');
@@ -4818,9 +4848,17 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
    const d=await r.json(),s=d.subscription;
    if(!s){el.innerHTML='<div class="active-plan-empty">Belum ada paket langganan aktif pada akun ini.</div>';const summary=document.getElementById('priceSummary');if(summary){summary.textContent='Belum ada paket';summary.dataset.activePlan='';}return}
    if(typeof maxFileSizeBytes!=='undefined')maxFileSizeBytes=Math.min(maxFileSizeBytes,Number(s.max_file_size_bytes)||maxFileSizeBytes);
-   const exp=new Date(s.expires_at).toLocaleString('id-ID');
+   const expDate=new Date(s.expires_at),startDate=new Date(s.starts_at),now=new Date();
+   const exp=Number.isNaN(expDate.getTime())?'—':expDate.toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'});
+   const starts=Number.isNaN(startDate.getTime())?'—':startDate.toLocaleDateString('id-ID',{dateStyle:'medium'});
+   const remainingDays=Number.isNaN(expDate.getTime())?null:Math.max(0,Math.ceil((expDate-now)/86400000));
+   const quota=Number(s.process_quota)||0,used=Number(s.processes_used)||0,left=Number(s.processes_remaining??Math.max(0,quota-used))||0;
+   const quotaPct=quota>0?Math.min(100,Math.max(0,used/quota*100)):0;
+   const maxMb=Number(s.max_file_size_mb)||0;
+   const sizeLabel=maxMb>=1024?(maxMb/1024).toLocaleString('id-ID',{maximumFractionDigits:2})+' GB':maxMb.toLocaleString('id-ID',{maximumFractionDigits:0})+' MB';
    const planLabel=String(s.plan_name||s.plan_code||'Paket Langganan');const summary=document.getElementById('priceSummary');if(summary){summary.textContent=planLabel;summary.dataset.activePlan='true';summary.title='Paket layanan aktif: '+planLabel;}
-   el.innerHTML='<div class="active-plan-card active-plan-compact"><span class="active-plan-check" aria-hidden="true">✓</span><span class="active-plan-name">'+esc(s.plan_name||s.plan_code||'Paket Langganan')+'</span></div>';
+   el.innerHTML='<div class="dn-active-plan"><div class="dn-plan-head"><div><span class="dn-plan-kicker">PAKET AKTIF</span><h3>'+esc(planLabel)+'</h3><span class="dn-plan-status"><i></i> AKTIF</span></div><div class="dn-plan-days"><b>'+(remainingDays===null?'—':remainingDays)+'</b><small>HARI TERSISA</small></div></div><div class="dn-plan-grid"><div class="dn-plan-metric"><small>MULAI AKTIF</small><b>'+esc(starts)+'</b></div><div class="dn-plan-metric"><small>KEDALUWARSA</small><b>'+esc(exp)+'</b></div><div class="dn-plan-metric"><small>BATAS PER VIDEO</small><b>'+esc(sizeLabel)+'</b></div><div class="dn-plan-metric"><small>STATUS PAKET</small><b>Terhubung</b></div></div><div class="dn-quota"><div class="dn-quota-head"><span>KUOTA PEMROSESAN</span><b>'+used.toLocaleString('id-ID')+' / '+quota.toLocaleString('id-ID')+'</b></div><div class="dn-quota-track"><i style="width:'+quotaPct.toFixed(1)+'%"></i></div><div class="dn-quota-foot"><span>'+left.toLocaleString('id-ID')+' pemrosesan tersisa</span><span>'+quotaPct.toFixed(1)+'% digunakan</span></div></div><div class="dn-usage" id="dnSubscriptionUsage"><div class="dn-usage-title">TOTAL DATA USAGE</div><div class="dn-usage-total">Menghitung penggunaan data…</div></div></div>';
+   loadSubscriptionUsage(token);
   }catch(e){el.textContent='Tidak dapat memuat status langganan saat ini.'}
  }
  window.goldenRefreshSubscription=loadCurrent;
@@ -5592,6 +5630,37 @@ body{position:relative!important;min-height:100%!important}
  animation:none!important;transition:none!important;
  opacity:.72!important;filter:none!important;
 }
+</style>
+
+<style id="DN_ACTIVE_SUBSCRIPTION_DASHBOARD_V1">
+#customerSubscriptionCurrent{width:100%;margin:16px 0!important}
+.dn-active-plan{padding:18px;border:1px solid rgba(118,185,0,.36);border-radius:17px;background:linear-gradient(145deg,rgba(17,25,12,.96),rgba(8,11,9,.98));color:#edf2e8;box-shadow:inset 0 1px rgba(255,255,255,.045),0 12px 28px rgba(0,0,0,.24)}
+.dn-plan-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:15px;border-bottom:1px solid rgba(118,185,0,.2)}
+.dn-plan-kicker,.dn-usage-title{font-size:10px;letter-spacing:.13em;font-weight:800;color:#91c83a}
+.dn-plan-head h3{font-size:22px;line-height:1.2;margin:5px 0 8px;color:#f5f7f2}
+.dn-plan-status{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.08em;font-weight:800;color:#9bd34b}
+.dn-plan-status i{width:7px;height:7px;border-radius:50%;background:#76b900;box-shadow:0 0 8px rgba(118,185,0,.55)}
+.dn-plan-days{min-width:76px;text-align:center;padding:10px 12px;border:1px solid rgba(118,185,0,.3);border-radius:12px;background:rgba(118,185,0,.08)}
+.dn-plan-days b{display:block;font-size:26px;line-height:1.1;color:#a4d65b;font-variant-numeric:tabular-nums}
+.dn-plan-days small{font-size:9px;letter-spacing:.08em;color:#b8c5ad}
+.dn-plan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:14px 0}
+.dn-plan-metric{min-width:0;padding:11px 12px;border:1px solid rgba(255,255,255,.08);border-radius:11px;background:rgba(255,255,255,.025)}
+.dn-plan-metric small{display:block;font-size:9px;letter-spacing:.09em;color:#9aa694;font-weight:750}
+.dn-plan-metric b{display:block;margin-top:5px;font-size:13px;color:#eef2e9;overflow-wrap:anywhere;line-height:1.4}
+.dn-quota{padding:13px;border:1px solid rgba(118,185,0,.2);border-radius:12px;background:rgba(0,0,0,.2)}
+.dn-quota-head,.dn-quota-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11px}
+.dn-quota-head span{font-size:10px;letter-spacing:.08em;color:#aeb9a4;font-weight:800}
+.dn-quota-head b{color:#f2f5ef;font-variant-numeric:tabular-nums}
+.dn-quota-track{height:8px;margin:10px 0 7px;border-radius:20px;background:#242a21;overflow:hidden}
+.dn-quota-track i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,#76b900,#a5d64a);box-shadow:0 0 9px rgba(118,185,0,.25)}
+.dn-quota-foot{font-size:10px;color:#9daa92}
+.dn-usage{margin-top:12px;padding:14px;border:1px solid rgba(118,185,0,.25);border-radius:12px;background:linear-gradient(120deg,rgba(118,185,0,.075),rgba(255,255,255,.018))}
+.dn-usage-total{font-size:27px;line-height:1.15;font-weight:850;letter-spacing:-.025em;color:#f3f6ef;margin:7px 0 11px;font-variant-numeric:tabular-nums}
+.dn-usage-breakdown{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.dn-usage-breakdown span{display:flex;flex-direction:column;gap:4px;color:#9eaa97;font-size:10px}
+.dn-usage-breakdown b{font-size:12px;color:#edf2e8;overflow-wrap:anywhere}
+.dn-usage-note{display:block;margin-top:10px;color:#82907a;font-size:9px;line-height:1.45}
+@media(max-width:480px){.dn-active-plan{padding:14px}.dn-plan-head h3{font-size:19px}.dn-plan-days{min-width:68px;padding:9px}.dn-plan-days b{font-size:23px}.dn-plan-metric{padding:10px}.dn-plan-metric b{font-size:12px}.dn-usage-total{font-size:24px}}
 </style>
 </body>
 </html>
