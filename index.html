@@ -3921,7 +3921,7 @@ html body .app .hero-main-headline strong.nvidia-accent {
     <div id="freeInjectWrap" class="free-inject-wrap"><button class="mode-btn free-inject-btn" id="freeInjectBtn" type="button">INJECT GRATIS</button><p class="free-inject-caption">Coba Dicky News Method tanpa login. Mendukung input video MP4, MOV, MKV, dan WEBM. Pemrosesan tanpa encoding ulang.</p><input id="freeInjectFile" type="file" accept="*/*" hidden></div>
     <div class="mode-buttons machine-columns">
       <article class="machine-card inject-machine">
-        <button class="mode-btn active" id="sdrBtn" type="button">INJECT HD ULTIMATE <small id="sdrPrice">PAKET LANGGANAN</small></button>
+        <button class="mode-btn active" id="sdrBtn" type="button">INJECT VIDEO DISINI <small id="sdrPrice">PAKET LANGGANAN</small></button>
         <details class="machine-details">
           <summary>Baca selengkapnya</summary>
           <ul class="machine-notes">
@@ -5988,6 +5988,36 @@ html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>
 /* Temporarily hide the Inject HD Ultimate read-more control and its expanded notes. */
 html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>.machine-details{
   display:none!important;
+}
+</style>
+
+
+<style id="DN_INJECT_BUTTON_STABLE_SIZE_V1">
+/* Keep Inject HD button geometry identical before, during and after pointer interaction. */
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn,
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn:hover,
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn:focus,
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn:focus-visible,
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn:active {
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:112px!important;
+  min-height:112px!important;
+  max-height:112px!important;
+  flex:0 0 112px!important;
+  padding:10px 14px!important;
+  margin:0!important;
+  transform:none!important;
+  animation:none!important;
+  transition:background-color .18s ease,filter .18s ease,box-shadow .18s ease,border-color .18s ease!important;
+}
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn:hover,
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn:focus-visible {
+  filter:brightness(1.04)!important;
+  outline-offset:2px!important;
+}
+html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>#sdrBtn:active {
+  filter:brightness(.98)!important;
 }
 </style>
 
