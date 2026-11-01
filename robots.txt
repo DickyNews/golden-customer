@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dickynewsmethod.pages.dev/sitemap.xml
+Sitemap: https://dickynews.com/sitemap.xml
