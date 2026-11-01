@@ -126,7 +126,7 @@ function findItemStruct(root) {
 }
 function baseResult(input) {
   return {
-    input_url: input, title: null, author: null, description: null, thumbnail: null,
+    input_url: input, title: null, author: null, author_username: null, description: null, thumbnail: null,
     video_id: null, created_at: null, duration: null, play_count: null, like_count: null,
     comment_count: null, share_count: null, music_title: null, music_author: null, aspect_ratio: null,
     resolution: null, resolution_label: null, video_format: null, fps: null, fps_value: null, bitrate: null, codec: null, file_size: null, container: null,
@@ -241,6 +241,8 @@ export default {
           result.video_id = item.id || null;
           result.description = item.desc || result.description;
           result.author = author.nickname || author.uniqueId || result.author;
+          result.author_username = author.uniqueId || result.author_username;
+          result.title = result.title || item.desc || null;
           result.created_at = numeric(item.createTime) ? new Date(Number(item.createTime) * 1000).toISOString() : null;
           result.duration = numeric(item.video?.duration) ? Number(item.video.duration) + " detik" : null;
           result.play_count = stats.playCount ?? stats.play_count ?? null;
