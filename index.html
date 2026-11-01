@@ -3947,13 +3947,13 @@ html body .app .hero-main-headline strong.nvidia-accent {
       <div class="upload-destination-heading"><span aria-hidden="true">◆</span> Zernio Web</div>
       <p>Upload video HD untuk format <strong>SDR maupun HDR Dolby Vision</strong>.</p>
       <a href="https://zernio.com/dashboard/posts-all" target="_blank" rel="noopener noreferrer">Buka Zernio Web ↗</a>
-      <p class="upload-mode-note">Tidak perlu mode desktop</p>
+      <div class="upload-mode-note upload-mode-note--info"><span class="upload-mode-label">INFO</span><span>Tidak perlu mode desktop</span></div>
     </div>
     <div class="upload-destination-option">
       <div class="upload-destination-heading"><span aria-hidden="true">▶</span> TikTok Web</div>
       <p>Upload video HD untuk format <strong>SDR maupun HDR Dolby Vision</strong>.</p>
       <a href="https://www.tiktok.com/tiktokstudio/upload?from=webapp&amp;tab=video" target="_blank" rel="noopener noreferrer">Buka TikTok Web ↗</a>
-      <p class="upload-mode-note">Butuh mode desktop</p>
+      <div class="upload-mode-note upload-mode-note--attention"><span class="upload-mode-label">PERHATIAN</span><span>Butuh mode desktop</span></div>
     </div>
   </div>
   <ul class="upload-destination-rules">
@@ -5812,6 +5812,54 @@ body{position:relative!important;min-height:100%!important}
   line-height:1.35!important;
   font-weight:650!important;
   text-align:center!important;
+}
+</style>
+
+
+<style id="DN_UPLOAD_MODE_NOTES_POLISH_V2">
+.upload-destination-options{align-items:stretch!important}
+.upload-destination-option{
+  display:flex!important;flex-direction:column!important;align-items:center!important;
+  justify-content:flex-start!important;min-width:0!important;
+  padding:14px 14px 12px!important;gap:0!important;
+}
+.upload-destination-option>p:not(.upload-mode-note){
+  min-height:2.9em!important;margin:7px 0 11px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+}
+.upload-destination-option>a{
+  margin-top:auto!important;flex:0 0 auto!important;
+}
+.upload-destination-option .upload-mode-note{
+  box-sizing:border-box!important;display:flex!important;align-items:center!important;
+  justify-content:center!important;gap:7px!important;width:100%!important;
+  min-height:34px!important;margin:10px 0 0!important;padding:6px 10px!important;
+  border-radius:10px!important;font-size:11px!important;line-height:1.3!important;
+  font-weight:650!important;text-align:center!important;
+}
+.upload-destination-option .upload-mode-note--info{
+  color:#c7d7b4!important;background:rgba(138,201,25,.07)!important;
+  border:1px solid rgba(138,201,25,.2)!important;
+}
+.upload-destination-option .upload-mode-note--attention{
+  color:#f2d28a!important;background:rgba(245,177,55,.09)!important;
+  border:1px solid rgba(245,177,55,.42)!important;
+}
+.upload-destination-option .upload-mode-label{
+  flex:0 0 auto!important;display:inline-flex!important;align-items:center!important;
+  justify-content:center!important;padding:3px 6px!important;border-radius:5px!important;
+  font-size:9px!important;font-weight:850!important;letter-spacing:.07em!important;
+}
+.upload-mode-note--info .upload-mode-label{
+  color:#a8db55!important;background:rgba(138,201,25,.14)!important;
+}
+.upload-mode-note--attention .upload-mode-label{
+  color:#ffd27a!important;background:rgba(245,177,55,.17)!important;
+}
+@media(max-width:600px){
+  .upload-destination-option{padding:12px 9px 10px!important}
+  .upload-destination-option .upload-mode-note{font-size:10px!important;gap:5px!important;padding:6px 5px!important}
+  .upload-destination-option .upload-mode-label{font-size:8px!important}
 }
 </style>
 
