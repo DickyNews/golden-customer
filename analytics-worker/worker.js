@@ -215,8 +215,8 @@ export default {
         // TikTok may omit og:image and oEmbed thumbnail_url while exposing
         // the current cover in its server-rendered preload link. Signed CDN URLs
         // are refreshed per request and are never persisted by this Worker.
-        const coverTag = html.match(/<link\\b(?=[^>]*\\bdata-source=["']ssr-cover-preload["'])[^>]*>/i);
-        const coverHref = coverTag && coverTag[0].match(/\\bhref=["']([^"']+)["']/i);
+        const coverTag = html.match(/<link\b(?=[^>]*\bdata-source=["']ssr-cover-preload["'])[^>]*>/i);
+        const coverHref = coverTag && coverTag[0].match(/\bhref=["']([^"']+)["']/i);
         let coverUrl = coverHref ? coverHref[1]
           .replace(/&amp;/g, "&").replace(/&#38;/g, "&").replace(/&#x26;/gi, "&") : null;
         try {
