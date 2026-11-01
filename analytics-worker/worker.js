@@ -223,7 +223,8 @@ export default {
           const parsedCover = coverUrl ? new URL(coverUrl) : null;
           if (!parsedCover || parsedCover.protocol !== "https:" ||
               !(parsedCover.hostname === "tiktokcdn.com" || parsedCover.hostname.endsWith(".tiktokcdn.com") ||
-                parsedCover.hostname === "tiktokcdn-us.com" || parsedCover.hostname.endsWith(".tiktokcdn-us.com"))) {
+                parsedCover.hostname === "tiktokcdn-us.com" || parsedCover.hostname.endsWith(".tiktokcdn-us.com") ||
+                parsedCover.hostname === "tiktokcdn-eu.com" || parsedCover.hostname.endsWith(".tiktokcdn-eu.com"))) {
             coverUrl = null;
           }
         } catch { coverUrl = null; }
