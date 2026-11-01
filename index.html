@@ -4482,6 +4482,7 @@ const walletProgressBar=document.querySelector('.wallet-progress .bar i');
 const walletBottomCost=document.querySelector('.wallet-bottom strong');
 
 let customerAuthenticated=false;
+let customerUsername='';
 const historySection=document.getElementById("job-history");
 function setCustomerAuth(auth,balance=null){
   customerAuthenticated=!!auth;
@@ -4499,6 +4500,7 @@ function customerAuthHeaders(extra={}){const token=localStorage.getItem('golden_
 function showModal(titleText,textText){hideProgress();modal.classList.add('show');document.getElementById('modalTitle').textContent=titleText;document.getElementById('modalText').textContent=textText}
 function closeModal(){modal.classList.remove('show');hideProgress();const subscriptionAction=document.getElementById('goToSubscription');if(subscriptionAction)subscriptionAction.hidden=true;}
 function setWallet(d){
+  customerUsername=String(d?.customer?.name ?? d?.name ?? '').trim();
   const wallet=d?.wallet ?? d;
   const balance=Number(wallet?.coin_balance ?? wallet?.coins ?? wallet?.balance ?? d?.customer?.coin_balance ?? d?.coin_balance ?? 0);
   const used=Number(wallet?.encode_used ?? wallet?.encodes_used ?? wallet?.usage_count ?? wallet?.completed_jobs ?? d?.encode_used ?? d?.encodes_used ?? d?.usage_count ?? 0);
@@ -4859,7 +4861,7 @@ async function loadSubscriptionUsage(token){
    const maxMb=Number(s.max_file_size_mb)||0;
    const sizeLabel=maxMb>=1024?(maxMb/1024).toLocaleString('id-ID',{maximumFractionDigits:2})+' GB':maxMb.toLocaleString('id-ID',{maximumFractionDigits:0})+' MB';
    const planLabel=String(s.plan_name||s.plan_code||'Paket Langganan');const summary=document.getElementById('priceSummary');if(summary){summary.textContent=planLabel;summary.dataset.activePlan='true';summary.title='Paket layanan aktif: '+planLabel;}
-   el.innerHTML='<div class="dn-active-plan"><div class="dn-plan-head"><div><span class="dn-plan-kicker">PAKET AKTIF</span><h3>'+esc(planLabel)+'</h3><span class="dn-plan-status"><i></i> AKTIF</span></div><div class="dn-plan-days"><b>'+(remainingDays===null?'—':remainingDays)+'</b><small>HARI TERSISA</small></div></div><div class="dn-plan-grid"><div class="dn-plan-metric"><small>MULAI AKTIF</small><b>'+esc(starts)+'</b></div><div class="dn-plan-metric"><small>KEDALUWARSA</small><b>'+esc(exp)+'</b></div><div class="dn-plan-metric"><small>BATAS PER VIDEO</small><b>'+esc(sizeLabel)+'</b></div><div class="dn-plan-metric"><small>STATUS PAKET</small><b>Terhubung</b></div></div><div class="dn-quota"><div class="dn-quota-head"><span>KUOTA PEMROSESAN</span><b>'+used.toLocaleString('id-ID')+' / '+quota.toLocaleString('id-ID')+'</b></div><div class="dn-quota-track"><i style="width:'+quotaPct.toFixed(1)+'%"></i></div><div class="dn-quota-foot"><span>'+left.toLocaleString('id-ID')+' pemrosesan tersisa</span><span>'+quotaPct.toFixed(1)+'% digunakan</span></div></div><div class="dn-usage" id="dnSubscriptionUsage"><div class="dn-usage-title">TOTAL DATA USAGE</div><div class="dn-usage-total">Menghitung penggunaan data…</div></div></div>';
+   el.innerHTML='<div class="dn-active-plan"><div class="dn-plan-head"><div><span class="dn-plan-kicker">PAKET AKTIF</span><h3>'+esc(planLabel)+'</h3><span class="dn-plan-status"><i></i> AKTIF</span></div><div class="dn-plan-days"><b>'+(remainingDays===null?'—':remainingDays)+'</b><small>HARI TERSISA</small></div></div><div class="dn-plan-username"><small>USERNAME CUSTOMER</small><b>'+esc(customerUsername||'—')+'</b></div><div class="dn-plan-grid"><div class="dn-plan-metric"><small>MULAI AKTIF</small><b>'+esc(starts)+'</b></div><div class="dn-plan-metric"><small>KEDALUWARSA</small><b>'+esc(exp)+'</b></div><div class="dn-plan-metric"><small>BATAS PER VIDEO</small><b>'+esc(sizeLabel)+'</b></div><div class="dn-plan-metric"><small>STATUS PAKET</small><b>Terhubung</b></div></div><div class="dn-quota"><div class="dn-quota-head"><span>KUOTA PEMROSESAN</span><b>'+used.toLocaleString('id-ID')+' / '+quota.toLocaleString('id-ID')+'</b></div><div class="dn-quota-track"><i style="width:'+quotaPct.toFixed(1)+'%"></i></div><div class="dn-quota-foot"><span>'+left.toLocaleString('id-ID')+' pemrosesan tersisa</span><span>'+quotaPct.toFixed(1)+'% digunakan</span></div></div><div class="dn-usage" id="dnSubscriptionUsage"><div class="dn-usage-title">TOTAL DATA USAGE</div><div class="dn-usage-total">Menghitung penggunaan data…</div></div></div>';
    loadSubscriptionUsage(token);
   }catch(e){el.textContent='Tidak dapat memuat status langganan saat ini.'}
  }
@@ -5645,7 +5647,7 @@ body{position:relative!important;min-height:100%!important}
 .dn-plan-days{min-width:76px;text-align:center;padding:10px 12px;border:1px solid rgba(118,185,0,.3);border-radius:12px;background:rgba(118,185,0,.08)}
 .dn-plan-days b{display:block;font-size:26px;line-height:1.1;color:#a4d65b;font-variant-numeric:tabular-nums}
 .dn-plan-days small{font-size:9px;letter-spacing:.08em;color:#b8c5ad}
-.dn-plan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:14px 0}
+.dn-plan-username{display:flex;flex-direction:column;gap:5px;margin:14px 0 10px;padding:12px 14px;border:1px solid rgba(118,185,0,.24);border-radius:11px;background:rgba(118,185,0,.045);min-width:0}.dn-plan-username small{color:#9aa694;font-size:9px;letter-spacing:.09em;font-weight:800}.dn-plan-username b{color:#eef2e9;font-size:13px;line-height:1.4;overflow-wrap:anywhere}.dn-plan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:14px 0}
 .dn-plan-metric{min-width:0;padding:11px 12px;border:1px solid rgba(255,255,255,.08);border-radius:11px;background:rgba(255,255,255,.025)}
 .dn-plan-metric small{display:block;font-size:9px;letter-spacing:.09em;color:#9aa694;font-weight:750}
 .dn-plan-metric b{display:block;margin-top:5px;font-size:13px;color:#eef2e9;overflow-wrap:anywhere;line-height:1.4}
@@ -5662,7 +5664,7 @@ body{position:relative!important;min-height:100%!important}
 .dn-usage-breakdown span{display:flex;flex-direction:column;gap:4px;color:#9eaa97;font-size:10px}
 .dn-usage-breakdown b{font-size:12px;color:#edf2e8;overflow-wrap:anywhere}
 .dn-usage-note{display:block;margin-top:10px;color:#82907a;font-size:9px;line-height:1.45}
-@media(max-width:480px){.dn-active-plan{padding:14px}.dn-plan-head h3{font-size:19px}.dn-plan-days{min-width:68px;padding:9px}.dn-plan-days b{font-size:23px}.dn-plan-metric{padding:10px}.dn-plan-metric b{font-size:12px}.dn-usage-total{font-size:24px}}
+@media(max-width:480px){.dn-active-plan{padding:14px}.dn-plan-head h3{font-size:19px}.dn-plan-days{min-width:68px;padding:9px}.dn-plan-days b{font-size:23px}.dn-plan-metric{padding:10px}.dn-plan-metric b{font-size:12px}.dn-plan-username{margin:10px 0 8px;padding:10px 11px}.dn-plan-username b{font-size:12px}.dn-usage-total{font-size:24px}}
 </style>
 
 <style id="DN_NVIDIA_PAYMENT_HISTORY_V1">
