@@ -4683,8 +4683,13 @@ async function runTikTokAnalytics(){
  try{
   const response=await fetch(apiBase+'/public/tiktok-analytics?url='+encodeURIComponent(url),{method:'GET',mode:'cors',cache:'no-store',headers:{'Accept':'application/json'}});
   const data=await response.json().catch(()=>null);if(!response.ok)throw new Error(data?.error||('HTTP '+response.status));if(!data||typeof data!=='object')throw new Error('Respons API tidak valid.');
-  const resolutionText=[data.resolution,data.resolution_label].filter(Boolean).join(" · ");
-  const map={mResolution:resolutionText,mFps:data.fps,mFormat:data.video_format,mBitrate:data.bitrate,mCodec:data.codec,mSize:data.file_size,mContainer:data.container,sRegion:data.region,sReview:data.review_status,sVisibility:data.visibility,sIndex:data.index_visibility,mViews:data.play_count,mLikes:data.like_count,mComments:data.comment_count,mShares:data.share_count,mDuration:data.duration,mCreated:data.created_at?new Date(data.created_at).toLocaleString('id-ID'):'',mMusic:[data.music_title,data.music_author].filter(Boolean).join(' — '),mVideoId:data.video_id};
+  const dimensionSource=String(data.resolution||data.resolution_label||'');
+  const dimensionMatch=dimensionSource.match(/(\\d{3,5})\\s*[x×X]\\s*(\\d{3,5})/);
+  const resolutionText=dimensionMatch?dimensionMatch[1]+'×'+dimensionMatch[2]:'';
+  const formatSource=String(data.video_format||data.resolution_label||'');
+  const formatMatch=formatSource.match(/\\b(8K|6K|5K|4K|2K|1080P|720P|480P)\\b/i);
+  const formatText=formatMatch?formatMatch[1].toUpperCase():'';
+  const map={mResolution:resolutionText,mFps:data.fps,mFormat:formatText,mBitrate:data.bitrate,mCodec:data.codec,mSize:data.file_size,mContainer:data.container,sRegion:data.region,sReview:data.review_status,sVisibility:data.visibility,sIndex:data.index_visibility,mViews:data.play_count,mLikes:data.like_count,mComments:data.comment_count,mShares:data.share_count,mDuration:data.duration,mCreated:data.created_at?new Date(data.created_at).toLocaleString('id-ID'):'',mMusic:[data.music_title,data.music_author].filter(Boolean).join(' — '),mVideoId:data.video_id};
   Object.entries(map).forEach(([id,value])=>{const el=document.getElementById(id);if(el)el.textContent=(value===null||value===undefined||value==='')?'Tidak tersedia':(typeof value==='number'?value.toLocaleString('id-ID'):value)});
   const preview=document.getElementById('videoPreview');
   if(preview){if(data.thumbnail){preview.src=data.thumbnail;preview.hidden=false;preview.onerror=()=>{preview.hidden=true;preview.removeAttribute('src')}}else{preview.hidden=true;preview.removeAttribute('src')}}
