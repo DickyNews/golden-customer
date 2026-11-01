@@ -212,10 +212,25 @@ export default {
         const html = await readTextLimited(page);
         const title = html.match(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']*)/i) ||
           html.match(/<meta[^>]+content=["']([^"']*)["'][^>]+property=["']og:title["']/i);
+        // TikTok may omit og:image and oEmbed thumbnail_url while exposing
+        // the current cover in its server-rendered preload link. Signed CDN URLs
+        // are refreshed per request and are never persisted by this Worker.
+        const coverTag = html.match(/<link\\b(?=[^>]*\\bdata-source=["']ssr-cover-preload["'])[^>]*>/i);
+        const coverHref = coverTag && coverTag[0].match(/\\bhref=["']([^"']+)["']/i);
+        let coverUrl = coverHref ? coverHref[1]
+          .replace(/&amp;/g, "&").replace(/&#38;/g, "&").replace(/&#x26;/gi, "&") : null;
+        try {
+          const parsedCover = coverUrl ? new URL(coverUrl) : null;
+          if (!parsedCover || parsedCover.protocol !== "https:" ||
+              !(parsedCover.hostname === "tiktokcdn.com" || parsedCover.hostname.endsWith(".tiktokcdn.com") ||
+                parsedCover.hostname === "tiktokcdn-us.com" || parsedCover.hostname.endsWith(".tiktokcdn-us.com"))) {
+            coverUrl = null;
+          }
+        } catch { coverUrl = null; }
         const image = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']*)/i) ||
           html.match(/<meta[^>]+content=["']([^"']*)["'][^>]+property=["']og:image["']/i);
         if (title) result.title = title[1].replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
-        if (image) result.thumbnail = image[1].replace(/&amp;/g, "&");
+        result.thumbnail = coverUrl || (image ? image[1].replace(/&amp;/g, "&") : null);
         const embedded = parseEmbeddedJson(html);
         const item = embedded ? findItemStruct(embedded) : null;
         if (item) {
