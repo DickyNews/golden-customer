@@ -2,4 +2,3 @@ name = "golden-tiktok-analytics"
 main = "worker.js"
 compatibility_date = "2026-10-17"
 workers_dev = true
-account_id = "4b4b6a990db51dcbfff8af19efa53b3"
