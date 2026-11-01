@@ -4605,7 +4605,7 @@ const refreshHistoryBtn=document.getElementById('refreshHistory');
 function formatHistoryDate(value){
   if(!value)return 'Waktu tidak tersedia';
   const date=new Date(value);
-  return Number.isNaN(date.getTime())?String(value):date.toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'});
+  return Number.isNaN(date.getTime())?String(value):date.toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short',timeZone:'Asia/Jakarta'})+' WIB';
 }
 function historyStatusLabel(status){
   const s=String(status||'unknown').toLowerCase();
@@ -4689,7 +4689,7 @@ async function runTikTokAnalytics(){
   const formatSource=String(data.video_format||data.resolution_label||'');
   const formatMatch=formatSource.match(/\b(8K|6K|5K|4K|2K|1080P|720P|480P)\b/i);
   const formatText=formatMatch?formatMatch[1].toUpperCase():'';
-  const map={mResolution:resolutionText,mFps:data.fps,mFormat:formatText,mBitrate:data.bitrate,mCodec:data.codec,mSize:data.file_size,mContainer:data.container,sRegion:data.region,sReview:data.review_status,sVisibility:data.visibility,sIndex:data.index_visibility,mViews:data.play_count,mLikes:data.like_count,mComments:data.comment_count,mShares:data.share_count,mDuration:data.duration,mCreated:data.created_at?new Date(data.created_at).toLocaleString('id-ID'):'',mMusic:[data.music_title,data.music_author].filter(Boolean).join(' — '),mVideoId:data.video_id};
+  const map={mResolution:resolutionText,mFps:data.fps,mFormat:formatText,mBitrate:data.bitrate,mCodec:data.codec,mSize:data.file_size,mContainer:data.container,sRegion:data.region,sReview:data.review_status,sVisibility:data.visibility,sIndex:data.index_visibility,mViews:data.play_count,mLikes:data.like_count,mComments:data.comment_count,mShares:data.share_count,mDuration:data.duration,mCreated:data.created_at?new Date(data.created_at).toLocaleString('id-ID',{timeZone:'Asia/Jakarta'})+' WIB':'',mMusic:[data.music_title,data.music_author].filter(Boolean).join(' — '),mVideoId:data.video_id};
   Object.entries(map).forEach(([id,value])=>{const el=document.getElementById(id);if(el)el.textContent=(value===null||value===undefined||value==='')?'Tidak tersedia':(typeof value==='number'?value.toLocaleString('id-ID'):value)});
   const preview=document.getElementById('videoPreview');
   if(preview){if(data.thumbnail){preview.src=data.thumbnail;preview.hidden=false;preview.onerror=()=>{preview.hidden=true;preview.removeAttribute('src')}}else{preview.hidden=true;preview.removeAttribute('src')}}
@@ -4860,7 +4860,7 @@ async function loadSubscriptionUsage(token){
    if(!s){el.innerHTML='<div class="active-plan-empty">Belum ada paket langganan aktif pada akun ini.</div>';const summary=document.getElementById('priceSummary');if(summary){summary.textContent='Belum ada paket';summary.dataset.activePlan='';}return}
    if(typeof maxFileSizeBytes!=='undefined')maxFileSizeBytes=Math.min(maxFileSizeBytes,Number(s.max_file_size_bytes)||maxFileSizeBytes);
    const expDate=new Date(s.expires_at),startDate=new Date(s.starts_at),now=new Date();
-   const exp=Number.isNaN(expDate.getTime())?'—':expDate.toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'});
+   const exp=Number.isNaN(expDate.getTime())?'—':expDate.toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short',timeZone:'Asia/Jakarta'})+' WIB';
    const starts=Number.isNaN(startDate.getTime())?'—':startDate.toLocaleDateString('id-ID',{dateStyle:'medium'});
    const remainingDays=Number.isNaN(expDate.getTime())?null:Math.max(0,Math.ceil((expDate-now)/86400000));
    const quota=Number(s.process_quota)||0,used=Number(s.processes_used)||0,left=Number(s.processes_remaining??Math.max(0,quota-used))||0;
