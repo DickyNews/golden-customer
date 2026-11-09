@@ -1171,7 +1171,7 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 .machine-card{min-width:0;padding:14px;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:linear-gradient(145deg,rgba(22,24,31,.96),rgba(8,9,13,.96));box-shadow:inset 0 1px rgba(255,255,255,.035)}
 .machine-card.inject-machine{border-color:rgba(37,244,238,.3)}
 .machine-card.hdr-machine{border-color:rgba(254,44,85,.28)}
-.machine-card.rtx-machine{border-color:rgba(118,185,0,.55);background:linear-gradient(145deg,rgba(118,185,0,.10),rgba(8,9,13,.96))}
+.machine-card.rtx-machine{grid-column:1/-1;border-color:rgba(118,185,0,.55);background:linear-gradient(145deg,rgba(118,185,0,.10),rgba(8,9,13,.96))}
 .machine-card>.mode-btn{display:block;width:100%;min-height:86px;text-align:center;font-size:13px;line-height:1.5}
 .machine-card>.mode-btn small{font-size:10px;line-height:1.5;overflow-wrap:anywhere}
 .machine-notes{display:grid;gap:10px;margin:15px 0 2px;padding:0 0 0 20px;color:#e8e8ec;font-size:12px;line-height:1.7}
@@ -3943,12 +3943,11 @@ html body .app .hero-main-headline strong.nvidia-accent {
             <li>Setelah videomu selesai di-upload dan berhasil di-download dari mesin ini, langkah selanjutnya tinggal upload ke TikTok lewat Zernio.</li>
           </ul>
         </details>
+      </article>
       <article class="machine-card rtx-machine">
         <button class="mode-btn" id="rtxBtn" type="button">GOLDEN RTX TEST <small>MESIN EKSPERIMEN PUBLIK · TANPA LOGIN</small></button>
         <p class="machine-notes">Uji mesin RTX terpisah dari Golden HD produksi. Video diproses dengan pipeline Golden Engine + stream restructuring. Hasil pengujian berupa file transport stream.</p>
         <input id="rtxFile" type="file" accept=".mp4,.mov,.mkv,.webm,video/*" hidden>
-      </article>
-
       </article>
 
     </div>
@@ -4490,7 +4489,7 @@ if(rtxBtn&&rtxFile){
     const f=rtxFile.files&&rtxFile.files[0];
     if(!f)return;
     if(rtxBusy||processing)return;
-    if(!/\\.(mp4|mov|mkv|webm)$/i.test(f.name)){
+    if(!/\.(mp4|mov|mkv|webm)$/i.test(f.name)){
       showModal('Format tidak didukung','Pilih video MP4, MOV, MKV, atau WEBM.');
       rtxFile.value='';return;
     }
