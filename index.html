@@ -1171,7 +1171,6 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 .machine-card{min-width:0;padding:14px;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:linear-gradient(145deg,rgba(22,24,31,.96),rgba(8,9,13,.96));box-shadow:inset 0 1px rgba(255,255,255,.035)}
 .machine-card.inject-machine{border-color:rgba(37,244,238,.3)}
 .machine-card.hdr-machine{border-color:rgba(254,44,85,.28)}
-.machine-card.rtx-machine{grid-column:1/-1;border-color:rgba(118,185,0,.55);background:linear-gradient(145deg,rgba(118,185,0,.10),rgba(8,9,13,.96))}
 .machine-card>.mode-btn{display:block;width:100%;min-height:86px;text-align:center;font-size:13px;line-height:1.5}
 .machine-card>.mode-btn small{font-size:10px;line-height:1.5;overflow-wrap:anywhere}
 .machine-notes{display:grid;gap:10px;margin:15px 0 2px;padding:0 0 0 20px;color:#e8e8ec;font-size:12px;line-height:1.7}
@@ -3944,11 +3943,7 @@ html body .app .hero-main-headline strong.nvidia-accent {
           </ul>
         </details>
       </article>
-      <article class="machine-card rtx-machine">
-        <button class="mode-btn" id="rtxBtn" type="button">GOLDEN RTX TEST <small>MESIN EKSPERIMEN PUBLIK · TANPA LOGIN</small></button>
-        <p class="machine-notes">Uji mesin RTX terpisah dari Golden HD produksi. Video diproses dengan pipeline Golden Engine + stream restructuring. Hasil pengujian berupa file transport stream.</p>
-        <input id="rtxFile" type="file" accept=".mp4,.mov,.mkv,.webm,video/*" hidden>
-      </article>
+
 
     </div>
     <div class="drop" id="drop"><strong id="dropTitle"></strong><p id="dropText"></p><div class="upload-destination-guide" aria-label="Panduan upload HD ke platform">
@@ -4110,7 +4105,7 @@ const file=document.getElementById('file'),drop=document.getElementById('drop'),
 const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:false};let maxFileSizeBytes=4096*1024*1024; // fallback ceiling; public service and active subscription settings narrow this value.
 function renderPrices(){
   const sdr=document.getElementById('sdrPrice'),hdr=document.getElementById('hdrPrice'),summary=document.getElementById('priceSummary');
-  if(sdr)sdr.textContent='✓ USER VIP AKTIF';
+  if(sdr)sdr.textContent='GOLDEN RTX · PUBLIK';
   if(hdr)hdr.textContent='KLIK DISINI HDR';
   if(summary&&!summary.dataset.activePlan)summary.textContent='Belum ada paket';
   sdrBtn.disabled=!serviceActive.sdr;hdrBtn.disabled=false;
@@ -4158,7 +4153,7 @@ function showSubscriptionRequired(){
   action.hidden=false;
 }
 function selectMode(mode,price){
-  if(mode==='sdr'&&!customerAuthenticated){showSubscriptionRequired();return;}
+  
   const existingAction=document.getElementById('goToSubscription');
   if(existingAction)existingAction.hidden=true;
   if(!serviceActive[mode]){modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Layanan Tidak Tersedia';document.getElementById('modalText').textContent='Layanan ini sedang dinonaktifkan oleh admin. Silakan pilih mode lain.';return}
@@ -4480,20 +4475,14 @@ async function uploadVideo(f){
 }
 
 
-const rtxBtn=document.getElementById('rtxBtn');
-const rtxFile=document.getElementById('rtxFile');
-let rtxBusy=false;
-if(rtxBtn&&rtxFile){
-  rtxBtn.addEventListener('click',()=>{if(!rtxBusy)rtxFile.click();});
-  rtxFile.addEventListener('change',async()=>{
-    const f=rtxFile.files&&rtxFile.files[0];
+async function uploadRtxVideo(f){
     if(!f)return;
-    if(rtxBusy||processing)return;
+    if(processing)return;
     if(!/\.(mp4|mov|mkv|webm)$/i.test(f.name)){
       showModal('Format tidak didukung','Pilih video MP4, MOV, MKV, atau WEBM.');
-      rtxFile.value='';return;
+      file.value='';return;
     }
-    rtxBusy=true;processing=true;modal.classList.add('show');close.style.display='block';
+    processing=true;modal.classList.add('show');close.style.display='block';
     close.textContent='Tutup Tampilan Proses';
     document.getElementById('modalTitle').textContent='Golden RTX Test';
     document.getElementById('modalText').textContent='Mengunggah video ke mesin RTX…';
@@ -4535,12 +4524,10 @@ if(rtxBtn&&rtxFile){
       document.getElementById('modalTitle').textContent='Golden RTX Test gagal';
       document.getElementById('modalText').textContent=e.message||'Terjadi kesalahan saat menjalankan mesin RTX.';
     }finally{
-      rtxBusy=false;processing=false;rtxFile.value='';close.style.display='block';
-    }
-  });
+    processing=false;file.value='';close.style.display='block';
 }
 
-file.onchange=()=>{const f=file.files[0];if(!f)return;const supportedVideoExt=/\.(mp4|mov|m4v|webm|mkv)$/i.test(f.name);const supportedVideoMime=!f.type||/^video\/(mp4|quicktime|x-m4v|webm|x-matroska|matroska|mkv)$/i.test(f.type);if(!supportedVideoExt||!supportedVideoMime){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Format Video Tidak Didukung';document.getElementById('modalText').textContent='Pilih video MP4, MOV, WEBM, atau MKV dari Recent/Terkini atau penyimpanan perangkat.';return}if(!serviceActive[selectedMode]){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Layanan Tidak Tersedia';document.getElementById('modalText').textContent='Mode yang dipilih sedang dinonaktifkan oleh admin.';return}title.textContent='Video siap diproses';text.textContent=(f.size/1048576).toFixed(1)+' MB · '+(selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD')+' · Paket Langganan';if(f.size>maxFileSizeBytes){modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Ukuran Video Melebihi Batas';document.getElementById('modalText').textContent='Ukuran file '+(f.size/1048576).toFixed(1)+' MB, sedangkan batas layanan '+(maxFileSizeBytes/1048576).toFixed(0)+' MB. Pilih file yang lebih kecil.';return}uploadVideo(f);};
+file.onchange=()=>{const f=file.files[0];if(!f)return;const supportedVideoExt=/\.(mp4|mov|m4v|webm|mkv)$/i.test(f.name);const supportedVideoMime=!f.type||/^video\/(mp4|quicktime|x-m4v|webm|x-matroska|matroska|mkv)$/i.test(f.type);if(!supportedVideoExt||!supportedVideoMime){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Format Video Tidak Didukung';document.getElementById('modalText').textContent='Pilih video MP4, MOV, WEBM, atau MKV dari Recent/Terkini atau penyimpanan perangkat.';return}if(!serviceActive[selectedMode]){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Layanan Tidak Tersedia';document.getElementById('modalText').textContent='Mode yang dipilih sedang dinonaktifkan oleh admin.';return}title.textContent='Video siap diproses';text.textContent=(f.size/1048576).toFixed(1)+' MB · '+(selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD')+' · Paket Langganan';if(f.size>maxFileSizeBytes){modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Ukuran Video Melebihi Batas';document.getElementById('modalText').textContent='Ukuran file '+(f.size/1048576).toFixed(1)+' MB, sedangkan batas layanan '+(maxFileSizeBytes/1048576).toFixed(0)+' MB. Pilih file yang lebih kecil.';return}uploadRtxVideo(f);};
 
 ['dragenter','dragover'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>{if(e.dataTransfer.files.length){file.files=e.dataTransfer.files;file.dispatchEvent(new Event('change'))}});
 close.onclick=()=>{modal.classList.remove('show');close.textContent='Tutup';const result=document.getElementById('downloadResult');if(result)result.remove();};buy.onclick=()=>{window.open('https://wa.me/6289616438173?text='+encodeURIComponent('Halo Bang, Saya Mau Isi Paket'),'_blank','noopener')};document.getElementById('claimKey').onclick=()=>{const key=document.getElementById('claimKeyInput').value.trim();if(!key){document.getElementById('claimKeyInput').focus();return}modal.classList.add('show');document.getElementById('modalTitle').textContent='Claim Akun';document.getElementById('modalText').textContent='Key diterima. Verifikasi akun akan dilakukan oleh API server.'};
