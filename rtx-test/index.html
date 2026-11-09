@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050506">
+<title>RTX Fury Public Test | Dicky News</title>
+<style>
+:root{color-scheme:dark;--bg:#050608;--panel:#11151b;--line:#29323b;--green:#76ff03;--cyan:#61eaff;--muted:#9aa5b1}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#1b2b17,transparent 55%),var(--bg);color:#f5f7f8;font:15px Inter,Segoe UI,Arial,sans-serif;min-height:100vh}.wrap{max-width:900px;margin:auto;padding:28px 18px 70px}.top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:12px 0 22px}.brand{font-weight:900;letter-spacing:.04em}.brand span{color:var(--green)}a{color:var(--cyan);text-decoration:none}.tag{font-size:11px;border:1px solid #3a5631;color:var(--green);border-radius:20px;padding:7px 10px}.hero{text-align:center;padding:54px 0 30px}.hero h1{font-size:clamp(34px,7vw,58px);line-height:1;margin:0 0 15px;letter-spacing:-.05em}.hero h1 span{color:var(--green);text-shadow:0 0 25px #76ff0333}.hero p{color:var(--muted);line-height:1.65;max-width:680px;margin:auto}.panel{background:linear-gradient(145deg,#151b20,#0d1115);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 18px 60px #0008}.drop{border:1px dashed #52616b;border-radius:17px;padding:35px 18px;text-align:center;background:#ffffff05}.drop.drag{border-color:var(--green);background:#76ff0310}.drop strong{font-size:18px}.hint{color:var(--muted);font-size:13px;line-height:1.6}.btn{border:0;border-radius:12px;padding:13px 18px;font-weight:850;cursor:pointer;background:linear-gradient(110deg,var(--green),#c2ff77);color:#071000}.btn:disabled{opacity:.45;cursor:not-allowed}.file{display:none}.row{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:18px}.status{margin-top:20px;border:1px solid var(--line);border-radius:14px;padding:17px;display:none}.bar{height:7px;background:#283038;border-radius:9px;overflow:hidden;margin:12px 0}.bar i{display:block;width:12%;height:100%;background:var(--green);transition:width .3s}.result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:15px}.metric{background:#ffffff08;border:1px solid var(--line);border-radius:12px;padding:12px}.metric small{display:block;color:var(--muted);margin-bottom:6px}.metric b{font-size:14px;overflow-wrap:anywhere}.warn{color:#ffd37a}.foot{color:var(--muted);font-size:12px;text-align:center;margin-top:25px;line-height:1.7}@media(max-width:560px){.panel{padding:15px}.result{grid-template-columns:1fr 1fr}.hero{padding-top:40px}}
+</style>
+</head>
+<body><main class="wrap">
+<header class="top"><div class="brand">DICKY NEWS <span>RTX TEST</span></div><a href="/">Kembali ke Dicky News</a></header>
+<section class="hero"><h1>RTX <span>FURY</span><br>PUBLIC TEST</h1><p>Uji struktur stream video menggunakan salinan Golden HD dan pipeline RTX eksperimen. Video diproses tanpa re-encoding payload gambar.</p></section>
+<section class="panel">
+<div class="drop" id="drop"><strong id="filename">Pilih atau jatuhkan video di sini</strong><p class="hint">MP4, MOV, MKV, WEBM · Maksimal 100 MB per video</p><input class="file" id="file" type="file" accept="video/mp4,video/quicktime,video/x-matroska,video/webm,.mp4,.mov,.mkv,.webm"><div class="row"><button class="btn" id="choose">PILIH VIDEO</button><button class="btn" id="run" disabled>JALANKAN RTX TEST</button></div></div>
+<div class="status" id="status"><b id="state">Menyiapkan...</b><div class="bar"><i id="bar"></i></div><p class="hint" id="message">Upload dan proses sedang berjalan.</p><div id="result"></div><div class="row" id="downloadRow"></div></div>
+<p class="foot warn">Halaman ini terbuka untuk publik. Batas: 100 MB/video, satu proses pada satu waktu, maksimal 3 pengujian per IP setiap jam. File sementara dijadwalkan dihapus maksimal 30 menit. Jangan unggah video pribadi atau sensitif.</p>
+</section>
+<p class="foot">Mesin eksperimen terpisah · Tidak menggunakan saldo atau paket pelanggan · Tidak mengubah mesin produksi.</p>
+</main>
+<script>
+const API="https://103-235-74-92.sslip.io/rtx-test";
+const fileEl=document.getElementById("file"),drop=document.getElementById("drop"),run=document.getElementById("run"),statusEl=document.getElementById("status");
+let selected=null;
+document.getElementById("choose").onclick=()=>fileEl.click();
+fileEl.onchange=()=>select(fileEl.files[0]);
+function select(f){if(!f)return;if(f.size>100*1024*1024){alert("Maksimal 100 MB.");return}selected=f;document.getElementById("filename").textContent=f.name+" ("+(f.size/1048576).toFixed(1)+" MB)";run.disabled=false}
+drop.ondragover=e=>{e.preventDefault();drop.classList.add("drag")};drop.ondragleave=()=>drop.classList.remove("drag");drop.ondrop=e=>{e.preventDefault();drop.classList.remove("drag");select(e.dataTransfer.files[0])};
+const fmt=n=>(n/1048576).toFixed(2)+" MB";
+run.onclick=async()=>{if(!selected)return;run.disabled=true;document.getElementById("choose").disabled=true;statusEl.style.display="block";document.getElementById("result").innerHTML="";document.getElementById("downloadRow").innerHTML="";set("Mengunggah video","Mengirim file ke mesin RTX eksperimen...",12);
+try{const fd=new FormData();fd.append("file",selected);const response=await fetch(API+"/jobs",{method:"POST",body:fd});const created=await response.json();if(!response.ok)throw new Error(created.detail||"Upload gagal");await poll(created.job_id,created.token)}
+catch(e){set("Gagal",e.message,0);run.disabled=false;document.getElementById("choose").disabled=false}};
+function set(title,msg,p){document.getElementById("state").textContent=title;document.getElementById("message").textContent=msg;document.getElementById("bar").style.width=p+"%"}
+async function poll(id,token){for(let i=0;i<180;i++){const r=await fetch(API+"/jobs/"+id+"?token="+encodeURIComponent(token));const d=await r.json();if(!r.ok)throw new Error(d.detail||"Status tidak tersedia");if(d.status==="completed"){set("Pengujian selesai","Payload video tidak di-encode ulang. Periksa parameter hasil di bawah.",100);const v=d.validation;document.getElementById("result").innerHTML='<div class="result">'+metric("Codec",v.codec)+metric("Resolusi",v.width+" × "+v.height)+metric("FPS input/output",v.inputFps+" / "+v.outputFps)+metric("Pixel format",v.pixelFormat||"-")+metric("Ukuran input",fmt(d.input_bytes))+metric("Ukuran output",fmt(d.output_bytes))+metric("Kontainer",v.container)+metric("Video re-encode","Tidak")+'</div>';const a=document.createElement("a");a.className="btn";a.href=API+"/jobs/"+id+"/download?token="+encodeURIComponent(token);a.textContent="UNDUH HASIL RTX (.TS)";document.getElementById("downloadRow").appendChild(a);run.disabled=false;document.getElementById("choose").disabled=false;return}if(d.status==="failed")throw new Error(d.error||"Proses gagal");set(d.status==="processing"?"Memproses video":"Dalam antrean",d.progress||"Sedang diproses...",45);await new Promise(r=>setTimeout(r,3000))}throw new Error("Waktu tunggu habis. Periksa kembali nanti.")}
+function metric(k,v){return '<div class="metric"><small>'+k+'</small><b>'+String(v??"-")+'</b></div>'}
+</script></body></html>
