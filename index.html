@@ -3839,6 +3839,20 @@ html body .app .grid>.card.upload #drop .upload-destination-guide{width:100%;mar
 @media(prefers-reduced-motion:reduce){html body .app .grid>.card.upload *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 </style>
 
+<style id="RTXFURY_DROP_ONLY_THEME">
+.machine-runtime-controls{display:none!important}
+html body .app .grid>.card.upload{background:linear-gradient(145deg,#111216 0%,#0b0c0f 100%)!important;border:1px solid rgba(255,255,255,.075)!important;border-radius:24px!important;box-shadow:0 18px 55px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.035)!important;padding:26px!important}
+html body .app .grid>.card.upload .card-head{border:0!important;background:transparent!important}
+html body .app .grid>.card.upload #drop{position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:14px!important;min-height:390px!important;width:100%!important;margin:18px 0 0!important;padding:48px 24px!important;box-sizing:border-box!important;border:2px dashed #76b900!important;border-radius:24px!important;background:radial-gradient(ellipse at 50% 45%,rgba(118,185,0,.105),rgba(118,185,0,.045) 58%,rgba(9,12,8,.35) 100%)!important;color:#f4f4f4!important;text-align:center!important;box-shadow:inset 0 0 35px rgba(118,185,0,.035)!important}
+html body .app .grid>.card.upload #drop .rtx-drop-icon{display:flex!important;align-items:center!important;justify-content:center!important;width:68px!important;height:68px!important;border:1px solid rgba(118,185,0,.32)!important;border-radius:18px!important;background:rgba(118,185,0,.08)!important;color:#80d000!important}
+html body .app .grid>.card.upload #drop .rtx-drop-icon svg{width:30px!important;height:30px!important}
+html body .app .grid>.card.upload #drop #dropTitle{display:block!important;margin:4px 0 0!important;color:#f5f5f5!important;font-size:23px!important;font-weight:750!important;letter-spacing:-.025em!important;line-height:1.25!important}
+html body .app .grid>.card.upload #drop #dropText{display:block!important;margin:0!important;max-width:100%!important;color:#777982!important;font-size:16px!important;font-weight:450!important;line-height:1.55!important}
+html body .app .grid>.card.upload #drop .rtx-bitrate-note{margin:0!important;color:#f0f0f1!important;font-size:16px!important;font-weight:750!important;line-height:1.4!important}
+html body .app .grid>.card.upload #drop .upload-destination-guide{width:100%;margin-top:20px}
+@media(max-width:700px){html body .app .grid>.card.upload{padding:16px!important;border-radius:19px!important}html body .app .grid>.card.upload #drop{min-height:320px!important;padding:32px 14px!important;gap:12px!important;border-radius:19px!important}html body .app .grid>.card.upload #drop #dropTitle{font-size:20px!important}html body .app .grid>.card.upload #drop #dropText{font-size:13px!important}html body .app .grid>.card.upload #drop .rtx-bitrate-note{font-size:14px!important}}
+@media(prefers-reduced-motion:reduce){html body .app .grid>.card.upload *{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
 
@@ -3949,15 +3963,11 @@ html body .app .grid>.card.upload #drop .upload-destination-guide{width:100%;mar
 <section class="grid" id="uploadSection" aria-label="Upload dan proses video">
   <div class="card upload">
     <div class="card-head"><div><div class="mini">Pilih mode pemrosesan video</div></div><div class="pill">MP4 / MOV</div></div>
-    <div class="mode-title">PILIH MESIN</div>
+
     <div id="freeInjectWrap" class="free-inject-wrap"><button class="mode-btn free-inject-btn" id="freeInjectBtn" type="button">INJECT GRATIS</button><p class="free-inject-caption">Coba Dicky News Method tanpa login. Mendukung input video MP4, MOV, MKV, dan WEBM. Pemrosesan tanpa encoding ulang.</p><input id="freeInjectFile" type="file" accept="*/*" hidden></div>
-    <div class="mode-buttons machine-columns" role="group" aria-label="Pilih mesin pemrosesan">
-      <article class="machine-card inject-machine">
-        <button class="mode-btn active" id="sdrBtn" type="button" aria-pressed="true">MESIN UTAMA <small id="sdrPrice">PAKET LANGGANAN</small></button>
-      </article>
-      <article class="machine-card hdr-machine new-machine-card">
-        <button class="mode-btn hdr-soon" id="hdrBtn" type="button" disabled aria-disabled="true" title="Mesin baru sedang disiapkan">MESIN BARU <small id="hdrPrice" class="soon-label">SEGERA HADIR</small></button>
-      </article>
+    <div class="machine-runtime-controls" aria-hidden="true">
+      <button class="mode-btn active" id="sdrBtn" type="button">MESIN UTAMA <small id="sdrPrice">PAKET LANGGANAN</small></button>
+      <button class="mode-btn" id="hdrBtn" type="button" disabled>MESIN BARU <small id="hdrPrice">SEGERA HADIR</small></button>
     </div>
     <div class="drop" id="drop">
       <div class="rtx-drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0 5-5m-5 5-5-5M4 17v3h16v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
