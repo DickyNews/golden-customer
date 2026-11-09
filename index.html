@@ -1171,6 +1171,7 @@ button:disabled,input:disabled,[aria-disabled="true"]{animation:none!important}
 .machine-card{min-width:0;padding:14px;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:linear-gradient(145deg,rgba(22,24,31,.96),rgba(8,9,13,.96));box-shadow:inset 0 1px rgba(255,255,255,.035)}
 .machine-card.inject-machine{border-color:rgba(37,244,238,.3)}
 .machine-card.hdr-machine{border-color:rgba(254,44,85,.28)}
+.machine-card.rtx-machine{border-color:rgba(118,185,0,.55);background:linear-gradient(145deg,rgba(118,185,0,.10),rgba(8,9,13,.96))}
 .machine-card>.mode-btn{display:block;width:100%;min-height:86px;text-align:center;font-size:13px;line-height:1.5}
 .machine-card>.mode-btn small{font-size:10px;line-height:1.5;overflow-wrap:anywhere}
 .machine-notes{display:grid;gap:10px;margin:15px 0 2px;padding:0 0 0 20px;color:#e8e8ec;font-size:12px;line-height:1.7}
@@ -3942,6 +3943,12 @@ html body .app .hero-main-headline strong.nvidia-accent {
             <li>Setelah videomu selesai di-upload dan berhasil di-download dari mesin ini, langkah selanjutnya tinggal upload ke TikTok lewat Zernio.</li>
           </ul>
         </details>
+      <article class="machine-card rtx-machine">
+        <button class="mode-btn" id="rtxBtn" type="button">GOLDEN RTX TEST <small>MESIN EKSPERIMEN PUBLIK · TANPA LOGIN</small></button>
+        <p class="machine-notes">Uji mesin RTX terpisah dari Golden HD produksi. Video diproses dengan pipeline Golden Engine + stream restructuring. Hasil pengujian berupa file transport stream.</p>
+        <input id="rtxFile" type="file" accept=".mp4,.mov,.mkv,.webm,video/*" hidden>
+      </article>
+
       </article>
 
     </div>
@@ -4471,6 +4478,67 @@ async function uploadVideo(f){
     // a backend failure may already have refunded COIN or finalized the job.
     await Promise.allSettled([loadWallet(),loadJobHistory()]);
   }finally{processing=false;}
+}
+
+
+const rtxBtn=document.getElementById('rtxBtn');
+const rtxFile=document.getElementById('rtxFile');
+let rtxBusy=false;
+if(rtxBtn&&rtxFile){
+  rtxBtn.addEventListener('click',()=>{if(!rtxBusy)rtxFile.click();});
+  rtxFile.addEventListener('change',async()=>{
+    const f=rtxFile.files&&rtxFile.files[0];
+    if(!f)return;
+    if(rtxBusy||processing)return;
+    if(!/\\.(mp4|mov|mkv|webm)$/i.test(f.name)){
+      showModal('Format tidak didukung','Pilih video MP4, MOV, MKV, atau WEBM.');
+      rtxFile.value='';return;
+    }
+    rtxBusy=true;processing=true;modal.classList.add('show');close.style.display='block';
+    close.textContent='Tutup Tampilan Proses';
+    document.getElementById('modalTitle').textContent='Golden RTX Test';
+    document.getElementById('modalText').textContent='Mengunggah video ke mesin RTX…';
+    const progressTrack=document.querySelector('#modal .progress');
+    if(progressTrack)progressTrack.style.display='block';
+    try{
+      const fd=new FormData();fd.append('file',f,f.name);
+      const upload=await fetch(GOLDEN_PLATFORM.apiBase+'/rtx/jobs',{method:'POST',body:fd,cache:'no-store'});
+      const created=await upload.json().catch(()=>({}));
+      if(!upload.ok)throw new Error(formatApiDetail(created.detail,'HTTP '+upload.status));
+      const jobId=created.job_id,token=created.token;
+      if(!jobId||!token)throw new Error('Server RTX tidak memberikan identitas job.');
+      let finalData=null;
+      for(let i=0;i<450;i++){
+        await new Promise(resolve=>setTimeout(resolve,2000));
+        const response=await fetch(GOLDEN_PLATFORM.apiBase+'/rtx/jobs/'+encodeURIComponent(jobId)+'?token='+encodeURIComponent(token),{cache:'no-store'});
+        const data=await response.json().catch(()=>({}));
+        if(!response.ok)throw new Error(formatApiDetail(data.detail,'HTTP '+response.status));
+        const status=String(data.status||'').toLowerCase();
+        document.getElementById('modalText').textContent=data.progress||({queued:'Menunggu mesin RTX…',processing:'Golden Engine + RTX sedang memproses…',completed:'Pemrosesan selesai.'}[status]||'Mesin RTX sedang bekerja…');
+        if(['completed','complete','done','success'].includes(status)){finalData=data;break;}
+        if(['failed','error','cancelled','canceled'].includes(status))throw new Error(data.error||'Pemrosesan RTX gagal.');
+      }
+      if(!finalData)throw new Error('Pemrosesan belum selesai dalam 15 menit. Periksa kembali nanti.');
+      if(!finalData.download_url)throw new Error('Job selesai tetapi link unduhan tidak tersedia.');
+      document.getElementById('modalTitle').textContent='Golden RTX selesai';
+      document.getElementById('modalText').textContent='Mengambil hasil transport stream…';
+      const downloadUrl=finalData.download_url.startsWith('http')?finalData.download_url:(GOLDEN_PLATFORM.apiBase+finalData.download_url);
+      const result=await fetch(downloadUrl,{cache:'no-store'});
+      if(!result.ok)throw new Error('Unduhan gagal: HTTP '+result.status);
+      const blob=await result.blob();
+      if(!blob.size)throw new Error('File hasil RTX kosong.');
+      const objectUrl=URL.createObjectURL(blob);
+      const a=document.createElement('a');a.href=objectUrl;a.download='dickynews-rtx-'+jobId.slice(0,8)+'.ts';
+      document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(objectUrl),60000);
+      document.getElementById('modalTitle').textContent='Golden RTX berhasil';
+      document.getElementById('modalText').textContent='Hasil RTX sudah dikirim ke unduhan browser. Periksa hasil video sebelum dipublikasikan.';
+    }catch(e){
+      document.getElementById('modalTitle').textContent='Golden RTX Test gagal';
+      document.getElementById('modalText').textContent=e.message||'Terjadi kesalahan saat menjalankan mesin RTX.';
+    }finally{
+      rtxBusy=false;processing=false;rtxFile.value='';close.style.display='block';
+    }
+  });
 }
 
 file.onchange=()=>{const f=file.files[0];if(!f)return;const supportedVideoExt=/\.(mp4|mov|m4v|webm|mkv)$/i.test(f.name);const supportedVideoMime=!f.type||/^video\/(mp4|quicktime|x-m4v|webm|x-matroska|matroska|mkv)$/i.test(f.type);if(!supportedVideoExt||!supportedVideoMime){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Format Video Tidak Didukung';document.getElementById('modalText').textContent='Pilih video MP4, MOV, WEBM, atau MKV dari Recent/Terkini atau penyimpanan perangkat.';return}if(!serviceActive[selectedMode]){file.value='';modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Layanan Tidak Tersedia';document.getElementById('modalText').textContent='Mode yang dipilih sedang dinonaktifkan oleh admin.';return}title.textContent='Video siap diproses';text.textContent=(f.size/1048576).toFixed(1)+' MB · '+(selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD')+' · Paket Langganan';if(f.size>maxFileSizeBytes){modal.classList.add('show');close.style.display='block';document.getElementById('modalTitle').textContent='Ukuran Video Melebihi Batas';document.getElementById('modalText').textContent='Ukuran file '+(f.size/1048576).toFixed(1)+' MB, sedangkan batas layanan '+(maxFileSizeBytes/1048576).toFixed(0)+' MB. Pilih file yang lebih kecil.';return}uploadVideo(f);};
