@@ -4367,8 +4367,7 @@ async function dnCheckVideoBitrate(file){
     const factory=await dnGetMediaInfoFactory();
     mediaInfo=await factory({
       format:'object',
-      chunkSize:1048576,
-      locateFile:()=> 'https://cdn.jsdelivr.net/npm/mediainfo.js@0.3.8/dist/MediaInfoModule.wasm'
+      chunkSize:262144
     });
     const result=await mediaInfo.analyzeData(file.size,async(size,offset)=>{
       const buffer=await file.slice(offset,offset+size).arrayBuffer();
@@ -4379,13 +4378,13 @@ async function dnCheckVideoBitrate(file){
     if(!videoTracks.length)throw new Error('Track video tidak ditemukan.');
     const bitrates=videoTracks.map(track=>dnParseBitrateBps(track.BitRate)??dnParseBitrateBps(track.BitRate_Nominal)??dnParseBitrateBps(track.BitRate_Maximum));
     if(bitrates.some(value=>!Number.isFinite(value)||value<=0)){
-      showModal('Bitrate Video Tidak Terbaca','Bitrate video sumber tidak dapat diverifikasi di perangkat ini. File tidak diunggah. Coba gunakan video dengan metadata bitrate yang terbaca.');
+      showModal('Bitrate Video Tidak Terbaca','Maksimal bitrate video yang dapat diproses adalah 30Mbps.');
       return null;
     }
     const highest=Math.max(...bitrates);
     if(highest>DN_VIDEO_BITRATE_LIMIT_BPS){
       const detected=(highest/1000000).toFixed(2).replace(/\.?0+$/,'');
-      showModal('Bitrate Video Melebihi Batas','Maksimal bitrate video adalah 30 Mbps. Video ini terdeteksi '+detected+' Mbps. File ditolak dan tidak akan diunggah ke server.');
+      showModal('Bitrate Video Melebihi Batas','Maksimal bitrate video yang dapat diproses adalah 30Mbps.');
       return null;
     }
     const video=videoTracks[0],general=tracks.find(track=>String(track?.['@type']||'').toLowerCase()==='general')||{};
@@ -4401,7 +4400,7 @@ async function dnCheckVideoBitrate(file){
       container:general.Format||file.name.split('.').pop()?.toUpperCase()||'—'
     };
   }catch(error){
-    showModal('Pemeriksaan Bitrate Gagal','Bitrate video tidak dapat diperiksa di perangkat ini. File tidak diunggah demi menjaga batas maksimal 30 Mbps. Periksa koneksi lalu coba lagi.');
+    showModal('Pemeriksaan Bitrate Gagal','Maksimal bitrate video yang dapat diproses adalah 30Mbps.');
     return false;
   }finally{
     try{mediaInfo?.close();}catch(e){}
