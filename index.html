@@ -4394,7 +4394,7 @@ async function dnCheckVideoBitrate(file){
     const highest=Math.max(...bitrates);
     if(highest>DN_VIDEO_BITRATE_LIMIT_BPS){
       const detected=(highest/1000000).toFixed(2).replace(/\.?0+$/,'');
-      showModal('Bitrate Video Melebihi Batas','Maksimal bitrate video yang dapat diproses adalah 30Mbps.');
+      showModal('Bitrate Video Melebihi Batas','Maksimal bitrate video yang dapat diproses adalah 50Mbps.');
       return null;
     }
     const video=videoTracks[0],general=tracks.find(track=>String(track?.['@type']||'').toLowerCase()==='general')||{};
@@ -4506,7 +4506,7 @@ async function dnPrepareUltimateVideo(f){
   title.textContent='Memeriksa video secara lokal…';text.textContent='Belum ada data yang dikirim ke server.';
   const info=await dnCheckVideoBitrate(f);
   if(!info){file.value='';return;}
-  title.textContent='Video siap diperiksa';text.textContent=f.name+' · '+dnFormatSize(f.size)+' · Maksimal bitrate 30 Mbps';
+  title.textContent='Video siap diperiksa';text.textContent=f.name+' · '+dnFormatSize(f.size)+' · Maksimal bitrate 50 Mbps';
   dnRenderVideoPreflight(info,f);
 }
 
