@@ -4178,8 +4178,107 @@ function dnSetStage(mode){const idx={upload:0,processing:1,download:2,done:3,err
 function dnStartProgress(mode,file,label){dnProgressState.startedAt=Date.now();dnProgressState.lastActivityAt=Date.now();dnProgressState.lastSampleAt=0;dnProgressState.lastLoaded=0;dnProgressState.rate=0;dnProgressState.mode=mode;const p=document.getElementById('dnProgressPanel');if(p)p.hidden=false;const n=document.getElementById('dnProgressFileName');if(n)n.textContent=file?.name||'Video hasil pemrosesan';const z=document.getElementById('dnProgressFileSize');if(z)z.textContent=file?.size?'Ukuran file '+dnFormatBytes(file.size):'Ukuran file menunggu informasi server';const t=document.getElementById('dnProgressTransfer');if(t)t.textContent=file?.size?'0 B / '+dnFormatBytes(file.size):'Menunggu ukuran transfer';dnSetStage(mode);setProgress(0,label,{mode,detail:'Koneksi sedang disiapkan.'});dnStopProgressTicker();dnProgressState.timer=setInterval(()=>{const el=document.getElementById('dnProgressElapsed');if(el)el.textContent=dnFormatDuration((Date.now()-dnProgressState.startedAt)/1000);const idle=(Date.now()-dnProgressState.lastActivityAt)/1000,h=document.getElementById('dnProgressHint'),m=dnProgressState.mode;if(h){if(m==='processing')h.textContent=idle>8?'Server belum mengirim perubahan angka. Pemantauan job tetap aktif dan waktu proses terus dihitung.':'Server dipantau berkala. Indikator bergerak selama sesi masih berlangsung.';else if((m==='upload'||m==='download')&&idle>5)h.textContent='Belum ada paket data baru. Jaringan mungkin lambat; koneksi tetap dipantau.';}},1000);}
 function dnStopProgressTicker(){if(dnProgressState.timer){clearInterval(dnProgressState.timer);dnProgressState.timer=null;}}
 function dnSetProgress(p,label,d={}){const n=Math.max(0,Math.min(100,Number(p)||0)),m=d.mode||dnProgressState.mode||'upload';dnProgressState.mode=m;dnProgressState.lastActivityAt=Date.now();const panel=document.getElementById('dnProgressPanel');if(panel)panel.hidden=false;const tr=document.getElementById('dnProgressTrack'),bar=document.getElementById('dnProgressBar');if(tr){tr.classList.add('active');tr.classList.remove('indeterminate');}if(bar)bar.style.width=n+'%';const pc=document.getElementById('dnProgressPercent');if(pc)pc.textContent=Math.round(n)+'%';const l=document.getElementById('dnProgressLabel');if(l)l.textContent=label||'Memproses';const tx=document.getElementById('modalText');if(tx)tx.textContent=(label||'Memproses')+' '+Math.round(n)+'%.';if(d.detail){const h=document.getElementById('dnProgressHint');if(h)h.textContent=d.detail;}if(d.loaded!=null&&d.total>0){const t=document.getElementById('dnProgressTransfer');if(t)t.textContent=dnFormatBytes(d.loaded)+' / '+dnFormatBytes(d.total);const s=document.getElementById('dnProgressSpeed');if(s)s.textContent=d.speed?dnFormatBytes(d.speed)+'/s':'Mengukur kecepatan…';const r=document.getElementById('dnProgressRate');if(r)r.textContent=d.speed?dnFormatBytes(d.speed)+'/s':'Mengukur…';const e=document.getElementById('dnProgressEta');if(e)e.textContent=d.eta!=null?dnFormatDuration(d.eta):'Menghitung…';const z=document.getElementById('dnProgressFileSize');if(z)z.textContent='Ukuran transfer '+dnFormatBytes(d.total);}dnSetStage(m);}
-function dnSetIndeterminateProgress(mode,label,detail){dnProgressState.mode=mode;dnProgressState.lastActivityAt=Date.now();const p=document.getElementById('dnProgressPanel');if(p)p.hidden=false;const t=document.getElementById('dnProgressTrack'),b=document.getElementById('dnProgressBar');if(t)t.classLasync function uploadFreeVideo(f){if(processing||customerAuthenticated||!f)return;await freeMaxSettingsPromise;if(f.size>freeMaxBytes){showFreeSizeLimit();freeInjectFile.value='';return;}if(!/\.(mp4|mov|webm|mkv)$/i.test(f.name)){showModal('Format Video Tidak Didukung','Pilih video MP4, MOV, WEBM, atau MKV.');freeInjectFile.value='';return;}processing=true;modal.classList.add('show');close.style.display='block';close.textContent='Tutup Tampilan Proses';document.getElementById('modalTitle').textContent='Inject Gratis · Dicky News Method';const modalText=document.getElementById('modalText');dnStartProgress('upload',f,'Mengunggah video gratis ke server');let token=null,jobId=null;try{const fd=new FormData();fd.append('file',f,f.name);const data=await new Promise((resolve,reject)=>{const xhr=new XMLHttpRequest();xhr.open('POST',GOLDEN_PLATFORM.apiBase+'/public/free-inject/jobs',true);xhr.timeout=15*60*1000;xhr.upload.onprogress=e=>dnUpdateTransfer('upload',e.loaded,e.total,'Mengunggah video gratis');xhr.onerror=()=>reject(new Error('Koneksi upload gratis terputus. Periksa jaringan sebelum mencoba lagi.'));xhr.ontimeout=()=>reject(new Error('Upload gratis melewati batas waktu 15 menit.'));xhr.onload=()=>{let d={};try{d=JSON.parse(xhr.responseText||'{}')}catch(e){}if(xhr.status<200||xhr.status>=300){if(xhr.status===413||d.detail==='FREE_MAX_50MB')return reject(new Error('FREE_SIZE_LIMIT'));return reject(new Error(formatApiDetail(d.detail,'HTTP '+xhr.status)));}resolve(d);};xhr.send(fd);});jobId=data.job_id;token=data.token;if(!jobId||!token)throw new Error('Server belum memberikan akses job gratis.');dnSetIndeterminateProgress('processing','Upload diterima · menunggu ULTIMATE','File sudah diterima server. Sistem sedang menyiapkan antrean pemrosesan.');let downloadUrl=null;for(let i=0;i<180;i++){await new Promise(resolve=>setTimeout(resolve,2000));const sr=await fetch(GOLDEN_PLATFORM.apiBase+'/public/free-inject/jobs/'+encodeURIComponent(jobId)+'?token='+encodeURIComponent(token),{cache:'no-store'});const d=await sr.json().catch(()=>({}));if(!sr.ok)throw new Error(formatApiDetail(d.detail,'HTTP '+sr.status));const st=String(d.status||'').toLowerCase(),p=normalizeProgress(d),label=d.progress_label||d.stage_label||({queued:'Video masuk antrean, menunggu worker…',processing:'ULTIMATE sedang memproses video…',running:'ULTIMATE sedang memproses video…'}[st]||'ULTIMATE sedang memproses video…');if(p!==null)setProgress(p,label,{mode:'processing',detail:'Progres aktual dari server. Waktu pemrosesan tetap dihitung.'});else dnSetIndeterminateProgress('processing',label,'ULTIMATE sedang bekerja. Jika persentase belum tersedia, indikator aktivitas dan waktu tetap bergerak.');if(d.download_url&&['completed','complete','done','success','finished'].includes(st)){downloadUrl=d.download_url;break;}if(['failed','error','cancelled','canceled'].includes(st))throw new Error(d.error||'Proses video gagal di server.');}if(!downloadUrl)throw new Error('Proses masih berjalan. Coba periksa kembali riwayat beberapa saat lagi.');dnStartProgress('download',null,'Mengunduh hasil video');const target=downloadUrl.startsWith('http')?downloadUrl:(GOLDEN_PLATFORM.apiBase+(downloadUrl.startsWith('/')?'':'/')+downloadUrl);const blob=await new Promise((resolve,reject)=>{const xhr=new XMLHttpRequest();xhr.open('GET',target,true);xhr.responseType='blob';xhr.timeout=15*60*1000;xhr.onprogress=e=>dnUpdateTransfer('download',e.loaded,e.total,'Mengunduh hasil video');xhr.onerror=()=>reject(new Error('Koneksi terputus saat mengunduh hasil.'));xhr.ontimeout=()=>reject(new Error('Unduhan melewati batas waktu 15 menit.'));xhr.onload=()=>{if(xhr.status<200||xhr.status>=300)return reject(new Error('Unduhan gagal (HTTP '+xhr.status+').'));if(!(xhr.response instanceof Blob)||!xhr.response.size)return reject(new Error('File hasil kosong.'));resolve(xhr.response);};xhr.send();});const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='dickynewsmethod_free_'+jobId+'.mp4';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000);setProgress(100,'Unduhan selesai',{mode:'done',loaded:blob.size,total:blob.size,detail:'File hasil sudah diterima browser dan unduhan telah dimulai.'});dnStopProgressTicker();document.getElementById('modalTitle').textContent='Inject Gratis Berhasil';modalText.textContent='Hasil video berhasil diproses dan unduhan telah dimulai.';close.style.display='block';}catch(e){if(e.message==='FREE_SIZE_LIMIT')showFreeSizeLimit();else{document.getElementById('modalTitle').textContent='Inject Gratis';dnSetErrorProgress('Proses terhenti',e.message||'Gagal memproses video.');modalText.textContent=e.message||'Gagal memproses video.';close.style.display='block';}}finally{processing=false;freeInjectFile.value='';}}essage||value.msg||value.error||value.detail||JSON.stringify(value));
+function dnSetIndeterminateProgress(mode,label,detail){
+  dnProgressState.mode=mode;dnProgressState.lastActivityAt=Date.now();
+  const p=document.getElementById('dnProgressPanel');if(p)p.hidden=false;
+  const t=document.getElementById('dnProgressTrack'),b=document.getElementById('dnProgressBar');
+  if(t)t.classList.add('active','indeterminate');if(b)b.style.width='34%';
+  const pc=document.getElementById('dnProgressPercent');if(pc)pc.textContent='—';
+  const l=document.getElementById('dnProgressLabel');if(l)l.textContent=label||'Memproses';
+  const tx=document.getElementById('modalText');if(tx)tx.textContent=label||'Memproses';
+  const h=document.getElementById('dnProgressHint');if(h)h.textContent=detail||'Aktivitas tetap dipantau. Waktu proses terus berjalan.';
+  const speed=document.getElementById('dnProgressSpeed');if(speed)speed.textContent='Menunggu data';
+  const rate=document.getElementById('dnProgressRate');if(rate)rate.textContent='—';
+  const eta=document.getElementById('dnProgressEta');if(eta)eta.textContent='Menunggu';
+  dnSetStage(mode);
+}
+function setProgress(p,label,details){dnSetProgress(p,label,details||{});}
+function dnUpdateTransfer(mode,loaded,total,label){
+  const now=Date.now(),bytes=Math.max(0,Number(loaded)||0),all=Math.max(0,Number(total)||0);
+  let speed=0;
+  if(dnProgressState.lastSampleAt&&now>dnProgressState.lastSampleAt){
+    const dt=(now-dnProgressState.lastSampleAt)/1000,delta=bytes-dnProgressState.lastLoaded;
+    if(dt>0&&delta>=0)speed=delta/dt;
+  }
+  if(speed>0)dnProgressState.rate=speed;
+  dnProgressState.lastSampleAt=now;dnProgressState.lastLoaded=bytes;dnProgressState.lastActivityAt=now;
+  const pct=all>0?Math.max(0,Math.min(100,bytes/all*100)):0;
+  const eta=all>bytes&&dnProgressState.rate>0?(all-bytes)/dnProgressState.rate:null;
+  dnSetProgress(pct,label||'Transfer berlangsung',{mode,loaded:bytes,total:all,speed:dnProgressState.rate,eta,detail:all>0?'Data diterima '+dnFormatBytes(bytes)+' dari '+dnFormatBytes(all)+'.':'Transfer berlangsung; ukuran total belum tersedia.'});
+  const track=document.getElementById('dnProgressTrack');if(track)track.classList.remove('indeterminate');
+  const pc=document.getElementById('dnProgressPercent');if(pc)pc.textContent=all>0?Math.floor(pct)+'%':'—';
+}
+function dnSetErrorProgress(label,detail){
+  dnProgressState.mode='error';dnProgressState.lastActivityAt=Date.now();
+  const track=document.getElementById('dnProgressTrack');if(track){track.classList.remove('indeterminate');track.classList.add('active');}
+  const pc=document.getElementById('dnProgressPercent');if(pc)pc.textContent='!';
+  const l=document.getElementById('dnProgressLabel');if(l)l.textContent=label||'Proses terhenti';
+  const h=document.getElementById('dnProgressHint');if(h)h.textContent=detail||'Periksa koneksi dan status pekerjaan.';
+  dnSetStage('error');dnStopProgressTicker();
+}
+function dnFormatApiDetail(value,fallback){
+  if(value==null)return fallback||'Permintaan gagal.';
+  if(typeof value==='string')return value;
+  if(typeof value==='object')return String(value.message||value.msg||value.error||value.detail||JSON.stringify(value));
   return String(value);
+}
+function formatApiDetail(value,fallback){return dnFormatApiDetail(value,fallback);}
+async function uploadFreeVideo(f){
+  if(processing||customerAuthenticated||!f)return;
+  await freeMaxSettingsPromise;
+  if(f.size>freeMaxBytes){showFreeSizeLimit();freeInjectFile.value='';return;}
+  if(!/\.(mp4|mov|webm|mkv)$/i.test(f.name)){showModal('Format Video Tidak Didukung','Pilih video MP4, MOV, WEBM, atau MKV.');freeInjectFile.value='';return;}
+  processing=true;modal.classList.add('show');close.style.display='block';close.textContent='Tutup Tampilan Proses';
+  document.getElementById('modalTitle').textContent='Inject Gratis · Dicky News Method';
+  dnStartProgress('upload',f,'Mengunggah video gratis ke server');
+  let jobId=null,token=null;
+  try{
+    const fd=new FormData();fd.append('file',f,f.name);
+    const data=await new Promise((resolve,reject)=>{
+      const xhr=new XMLHttpRequest();xhr.open('POST',GOLDEN_PLATFORM.apiBase+'/public/free-inject/jobs',true);xhr.timeout=15*60*1000;
+      xhr.upload.onprogress=e=>dnUpdateTransfer('upload',e.loaded,e.total,'Mengunggah video gratis');
+      xhr.onerror=()=>reject(new Error('Koneksi upload gratis terputus. Periksa jaringan.'));
+      xhr.ontimeout=()=>reject(new Error('Upload gratis melewati batas waktu 15 menit.'));
+      xhr.onload=()=>{let d={};try{d=JSON.parse(xhr.responseText||'{}')}catch(e){}
+        if(xhr.status<200||xhr.status>=300){if(xhr.status===413||d.detail==='FREE_MAX_50MB')return reject(new Error('FREE_SIZE_LIMIT'));return reject(new Error(formatApiDetail(d.detail,'HTTP '+xhr.status)));}
+        resolve(d);
+      };xhr.send(fd);
+    });
+    jobId=data.job_id;token=data.token;
+    if(!jobId||!token)throw new Error('Server belum memberikan akses job gratis.');
+    dnSetIndeterminateProgress('processing','Upload diterima · menunggu ULTIMATE','File sudah diterima server. Antrean dan worker sedang dipantau; indikator aktivitas tetap bergerak.');
+    let downloadUrl=null;
+    for(let i=0;i<180;i++){
+      await new Promise(resolve=>setTimeout(resolve,2000));
+      const sr=await fetch(GOLDEN_PLATFORM.apiBase+'/public/free-inject/jobs/'+encodeURIComponent(jobId)+'?token='+encodeURIComponent(token),{cache:'no-store'});
+      const d=await sr.json().catch(()=>({}));
+      if(!sr.ok)throw new Error(formatApiDetail(d.detail,'HTTP '+sr.status));
+      const st=String(d.status||'').toLowerCase(),p=normalizeProgress(d);
+      const label=d.progress_label||d.stage_label||({queued:'Video masuk antrean, menunggu worker…',processing:'ULTIMATE sedang memproses video…',running:'ULTIMATE sedang memproses video…'}[st]||'ULTIMATE sedang memproses video…');
+      if(p!==null)setProgress(p,label,{mode:'processing',detail:'Persentase aktual dari server. Waktu dan pemantauan tetap berjalan.'});
+      else dnSetIndeterminateProgress('processing',label,'ULTIMATE sedang bekerja. Server belum mengirim persentase; animasi aktivitas dan waktu tetap berjalan.');
+      if(d.download_url&&['completed','complete','done','success','finished'].includes(st)){downloadUrl=d.download_url;break;}
+      if(['failed','error','cancelled','canceled'].includes(st))throw new Error(d.error||'Proses video gagal di server.');
+    }
+    if(!downloadUrl)throw new Error('Proses masih berjalan. Periksa kembali riwayat beberapa saat lagi.');
+    dnStartProgress('download',null,'Mengunduh hasil video');
+    const target=downloadUrl.startsWith('http')?downloadUrl:(GOLDEN_PLATFORM.apiBase+(downloadUrl.startsWith('/')?'':'/')+downloadUrl);
+    const blob=await new Promise((resolve,reject)=>{
+      const xhr=new XMLHttpRequest();xhr.open('GET',target,true);xhr.responseType='blob';xhr.timeout=15*60*1000;
+      xhr.onprogress=e=>dnUpdateTransfer('download',e.loaded,e.total,'Mengunduh hasil video');
+      xhr.onerror=()=>reject(new Error('Koneksi terputus saat mengunduh hasil.'));
+      xhr.ontimeout=()=>reject(new Error('Unduhan melewati batas waktu 15 menit.'));
+      xhr.onload=()=>{if(xhr.status<200||xhr.status>=300)return reject(new Error('Unduhan gagal (HTTP '+xhr.status+').'));if(!(xhr.response instanceof Blob)||!xhr.response.size)return reject(new Error('File hasil kosong.'));resolve(xhr.response);};
+      xhr.send();
+    });
+    const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='dickynewsmethod_free_'+jobId+'.mp4';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000);
+    setProgress(100,'Unduhan selesai',{mode:'done',loaded:blob.size,total:blob.size,detail:'File hasil sudah diterima browser dan unduhan telah dimulai.'});
+    dnStopProgressTicker();document.getElementById('modalTitle').textContent='Inject Gratis Berhasil';
+    document.getElementById('modalText').textContent='Hasil video berhasil diproses dan unduhan telah dimulai.';close.style.display='block';
+  }catch(e){
+    if(e.message==='FREE_SIZE_LIMIT')showFreeSizeLimit();
+    else{document.getElementById('modalTitle').textContent='Inject Gratis';dnSetErrorProgress('Proses terhenti',e.message||'Gagal memproses video.');document.getElementById('modalText').textContent=e.message||'Gagal memproses video.';close.style.display='block';}
+  }finally{processing=false;freeInjectFile.value='';}
 }
 function extractJobId(d){
   return d?.job_id ?? d?.id ?? d?.job?.id ?? d?.job?.job_id ?? d?.data?.job_id ?? d?.data?.id ?? null;
