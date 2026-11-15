@@ -4268,7 +4268,7 @@ function dnTgRender(data){
  dnTgState.textContent=data.is_member?'TERVERIFIKASI':'BELUM FOLLOW CHANNEL';
  dnTgMessage.textContent=data.is_member?'Telegram terhubung. Akses Inject Gratis aktif.':'Telegram terhubung. Gabung @dickynewsofficial lalu tekan Verifikasi Channel.';
  dnTgConnect.style.display='none';dnTgJoin.style.display=data.is_member?'none':'inline-flex';dnTgVerify.style.display=data.is_member?'none':'inline-flex';
- dnTgQuota.textContent=String(data.remaining??0)+' / '+String(data.quota_limit??3)+' tersisa';
+ dnTgQuota.textContent=String(data.used_24h??0)+' / '+String(data.quota_limit??3)+' terpakai';
  return !!data.is_member;
 }
 async function dnTgRefresh(){
