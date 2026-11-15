@@ -4271,7 +4271,7 @@ async function uploadFreeVideo(f){
       xhr.onload=()=>{if(xhr.status<200||xhr.status>=300)return reject(new Error('Unduhan gagal (HTTP '+xhr.status+').'));if(!(xhr.response instanceof Blob)||!xhr.response.size)return reject(new Error('File hasil kosong.'));resolve(xhr.response);};
       xhr.send();
     });
-    const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='dickynewsmethod_free_'+jobId+'.mp4';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000);
+    const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='dickynews.com - dicky news method - '+f.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000);
     setProgress(100,'Unduhan selesai',{mode:'done',loaded:blob.size,total:blob.size,detail:'File hasil sudah diterima browser dan unduhan telah dimulai.'});
     dnStopProgressTicker();document.getElementById('modalTitle').textContent='Inject Gratis Berhasil';
     document.getElementById('modalText').textContent='Hasil video berhasil diproses dan unduhan telah dimulai.';close.style.display='block';
@@ -4359,7 +4359,7 @@ async function uploadFreeVideo(f){
     const result=await fetch(GOLDEN_PLATFORM.apiBase+downloadUrl,{cache:'no-store'});
     if(!result.ok)throw new Error('Hasil belum dapat diunduh (HTTP '+result.status+').');
     const blob=await result.blob();if(!blob.size)throw new Error('File hasil kosong.');
-    const objectUrl=URL.createObjectURL(blob);const a=document.createElement('a');a.href=objectUrl;a.download='dickynewsmethod_free_'+jobId+'.mp4';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(objectUrl),60000);
+    const objectUrl=URL.createObjectURL(blob);const a=document.createElement('a');a.href=objectUrl;a.download='dickynews.com - dicky news method - '+f.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(objectUrl),60000);
     document.getElementById('modalTitle').textContent='Inject Gratis Berhasil';modalText.textContent='Hasil video berhasil diproses dan unduhan telah dimulai.';close.style.display='block';
   }catch(e){
     document.getElementById('modalTitle').textContent='Inject Gratis';modalText.textContent=e.message||'Gagal memproses video.';close.style.display='block';
@@ -4457,7 +4457,7 @@ async function uploadVideo(f){
         transferComplete=true;
         objectUrl=URL.createObjectURL(blob);
         const save=document.createElement('a');
-        save.href=objectUrl;save.download=`dickynewsmethod_${jobId||'result'}.mp4`;
+        save.href=objectUrl;save.download='dickynews.com - dicky news method - '+f.name;
         save.style.display='none';document.body.appendChild(save);save.click();save.remove();
         setProgress(100,'Unduhan selesai',{mode:'done',loaded:blob.size,total:blob.size,detail:'Seluruh data video sudah diterima browser. Mengonfirmasi pembersihan file server…'});dnStopProgressTicker();
         a.textContent='UNDUHAN SELESAI · 100%';
