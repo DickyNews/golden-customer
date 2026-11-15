@@ -4102,6 +4102,10 @@ html body .app .hero-main-headline strong.nvidia-accent {
 .dn-tg-quota b{font-size:12px;color:#b7e56e;font-variant-numeric:tabular-nums}
 @media(max-width:600px){.dn-tg-free-actions{display:grid;grid-template-columns:1fr 1fr}.dn-tg-free-actions .btn{min-height:38px}}
 </style>
+<style id="DN_UNLIMITED_SUBSCRIPTION_POPUP_CENTER_V1">
+#modalText{text-align:center!important;white-space:pre-line!important}
+#goToSubscription{margin-left:auto!important;margin-right:auto!important}
+</style>
 <script src="./analytics-config.js"></script>
 <script>
 /* ============================================================
@@ -4161,7 +4165,7 @@ function showSubscriptionRequired(){
   close.style.display='block';
   close.textContent='Tutup';
   document.getElementById('modalTitle').textContent='Paket Langganan Diperlukan';
-  document.getElementById('modalText').textContent='Silahkan beli kuota untuk menggunakan fitur tidak terbatas. Pilih paket langganan untuk mengaktifkan Inject TikTok HD.';
+  document.getElementById('modalText').textContent='Silahkan beli kuota untuk menggunakan fitur unlimited.\\nPilih paket langganan untuk mengaktifkan Inject TikTok HD Unlimited.';
   let action=document.getElementById('goToSubscription');
   if(!action){
     action=document.createElement('button');
