@@ -4632,11 +4632,14 @@ claimBtn.onclick=async()=>{
   if(!key){claimInput.focus();return}
   claimBtn.disabled=true;
   showModal('Claim Akun','Memverifikasi key ke API server...');
+  const claimController=new AbortController();
+  const claimTimeout=setTimeout(()=>claimController.abort(),30000);
   try{
     const r=await fetch(window.GOLDEN_PLATFORM.apiBase+window.GOLDEN_PLATFORM.endpoints.claimKey,{
       method:'POST',
       credentials:'include',
       headers:{'Content-Type':'application/json'},
+      signal:claimController.signal,
       body:JSON.stringify({username,key})
     });
     let d={};try{d=await r.json()}catch(e){}
@@ -4656,8 +4659,11 @@ claimBtn.onclick=async()=>{
     claimInput.value='';
   }catch(e){
     document.getElementById('modalTitle').textContent='Claim Gagal';
-    document.getElementById('modalText').textContent=e.message||'Terjadi kesalahan saat menghubungkan akun.';
+    document.getElementById('modalText').textContent=e?.name==='AbortError'
+      ?'Server belum merespons dalam 30 detik. Jangan klaim berulang; periksa koneksi dan status akun terlebih dahulu.'
+      :(e.message||'Terjadi kesalahan saat menghubungkan akun.');
   }finally{
+    clearTimeout(claimTimeout);
     claimBtn.disabled=false;
   }
 };
