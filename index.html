@@ -4371,50 +4371,78 @@ function dnParseBitrateBps(value){
   const multiplier=({k:1000,m:1000000,g:1000000000})[(match[2]||'').toLowerCase()]||1;
   return Number(match[1])*multiplier;
 }
+async function dnEstimateLocalBitrate(file){
+  const objectUrl=URL.createObjectURL(file);
+  try{
+    const duration=await new Promise((resolve,reject)=>{
+      const video=document.createElement('video');
+      video.preload='metadata';
+      video.muted=true;
+      const timeout=setTimeout(()=>{video.src='';reject(new Error('Metadata video timeout'));},12000);
+      video.onloadedmetadata=()=>{
+        clearTimeout(timeout);
+        const value=Number(video.duration);
+        video.src='';
+        if(Number.isFinite(value)&&value>0)resolve(value);
+        else reject(new Error('Durasi video tidak tersedia'));
+      };
+      video.onerror=()=>{clearTimeout(timeout);reject(new Error('Metadata video tidak terbaca'));};
+      video.src=objectUrl;
+    });
+    return {bitrateBps:(file.size*8)/duration,duration};
+  }finally{
+    URL.revokeObjectURL(objectUrl);
+  }
+}
 async function dnCheckVideoBitrate(file){
   let mediaInfo=null;
+  let result=null;
   try{
     const factory=await dnGetMediaInfoFactory();
-    mediaInfo=await factory({
-      format:'object',
-      chunkSize:262144
-    });
-    const result=await mediaInfo.analyzeData(file.size,async(size,offset)=>{
+    mediaInfo=await factory({format:'object',chunkSize:262144});
+    result=await mediaInfo.analyzeData(file.size,async(size,offset)=>{
       const buffer=await file.slice(offset,offset+size).arrayBuffer();
       return new Uint8Array(buffer);
     });
-    const tracks=Array.isArray(result?.media?.track)?result.media.track:[];
-    const videoTracks=tracks.filter(track=>String(track?.['@type']||'').toLowerCase()==='video');
-    if(!videoTracks.length)throw new Error('Track video tidak ditemukan.');
-    const bitrates=videoTracks.map(track=>dnParseBitrateBps(track.BitRate)??dnParseBitrateBps(track.BitRate_Nominal)??dnParseBitrateBps(track.BitRate_Maximum));
-    if(bitrates.some(value=>!Number.isFinite(value)||value<=0)){
-      showModal('Bitrate Video Tidak Terbaca','Maksimal bitrate video yang dapat diproses adalah 50Mbps.');
-      return null;
-    }
-    const highest=Math.max(...bitrates);
-    if(highest>DN_VIDEO_BITRATE_LIMIT_BPS){
-      const detected=(highest/1000000).toFixed(2).replace(/\.?0+$/,'');
-      showModal('Bitrate Video Melebihi Batas','Maksimal bitrate video yang dapat diproses adalah 50Mbps.');
-      return null;
-    }
-    const video=videoTracks[0],general=tracks.find(track=>String(track?.['@type']||'').toLowerCase()==='general')||{};
-    const pick=(...keys)=>{for(const key of keys){const value=video?.[key]??general?.[key];if(value!==undefined&&value!==null&&value!=='')return value;}return null;};
-    return {
-      bitrateBps:highest,
-      width:pick('Width'),height:pick('Height'),
-      fps:pick('FrameRate','FrameRate_Num'),
-      duration:pick('Duration'),
-      codec:pick('Format','CodecID','Codec'),
-      profile:pick('Format_Profile'),
-      hdr:pick('HDR_Format_Commercial','HDR_Format','HDR_Format_String','colour_primaries')||'SDR',
-      container:general.Format||file.name.split('.').pop()?.toUpperCase()||'—'
-    };
   }catch(error){
-    showModal('Pemeriksaan Bitrate Gagal','Maksimal bitrate video yang dapat diproses adalah 50Mbps.');
-    return false;
+    result=null;
   }finally{
     try{mediaInfo?.close();}catch(e){}
   }
+  const tracks=Array.isArray(result?.media?.track)?result.media.track:[];
+  const videoTracks=tracks.filter(track=>String(track?.['@type']||'').toLowerCase()==='video');
+  let highest=null;
+  if(videoTracks.length){
+    const values=videoTracks.map(track=>dnParseBitrateBps(track.BitRate)??dnParseBitrateBps(track.BitRate_Nominal)??dnParseBitrateBps(track.BitRate_Maximum));
+    if(values.every(value=>Number.isFinite(value)&&value>0))highest=Math.max(...values);
+  }
+  let duration=null;
+  if(!highest){
+    try{
+      const estimate=await dnEstimateLocalBitrate(file);
+      highest=estimate.bitrateBps;
+      duration=estimate.duration;
+    }catch(error){
+      showModal('Video Tidak Dapat Diperiksa','Metadata video tidak dapat dibaca di perangkat ini. Coba file MP4 atau MOV yang valid.');
+      return false;
+    }
+  }
+  if(highest>DN_VIDEO_BITRATE_LIMIT_BPS){
+    showModal('Bitrate Video Melebihi Batas','Maksimal bitrate video yang dapat diproses adalah 50Mbps.');
+    return false;
+  }
+  const video=videoTracks[0]||{},general=tracks.find(track=>String(track?.['@type']||'').toLowerCase()==='general')||{};
+  const pick=(...keys)=>{for(const key of keys){const value=video?.[key]??general?.[key];if(value!==undefined&&value!==null&&value!=='')return value;}return null;};
+  return {
+    bitrateBps:highest,
+    width:pick('Width'),height:pick('Height'),
+    fps:pick('FrameRate','FrameRate_Num'),
+    duration:pick('Duration')??duration,
+    codec:pick('Format','CodecID','Codec'),
+    profile:pick('Format_Profile'),
+    hdr:pick('HDR_Format_Commercial','HDR_Format','HDR_Format_String','colour_primaries')||'SDR',
+    container:general.Format||file.name.split('.').pop()?.toUpperCase()||'—'
+  };
 }
 async function uploadFreeVideo(f){
   if(processing||customerAuthenticated)return;
