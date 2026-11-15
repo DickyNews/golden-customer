@@ -4012,6 +4012,7 @@ html body .app .hero-main-headline strong.nvidia-accent {
   <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h2 style="margin:0 0 6px">Paket Dicky News Method</h2><p style="margin:0;color:#aab3bb"></p></div><span id="subscriptionStatusBadge" class="badge">MEMUAT PAKET</span></div>
   <div class="customer-active-session-row" id="customerActiveSessionRow"><div id="customerSubscriptionCurrent" style="margin:16px 0;color:#e8edf2">Memuat status langganan…</div><button class="btn btn-secondary" id="customerLogout" type="button" hidden>Logout</button></div>
   <div id="customerSubscriptionPlans" class="subscription-plans-strip"><p>Memuat daftar paket dari server…</p></div>
+  <p class="dn-package-swipe-label">Geser kanan kiri untuk melihat paket</p>
   <p id="customerSubscriptionNote" style="margin:14px 0 0;color:#9aa4ad;font-size:13px">Pembelian/aktivasi paket dikonfirmasi admin. Paket yang tampil mengikuti konfigurasi server terbaru.</p>
 </section>
 
@@ -4022,7 +4023,7 @@ html body .app .hero-main-headline strong.nvidia-accent {
   <div class="vip-package-brand"><div class="vip-crown" aria-hidden="true">♛</div><div><h2 class="vip-package-title" id="vip-packages-title">Paket <span class="vip-gold">VIP</span> Unlimited</h2><p class="vip-package-subtitle"></p></div></div>
   <span class="vip-unlimited-pill"><span aria-hidden="true">∞</span> UNLIMITED TOKEN</span>
  </div>
- <p class="vip-scroll-hint"><span aria-hidden="true">↔</span><strong>Swipe or scroll horizontally</strong> to compare all VIP packages.</p><div class="vip-tier-grid" tabindex="0" aria-label="VIP packages. Scroll horizontally to compare plans.">
+ <p class="vip-scroll-hint">Geser kanan kiri untuk melihat paket</p><div class="vip-tier-grid" tabindex="0" aria-label="VIP packages. Scroll horizontally to compare plans.">
   <article class="vip-tier premium">
    <div class="vip-tier-top"><div class="vip-tier-icon" aria-hidden="true">♛</div><div><h3 class="vip-tier-name">VIP PREMIUM</h3><div class="vip-tier-label">Unlimited Token Video</div></div><span class="vip-tier-rank">VIP 1</span></div>
    <p class="vip-tier-price">Rp59.900</p><p class="vip-tier-desc">Masa aktif 30 hari</p>
@@ -4105,6 +4106,17 @@ html body .app .hero-main-headline strong.nvidia-accent {
 <style id="DN_UNLIMITED_SUBSCRIPTION_POPUP_CENTER_V1">
 #modalText{text-align:center!important;white-space:pre-line!important}
 #goToSubscription{margin-left:auto!important;margin-right:auto!important}
+</style>
+<style id="DN_PACKAGE_SWIPE_LABELS_V1">
+.dn-package-swipe-label,#vip-packages .vip-scroll-hint{
+ margin:8px 0 12px!important;
+ color:#a6d65b!important;
+ font-size:11px!important;
+ font-weight:750!important;
+ letter-spacing:.04em!important;
+ text-align:center!important;
+}
+#vip-packages .vip-scroll-hint{margin:0 0 8px!important}
 </style>
 <script src="./analytics-config.js"></script>
 <script>
