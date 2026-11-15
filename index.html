@@ -4343,10 +4343,20 @@ function showFreeSizeLimit(){
 const DN_VIDEO_BITRATE_LIMIT_BPS=50000000;
 let dnMediaInfoFactoryPromise=null;
 async function dnGetMediaInfoFactory(){
+  if(window.MediaInfo?.default)return window.MediaInfo.default;
   if(!dnMediaInfoFactoryPromise){
-    dnMediaInfoFactoryPromise=import('https://cdn.jsdelivr.net/npm/mediainfo.js@0.3.8/dist/esm/index.js')
-      .then(module=>module.default)
-      .catch(error=>{dnMediaInfoFactoryPromise=null;throw error;});
+    dnMediaInfoFactoryPromise=new Promise((resolve,reject)=>{
+      const script=document.createElement('script');
+      script.src='https://cdn.jsdelivr.net/npm/mediainfo.js@0.3.8/dist/umd/index.min.js';
+      script.async=true;
+      script.onload=()=>{
+        const factory=window.MediaInfo?.default||window.MediaInfo?.mediaInfoFactory;
+        if(typeof factory==='function')resolve(factory);
+        else reject(new Error('MediaInfo browser bundle tidak menyediakan factory.'));
+      };
+      script.onerror=()=>reject(new Error('MediaInfo browser bundle gagal dimuat.'));
+      document.head.appendChild(script);
+    }).catch(error=>{dnMediaInfoFactoryPromise=null;throw error;});
   }
   return dnMediaInfoFactoryPromise;
 }
@@ -4378,7 +4388,7 @@ async function dnCheckVideoBitrate(file){
     if(!videoTracks.length)throw new Error('Track video tidak ditemukan.');
     const bitrates=videoTracks.map(track=>dnParseBitrateBps(track.BitRate)??dnParseBitrateBps(track.BitRate_Nominal)??dnParseBitrateBps(track.BitRate_Maximum));
     if(bitrates.some(value=>!Number.isFinite(value)||value<=0)){
-      showModal('Bitrate Video Tidak Terbaca','Maksimal bitrate video yang dapat diproses adalah 30Mbps.');
+      showModal('Bitrate Video Tidak Terbaca','Maksimal bitrate video yang dapat diproses adalah 50Mbps.');
       return null;
     }
     const highest=Math.max(...bitrates);
