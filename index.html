@@ -4559,8 +4559,8 @@ function setCustomerAuth(auth,balance=null){
   if(!customerAuthenticated&&historyList)historyList.replaceChildren();
 }
 function customerAuthHeaders(extra={}){const token=localStorage.getItem('golden_customer_session_token');return token?{...extra,Authorization:'Bearer '+token}:{...extra};}
-function showModal(titleText,textText){hideProgress();modal.classList.add('show');document.getElementById('modalTitle').textContent=titleText;document.getElementById('modalText').textContent=textText}
-function closeModal(){modal.classList.remove('show');hideProgress();const subscriptionAction=document.getElementById('goToSubscription');if(subscriptionAction)subscriptionAction.hidden=true;}
+function showModal(titleText,textText){dnStopProgressTicker();const progressPanel=document.getElementById('dnProgressPanel');if(progressPanel)progressPanel.hidden=true;modal.classList.add('show');document.getElementById('modalTitle').textContent=titleText;document.getElementById('modalText').textContent=textText}
+function closeModal(){modal.classList.remove('show');dnStopProgressTicker();const progressPanel=document.getElementById('dnProgressPanel');if(progressPanel)progressPanel.hidden=true;const subscriptionAction=document.getElementById('goToSubscription');if(subscriptionAction)subscriptionAction.hidden=true;}
 function setWallet(d){
   customerUsername=String(d?.customer?.name ?? d?.name ?? '').trim();
   const wallet=d?.wallet ?? d;
