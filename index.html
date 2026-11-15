@@ -4432,7 +4432,9 @@ async function dnCheckVideoBitrate(file){
     return false;
   }
   const video=videoTracks[0]||{},general=tracks.find(track=>String(track?.['@type']||'').toLowerCase()==='general')||{};
+  const audioTracks=tracks.filter(track=>String(track?.['@type']||'').toLowerCase()==='audio');
   const pick=(...keys)=>{for(const key of keys){const value=video?.[key]??general?.[key];if(value!==undefined&&value!==null&&value!=='')return value;}return null;};
+  const audio=audioTracks[0]||{};
   return {
     bitrateBps:highest,
     width:pick('Width'),height:pick('Height'),
@@ -4441,7 +4443,15 @@ async function dnCheckVideoBitrate(file){
     codec:pick('Format','CodecID','Codec'),
     profile:pick('Format_Profile'),
     hdr:pick('HDR_Format_Commercial','HDR_Format','HDR_Format_String','colour_primaries')||'SDR',
-    container:general.Format||file.name.split('.').pop()?.toUpperCase()||'—'
+    container:general.Format||file.name.split('.').pop()?.toUpperCase()||'—',
+    fileType:file.type||general.InternetMediaType||'—',
+    recordedDate:pick('Recorded_Date','Encoded_Date','Tagged_Date','File_Modified_Date'),
+    hasAudio:audioTracks.length>0,
+    audioCodec:audio.Format||audio.CodecID||'—',
+    audioChannels:audio.Channel_s??audio.Channels??null,
+    location:pick('Recorded_Location','Location')||'—',
+    rotation:pick('Rotation')??video.Rotation??'0°',
+    bitDepth:video.BitDepth??null
   };
 }
 async function uploadFreeVideo(f){
@@ -4498,7 +4508,8 @@ if(freeInjectBtn&&freeInjectFile){
 let pendingUltimateFile=null;
 function dnFormatDuration(value){
   const n=Number(value);if(!Number.isFinite(n)||n<=0)return '—';
-  const sec=Math.round(n),m=Math.floor(sec/60),r=sec%60;return m+':'+String(r).padStart(2,'0');
+  const hours=Math.floor(n/3600),minutes=Math.floor((n%3600)/60),seconds=n%60;
+  return String(hours).padStart(2,'0')+':'+String(minutes).padStart(2,'0')+':'+seconds.toFixed(3).padStart(6,'0');
 }
 function dnFormatSize(bytes){return bytes>=1073741824?(bytes/1073741824).toFixed(2)+' GB':(bytes/1048576).toFixed(1)+' MB';}
 function dnRenderVideoPreflight(fileInfo,fileObject){
@@ -4514,7 +4525,7 @@ function dnRenderVideoPreflight(fileInfo,fileObject){
   const bitrate=(fileInfo.bitrateBps/1000000).toFixed(2)+' Mbps';
   const hdr=String(fileInfo.hdr||'SDR');
   const type=/dolby|hdr/i.test(hdr)?(hdr.toLowerCase().includes('dolby')?'HDR · Dolby Vision':'HDR'):'SDR';
-  const rows=[['Nama file',fileObject.name],['Kualitas',width>=3840||height>=3840?'4K':width>=2560||height>=2560?'2K':width>=1920||height>=1920?'1080P':'Video'],['Resolusi',resolution],['FPS',fps],['Durasi',dnFormatDuration(fileInfo.duration)],['Codec',fileInfo.codec||'—'],['Tipe',type],['Bitrate',bitrate],['Ukuran video',dnFormatSize(fileObject.size)],['Container',fileInfo.container||'—']];
+  const rows=[['Nama file',fileObject.name],['Tipe file',fileInfo.fileType||'—'],['Ukuran video',dnFormatSize(fileObject.size)],['Kualitas',width>=3840||height>=3840?'4K':width>=2560||height>=2560?'2K':width>=1920||height>=1920?'1080P':'Video'],['Resolusi',resolution],['Durasi',dnFormatDuration(fileInfo.duration)],['Tanggal',fileInfo.recordedDate||'—'],['Frame rate',fps],['Bitrate',bitrate],['Codec',fileInfo.codec||'—'],['Tipe video',type],['Bit depth',fileInfo.bitDepth?fileInfo.bitDepth+' bit':'—'],['Audio',fileInfo.hasAudio?'Ya'+(fileInfo.audioCodec&&fileInfo.audioCodec!=='—'?' · '+fileInfo.audioCodec:'')+(fileInfo.audioChannels?' · '+fileInfo.audioChannels+' channel':''):'Tidak'],['Lokasi',fileInfo.location||'—'],['Rotasi',fileInfo.rotation??'—'],['Container',fileInfo.container||'—']];
   panel.innerHTML='<div class="card-head"><div><h3>Info Video</h3><div class="mini">Periksa detail video sebelum mengirim ke server</div></div><span class="pill">LOKAL</span></div><div class="dn-video-info-grid">'+rows.map(([k,v])=>'<div class="dn-video-info-item"><small>'+k+'</small><strong></strong></div>').join('')+'</div><button type="button" class="btn btn-primary dn-encode-ultimate" id="dnEncodeUltimate">Encode Ultimate Video</button><button type="button" class="btn btn-secondary dn-change-video" id="dnChangeVideo">Pilih Video Lain</button>';
   panel.querySelectorAll('.dn-video-info-item strong').forEach((el,i)=>el.textContent=rows[i][1]);
   document.getElementById('dnEncodeUltimate').addEventListener('click',()=>{
