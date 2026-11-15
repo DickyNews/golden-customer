@@ -3941,7 +3941,7 @@ html body .app .hero-main-headline strong.nvidia-accent {
   <div class="card upload">
     <div class="card-head"><div><div class="mini">Pilih mode pemrosesan video</div></div><div class="pill">MP4 / MOV</div></div>
     <div class="mode-title">PILIH MESIN</div>
-    <div id="freeInjectWrap" class="free-inject-wrap"><button class="mode-btn free-inject-btn" id="freeInjectBtn" type="button">INJECT GRATIS</button><p class="free-inject-caption">Coba Dicky News Method tanpa login. Mendukung input video MP4, MOV, MKV, dan WEBM. Pemrosesan tanpa encoding ulang.</p><input id="freeInjectFile" type="file" accept="*/*" hidden></div>
+    <div id="freeInjectWrap" class="free-inject-wrap"><button class="mode-btn free-inject-btn" id="freeInjectBtn" type="button">INJECT GRATIS</button><p class="free-inject-caption">Hubungkan Telegram dan ikuti channel @dickynewsofficial untuk mendapatkan 3 encode gratis setiap 24 jam.</p><div id="dnTelegramFreePanel" class="dn-tg-free-panel"><div class="dn-tg-free-head"><b>AKSES INJECT GRATIS</b><span id="dnTgState">BELUM TERHUBUNG</span></div><p id="dnTgMessage">Hubungkan akun Telegram untuk membuka akses Inject Gratis.</p><div class="dn-tg-free-actions"><button type="button" id="dnTgConnect" class="btn btn-primary">HUBUNGKAN TELEGRAM</button><a id="dnTgJoin" href="https://t.me/dickynewsofficial" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GABUNG CHANNEL</a><button type="button" id="dnTgVerify" class="btn btn-secondary">VERIFIKASI CHANNEL</button></div><div class="dn-tg-quota"><span>KUOTA 24 JAM</span><b id="dnTgQuota">— / 3</b></div></div><input id="freeInjectFile" type="file" accept="*/*" hidden></div>
     <div class="mode-buttons machine-columns">
       <article class="machine-card inject-machine">
         <button class="mode-btn active" id="sdrBtn" type="button">INJECT VIDEO DISINI <small id="sdrPrice">PAKET LANGGANAN</small></button>
@@ -4090,6 +4090,18 @@ html body .app .hero-main-headline strong.nvidia-accent {
 </div>
 <div class="modal" id="modal"><div class="modal-box"><h3 id="modalTitle">Memproses...</h3><p class="mini" id="modalText">Menyiapkan proses...</p><div class="dn-progress-panel" id="dnProgressPanel" hidden role="status" aria-live="polite"><div class="dn-progress-top"><span id="dnProgressStage">UPLOAD VIDEO</span><span class="dn-progress-live"><i></i> LIVE</span></div><div class="dn-progress-track" id="dnProgressTrack"><i id="dnProgressBar"></i></div><div class="dn-progress-row"><strong id="dnProgressPercent">0%</strong><span id="dnProgressLabel">Menyiapkan koneksi</span></div><div class="dn-progress-transfer"><span id="dnProgressTransfer">0 B / 0 B</span><span id="dnProgressSpeed">Menunggu transfer</span></div><div class="dn-progress-file"><span class="dn-progress-file-icon">MP4</span><span class="dn-progress-file-copy"><b id="dnProgressFileName">Video</b><small id="dnProgressFileSize">Ukuran file —</small></span><span class="dn-progress-server" id="dnProgressServerStatus">SIAP</span></div><div class="dn-progress-stats"><div><small>WAKTU BERJALAN</small><b id="dnProgressElapsed">00:00</b></div><div><small>KECEPATAN</small><b id="dnProgressRate">—</b></div><div><small>ESTIMASI SISA</small><b id="dnProgressEta">—</b></div></div><div class="dn-progress-steps" aria-label="Tahapan proses"><span class="dn-progress-step active"><i>1</i> Upload</span><span class="dn-progress-step"><i>2</i> Server</span><span class="dn-progress-step"><i>3</i> Download</span></div><p class="dn-progress-hint" id="dnProgressHint">Koneksi sedang disiapkan.</p></div><button class="btn btn-secondary" style="margin-top:18px;width:100%" id="close">Tutup</button></div></div>
 
+<style id="DN_TELEGRAM_FREE_PANEL_V1">
+.dn-tg-free-panel{margin:14px auto 0;padding:14px;text-align:left;max-width:560px;border:1px solid rgba(118,185,0,.34);border-radius:14px;background:linear-gradient(145deg,rgba(13,20,9,.96),rgba(8,12,7,.98));}
+.dn-tg-free-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;letter-spacing:.07em;color:#e8f1df}
+.dn-tg-free-head span{color:#a5d65b;font-size:9px;font-weight:850}
+.dn-tg-free-panel p{margin:9px 0 12px;color:#aab69f;font-size:11px;line-height:1.5}
+.dn-tg-free-actions{display:flex;flex-wrap:wrap;gap:7px}
+.dn-tg-free-actions .btn{padding:9px 11px;font-size:10px;text-decoration:none}
+.dn-tg-free-actions #dnTgVerify{display:none}
+.dn-tg-quota{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08);font-size:9px;color:#9daa92;letter-spacing:.07em}
+.dn-tg-quota b{font-size:12px;color:#b7e56e;font-variant-numeric:tabular-nums}
+@media(max-width:600px){.dn-tg-free-actions{display:grid;grid-template-columns:1fr 1fr}.dn-tg-free-actions .btn{min-height:38px}}
+</style>
 <script src="./analytics-config.js"></script>
 <script>
 /* ============================================================
@@ -4235,62 +4247,132 @@ function dnFormatApiDetail(value,fallback){
   return String(value);
 }
 function formatApiDetail(value,fallback){return dnFormatApiDetail(value,fallback);}
+const DN_TG_KEY_NAME='dickynews_telegram_free_key';
+const dnTgPanel=document.getElementById('dnTelegramFreePanel');
+const dnTgState=document.getElementById('dnTgState');
+const dnTgMessage=document.getElementById('dnTgMessage');
+const dnTgQuota=document.getElementById('dnTgQuota');
+const dnTgConnect=document.getElementById('dnTgConnect');
+const dnTgJoin=document.getElementById('dnTgJoin');
+const dnTgVerify=document.getElementById('dnTgVerify');
+function dnTgKey(){try{return localStorage.getItem(DN_TG_KEY_NAME)||''}catch(e){return ''}}
+function dnTgHeaders(){const key=dnTgKey();return key?{'X-Telegram-Free-Key':key,'Accept':'application/json'}:{'Accept':'application/json'}}
+function dnTgRender(data){
+ if(!dnTgPanel)return;
+ if(!data||!data.linked){
+  dnTgState.textContent=data&&data.pending?'MENUNGGU TELEGRAM':'BELUM TERHUBUNG';
+  dnTgMessage.textContent=data&&data.pending?'Buka bot Telegram dari tautan yang sudah dibuat, tekan Start, lalu kembali ke halaman ini.':'Hubungkan Telegram, gabung channel resmi, lalu verifikasi keanggotaan.';
+  dnTgConnect.style.display='inline-flex';dnTgJoin.style.display='inline-flex';dnTgVerify.style.display='none';dnTgQuota.textContent='— / 3';
+  return false;
+ }
+ dnTgState.textContent=data.is_member?'TERVERIFIKASI':'BELUM FOLLOW CHANNEL';
+ dnTgMessage.textContent=data.is_member?'Telegram terhubung. Akses Inject Gratis aktif.':'Telegram terhubung. Gabung @dickynewsofficial lalu tekan Verifikasi Channel.';
+ dnTgConnect.style.display='none';dnTgJoin.style.display=data.is_member?'none':'inline-flex';dnTgVerify.style.display=data.is_member?'none':'inline-flex';
+ dnTgQuota.textContent=String(data.remaining??0)+' / '+String(data.quota_limit??3)+' tersisa';
+ return !!data.is_member;
+}
+async function dnTgRefresh(){
+ const key=dnTgKey();
+ if(!key){dnTgRender(null);return null}
+ try{
+  const r=await fetch(GOLDEN_PLATFORM.apiBase+'/public/telegram-free/status',{cache:'no-store',headers:dnTgHeaders()});
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok){if(r.status===401){localStorage.removeItem(DN_TG_KEY_NAME);dnTgRender(null);return null}throw new Error(formatApiDetail(d.detail,'HTTP '+r.status))}
+  dnTgRender(d);return d;
+ }catch(e){dnTgMessage.textContent='Status Telegram belum dapat dimuat. Periksa koneksi lalu coba lagi.';return null}
+}
+if(dnTgConnect)dnTgConnect.addEventListener('click',async()=>{
+ dnTgConnect.disabled=true;dnTgMessage.textContent='Membuat tautan penghubung aman…';
+ try{
+  const r=await fetch(GOLDEN_PLATFORM.apiBase+'/public/telegram-free/link/start',{method:'POST',cache:'no-store',headers:{Accept:'application/json'}});
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(formatApiDetail(d.detail,'HTTP '+r.status));
+  localStorage.setItem(DN_TG_KEY_NAME,d.browser_key);
+  window.open(d.bot_url,'_blank','noopener');
+  dnTgMessage.textContent='Bot Telegram dibuka. Tekan Start di bot, lalu tunggu status terhubung di halaman ini.';
+  await dnTgRefresh();
+  for(let i=0;i<120;i++){
+   await new Promise(resolve=>setTimeout(resolve,3000));
+   const status=await dnTgRefresh();
+   if(status&&status.linked)break;
+  }
+ }catch(e){dnTgMessage.textContent=e.message||'Gagal membuat tautan Telegram.'}
+ finally{dnTgConnect.disabled=false}
+});
+if(dnTgVerify)dnTgVerify.addEventListener('click',async()=>{
+ dnTgVerify.disabled=true;dnTgMessage.textContent='Memeriksa keanggotaan channel…';
+ try{
+  const r=await fetch(GOLDEN_PLATFORM.apiBase+'/public/telegram-free/verify',{method:'POST',cache:'no-store',headers:dnTgHeaders()});
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(formatApiDetail(d.detail,'HTTP '+r.status));
+  await dnTgRefresh();
+  if(!d.is_member)dnTgMessage.textContent='Belum terdeteksi sebagai anggota @dickynewsofficial. Gabung channel lalu verifikasi ulang.';
+ }catch(e){dnTgMessage.textContent=e.message||'Verifikasi gagal.'}
+ finally{dnTgVerify.disabled=false}
+});
+dnTgRefresh();
 async function uploadFreeVideo(f){
-  if(processing||customerAuthenticated||!f)return;
-  await freeMaxSettingsPromise;
-  if(f.size>freeMaxBytes){showFreeSizeLimit();freeInjectFile.value='';return;}
-  if(!/\.(mp4|mov|webm|mkv)$/i.test(f.name)){showModal('Format Video Tidak Didukung','Pilih video MP4, MOV, WEBM, atau MKV.');freeInjectFile.value='';return;}
-  processing=true;modal.classList.add('show');close.style.display='block';close.textContent='Tutup Tampilan Proses';
-  document.getElementById('modalTitle').textContent='Inject Gratis · Dicky News Method';
-  dnStartProgress('upload',f,'Mengunggah video gratis ke server');
-  let jobId=null,token=null;
-  try{
-    const fd=new FormData();fd.append('file',f,f.name);
-    const data=await new Promise((resolve,reject)=>{
-      const xhr=new XMLHttpRequest();xhr.open('POST',GOLDEN_PLATFORM.apiBase+'/public/free-inject/jobs',true);xhr.timeout=15*60*1000;
-      xhr.upload.onprogress=e=>dnUpdateTransfer('upload',e.loaded,e.total,'Mengunggah video gratis');
-      xhr.onerror=()=>reject(new Error('Koneksi upload gratis terputus. Periksa jaringan.'));
-      xhr.ontimeout=()=>reject(new Error('Upload gratis melewati batas waktu 15 menit.'));
-      xhr.onload=()=>{let d={};try{d=JSON.parse(xhr.responseText||'{}')}catch(e){}
-        if(xhr.status<200||xhr.status>=300){if(xhr.status===413||d.detail==='FREE_MAX_50MB')return reject(new Error('FREE_SIZE_LIMIT'));return reject(new Error(formatApiDetail(d.detail,'HTTP '+xhr.status)));}
-        resolve(d);
-      };xhr.send(fd);
-    });
-    jobId=data.job_id;token=data.token;
-    if(!jobId||!token)throw new Error('Server belum memberikan akses job gratis.');
-    dnSetIndeterminateProgress('processing','Upload diterima · menunggu ULTIMATE','File sudah diterima server. Antrean dan worker sedang dipantau; indikator aktivitas tetap bergerak.');
-    let downloadUrl=null;
-    for(let i=0;i<180;i++){
-      await new Promise(resolve=>setTimeout(resolve,2000));
-      const sr=await fetch(GOLDEN_PLATFORM.apiBase+'/public/free-inject/jobs/'+encodeURIComponent(jobId)+'?token='+encodeURIComponent(token),{cache:'no-store'});
-      const d=await sr.json().catch(()=>({}));
-      if(!sr.ok)throw new Error(formatApiDetail(d.detail,'HTTP '+sr.status));
-      const st=String(d.status||'').toLowerCase(),p=normalizeProgress(d);
-      const label=d.progress_label||d.stage_label||({queued:'Video masuk antrean, menunggu worker…',processing:'ULTIMATE sedang memproses video…',running:'ULTIMATE sedang memproses video…'}[st]||'ULTIMATE sedang memproses video…');
-      if(p!==null)setProgress(p,label,{mode:'processing',detail:'Persentase aktual dari server. Waktu dan pemantauan tetap berjalan.'});
-      else dnSetIndeterminateProgress('processing',label,'ULTIMATE sedang bekerja. Server belum mengirim persentase; animasi aktivitas dan waktu tetap berjalan.');
-      if(d.download_url&&['completed','complete','done','success','finished'].includes(st)){downloadUrl=d.download_url;break;}
-      if(['failed','error','cancelled','canceled'].includes(st))throw new Error(d.error||'Proses video gagal di server.');
-    }
-    if(!downloadUrl)throw new Error('Proses masih berjalan. Periksa kembali riwayat beberapa saat lagi.');
-    dnStartProgress('download',null,'Mengunduh hasil video');
-    const target=downloadUrl.startsWith('http')?downloadUrl:(GOLDEN_PLATFORM.apiBase+(downloadUrl.startsWith('/')?'':'/')+downloadUrl);
-    const blob=await new Promise((resolve,reject)=>{
-      const xhr=new XMLHttpRequest();xhr.open('GET',target,true);xhr.responseType='blob';xhr.timeout=15*60*1000;
-      xhr.onprogress=e=>dnUpdateTransfer('download',e.loaded,e.total,'Mengunduh hasil video');
-      xhr.onerror=()=>reject(new Error('Koneksi terputus saat mengunduh hasil.'));
-      xhr.ontimeout=()=>reject(new Error('Unduhan melewati batas waktu 15 menit.'));
-      xhr.onload=()=>{if(xhr.status<200||xhr.status>=300)return reject(new Error('Unduhan gagal (HTTP '+xhr.status+').'));if(!(xhr.response instanceof Blob)||!xhr.response.size)return reject(new Error('File hasil kosong.'));resolve(xhr.response);};
-      xhr.send();
-    });
-    const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='dickynews.com - dicky news method - '+f.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000);
-    setProgress(100,'Unduhan selesai',{mode:'done',loaded:blob.size,total:blob.size,detail:'File hasil sudah diterima browser dan unduhan telah dimulai.'});
-    dnStopProgressTicker();document.getElementById('modalTitle').textContent='Inject Gratis Berhasil';
-    document.getElementById('modalText').textContent='Hasil video berhasil diproses dan unduhan telah dimulai.';close.style.display='block';
-  }catch(e){
-    if(e.message==='FREE_SIZE_LIMIT')showFreeSizeLimit();
-    else{document.getElementById('modalTitle').textContent='Inject Gratis';dnSetErrorProgress('Proses terhenti',e.message||'Gagal memproses video.');document.getElementById('modalText').textContent=e.message||'Gagal memproses video.';close.style.display='block';}
-  }finally{processing=false;freeInjectFile.value='';}
+ if(processing||customerAuthenticated||!f)return;
+ await freeMaxSettingsPromise;
+ if(f.size>freeMaxBytes){showFreeSizeLimit();freeInjectFile.value='';return;}
+ if(!/\.(mp4|mov|webm|mkv)$/i.test(f.name)){showModal('Format Video Tidak Didukung','Pilih video MP4, MOV, WEBM, atau MKV.');freeInjectFile.value='';return;}
+ const tgStatus=await dnTgRefresh();
+ if(!tgStatus||!tgStatus.linked){showModal('Hubungkan Telegram','Hubungkan akun Telegram melalui panel Inject Gratis sebelum mengunggah video.');freeInjectFile.value='';return;}
+ if(!tgStatus.is_member){showModal('Wajib Follow Channel','Gabung @dickynewsofficial, lalu tekan Verifikasi Channel sebelum mengunggah video.');freeInjectFile.value='';return;}
+ if(Number(tgStatus.remaining)<=0){showModal('Kuota Gratis Habis','Kuota gratis 3 encode dalam 24 jam sudah digunakan. Silakan tunggu kuota diperbarui atau pilih paket langganan.');freeInjectFile.value='';return;}
+ processing=true;modal.classList.add('show');close.style.display='block';close.textContent='Tutup Tampilan Proses';
+ document.getElementById('modalTitle').textContent='Inject Gratis · Dicky News Method';
+ dnStartProgress('upload',f,'Mengunggah video gratis ke server');
+ let jobId=null,token=null;
+ try{
+  const fd=new FormData();fd.append('file',f,f.name);
+  const data=await new Promise((resolve,reject)=>{
+   const xhr=new XMLHttpRequest();xhr.open('POST',GOLDEN_PLATFORM.apiBase+'/public/telegram-free/jobs',true);xhr.timeout=15*60*1000;
+   const key=dnTgKey();if(key)xhr.setRequestHeader('X-Telegram-Free-Key',key);
+   xhr.upload.onprogress=e=>dnUpdateTransfer('upload',e.loaded,e.total,'Mengunggah video gratis');
+   xhr.onerror=()=>reject(new Error('Koneksi upload gratis terputus. Periksa jaringan.'));
+   xhr.ontimeout=()=>reject(new Error('Upload gratis melewati batas waktu 15 menit.'));
+   xhr.onload=()=>{let d={};try{d=JSON.parse(xhr.responseText||'{}')}catch(e){}
+    if(xhr.status<200||xhr.status>=300){if(xhr.status===413)return reject(new Error('Ukuran video melebihi batas gratis yang ditetapkan admin.'));if(d.detail==='TELEGRAM_CHANNEL_REQUIRED')return reject(new Error('Keanggotaan channel tidak aktif. Verifikasi ulang Telegram.'));return reject(new Error(formatApiDetail(d.detail,'HTTP '+xhr.status)));}
+    resolve(d);
+   };xhr.send(fd);
+  });
+  jobId=data.job_id;token=data.token;
+  if(!jobId||!token)throw new Error('Server belum memberikan akses job gratis.');
+  dnSetIndeterminateProgress('processing','Upload diterima · menunggu ULTIMATE','File sudah diterima server. Antrean dan worker sedang dipantau; indikator aktivitas tetap bergerak.');
+  let downloadUrl=null;
+  for(let i=0;i<180;i++){
+   await new Promise(resolve=>setTimeout(resolve,2000));
+   const sr=await fetch(GOLDEN_PLATFORM.apiBase+'/public/telegram-free/jobs/'+encodeURIComponent(jobId)+'?token='+encodeURIComponent(token),{cache:'no-store'});
+   const d=await sr.json().catch(()=>({}));
+   if(!sr.ok)throw new Error(formatApiDetail(d.detail,'HTTP '+sr.status));
+   const st=String(d.status||'').toLowerCase(),p=normalizeProgress(d);
+   const label=d.progress_label||d.stage_label||({queued:'Video masuk antrean, menunggu worker…',processing:'ULTIMATE sedang memproses video…',running:'ULTIMATE sedang memproses video…'}[st]||'ULTIMATE sedang memproses video…');
+   if(p!==null)setProgress(p,label,{mode:'processing',detail:'Persentase aktual dari server. Waktu dan pemantauan tetap berjalan.'});
+   else dnSetIndeterminateProgress('processing',label,'ULTIMATE sedang bekerja. Server belum mengirim persentase; animasi aktivitas dan waktu tetap berjalan.');
+   if(d.download_url&&['completed','complete','done','success','finished'].includes(st)){downloadUrl=d.download_url;break;}
+   if(['failed','error','cancelled','canceled'].includes(st))throw new Error(d.error||'Proses video gagal di server.');
+  }
+  if(!downloadUrl)throw new Error('Proses masih berjalan. Periksa kembali riwayat beberapa saat lagi.');
+  dnStartProgress('download',null,'Mengunduh hasil video');
+  const target=downloadUrl.startsWith('http')?downloadUrl:(GOLDEN_PLATFORM.apiBase+(downloadUrl.startsWith('/')?'':'/')+downloadUrl);
+  const blob=await new Promise((resolve,reject)=>{
+   const xhr=new XMLHttpRequest();xhr.open('GET',target,true);xhr.responseType='blob';xhr.timeout=15*60*1000;
+   xhr.onprogress=e=>dnUpdateTransfer('download',e.loaded,e.total,'Mengunduh hasil video');
+   xhr.onerror=()=>reject(new Error('Koneksi terputus saat mengunduh hasil.'));
+   xhr.ontimeout=()=>reject(new Error('Unduhan melewati batas waktu 15 menit.'));
+   xhr.onload=()=>{if(xhr.status<200||xhr.status>=300)return reject(new Error('Unduhan gagal (HTTP '+xhr.status+').'));if(!(xhr.response instanceof Blob)||!xhr.response.size)return reject(new Error('File hasil kosong.'));resolve(xhr.response);};
+   xhr.send();
+  });
+  const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='dickynews.com - dicky news method - '+f.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000);
+  setProgress(100,'Unduhan selesai',{mode:'done',loaded:blob.size,total:blob.size,detail:'File hasil sudah diterima browser dan unduhan telah dimulai.'});
+  dnStopProgressTicker();document.getElementById('modalTitle').textContent='Inject Gratis Berhasil';
+  document.getElementById('modalText').textContent='Hasil video berhasil diproses dan unduhan telah dimulai.';close.style.display='block';
+  await dnTgRefresh();
+ }catch(e){
+  if(e.message==='FREE_SIZE_LIMIT')showFreeSizeLimit();
+  else{document.getElementById('modalTitle').textContent='Inject Gratis';dnSetErrorProgress('Proses terhenti',e.message||'Gagal memproses video.');document.getElementById('modalText').textContent=e.message||'Gagal memproses video.';close.style.display='block';}
+ }finally{processing=false;freeInjectFile.value='';}
 }
 function extractJobId(d){
   return d?.job_id ?? d?.id ?? d?.job?.id ?? d?.job?.job_id ?? d?.data?.job_id ?? d?.data?.id ?? null;
