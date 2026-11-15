@@ -4410,7 +4410,7 @@ async function dnCheckVideoBitrate(file){
       container:general.Format||file.name.split('.').pop()?.toUpperCase()||'—'
     };
   }catch(error){
-    showModal('Pemeriksaan Bitrate Gagal','Maksimal bitrate video yang dapat diproses adalah 30Mbps.');
+    showModal('Pemeriksaan Bitrate Gagal','Maksimal bitrate video yang dapat diproses adalah 50Mbps.');
     return false;
   }finally{
     try{mediaInfo?.close();}catch(e){}
