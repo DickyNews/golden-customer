@@ -4326,12 +4326,71 @@ function showFreeSizeLimit(){
   box.appendChild(link);
 }
 /* Browser geolocation intentionally removed. */
+
+/* Preflight bitrate video lokal: tidak mengirim file ke server untuk pemeriksaan ini. */
+const DN_VIDEO_BITRATE_LIMIT_BPS=30000000;
+let dnMediaInfoFactoryPromise=null;
+async function dnGetMediaInfoFactory(){
+  if(!dnMediaInfoFactoryPromise){
+    dnMediaInfoFactoryPromise=import('https://cdn.jsdelivr.net/npm/mediainfo.js@0.3.8/dist/esm/index.js')
+      .then(module=>module.default)
+      .catch(error=>{dnMediaInfoFactoryPromise=null;throw error;});
+  }
+  return dnMediaInfoFactoryPromise;
+}
+function dnParseBitrateBps(value){
+  if(value==null||value==='')return null;
+  if(typeof value==='number')return Number.isFinite(value)&&value>0?value:null;
+  const raw=String(value).trim().replace(/,/g,'');
+  const numeric=Number(raw);
+  if(Number.isFinite(numeric)&&numeric>0)return numeric;
+  const match=raw.match(/^([0-9]+(?:\.[0-9]+)?)\s*(k|m|g)?\s*(?:bit\/s|bps|b\/s)$/i);
+  if(!match)return null;
+  const multiplier=({k:1000,m:1000000,g:1000000000})[(match[2]||'').toLowerCase()]||1;
+  return Number(match[1])*multiplier;
+}
+async function dnCheckVideoBitrate(file){
+  let mediaInfo=null;
+  try{
+    const factory=await dnGetMediaInfoFactory();
+    mediaInfo=await factory({
+      format:'object',
+      chunkSize:1048576,
+      locateFile:()=> 'https://cdn.jsdelivr.net/npm/mediainfo.js@0.3.8/dist/MediaInfoModule.wasm'
+    });
+    const result=await mediaInfo.analyzeData(file.size,async(size,offset)=>{
+      const buffer=await file.slice(offset,offset+size).arrayBuffer();
+      return new Uint8Array(buffer);
+    });
+    const tracks=Array.isArray(result?.media?.track)?result.media.track:[];
+    const videoTracks=tracks.filter(track=>String(track?.['@type']||'').toLowerCase()==='video');
+    if(!videoTracks.length)throw new Error('Track video tidak ditemukan.');
+    const bitrates=videoTracks.map(track=>dnParseBitrateBps(track.BitRate)??dnParseBitrateBps(track.BitRate_Nominal)??dnParseBitrateBps(track.BitRate_Maximum));
+    if(bitrates.some(value=>!Number.isFinite(value)||value<=0)){
+      showModal('Bitrate Video Tidak Terbaca','Bitrate video sumber tidak dapat diverifikasi di perangkat ini. File tidak diunggah. Coba gunakan video dengan metadata bitrate yang terbaca.');
+      return false;
+    }
+    const highest=Math.max(...bitrates);
+    if(highest>DN_VIDEO_BITRATE_LIMIT_BPS){
+      const detected=(highest/1000000).toFixed(2).replace(/\.?0+$/,'');
+      showModal('Bitrate Video Melebihi Batas','Maksimal bitrate video adalah 30 Mbps. Video ini terdeteksi '+detected+' Mbps. File ditolak dan tidak akan diunggah ke server.');
+      return false;
+    }
+    return true;
+  }catch(error){
+    showModal('Pemeriksaan Bitrate Gagal','Bitrate video tidak dapat diperiksa di perangkat ini. File tidak diunggah demi menjaga batas maksimal 30 Mbps. Periksa koneksi lalu coba lagi.');
+    return false;
+  }finally{
+    try{mediaInfo?.close();}catch(e){}
+  }
+}
 async function uploadFreeVideo(f){
   if(processing||customerAuthenticated)return;
   if(!f)return;
   await freeMaxSettingsPromise;
   if(f.size>freeMaxBytes){showFreeSizeLimit();freeInjectFile.value='';return;}
   if(!/\.(mp4|mov|webm|mkv)$/i.test(f.name)){showModal('Format Video Tidak Didukung','Pilih video MP4, MOV, WEBM, atau MKV.');freeInjectFile.value='';return;}
+  if(!await dnCheckVideoBitrate(f)){freeInjectFile.value='';return;}
   processing=true;modal.classList.add('show');close.style.display='block';close.textContent='Tutup Tampilan Proses';
   document.getElementById('modalTitle').textContent='Inject Gratis · Dicky News Method';
   const modalText=document.getElementById('modalText');modalText.textContent='Mengunggah video…';
@@ -4378,6 +4437,7 @@ if(freeInjectBtn&&freeInjectFile){
 
 async function uploadVideo(f){
   if(processing)return;
+  if(!f||!await dnCheckVideoBitrate(f)){if(file)file.value='';return;}
   processing=true;
   modal.classList.add('show');close.style.display='none';close.textContent='Tutup';
   document.getElementById('modalTitle').textContent=selectedMode==='hdr'?'HDR + Inject TikTok HD':'Inject TikTok HD';
