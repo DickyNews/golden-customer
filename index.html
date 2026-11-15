@@ -4339,128 +4339,13 @@ function showFreeSizeLimit(){
 }
 /* Browser geolocation intentionally removed. */
 
-/* Preflight bitrate video lokal: tidak mengirim file ke server untuk pemeriksaan ini. */
-const DN_VIDEO_BITRATE_LIMIT_BPS=50000000;
-let dnMediaInfoFactoryPromise=null;
-async function dnGetMediaInfoFactory(){
-  if(window.MediaInfo?.default)return window.MediaInfo.default;
-  if(!dnMediaInfoFactoryPromise){
-    dnMediaInfoFactoryPromise=new Promise((resolve,reject)=>{
-      const script=document.createElement('script');
-      script.src='https://cdn.jsdelivr.net/npm/mediainfo.js@0.3.8/dist/umd/index.min.js';
-      script.async=true;
-      script.onload=()=>{
-        const factory=window.MediaInfo?.default||window.MediaInfo?.mediaInfoFactory;
-        if(typeof factory==='function')resolve(factory);
-        else reject(new Error('MediaInfo browser bundle tidak menyediakan factory.'));
-      };
-      script.onerror=()=>reject(new Error('MediaInfo browser bundle gagal dimuat.'));
-      document.head.appendChild(script);
-    }).catch(error=>{dnMediaInfoFactoryPromise=null;throw error;});
-  }
-  return dnMediaInfoFactoryPromise;
-}
-function dnParseBitrateBps(value){
-  if(value==null||value==='')return null;
-  if(typeof value==='number')return Number.isFinite(value)&&value>0?value:null;
-  const raw=String(value).trim().replace(/,/g,'');
-  const numeric=Number(raw);
-  if(Number.isFinite(numeric)&&numeric>0)return numeric;
-  const match=raw.match(/^([0-9]+(?:\.[0-9]+)?)\s*(k|m|g)?\s*(?:bit\/s|bps|b\/s)$/i);
-  if(!match)return null;
-  const multiplier=({k:1000,m:1000000,g:1000000000})[(match[2]||'').toLowerCase()]||1;
-  return Number(match[1])*multiplier;
-}
-async function dnEstimateLocalBitrate(file){
-  const objectUrl=URL.createObjectURL(file);
-  try{
-    const duration=await new Promise((resolve,reject)=>{
-      const video=document.createElement('video');
-      video.preload='metadata';
-      video.muted=true;
-      const timeout=setTimeout(()=>{video.src='';reject(new Error('Metadata video timeout'));},12000);
-      video.onloadedmetadata=()=>{
-        clearTimeout(timeout);
-        const value=Number(video.duration);
-        video.src='';
-        if(Number.isFinite(value)&&value>0)resolve(value);
-        else reject(new Error('Durasi video tidak tersedia'));
-      };
-      video.onerror=()=>{clearTimeout(timeout);reject(new Error('Metadata video tidak terbaca'));};
-      video.src=objectUrl;
-    });
-    return {bitrateBps:(file.size*8)/duration,duration};
-  }finally{
-    URL.revokeObjectURL(objectUrl);
-  }
-}
-async function dnCheckVideoBitrate(file){
-  let mediaInfo=null;
-  let result=null;
-  try{
-    const factory=await dnGetMediaInfoFactory();
-    mediaInfo=await factory({format:'object',chunkSize:262144});
-    result=await mediaInfo.analyzeData(file.size,async(size,offset)=>{
-      const buffer=await file.slice(offset,offset+size).arrayBuffer();
-      return new Uint8Array(buffer);
-    });
-  }catch(error){
-    result=null;
-  }finally{
-    try{mediaInfo?.close();}catch(e){}
-  }
-  const tracks=Array.isArray(result?.media?.track)?result.media.track:[];
-  const videoTracks=tracks.filter(track=>String(track?.['@type']||'').toLowerCase()==='video');
-  let highest=null;
-  if(videoTracks.length){
-    const values=videoTracks.map(track=>dnParseBitrateBps(track.BitRate)??dnParseBitrateBps(track.BitRate_Nominal)??dnParseBitrateBps(track.BitRate_Maximum));
-    if(values.every(value=>Number.isFinite(value)&&value>0))highest=Math.max(...values);
-  }
-  let duration=null;
-  if(!highest){
-    try{
-      const estimate=await dnEstimateLocalBitrate(file);
-      highest=estimate.bitrateBps;
-      duration=estimate.duration;
-    }catch(error){
-      showModal('Video Tidak Dapat Diperiksa','Metadata video tidak dapat dibaca di perangkat ini. Coba file MP4 atau MOV yang valid.');
-      return false;
-    }
-  }
-  if(highest>DN_VIDEO_BITRATE_LIMIT_BPS){
-    showModal('Bitrate Video Melebihi Batas','Maksimal bitrate video yang dapat diproses adalah 50Mbps.');
-    return false;
-  }
-  const video=videoTracks[0]||{},general=tracks.find(track=>String(track?.['@type']||'').toLowerCase()==='general')||{};
-  const audioTracks=tracks.filter(track=>String(track?.['@type']||'').toLowerCase()==='audio');
-  const pick=(...keys)=>{for(const key of keys){const value=video?.[key]??general?.[key];if(value!==undefined&&value!==null&&value!=='')return value;}return null;};
-  const audio=audioTracks[0]||{};
-  return {
-    bitrateBps:highest,
-    width:pick('Width'),height:pick('Height'),
-    fps:pick('FrameRate','FrameRate_Num'),
-    duration:pick('Duration')??duration,
-    codec:pick('Format','CodecID','Codec'),
-    profile:pick('Format_Profile'),
-    hdr:pick('HDR_Format_Commercial','HDR_Format','HDR_Format_String','colour_primaries')||'SDR',
-    container:general.Format||file.name.split('.').pop()?.toUpperCase()||'—',
-    fileType:file.type||general.InternetMediaType||'—',
-    recordedDate:pick('Recorded_Date','Encoded_Date','Tagged_Date','File_Modified_Date'),
-    hasAudio:audioTracks.length>0,
-    audioCodec:audio.Format||audio.CodecID||'—',
-    audioChannels:audio.Channel_s??audio.Channels??null,
-    location:pick('Recorded_Location','Location')||'—',
-    rotation:pick('Rotation')??video.Rotation??'0°',
-    bitDepth:video.BitDepth??null
-  };
-}
+/* Video diproses langsung setelah file dipilih; tanpa tabel metadata atau batas bitrate. */
 async function uploadFreeVideo(f){
   if(processing||customerAuthenticated)return;
   if(!f)return;
   await freeMaxSettingsPromise;
   if(f.size>freeMaxBytes){showFreeSizeLimit();freeInjectFile.value='';return;}
   if(!/\.(mp4|mov|webm|mkv)$/i.test(f.name)){showModal('Format Video Tidak Didukung','Pilih video MP4, MOV, WEBM, atau MKV.');freeInjectFile.value='';return;}
-  if(!await dnCheckVideoBitrate(f)){freeInjectFile.value='';return;}
   processing=true;modal.classList.add('show');close.style.display='block';close.textContent='Tutup Tampilan Proses';
   document.getElementById('modalTitle').textContent='Inject Gratis · Dicky News Method';
   const modalText=document.getElementById('modalText');modalText.textContent='Mengunggah video…';
@@ -4505,36 +4390,6 @@ if(freeInjectBtn&&freeInjectFile){
   });
 }
 
-let pendingUltimateFile=null;
-function dnFormatDuration(value){
-  const n=Number(value);if(!Number.isFinite(n)||n<=0)return '—';
-  const hours=Math.floor(n/3600),minutes=Math.floor((n%3600)/60),seconds=n%60;
-  return String(hours).padStart(2,'0')+':'+String(minutes).padStart(2,'0')+':'+seconds.toFixed(3).padStart(6,'0');
-}
-function dnFormatSize(bytes){return bytes>=1073741824?(bytes/1073741824).toFixed(2)+' GB':(bytes/1048576).toFixed(1)+' MB';}
-function dnRenderVideoPreflight(fileInfo,fileObject){
-  pendingUltimateFile=fileObject;
-  let panel=document.getElementById('dnVideoPreflight');
-  if(!panel){
-    panel=document.createElement('section');panel.id='dnVideoPreflight';panel.className='card dn-video-preflight';
-    const dropNode=document.getElementById('drop');dropNode.insertAdjacentElement('afterend',panel);
-  }
-  const width=Number.parseInt(fileInfo.width,10),height=Number.parseInt(fileInfo.height,10);
-  const resolution=width&&height?width+'×'+height:'—';
-  const fps=fileInfo.fps?Number(fileInfo.fps).toFixed(2).replace(/\.00$/,'')+' fps':'—';
-  const bitrate=(fileInfo.bitrateBps/1000000).toFixed(2)+' Mbps';
-  const hdr=String(fileInfo.hdr||'SDR');
-  const type=/dolby|hdr/i.test(hdr)?(hdr.toLowerCase().includes('dolby')?'HDR · Dolby Vision':'HDR'):'SDR';
-  const rows=[['Nama file',fileObject.name],['Tipe file',fileInfo.fileType||'—'],['Ukuran video',dnFormatSize(fileObject.size)],['Kualitas',width>=3840||height>=3840?'4K':width>=2560||height>=2560?'2K':width>=1920||height>=1920?'1080P':'Video'],['Resolusi',resolution],['Durasi',dnFormatDuration(fileInfo.duration)],['Tanggal',fileInfo.recordedDate||'—'],['Frame rate',fps],['Bitrate',bitrate],['Codec',fileInfo.codec||'—'],['Tipe video',type],['Bit depth',fileInfo.bitDepth?fileInfo.bitDepth+' bit':'—'],['Audio',fileInfo.hasAudio?'Ya'+(fileInfo.audioCodec&&fileInfo.audioCodec!=='—'?' · '+fileInfo.audioCodec:'')+(fileInfo.audioChannels?' · '+fileInfo.audioChannels+' channel':''):'Tidak'],['Lokasi',fileInfo.location||'—'],['Rotasi',fileInfo.rotation??'—'],['Container',fileInfo.container||'—']];
-  panel.innerHTML='<div class="card-head"><div><h3>Info Video</h3><div class="mini">Periksa detail video sebelum mengirim ke server</div></div><span class="pill">LOKAL</span></div><div class="dn-video-info-grid">'+rows.map(([k,v])=>'<div class="dn-video-info-item"><small>'+k+'</small><strong></strong></div>').join('')+'</div><button type="button" class="btn btn-primary dn-encode-ultimate" id="dnEncodeUltimate">Encode Ultimate Video</button><button type="button" class="btn btn-secondary dn-change-video" id="dnChangeVideo">Pilih Video Lain</button>';
-  panel.querySelectorAll('.dn-video-info-item strong').forEach((el,i)=>el.textContent=rows[i][1]);
-  document.getElementById('dnEncodeUltimate').addEventListener('click',()=>{
-    if(!pendingUltimateFile||processing)return;
-    const selected=pendingUltimateFile;pendingUltimateFile=null;panel.remove();uploadVideo(selected);
-  });
-  document.getElementById('dnChangeVideo').addEventListener('click',()=>{pendingUltimateFile=null;file.value='';panel.remove();file.click();});
-  panel.scrollIntoView({behavior:'smooth',block:'center'});
-}
 async function dnPrepareUltimateVideo(f){
   if(processing||!f)return;
   const supportedVideoExt=/\.(mp4|mov|m4v|webm|mkv)$/i.test(f.name);
@@ -4542,11 +4397,7 @@ async function dnPrepareUltimateVideo(f){
   if(!supportedVideoExt||!supportedVideoMime){file.value='';showModal('Format Video Tidak Didukung','Pilih video MP4, MOV, WEBM, atau MKV.');return;}
   if(!serviceActive[selectedMode]){file.value='';showModal('Layanan Tidak Tersedia','Mode yang dipilih sedang dinonaktifkan oleh admin.');return;}
   if(f.size>maxFileSizeBytes){file.value='';showModal('Ukuran Video Melebihi Batas','Ukuran file '+dnFormatSize(f.size)+', sedangkan batas layanan '+dnFormatSize(maxFileSizeBytes)+'. Pilih file yang lebih kecil.');return;}
-  title.textContent='Memeriksa video secara lokal…';text.textContent='Belum ada data yang dikirim ke server.';
-  const info=await dnCheckVideoBitrate(f);
-  if(!info){file.value='';return;}
-  title.textContent='Video siap diperiksa';text.textContent=f.name+' · '+dnFormatSize(f.size)+' · Maksimal bitrate 50 Mbps';
-  dnRenderVideoPreflight(info,f);
+  uploadVideo(f);
 }
 
 async function uploadVideo(f){
