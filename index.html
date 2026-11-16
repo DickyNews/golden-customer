@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.tiktokcdn.com https://*.tiktokcdn-us.com https://*.tiktokcdn-eu.com https://*.byteoversea.com; media-src 'self' blob: https://103-235-74-92.sslip.io; worker-src 'self' blob:; connect-src 'self' https://103-235-74-92.sslip.io https://golden-tiktok-analytics.alinkdicky45.workers.dev; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.tiktokcdn.com https://*.tiktokcdn-us.com https://*.tiktokcdn-eu.com https://*.byteoversea.com; media-src 'self' blob:; worker-src 'self' blob:; connect-src 'self' https://api.dickynews.com https://golden-tiktok-analytics.alinkdicky45.workers.dev; upgrade-insecure-requests">
 <script>if(window.top!==window.self){window.top.location=window.self.location;}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -4124,9 +4124,16 @@ html body .app .hero-main-headline strong.nvidia-accent {
    CUSTOMER WEB CONTRACT — JANGAN UBAH STRUKTUR BACKEND
    UI boleh direvisi. API contract dan pemisahan 3 pilar tetap.
    ============================================================ */
+// Prefer the same-origin Cloudflare Pages API proxy on the customer site.
+// This avoids third-party-cookie restrictions in Safari and embedded browsers.
+const GOLDEN_CUSTOMER_API_BASE = (
+  location.hostname === 'dickynews.com' ||
+  location.hostname === 'www.dickynews.com' ||
+  location.hostname.endsWith('.pages.dev')
+) ? `${location.origin}/api` : 'https://api.dickynews.com';
 window.GOLDEN_PLATFORM = Object.freeze({
   pillar: 'customer-web',
-  apiBase: 'https://103-235-74-92.sslip.io',
+  apiBase: GOLDEN_CUSTOMER_API_BASE,
   serviceCodes: Object.freeze({
     sdr: 'golden_hd_tiktok',
     hdr: 'golden_hdr_tiktok'
@@ -4954,7 +4961,7 @@ if(checkerUrl)checkerUrl.addEventListener('keydown',event=>{if(event.key==='Ente
 
 <script id="GOLDEN_SUBSCRIPTION_CUSTOMER_UI_V1">
 (function(){
- const API='https://103-235-74-92.sslip.io';
+ const API=window.GOLDEN_PLATFORM.apiBase;
  const walletTitle=document.getElementById('accountPanelTitle');if(walletTitle)walletTitle.textContent=localStorage.getItem('golden_customer_session_token')?'Detail Paket Aktif':'Akun';
  const plansEl=document.getElementById('customerSubscriptionPlans');
  if(!plansEl)return;
@@ -5058,7 +5065,7 @@ async function loadSubscriptionUsage(token){
 (async function(){
  const grid=document.querySelector('#vip-packages .vip-tier-grid');
  if(!grid)return;
- const api=(window.GOLDEN_PLATFORM&&window.GOLDEN_PLATFORM.apiBase)||'https://103-235-74-92.sslip.io';
+ const api=(window.GOLDEN_PLATFORM&&window.GOLDEN_PLATFORM.apiBase)||'https://api.dickynews.com';
  const tiers=['premium','maximum','ultimate'];
  const fmt=n=>'Rp'+Number(n||0).toLocaleString('id-ID');
  const safe=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
