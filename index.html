@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.tiktokcdn.com https://*.tiktokcdn-us.com https://*.tiktokcdn-eu.com https://*.byteoversea.com; media-src 'self' blob:; worker-src 'self' blob:; connect-src 'self' https://api.dickynews.com https://golden-tiktok-analytics.alinkdicky45.workers.dev; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.tiktokcdn.com https://*.tiktokcdn-us.com https://*.tiktokcdn-eu.com https://*.byteoversea.com; media-src 'self' blob:; worker-src 'self' blob:; connect-src 'self' https://api.dickynews.com https://103-235-74-92.sslip.io https://golden-tiktok-analytics.alinkdicky45.workers.dev; upgrade-insecure-requests">
 <script>if(window.top!==window.self){window.top.location=window.self.location;}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -4483,7 +4483,7 @@ async function uploadVideo(f){
     fd.append('file',f,f.name);
     const xhr=new XMLHttpRequest();
     const response=await new Promise((resolve,reject)=>{
-      xhr.open('POST',GOLDEN_PLATFORM.apiBase+GOLDEN_PLATFORM.endpoints.upload,true);
+      xhr.open('POST','https://103-235-74-92.sslip.io'+GOLDEN_PLATFORM.endpoints.upload,true);
       xhr.withCredentials=true;
       xhr.timeout=15*60*1000;
       const sessionToken=localStorage.getItem('golden_customer_session_token');if(sessionToken)xhr.setRequestHeader('Authorization','Bearer '+sessionToken);
