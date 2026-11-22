@@ -6316,5 +6316,53 @@ html body .app .grid>.card.upload > #drop{display:contents!important}
 
 
 <script id="dn-rtxfury-hover-interaction">(()=>{const wrap=document.querySelector('#uploadSection>.card.upload>.dn-rtx-tabs');if(wrap){const st=wrap.style;st.setProperty('display','flex','important');st.setProperty('align-items','center','important');st.setProperty('justify-content','center','important');st.setProperty('width','min(360px,100%)','important');st.setProperty('height','58px','important');st.setProperty('min-height','58px','important');st.setProperty('margin','0 auto 16px','important');st.setProperty('padding','3px','important');st.setProperty('gap','8px','important');st.setProperty('box-sizing','border-box','important');st.setProperty('border','1px solid #34363c','important');st.setProperty('border-radius','999px','important');st.setProperty('background','linear-gradient(145deg,#15161b 0%,#101116 100%)','important');st.setProperty('box-shadow','inset 0 1px 2px rgba(255,255,255,.035)','important');}document.querySelectorAll('#uploadSection .dn-rtx-tab').forEach(b=>{b.style.setProperty('height','48px','important');b.style.setProperty('min-height','48px','important');b.style.setProperty('border-radius','8px','important');});document.querySelectorAll('#uploadSection .dn-rtx-tab span').forEach(t=>{t.style.setProperty('font-size','13px','important');t.style.setProperty('transform','none','important');});document.querySelectorAll('#uploadSection .dn-rtx-tab small').forEach(t=>t.style.setProperty('font-size','9px','important'));const d=document.getElementById('dnDropTarget');if(d&&!d.dataset.rtxHoverBound){d.dataset.rtxHoverBound='1';const normal=()=>{d.style.setProperty('border','1px dashed #3a3b43','important');d.style.setProperty('background','#101116','important');d.style.setProperty('background-image','none','important');d.style.setProperty('box-shadow','inset 0 1px rgba(255,255,255,.025)','important');};const hover=()=>{d.style.setProperty('border','2px dashed #76b900','important');d.style.setProperty('background','#151d0b','important');d.style.setProperty('background-image','none','important');d.style.setProperty('box-shadow','inset 0 0 48px rgba(118,185,0,.085),0 0 20px rgba(118,185,0,.1)','important');};d.addEventListener('pointerenter',hover);d.addEventListener('pointerleave',normal);d.addEventListener('focus',hover);d.addEventListener('blur',normal);d.addEventListener('dragenter',hover);d.addEventListener('dragleave',normal);if(d.matches(':hover'))hover();}})();</script>
+
+<style id="DN_IPHONE_LAYOUT_REPAIR_V1">
+/* iPhone layout repair: widen the content column, prevent account header collisions,
+   keep the two upload modes readable, and remove floating navigation from content. */
+@media(max-width:600px){
+  html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+  body{-webkit-text-size-adjust:100%!important}
+  .app{width:100%!important;max-width:100%!important;padding:16px 10px calc(34px + env(safe-area-inset-bottom))!important;box-sizing:border-box!important}
+  .app .container,.container{width:100%!important;max-width:100%!important;margin-left:auto!important;margin-right:auto!important;min-width:0!important}
+  .grid{width:100%!important;max-width:100%!important;margin:14px 0 26px!important;gap:12px!important;grid-template-columns:minmax(0,1fr)!important}
+  .grid>.card,.grid>.side,.side,.wallet-card{width:100%!important;max-width:100%!important;min-width:0!important}
+  .wallet-card{padding:15px 13px!important}
+  .wallet-card .wallet-title{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;gap:9px!important;width:100%!important;min-width:0!important;margin:0 0 12px!important}
+  .wallet-card .wallet-title h2{display:block!important;width:100%!important;margin:0!important;font-size:17px!important;line-height:1.25!important}
+  .wallet-card #walletAuthBadge{display:inline-flex!important;align-self:flex-start!important;max-width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important;text-align:left!important;line-height:1.35!important;padding:7px 11px!important;font-size:11px!important}
+  #claimBox{width:100%!important;max-width:100%!important;min-width:0!important;padding-top:13px!important;margin-top:12px!important}
+  #claimBox .claim-row{display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%!important;gap:9px!important}
+  #claimBox .claim-row input{width:100%!important;min-width:0!important;min-height:54px!important;box-sizing:border-box!important;padding:12px 14px!important;font-size:16px!important;line-height:1.35!important}
+  #claimBox .claim-row #claimKey{width:100%!important;min-height:54px!important;height:auto!important;padding:13px 12px!important;font-size:16px!important}
+  #claimBox .claim-help{font-size:13px!important;line-height:1.5!important;overflow-wrap:anywhere!important}
+  #uploadSection{width:100%!important;max-width:100%!important;min-width:0!important;margin:14px 0 26px!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+  #uploadSection>.card.upload{width:100%!important;max-width:100%!important;min-width:0!important;padding:14px 12px!important;border-radius:18px!important;box-sizing:border-box!important}
+  #uploadSection>.card.upload>.dn-rtx-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important;justify-content:stretch!important;width:100%!important;max-width:100%!important;height:auto!important;min-height:0!important;margin:0 auto 14px!important;padding:0!important;gap:8px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important}
+  #uploadSection .dn-rtx-tab{display:flex!important;flex:initial!important;width:100%!important;min-width:0!important;max-width:100%!important;height:58px!important;min-height:58px!important;padding:7px 4px!important;gap:3px!important;border:1px solid #76b900!important;border-radius:11px!important;box-sizing:border-box!important;white-space:normal!important;text-align:center!important;overflow:hidden!important}
+  #uploadSection .dn-rtx-tab span{display:block!important;max-width:100%!important;font-size:clamp(10px,2.7vw,12px)!important;line-height:1.15!important;letter-spacing:0!important;white-space:normal!important;overflow-wrap:anywhere!important;text-align:center!important;transform:none!important}
+  #uploadSection .dn-rtx-tab small{display:block!important;font-size:clamp(7px,1.9vw,9px)!important;line-height:1.15!important;letter-spacing:.045em!important;white-space:normal!important;text-align:center!important}
+  #uploadSection .dn-rtx-tab::before{display:none!important}
+  #uploadSection .dn-rtx-drop-target{width:100%!important;min-width:0!important;min-height:245px!important;height:auto!important;padding:24px 12px!important;gap:12px!important;border-radius:18px!important;box-sizing:border-box!important}
+  #uploadSection .dn-rtx-upload-icon{width:56px!important;height:56px!important;flex-basis:56px!important;border-radius:16px!important}
+  #uploadSection .dn-rtx-upload-icon svg{width:31px!important;height:31px!important}
+  #uploadSection .dn-rtx-drop-target #dropTitle{font-size:clamp(18px,4.8vw,21px)!important;line-height:1.25!important;text-align:center!important;overflow-wrap:anywhere!important}
+  #uploadSection .dn-rtx-drop-target #dropText{font-size:12px!important;line-height:1.5!important;text-align:center!important;overflow-wrap:anywhere!important}
+  #uploadSection .dn-rtx-bitrate{max-width:100%!important;margin-top:4px!important;font-size:13px!important;line-height:1.4!important;text-align:center!important;white-space:normal!important;overflow-wrap:anywhere!important}
+  #uploadSection .dn-rtx-meter{display:flex!important;gap:8px!important;margin:12px 0 10px!important;min-width:0!important}
+  #uploadSection #dnRtxMeterText{font-size:10px!important;white-space:nowrap!important}
+  .golden-scroll-left,.golden-scroll-rail{display:none!important}
+  .golden-scroll-progress{z-index:999!important;height:2px!important}
+  .golden-scroll-progress>i{height:2px!important}
+  .dn-tg-popup{width:100%!important;max-width:100%!important;max-height:calc(100dvh - 32px - env(safe-area-inset-bottom))!important;overflow-y:auto!important}
+}
+@media(max-width:360px){
+  #uploadSection>.card.upload{padding:12px 10px!important}
+  #uploadSection .dn-rtx-tab{padding:6px 3px!important}
+  #uploadSection .dn-rtx-tab span{font-size:10px!important}
+  #uploadSection .dn-rtx-drop-target{min-height:230px!important;padding:20px 10px!important}
+}
+</style>
+
 </body>
 </html>
