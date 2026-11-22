@@ -6475,6 +6475,121 @@ button,input,select,textarea{max-width:100%;font:inherit}
 @media(hover:none),(pointer:coarse){.card:hover,.step:hover,.btn:hover,.hero-social:hover{transform:none!important}}
 @media(prefers-reduced-motion:reduce){.app .hero-social,.app .hero-social::after,.app .card,.app .step{animation:none!important;transition:none!important}}
 </style>
-
+<style id="DN_PROPORTIONAL_SCALE_V2">
+/* One proportional design system for every viewport and aspect ratio. */
+:root{
+ --dn-space-1:clamp(4px,.45vw,7px);--dn-space-2:clamp(7px,.7vw,11px);--dn-space-3:clamp(10px,1vw,16px);--dn-space-4:clamp(13px,1.35vw,21px);--dn-space-5:clamp(17px,1.8vw,28px);--dn-space-6:clamp(22px,2.4vw,36px);
+ --dn-type-xs:clamp(10px,.72vw,12px);--dn-type-sm:clamp(12px,.88vw,14px);--dn-type-md:clamp(14px,1.02vw,16px);--dn-type-lg:clamp(17px,1.45vw,22px);--dn-type-xl:clamp(21px,2vw,30px);--dn-type-display:clamp(30px,4.8vw,64px);
+ --dn-icon-xs:clamp(14px,1.1vw,18px);--dn-icon-sm:clamp(18px,1.45vw,23px);--dn-icon-md:clamp(24px,2vw,32px);--dn-icon-lg:clamp(42px,4.2vw,64px);
+ --dn-radius-sm:clamp(9px,.9vw,13px);--dn-radius-md:clamp(13px,1.35vw,20px);--dn-radius-lg:clamp(17px,1.9vw,26px);
+ --dn-gutter:clamp(10px,2.25vw,32px);--dn-panel-pad:clamp(12px,1.9vw,26px)
+}
+html{font-size:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-size:var(--dn-type-md)!important;line-height:1.55!important}
+.app,.app *{min-width:0}
+.app :where(p,li,label,.mini,.muted,.section-intro,.claim-help,.wallet-stat em,.wallet-stat span,.wallet-progress-head,.machine-notes){font-size:clamp(12px,.95vw,15px);line-height:1.55;overflow-wrap:anywhere}
+.app :where(h1,h2,h3,h4){line-height:1.18;letter-spacing:-.025em;text-wrap:balance;max-width:100%}
+.app :where(h2){font-size:var(--dn-type-xl)}
+.app :where(h3){font-size:var(--dn-type-lg)}
+.app :where(button,.btn,[role="button"],input[type="button"],input[type="submit"]){font-size:clamp(12px,.95vw,15px);line-height:1.25;min-height:clamp(40px,3.6vw,50px);padding:clamp(9px,.9vw,13px) clamp(12px,1.25vw,19px);border-radius:var(--dn-radius-sm);white-space:normal;overflow-wrap:anywhere}
+.app :where(input:not([type="checkbox"]):not([type="radio"]),select,textarea){font-size:16px!important;line-height:1.35;min-height:clamp(44px,3.8vw,52px);padding:clamp(10px,.9vw,14px)!important;border-radius:var(--dn-radius-sm);max-width:100%}
+.app :where(svg,.ui-icon,.social-brand-icon){max-width:100%;flex-shrink:0}
+.app :where(.ui-icon){width:var(--dn-icon-sm);height:var(--dn-icon-sm)}
+.app :where(.social-brand-icon){width:var(--dn-icon-sm);height:var(--dn-icon-sm);flex-basis:var(--dn-icon-sm)}
+.app :where(.container){width:min(100% - 2 * var(--dn-gutter),1320px)!important}
+.app :where(.nav){min-height:clamp(58px,5.2vw,76px);height:auto;gap:var(--dn-space-3);padding-block:var(--dn-space-2);flex-wrap:wrap}
+.app :where(.brand){gap:clamp(7px,.85vw,13px);font-size:clamp(13px,1.15vw,17px);line-height:1.2}
+.app :where(.logo){width:clamp(32px,3.2vw,46px)!important;height:clamp(32px,3.2vw,46px)!important;flex:0 0 clamp(32px,3.2vw,46px);border-radius:clamp(9px,1vw,14px)}
+.app :where(.brand small){font-size:clamp(9px,.72vw,11px);line-height:1.25}
+.app :where(.nav-actions){gap:var(--dn-space-2);flex-wrap:wrap;min-width:0}
+.app :where(.pill,.badge){font-size:var(--dn-type-xs);line-height:1.25;padding:clamp(6px,.65vw,9px) clamp(8px,.9vw,13px);white-space:normal;overflow-wrap:anywhere}
+.app :where(.hero){padding-inline:clamp(0px,1vw,14px)}
+.app :where(.hero h1){font-size:var(--dn-type-display)!important;line-height:1.04!important;letter-spacing:-.045em!important;max-width:100%!important;text-wrap:balance;overflow-wrap:normal}
+.app :where(.hero-main-headline){font-size:clamp(20px,3.2vw,40px)!important;line-height:1.15!important;max-width:100%!important;text-wrap:balance}
+.app :where(.hero-description){font-size:clamp(13px,1.15vw,16px)!important;line-height:1.6!important;max-width:min(100%,72ch)!important}
+.app :where(.eyebrow){font-size:clamp(9px,.75vw,11px)!important;line-height:1.25;padding:clamp(6px,.65vw,9px) clamp(9px,.9vw,13px);letter-spacing:.08em;max-width:100%;white-space:normal}
+.app :where(.hero-social){font-size:clamp(10px,.9vw,13px)!important;line-height:1.2;padding:clamp(7px,.75vw,10px) clamp(9px,1.1vw,16px);gap:clamp(5px,.6vw,9px)}
+.app :where(.hero-social-row){width:min(100%,640px)!important;gap:clamp(5px,.8vw,10px)!important}
+.app :where(.hero-social-row .hero-social){min-height:clamp(38px,3.7vw,48px)!important;font-size:clamp(9px,.82vw,12px)!important;padding:clamp(5px,.65vw,9px)!important;gap:clamp(3px,.55vw,7px)!important}
+.app :where(.hero-social-row .social-brand-icon,.hero-social-row .telegram-brand-mark){width:clamp(15px,1.45vw,21px)!important;height:clamp(15px,1.45vw,21px)!important;flex-basis:clamp(15px,1.45vw,21px)!important}
+.app :where(.card,.step,.method-flow-card,.bitrate-guide-item,.wallet-stat,.metric,.signal){padding:var(--dn-panel-pad);border-radius:var(--dn-radius-md)}
+.app :where(.card h2,.section h2){font-size:clamp(18px,1.65vw,25px)!important;line-height:1.2}
+.app :where(.card-head){gap:var(--dn-space-3);flex-wrap:wrap}
+.app :where(.grid){gap:clamp(10px,1.4vw,20px)}
+.app :where(.mode-buttons){gap:var(--dn-space-2)}
+.app :where(.mode-btn){min-height:clamp(50px,5.1vw,68px);padding:clamp(8px,.95vw,14px);font-size:clamp(11px,.95vw,14px);line-height:1.2;border-radius:var(--dn-radius-sm)}
+.app :where(.mode-btn small){font-size:clamp(9px,.72vw,11px);line-height:1.2;letter-spacing:.035em}
+#uploadSection>.card.upload{padding:clamp(12px,1.8vw,24px)!important;border-radius:var(--dn-radius-lg)!important}
+#uploadSection>.card.upload>.dn-rtx-tabs{width:min(100%,500px)!important;gap:clamp(6px,.9vw,12px)!important;padding:clamp(2px,.35vw,5px)!important}
+#uploadSection .dn-rtx-tab{min-height:clamp(52px,5.5vw,76px)!important;height:auto!important;padding:clamp(7px,.9vw,13px) clamp(5px,.8vw,12px)!important;gap:clamp(3px,.45vw,6px)!important;border-radius:clamp(10px,1.2vw,18px)!important}
+#uploadSection .dn-rtx-tab span{font-size:clamp(10px,.95vw,14px)!important;line-height:1.16!important;letter-spacing:0!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;text-wrap:balance}
+#uploadSection .dn-rtx-tab small{font-size:clamp(8px,.68vw,10px)!important;line-height:1.2!important;letter-spacing:.025em!important;white-space:normal!important}
+#uploadSection .dn-rtx-drop-target{min-height:clamp(220px,27vw,360px)!important;padding:clamp(18px,2.8vw,38px) clamp(10px,2vw,26px)!important;gap:clamp(9px,1.3vw,17px)!important;border-radius:var(--dn-radius-lg)!important}
+#uploadSection .dn-rtx-upload-icon{width:clamp(48px,5vw,72px)!important;height:clamp(48px,5vw,72px)!important;flex-basis:clamp(48px,5vw,72px)!important;border-radius:clamp(13px,1.4vw,20px)!important}
+#uploadSection .dn-rtx-upload-icon svg{width:58%!important;height:58%!important}
+#uploadSection .dn-rtx-drop-target #dropTitle{font-size:clamp(18px,2vw,29px)!important;line-height:1.2!important;text-wrap:balance}
+#uploadSection .dn-rtx-drop-target #dropText{font-size:clamp(12px,1vw,15px)!important;line-height:1.5!important}
+#uploadSection .dn-rtx-bitrate{font-size:clamp(12px,1.05vw,16px)!important;line-height:1.4!important}
+#uploadSection .dn-rtx-meter{gap:clamp(6px,.8vw,12px)!important}
+#uploadSection #dnRtxMeterText{font-size:clamp(9px,.78vw,12px)!important}
+.app :where(.upload-icon){width:clamp(44px,4.5vw,64px);height:clamp(44px,4.5vw,64px);font-size:clamp(20px,2vw,28px);border-radius:var(--dn-radius-md)}
+.app :where(.wallet-grid){gap:clamp(6px,.8vw,12px)}
+.app :where(.wallet-stat b){font-size:clamp(15px,1.3vw,20px);line-height:1.25;overflow-wrap:anywhere}
+.app :where(.wallet-stat span,.wallet-stat em){font-size:clamp(10px,.78vw,12px);line-height:1.4}
+.app :where(.wallet-title h2){font-size:clamp(17px,1.5vw,22px)!important}
+.app :where(.claim-row){gap:var(--dn-space-2)}
+.app :where(.subscription-panel){padding:clamp(13px,1.8vw,24px)!important;border-radius:var(--dn-radius-lg)!important}
+.app :where(.method-flow-track){gap:clamp(8px,1.2vw,18px)}
+.app :where(.method-flow-card){gap:clamp(7px,.9vw,13px);padding:clamp(12px,1.6vw,22px)}
+.app :where(.method-flow-num){width:clamp(27px,2.5vw,36px);height:clamp(27px,2.5vw,36px);font-size:clamp(11px,.85vw,13px)}
+.app :where(.method-flow-icon .ui-icon){width:clamp(22px,2vw,30px);height:clamp(22px,2vw,30px)}
+.app :where(.method-flow-card h3){font-size:clamp(15px,1.2vw,19px);line-height:1.25}
+.app :where(.method-flow-card p){font-size:clamp(12px,.9vw,14px);line-height:1.5}
+.app :where(.method-flow-action){font-size:clamp(11px,.85vw,13px);line-height:1.3;padding:clamp(8px,.8vw,12px)}
+.app :where(.bitrate-guide-table){gap:clamp(7px,.9vw,13px)}
+.app :where(.bitrate-guide-item){padding:clamp(10px,1.2vw,17px)}
+.app :where(.bitrate-guide-item strong,.bitrate-guide-item span){font-size:clamp(12px,.95vw,15px);line-height:1.35}
+.app :where(.section){padding-block:clamp(18px,2.5vw,38px)}
+.app :where(.section>h2){font-size:clamp(20px,2vw,29px)!important}
+.app :where(.metric-grid){gap:clamp(6px,.8vw,12px)}
+.app :where(.metric){padding:clamp(9px,1vw,15px);min-height:0}
+.app :where(.metric span,.signal-label){font-size:clamp(10px,.75vw,12px)}
+.app :where(.metric b){font-size:clamp(14px,1.15vw,18px)}
+.app :where(.footer){gap:var(--dn-space-3);font-size:clamp(10px,.8vw,12px);padding-block:clamp(18px,2vw,30px)}
+.app :where(.dn-tg-popup){width:min(500px,calc(100vw - 2 * var(--dn-gutter)))!important;padding:clamp(14px,2.1vw,26px)!important;border-radius:var(--dn-radius-lg)!important}
+@media(max-width:800px){
+ :root{--dn-gutter:clamp(12px,2.7vw,22px);--dn-panel-pad:clamp(12px,2.2vw,18px)}
+ .app :where(.nav){align-items:center;flex-wrap:wrap}
+ .app :where(.grid,#uploadSection,.analytics){grid-template-columns:minmax(0,1fr)!important}
+ .app :where(.method-flow-track,.steps){grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .app :where(.hero h1){font-size:clamp(30px,6vw,48px)!important}
+}
+@media(max-width:600px){
+ :root{--dn-gutter:clamp(10px,3vw,16px);--dn-panel-pad:clamp(11px,3vw,15px)}
+ .app :where(.hero h1){font-size:clamp(28px,8vw,40px)!important}
+ .app :where(.hero-main-headline){font-size:clamp(19px,5.5vw,27px)!important}
+ .app :where(.hero-social-row){grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .app :where(.method-flow-track,.steps){grid-template-columns:minmax(0,1fr)!important}
+ .app :where(.wallet-grid){grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .app :where(.bitrate-guide-table){grid-template-columns:minmax(0,1fr)!important}
+ #uploadSection .dn-rtx-tab{min-height:clamp(52px,13vw,62px)!important;padding:7px 4px!important}
+ #uploadSection .dn-rtx-tab span{font-size:clamp(9.5px,2.7vw,12px)!important}
+ #uploadSection .dn-rtx-tab small{font-size:clamp(7.5px,1.9vw,9px)!important}
+ #uploadSection .dn-rtx-drop-target{min-height:clamp(220px,65vw,290px)!important}
+}
+@media(max-width:380px){
+ .app :where(.wallet-grid){grid-template-columns:minmax(0,1fr)!important}
+ .app :where(.hero-social-row){gap:4px!important}
+ .app :where(.hero-social-row .hero-social){font-size:clamp(8.5px,2.6vw,10px)!important;padding-inline:2px!important}
+ #uploadSection .dn-rtx-tabs{gap:5px!important}
+ #uploadSection .dn-rtx-tab{padding-inline:3px!important}
+ #uploadSection .dn-rtx-tab span{font-size:clamp(9px,2.45vw,10px)!important}
+}
+@media(orientation:landscape) and (max-height:500px){
+ .app :where(.hero){padding-block:18px!important}
+ #uploadSection .dn-rtx-drop-target{min-height:190px!important}
+ .app :where(.dn-tg-popup){max-height:calc(100dvh - 16px)!important}
+}
+</style>
 </body>
 </html>
