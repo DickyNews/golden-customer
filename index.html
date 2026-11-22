@@ -4156,7 +4156,8 @@ window.GOLDEN_PLATFORM = Object.freeze({
     analytics: '/public/tiktok-analytics'
   })
 });
-const file=document.getElementById('file'),drop=document.getElementById('drop'),title=document.getElementById('dropTitle'),text=document.getElementById('dropText'),modal=document.getElementById('modal'),close=document.getElementById('close'),buy=document.getElementById('buy'),sdrBtn=document.getElementById('sdrBtn'),hdrBtn=document.getElementById('hdrBtn');let selectedMode='sdr',selectedPrice=1,processing=false;
+const file=document.getElementById('file'),drop=document.getElementById('drop'),title=document.getElementById('dropTitle'),text=document.getElementById('dropText'),modal=document.getElementById('modal'),close=document.getElementById('close'),buy=document.getElementById('buy'),sdrBtn=document.getElementById('sdrBtn'),hdrBtn=document.getElementById('hdrBtn');
+const freeInjectFile=document.getElementById('freeInjectFile');let selectedMode='sdr',selectedPrice=1,processing=false;
 
 const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:false};let maxFileSizeBytes=4096*1024*1024; // fallback ceiling; public service and active subscription settings narrow this value.
 function renderPrices(){
@@ -4439,7 +4440,6 @@ async function pollJob(jobId){for(let i=0;i<180;i++){await new Promise(r=>setTim
 
 
 const freeInjectBtn=document.getElementById('freeInjectBtn');
-const freeInjectFile=document.getElementById('freeInjectFile');
 let freeMaxFileSizeMb=50;
 let freeMaxBytes=freeMaxFileSizeMb*1024*1024;
 let freeMaxSettingsLoaded=false;
