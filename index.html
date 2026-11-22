@@ -3830,7 +3830,6 @@ html body .app .hero-main-headline strong.nvidia-accent {
 .dn-change-video{margin-top:9px}
 @media(max-width:560px){.dn-video-preflight{padding:15px!important}.dn-video-info-grid{gap:11px}.dn-video-info-item strong{font-size:14px}}
 </style>
-
 </head>
 <body>
 
@@ -3942,9 +3941,10 @@ html body .app .hero-main-headline strong.nvidia-accent {
     <a id="dnWhatsappJoin" href="https://chat.whatsapp.com/Lbf23uBgaUVChFfiOAAYex" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="display:flex;width:calc(100% - 48px);max-width:560px;min-height:48px;align-items:center;justify-content:center;margin:14px auto 12px;text-align:center;text-decoration:none">GABUNG GRUP WHATSAPP</a>
   </div>
   <section class="grid" id="uploadSection" aria-label="Upload dan proses video">
-  <div class="card upload" style="background:linear-gradient(145deg,#111116 0%,#0e0f14 100%)!important;border:1px solid #25262d!important;border-radius:22px!important;box-shadow:0 18px 48px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.025)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;animation:none!important;transition:none!important">
-    <div class="dn-rtx-tabs" role="tablist" aria-label="Pilih mode pemrosesan video"><button class="dn-rtx-tab" id="dnModeFree" type="button" role="tab" aria-selected="false"><span>INJECT GRATIS</span><small>3 VIDEO / 24 JAM</small></button><button class="dn-rtx-tab" id="dnModePaid" type="button" role="tab" aria-selected="true"><span>INJECT LANGGANAN</span><small>AKSES PAKET VIP</small></button></div>
-<div id="freeInjectWrap" class="free-inject-wrap"><button class="mode-btn free-inject-btn" id="freeInjectBtn" type="button">INJECT GRATIS</button><p class="free-inject-caption">Hubungkan Telegram dan ikuti channel @dickynewsofficial untuk mendapatkan 3 encode gratis setiap 24 jam.</p><input id="freeInjectFile" type="file" accept="*/*" hidden></div>
+  <div class="card upload">
+    <div class="card-head"><div><div class="mini">Pilih mode pemrosesan video</div></div><div class="pill">MP4 / MOV</div></div>
+    <div class="mode-title">PILIH MESIN</div>
+    <div id="freeInjectWrap" class="free-inject-wrap"><button class="mode-btn free-inject-btn" id="freeInjectBtn" type="button">INJECT GRATIS</button><p class="free-inject-caption">Hubungkan Telegram dan ikuti channel @dickynewsofficial untuk mendapatkan 3 encode gratis setiap 24 jam.</p><div id="dnTelegramFreePanel" class="dn-tg-free-panel"><div class="dn-tg-free-head"><b>AKSES INJECT GRATIS</b><span id="dnTgState">BELUM TERHUBUNG</span></div><p id="dnTgMessage">Hubungkan akun Telegram untuk membuka akses Inject Gratis.</p><div class="dn-tg-free-actions"><button type="button" id="dnTgConnect" class="btn btn-primary">HUBUNGKAN TELEGRAM</button><a id="dnTgJoin" href="https://t.me/dickynewsofficial" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GABUNG CHANNEL</a><button type="button" id="dnTgVerify" class="btn btn-secondary">VERIFIKASI CHANNEL</button></div><div class="dn-tg-quota"><span>KUOTA 24 JAM</span><b id="dnTgQuota">— / 3</b></div></div><input id="freeInjectFile" type="file" accept="*/*" hidden></div>
     
     <div class="mode-buttons machine-columns">
       <article class="machine-card inject-machine">
@@ -3965,7 +3965,7 @@ html body .app .hero-main-headline strong.nvidia-accent {
 
 
     </div>
-    <div class="drop" id="drop" style="display:contents!important;border:0!important;background:none!important;box-shadow:none!important;padding:0!important;margin:0!important"><div class="dn-rtx-drop-target" id="dnDropTarget" style="display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:12px!important;width:100%!important;height:285px!important;min-height:285px!important;padding:24px!important;box-sizing:border-box!important;border:1px dashed #3a3b43;border-radius:22px!important;background:#101116;background-image:none;color:#f0f0f3!important;box-shadow:inset 0 1px rgba(255,255,255,.025);overflow:hidden!important;filter:none!important;animation:none!important;transition:border-color .2s ease,background-color .2s ease,box-shadow .2s ease" role="button" tabindex="0" aria-label="Pilih video untuk diunggah"><span class="dn-rtx-upload-icon" style="display:grid!important;place-items:center!important;width:58px!important;height:58px!important;flex:0 0 58px!important;border:1px solid rgba(118,185,0,.32)!important;border-radius:15px!important;background:rgba(118,185,0,.075)!important;color:#76b900!important;box-shadow:none!important;animation:none!important" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12m-5-5 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg></span><strong id="dropTitle">Drop your video here</strong><p id="dropText">or click to browse &middot; MP4 / MOV / WEBM / MKV</p><b class="dn-rtx-bitrate">Our recommended bitrate is 10-30 MBPS</b></div><div class="dn-rtx-meter"><div class="dn-rtx-meter-track"><i id="dnRtxMeterBar"></i></div><span id="dnRtxMeterText">0.0 MB / 100 MB &middot; FREE</span></div><div class="upload-destination-guide" aria-label="Panduan upload HD ke platform">
+    <div class="drop" id="drop"><strong id="dropTitle"></strong><p id="dropText"></p><div class="upload-destination-guide" aria-label="Panduan upload HD ke platform">
   <div class="upload-destination-title">PANDUAN UPLOAD HD</div>
   <div class="upload-destination-flow">
     <span class="upload-flow-node">Dicky News Method</span><span class="upload-flow-arrow" aria-hidden="true">→</span><span class="upload-flow-node">Pilih platform</span>
@@ -4006,8 +4006,6 @@ html body .app .hero-main-headline strong.nvidia-accent {
         </details>
       </article>
   </div>
-  <div class="dn-tg-popup-backdrop" id="dnTgPopupBackdrop" aria-hidden="true"><section class="dn-tg-popup" role="dialog" aria-modal="true" aria-labelledby="dnTgPopupTitle"><button class="dn-tg-popup-close" id="dnTgPopupClose" type="button" aria-label="Tutup">&times;</button><div class="dn-tg-popup-kicker">AKSES MODE GRATIS</div><h3 id="dnTgPopupTitle">Hubungkan Telegram</h3><p class="dn-tg-popup-intro">Hubungkan Telegram dan ikuti channel @dickynewsofficial untuk mendapatkan 3 encode gratis setiap 24 jam.</p><div id="dnTelegramFreePanel" class="dn-tg-free-panel"><div class="dn-tg-free-head"><b>AKSES INJECT GRATIS</b><span id="dnTgState">BELUM TERHUBUNG</span></div><p id="dnTgMessage">Hubungkan akun Telegram untuk membuka akses Inject Gratis.</p><div class="dn-tg-free-actions"><button type="button" id="dnTgConnect" class="btn btn-primary">HUBUNGKAN TELEGRAM</button><a id="dnTgJoin" href="https://t.me/dickynewsofficial" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GABUNG CHANNEL</a><button type="button" id="dnTgVerify" class="btn btn-secondary">VERIFIKASI CHANNEL</button></div><button id="dnTgContinue" class="dn-tg-continue" type="button" hidden>LANJUTKAN KE UPLOAD GRATIS</button><div class="dn-tg-quota"><span>KUOTA 24 JAM</span><b id="dnTgQuota">— / 3</b></div></div></section></div>
-
   <aside class="side">
     <div class="card wallet-card"><div class="wallet-title"><h2 id="accountPanelTitle">Akun</h2><span class="badge warn" id="walletAuthBadge">BELUM LOGIN</span></div><div class="wallet-grid"><div class="wallet-stat primary"><span>Status akses</span><b>Belum login</b><em>login untuk melihat status akun</em></div><div class="wallet-stat"><span>Total pemrosesan</span><b>0</b><em>job yang tercatat</em></div><div class="wallet-stat"><span>Paket dibeli</span><b>0</b><em>riwayat pembelian paket</em></div></div><div class="wallet-progress"><div class="wallet-progress-head"><span>Status langganan</span><strong>Belum ada langganan aktif</strong></div><div class="bar"><i style="width:0%"></i></div></div><div class="wallet-bottom"><span class="wallet-cost-label">Paket layanan <strong id="priceSummary">Belum ada paket</strong></span><div class="wallet-actions"><button class="btn btn-secondary" id="buy">Isi Paket</button></div></div><div class="claim-box" id="claimBox"><div class="claim-label">CLAIM AKUN</div><div class="claim-row" style="display:grid;grid-template-columns:1fr;gap:10px"><input id="claimUsernameInput" type="text" placeholder="Masukkan username customer" autocomplete="username"><input id="claimKeyInput" type="text" placeholder="Masukkan Claim Key ID" autocomplete="off"><button class="btn btn-primary" id="claimKey">Claim Key</button></div><div class="claim-help">Masukkan username yang diberikan admin dan Claim Key ID milik username tersebut.</div></div></div>
     
@@ -4156,8 +4154,7 @@ window.GOLDEN_PLATFORM = Object.freeze({
     analytics: '/public/tiktok-analytics'
   })
 });
-const file=document.getElementById('file'),drop=document.getElementById('drop'),title=document.getElementById('dropTitle'),text=document.getElementById('dropText'),modal=document.getElementById('modal'),close=document.getElementById('close'),buy=document.getElementById('buy'),sdrBtn=document.getElementById('sdrBtn'),hdrBtn=document.getElementById('hdrBtn');
-const freeInjectFile=document.getElementById('freeInjectFile');let selectedMode='sdr',selectedPrice=1,processing=false;
+const file=document.getElementById('file'),drop=document.getElementById('drop'),title=document.getElementById('dropTitle'),text=document.getElementById('dropText'),modal=document.getElementById('modal'),close=document.getElementById('close'),buy=document.getElementById('buy'),sdrBtn=document.getElementById('sdrBtn'),hdrBtn=document.getElementById('hdrBtn');let selectedMode='sdr',selectedPrice=1,processing=false;
 
 const servicePrices={sdr:1,hdr:7},serviceActive={sdr:true,hdr:false};let maxFileSizeBytes=4096*1024*1024; // fallback ceiling; public service and active subscription settings narrow this value.
 function renderPrices(){
@@ -4285,7 +4282,6 @@ const dnTgPanel=document.getElementById('dnTelegramFreePanel');
 const dnTgState=document.getElementById('dnTgState');
 const dnTgMessage=document.getElementById('dnTgMessage');
 const dnTgQuota=document.getElementById('dnTgQuota');
-let dnTgContinue=null,dnFreeVerified=false;
 const dnTgConnect=document.getElementById('dnTgConnect');
 const dnTgJoin=document.getElementById('dnTgJoin');
 const dnTgVerify=document.getElementById('dnTgVerify');
@@ -4294,7 +4290,6 @@ function dnTgHeaders(){const key=dnTgKey();return key?{'X-Telegram-Free-Key':key
 function dnTgRender(data){
  if(!dnTgPanel)return;
  if(!data||!data.linked){
-  dnFreeVerified=false;if(dnTgContinue)dnTgContinue.hidden=true;
   dnTgState.textContent=data&&data.pending?'MENUNGGU TELEGRAM':'BELUM TERHUBUNG';
   dnTgMessage.textContent=data&&data.pending?'Buka bot Telegram dari tautan yang sudah dibuat, tekan Start, lalu kembali ke halaman ini.':'Hubungkan Telegram, gabung channel resmi, lalu verifikasi keanggotaan.';
   dnTgConnect.style.display='inline-flex';dnTgJoin.style.display='inline-flex';dnTgVerify.style.display='none';dnTgQuota.textContent='— / 3';
@@ -4304,7 +4299,6 @@ function dnTgRender(data){
  dnTgMessage.textContent=data.is_member?'Telegram terhubung. Akses Inject Gratis aktif.':'Telegram terhubung. Gabung @dickynewsofficial lalu tekan Verifikasi Channel.';
  dnTgConnect.style.display='none';dnTgJoin.style.display=data.is_member?'none':'inline-flex';dnTgVerify.style.display=data.is_member?'none':'inline-flex';
  dnTgQuota.textContent=String(data.used_24h??0)+' / '+String(data.quota_limit??3)+' terpakai';
- dnFreeVerified=!!data.is_member;if(dnTgContinue)dnTgContinue.hidden=!dnFreeVerified;
  return !!data.is_member;
 }
 async function dnTgRefresh(){
@@ -4347,25 +4341,6 @@ if(dnTgVerify)dnTgVerify.addEventListener('click',async()=>{
  finally{dnTgVerify.disabled=false}
 });
 dnTgRefresh();
-const dnModeFree=document.getElementById('dnModeFree'),dnModePaid=document.getElementById('dnModePaid'),dnTgBackdrop=document.getElementById('dnTgPopupBackdrop'),dnTgClose=document.getElementById('dnTgPopupClose'),dnDropTarget=document.getElementById('dnDropTarget');
-dnTgContinue=document.getElementById('dnTgContinue');
-document.body.appendChild(dnTgBackdrop);
-let dnUploadMode='free',dnModeTouched=false;
-function dnSetMode(mode){dnUploadMode=mode;const free=mode==='free';dnModeFree.classList.toggle('is-active',free);dnModePaid.classList.toggle('is-active',!free);dnModeFree.setAttribute('aria-selected',String(free));dnModePaid.setAttribute('aria-selected',String(!free));}
-function dnOpenFreePopup(){dnTgBackdrop.classList.add('is-open');dnTgBackdrop.setAttribute('aria-hidden','false');dnTgRefresh();}
-function dnCloseFreePopup(){dnTgBackdrop.classList.remove('is-open');dnTgBackdrop.setAttribute('aria-hidden','true');}
-function dnUpdateRtxMeter(f,mode){const label=document.getElementById('dnRtxMeterText'),bar=document.getElementById('dnRtxMeterBar');const limit=mode==='free'?100*1048576:maxFileSizeBytes;const limitMb=Number.isFinite(limit)&&limit>0?limit/1048576:(mode==='free'?100:0);if(label){const max=limitMb?((Number.isInteger(limitMb)?limitMb:limitMb.toFixed(1))+' MB'):'VIP';label.textContent=(f?(f.size/1048576).toFixed(1):'0.0')+' MB / '+max+' '+String.fromCharCode(183)+' '+(mode==='free'?'FREE':'VIP');}if(bar)bar.style.width=f&&limitMb?Math.min(100,f.size/1048576/limitMb*100)+'%':'0%';}
-dnSetMode('free');dnUpdateRtxMeter(null,'free');
-window.dnSyncModeTabs=()=>{if(!dnModeTouched){dnSetMode(customerAuthenticated?'paid':'free');dnUpdateRtxMeter(null,dnUploadMode);}};
-dnModeFree.addEventListener('click',()=>{dnModeTouched=true;dnSetMode('free');dnUpdateRtxMeter(null,'free');dnOpenFreePopup();});
-dnModePaid.addEventListener('click',()=>{dnModeTouched=true;dnSetMode('paid');dnUpdateRtxMeter(null,'paid');dnCloseFreePopup();});
-dnTgClose.addEventListener('click',dnCloseFreePopup);
-dnTgBackdrop.addEventListener('click',e=>{if(e.target===dnTgBackdrop)dnCloseFreePopup();});
-dnTgContinue.addEventListener('click',()=>{if(!dnFreeVerified){dnTgRefresh();return;}dnCloseFreePopup();freeInjectFile.value='';freeInjectFile.click();});
-file.addEventListener('change',()=>dnUpdateRtxMeter(file.files&&file.files[0],'paid'));
-freeInjectFile.addEventListener('change',()=>dnUpdateRtxMeter(freeInjectFile.files&&freeInjectFile.files[0],'free'));
-dnDropTarget.addEventListener('click',()=>{if(dnUploadMode==='free'){dnOpenFreePopup();return;}selectMode('sdr',servicePrices.sdr);});
-dnDropTarget.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();dnDropTarget.click();}});
 async function uploadFreeVideo(f){
  if(processing||customerAuthenticated||!f)return;
  await freeMaxSettingsPromise;
@@ -4440,6 +4415,7 @@ async function pollJob(jobId){for(let i=0;i<180;i++){await new Promise(r=>setTim
 
 
 const freeInjectBtn=document.getElementById('freeInjectBtn');
+const freeInjectFile=document.getElementById('freeInjectFile');
 let freeMaxFileSizeMb=50;
 let freeMaxBytes=freeMaxFileSizeMb*1024*1024;
 let freeMaxSettingsLoaded=false;
@@ -4652,7 +4628,7 @@ async function uploadVideo(f){
 
 file.onchange=()=>{const f=file.files[0];if(f)dnPrepareUltimateVideo(f);};
 
-['dragenter','dragover'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>{if(e.dataTransfer.files.length){e.preventDefault();if(dnUploadMode==='free'){dnOpenFreePopup();return;}file.files=e.dataTransfer.files;file.dispatchEvent(new Event('change'))}});
+['dragenter','dragover'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>{if(e.dataTransfer.files.length){file.files=e.dataTransfer.files;file.dispatchEvent(new Event('change'))}});
 close.onclick=()=>{modal.classList.remove('show');close.textContent='Tutup';const result=document.getElementById('downloadResult');if(result)result.remove();};buy.onclick=()=>{window.open('https://wa.me/6289616438173?text='+encodeURIComponent('Halo Bang, Saya Mau Isi Paket'),'_blank','noopener')};document.getElementById('claimKey').onclick=()=>{const key=document.getElementById('claimKeyInput').value.trim();if(!key){document.getElementById('claimKeyInput').focus();return}modal.classList.add('show');document.getElementById('modalTitle').textContent='Claim Akun';document.getElementById('modalText').textContent='Key diterima. Verifikasi akun akan dilakukan oleh API server.'};
 const stars=document.getElementById('stars');for(let i=0;i<78;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--l',(55+Math.random()*155)+'px');s.style.setProperty('--r',(-68+Math.random()*136)+'deg');s.style.setProperty('--x1',(-260+Math.random()*520)+'px');s.style.setProperty('--y1',(-210+Math.random()*420)+'px');s.style.setProperty('--x2',(-520+Math.random()*1040)+'px');s.style.setProperty('--y2',(-410+Math.random()*820)+'px');s.style.setProperty('--x3',(-300+Math.random()*600)+'px');s.style.setProperty('--y3',(-240+Math.random()*480)+'px');s.style.setProperty('--m',(12+Math.random()*20)+'s');s.style.setProperty('--d',(1.5+Math.random()*3)+'s');s.style.animationDelay=(-Math.random()*32)+'s';stars.appendChild(s)}
 document.querySelectorAll('.stars .star').forEach(s=>{s.style.setProperty('--x1',(-110+Math.random()*220)+'px');s.style.setProperty('--y1',(-90+Math.random()*180)+'px');s.style.setProperty('--x2',(-180+Math.random()*360)+'px');s.style.setProperty('--y2',(-150+Math.random()*300)+'px');s.style.setProperty('--x3',(-110+Math.random()*220)+'px');s.style.setProperty('--y3',(-90+Math.random()*180)+'px');s.style.setProperty('--m',(9+Math.random()*13)+'s');s.style.animationDelay=(-Math.random()*20)+'s'});
@@ -6212,384 +6188,5 @@ html body .app .grid>.card.upload .machine-columns>.machine-card.inject-machine>
 }
 </style>
 
-<style id="dn-rtxfury-two-tab-skin">
-#uploadSection>.card.upload{min-width:0!important}
-#uploadSection>.card.upload>.dn-rtx-tabs{display:flex!important;align-items:center!important;justify-content:center!important;width:min(100%,720px)!important;min-height:92px!important;margin:0 auto 22px!important;padding:5px!important;gap:5px!important;border:1px solid #34363c!important;border-radius:999px!important;background:#111216!important;box-sizing:border-box!important}
-#uploadSection .dn-rtx-tab{flex:1 1 0!important;min-width:0!important;height:78px!important;padding:9px 12px!important;border:1px solid transparent!important;border-radius:999px!important;background:transparent!important;color:#999ba4!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:6px!important;font:inherit!important;font-weight:850!important;cursor:pointer!important;transition:background .2s,color .2s,box-shadow .2s!important}
-#uploadSection .dn-rtx-tab span{font-size:clamp(13px,1.35vw,20px)!important;line-height:1.2!important;letter-spacing:.015em!important;white-space:nowrap!important}
-#uploadSection .dn-rtx-tab small{font-size:clamp(8px,.8vw,11px)!important;letter-spacing:.1em!important;color:inherit!important;opacity:.72!important}
-#uploadSection .dn-rtx-tab.is-active{background:linear-gradient(135deg,#8be000,#76b900 60%,#65a100)!important;color:#080c03!important;border-color:#a0eb2e!important;box-shadow:0 5px 24px rgba(118,185,0,.28),inset 0 1px rgba(255,255,255,.35)!important}
-#uploadSection #freeInjectWrap,#uploadSection .machine-columns{display:none!important}
-#uploadSection>.card.upload>.drop{display:contents!important}
-#uploadSection .dn-rtx-drop-target{position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:15px!important;width:100%!important;min-height:330px!important;flex:0 0 auto!important;margin:0!important;padding:34px 24px!important;box-sizing:border-box!important;border:2px dashed #76b900!important;border-radius:26px!important;background:radial-gradient(ellipse at center,rgba(118,185,0,.16),rgba(118,185,0,.06) 64%,rgba(12,14,12,.15) 100%)!important;color:#f1f2f4!important;text-align:center!important;cursor:pointer!important;overflow:hidden!important;box-shadow:inset 0 0 48px rgba(118,185,0,.045)!important}
-#uploadSection .dn-rtx-drop-target:hover,#uploadSection .dn-rtx-drop-target:focus-visible,#uploadSection #drop.drag .dn-rtx-drop-target{border-color:#a0e52e!important;background:radial-gradient(ellipse at center,rgba(118,185,0,.2),rgba(118,185,0,.075) 62%,rgba(12,14,12,.2) 100%)!important;box-shadow:inset 0 0 42px rgba(118,185,0,.09),0 0 24px rgba(118,185,0,.13)!important;outline:none!important}
-#uploadSection .dn-rtx-upload-icon{display:grid!important;place-items:center!important;width:68px!important;height:68px!important;flex:0 0 68px!important;border:1px solid rgba(118,185,0,.5)!important;border-radius:18px!important;background:rgba(118,185,0,.09)!important;color:#82cf00!important}
-#uploadSection .dn-rtx-upload-icon svg{width:36px!important;height:36px!important}
-#uploadSection .dn-rtx-drop-target #dropTitle{display:block!important;margin:0!important;color:#f1f2f4!important;font-size:clamp(21px,2vw,30px)!important;line-height:1.25!important;font-weight:800!important}
-#uploadSection .dn-rtx-drop-target #dropText{display:block!important;max-width:100%!important;margin:0!important;color:#a4a6b0!important;font-size:clamp(13px,1.2vw,18px)!important;line-height:1.55!important}
-#uploadSection .dn-rtx-bitrate{color:#f0f1f3!important;font-size:clamp(14px,1.3vw,20px)!important;font-weight:750!important;line-height:1.4!important}
-body .dn-tg-popup-backdrop{position:fixed!important;inset:0!important;z-index:99999!important;display:none!important;align-items:center!important;justify-content:center!important;padding:18px!important;background:rgba(0,0,0,.78)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important}
-body .dn-tg-popup-backdrop.is-open{display:flex!important}
-body .dn-tg-popup{position:relative!important;width:min(100%,520px)!important;max-height:min(90vh,760px)!important;overflow:auto!important;padding:28px!important;border:1px solid #34363c!important;border-radius:20px!important;background:linear-gradient(145deg,#141619,#090a0c)!important;color:#f1f2f4!important;box-shadow:0 25px 90px rgba(0,0,0,.65),0 0 32px rgba(118,185,0,.1)!important}
-body .dn-tg-popup-close{position:absolute!important;right:13px!important;top:11px!important;width:34px!important;height:34px!important;border:1px solid #444!important;border-radius:50%!important;background:#1a1c20!important;color:#fff!important;font-size:22px!important;cursor:pointer!important}
-body .dn-tg-popup-kicker{color:#8be000!important;font-size:11px!important;font-weight:900!important;letter-spacing:.13em!important}
-body .dn-tg-popup h3{margin:8px 36px 8px 0!important;font-size:23px!important;color:#f5f5f5!important}
-body .dn-tg-popup-intro{margin:0 0 17px!important;color:#a9adb5!important;font-size:13px!important;line-height:1.55!important}
-body .dn-tg-popup .dn-tg-free-panel{display:block!important;margin:0!important;padding:17px!important;border:1px solid rgba(118,185,0,.35)!important;border-radius:14px!important;background:rgba(8,11,7,.8)!important;color:#e7e8eb!important}
-body .dn-tg-popup .dn-tg-free-actions{display:flex!important;flex-wrap:wrap!important;gap:9px!important}
-body .dn-tg-continue{display:block!important;width:100%!important;margin-top:14px!important;padding:14px!important;border:1px solid #a0eb2e!important;border-radius:11px!important;background:linear-gradient(135deg,#8be000,#76b900)!important;color:#080c03!important;font-weight:900!important;cursor:pointer!important}
-body .dn-tg-continue[hidden]{display:none!important}
-@media(max-width:700px){#uploadSection>.card.upload>.dn-rtx-tabs{min-height:72px!important;margin-bottom:14px!important}#uploadSection .dn-rtx-tab{height:62px!important;padding:6px 4px!important;gap:4px!important}#uploadSection .dn-rtx-tab span{font-size:clamp(10px,2.7vw,15px)!important}#uploadSection .dn-rtx-tab small{font-size:clamp(7px,1.7vw,9px)!important}#uploadSection .dn-rtx-drop-target{min-height:260px!important;padding:22px 12px!important;gap:12px!important;border-radius:19px!important}#uploadSection .dn-rtx-upload-icon{width:58px!important;height:58px!important;flex-basis:58px!important}#uploadSection .dn-rtx-upload-icon svg{width:33px!important;height:33px!important}#uploadSection .dn-rtx-drop-target #dropTitle{font-size:clamp(18px,5vw,24px)!important}#uploadSection .dn-rtx-drop-target #dropText{font-size:clamp(11px,3vw,14px)!important}#uploadSection .dn-rtx-bitrate{font-size:clamp(12px,3vw,16px)!important}body .dn-tg-popup{padding:24px 16px!important}}
-
-#uploadSection .dn-rtx-drop-target{background:linear-gradient(135deg,rgba(118,185,0,.12),rgba(118,185,0,.045) 58%,rgba(10,11,12,.92)),#10130d!important}
-#uploadSection .dn-rtx-meter{display:flex!important;align-items:center!important;gap:14px!important;width:100%!important;margin:16px 0 18px!important;color:#a4a6af!important;font:12px ui-monospace,Consolas,monospace!important}
-#uploadSection .dn-rtx-meter-track{height:8px!important;flex:1 1 auto!important;min-width:0!important;overflow:hidden!important;border:1px solid #303239!important;border-radius:99px!important;background:#191a1f!important}
-#uploadSection .dn-rtx-meter-track i{display:block!important;width:0;height:100%!important;border-radius:99px!important;background:linear-gradient(90deg,#76b900,#a2e63b)!important;box-shadow:0 0 12px rgba(118,185,0,.3)!important;transition:width .2s!important}
-#uploadSection #dnRtxMeterText{flex:0 0 auto!important;white-space:nowrap!important;color:#a4a6af!important;font-size:12px!important}
-@media(max-width:700px){#uploadSection .dn-rtx-meter{gap:8px!important;margin:12px 0 14px!important}#uploadSection #dnRtxMeterText{font-size:10px!important}}
-
-html body .app .grid>.card.upload > #drop{display:contents!important}
-
-/* RTXFury reference pass: match the reference page proportions without changing upload behavior. */
-#uploadSection{width:min(1080px,calc(100vw - 48px))!important;max-width:1080px!important;margin:24px auto 52px!important;grid-template-columns:minmax(0,1fr)!important;gap:22px!important;align-items:start!important}
-#uploadSection>.card.upload{width:100%!important;min-width:0!important;padding:26px!important;border-radius:20px!important}
-#uploadSection>.card.upload>.dn-rtx-tabs{width:min(320px,100%)!important;min-height:78px!important;margin:0 auto 10px!important;padding:0!important;gap:4px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
-#uploadSection .dn-rtx-tab{position:relative!important;overflow:hidden!important;height:78px!important;min-height:78px!important;padding:8px 7px!important;border:1px solid #383a40!important;border-radius:999px!important;background:linear-gradient(145deg,#24252b 0%,#15161c 58%,#303137 100%)!important;color:#a5a6af!important;box-shadow:inset 0 1px 2px rgba(255,255,255,.1),0 5px 16px rgba(0,0,0,.25)!important}
-#uploadSection .dn-rtx-tab::before{content:""!important;position:absolute!important;top:0!important;left:36%!important;width:28%!important;height:2px!important;border:0!important;border-radius:0 0 8px 8px!important;background:linear-gradient(90deg,transparent,#22e6e8 38%,#7cfaff 70%,transparent)!important;box-shadow:0 0 8px rgba(34,230,232,.45)!important}
-#uploadSection .dn-rtx-tab span{font-size:clamp(13px,1vw,16px)!important;font-weight:850!important;letter-spacing:.005em!important}
-#uploadSection #dnModePaid span{display:block!important;transform:scaleX(.82)!important;white-space:nowrap!important}
-#uploadSection .dn-rtx-tab small{font-size:clamp(8px,.7vw,11px)!important;letter-spacing:.1em!important;color:inherit!important;opacity:.72!important}
-#uploadSection .dn-rtx-tab.is-active{background:linear-gradient(112deg,#91e900 0%,#7ac900 58%,#8bd326 100%)!important;color:#090d02!important;border-color:#a0eb2e!important;box-shadow:inset 0 1px 1px rgba(255,255,255,.48),0 7px 22px rgba(118,185,0,.2)!important}
-#uploadSection .dn-rtx-tab.is-active::before{background:linear-gradient(90deg,transparent,#13e9ed 35%,#b5ffff 70%,transparent)!important;box-shadow:0 0 8px rgba(34,230,232,.55)!important}
-#uploadSection .dn-rtx-drop-target{min-height:290px!important;height:290px!important;padding:28px 24px!important;gap:14px!important;border-width:2px!important;border-radius:28px!important;background:linear-gradient(108deg,#242c18 0%,#2b3023 46%,#414146 100%)!important;box-shadow:inset 0 0 55px rgba(0,0,0,.13)!important}
-#uploadSection .dn-rtx-upload-icon{width:68px!important;height:68px!important;flex:0 0 68px!important;border-radius:20px!important;background:rgba(118,185,0,.1)!important}
-#uploadSection .dn-rtx-upload-icon svg{width:38px!important;height:38px!important}
-#uploadSection .dn-rtx-drop-target #dropTitle{font-size:clamp(21px,1.85vw,29px)!important;font-weight:800!important;letter-spacing:-.025em!important}
-#uploadSection .dn-rtx-drop-target #dropText{font-size:clamp(13px,1.05vw,17px)!important;color:#b7b9b4!important}
-#uploadSection .dn-rtx-bitrate{font-size:clamp(15px,1.2vw,20px)!important;font-weight:800!important;margin-top:8px!important}
-#uploadSection .dn-rtx-meter{margin:16px 0 22px!important;gap:16px!important}
-#uploadSection .dn-rtx-meter-track{height:9px!important}
-#uploadSection #dnRtxMeterText{font-size:14px!important}
-@media(max-width:850px){#uploadSection{width:calc(100% - 24px)!important;margin:14px auto 26px!important;grid-template-columns:minmax(0,1fr)!important;gap:14px!important}#uploadSection>.card.upload{padding:16px!important}#uploadSection>.card.upload>.dn-rtx-tabs{width:min(320px,100%)!important;min-height:68px!important;margin-bottom:12px!important}#uploadSection .dn-rtx-tab{height:68px!important;min-height:68px!important;padding:7px 5px!important}#uploadSection .dn-rtx-tab span{font-size:clamp(12px,3vw,17px)!important}#uploadSection .dn-rtx-tab small{font-size:clamp(8px,2vw,10px)!important}#uploadSection .dn-rtx-drop-target{height:270px!important;min-height:270px!important;padding:20px 12px!important;gap:11px!important;border-radius:20px!important}#uploadSection .dn-rtx-upload-icon{width:58px!important;height:58px!important;flex-basis:58px!important}#uploadSection .dn-rtx-bitrate{font-size:clamp(12px,3vw,16px)!important;margin-top:4px!important}#uploadSection #dnRtxMeterText{font-size:11px!important}}
-
-
-/* Final refinements: RTXFury neutral drop surface and two wide pill tabs. */
-#uploadSection>.card.upload>.dn-rtx-tabs{width:min(460px,100%)!important;min-height:74px!important;margin-bottom:12px!important;gap:5px!important}
-#uploadSection .dn-rtx-tab{height:72px!important;min-height:72px!important;border-radius:999px!important}
-#uploadSection .dn-rtx-tab span{font-size:clamp(14px,1.2vw,18px)!important;letter-spacing:.005em!important}
-#uploadSection .dn-rtx-tab small{font-size:clamp(8px,.75vw,10px)!important}
-#uploadSection .dn-rtx-tab.is-active{color:#080b02!important}
-#uploadSection .dn-rtx-tab.is-active span,#uploadSection .dn-rtx-tab.is-active small{color:#080b02!important}
-#uploadSection #drop::before,#uploadSection #drop::after{display:none!important;content:none!important;animation:none!important}
-@media(max-width:850px){#uploadSection>.card.upload>.dn-rtx-tabs{width:min(400px,100%)!important;min-height:64px!important}#uploadSection .dn-rtx-tab{height:62px!important;min-height:62px!important}}
-
-/* Remove the inherited glass-sweep overlay from the upload dropzone only. */
-#uploadSection #dnDropTarget::before,#uploadSection #dnDropTarget::after,#uploadSection #drop::before,#uploadSection #drop::after{display:none!important;content:none!important;animation:none!important;background:none!important;box-shadow:none!important}
-
-/* RTXFury exact two-tab switch: framed graphite capsule, bordered pills and cyan edge glint. */
-#uploadSection>.card.upload>.dn-rtx-tabs{display:flex!important;align-items:center!important;justify-content:center!important;width:min(400px,100%)!important;height:96px!important;min-height:96px!important;margin:0 auto 12px!important;padding:5px!important;gap:4px!important;box-sizing:border-box!important;border:1px solid #34363c!important;border-radius:999px!important;background:linear-gradient(145deg,#15161b 0%,#101116 100%)!important;box-shadow:inset 0 1px 2px rgba(255,255,255,.035)!important}
-#uploadSection .dn-rtx-tab{position:relative!important;isolation:isolate!important;flex:1 1 0!important;min-width:0!important;height:86px!important;min-height:86px!important;padding:8px 7px!important;overflow:hidden!important;border:1px solid #373941!important;border-radius:999px!important;background:linear-gradient(145deg,#222329 0%,#15161c 58%,#292a30 100%)!important;color:#a4a5ae!important;box-shadow:inset 0 1px 2px rgba(255,255,255,.075),0 4px 12px rgba(0,0,0,.22)!important;transition:background .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease!important}
-#uploadSection .dn-rtx-tab::before{content:""!important;position:absolute!important;z-index:2!important;top:0!important;left:35%!important;width:30%!important;height:2px!important;border:0!important;border-radius:0 0 8px 8px!important;background:linear-gradient(90deg,transparent,#22e6e8 36%,#a4ffff 65%,transparent)!important;box-shadow:0 0 7px rgba(34,230,232,.42)!important;opacity:.9!important;pointer-events:none!important}
-#uploadSection .dn-rtx-tab span{position:relative!important;z-index:1!important;font-size:clamp(13px,1vw,16px)!important;font-weight:850!important;line-height:1.2!important;letter-spacing:.005em!important;white-space:nowrap!important}
-#uploadSection .dn-rtx-tab small{position:relative!important;z-index:1!important;font-size:clamp(8px,.7vw,10px)!important;line-height:1.2!important;letter-spacing:.1em!important;color:inherit!important;opacity:.72!important}
-#uploadSection .dn-rtx-tab:hover:not(.is-active){border-color:#555861!important;background:linear-gradient(145deg,#292a31 0%,#1b1c23 58%,#303139 100%)!important;color:#d0d1d7!important;box-shadow:inset 0 1px 2px rgba(255,255,255,.1),0 5px 15px rgba(0,0,0,.28)!important}
-#uploadSection .dn-rtx-tab.is-active{border:1px solid #a0eb2e!important;background:linear-gradient(112deg,#91e900 0%,#7bc900 58%,#8bd326 100%)!important;color:#080b02!important;box-shadow:inset 0 1px 1px rgba(255,255,255,.46),0 6px 18px rgba(118,185,0,.2)!important}
-#uploadSection .dn-rtx-tab.is-active span,#uploadSection .dn-rtx-tab.is-active small{color:#080b02!important}
-#uploadSection .dn-rtx-tab.is-active::before{background:linear-gradient(90deg,transparent,#16e9ed 35%,#c4ffff 68%,transparent)!important;box-shadow:0 0 8px rgba(34,230,232,.55)!important}
-#uploadSection .dn-rtx-drop-target{border:1px dashed #3a3b43!important;background:#101116!important;background-image:none!important;box-shadow:inset 0 1px rgba(255,255,255,.025)!important;transition:border-color .2s ease,background-color .2s ease,box-shadow .2s ease!important}
-#uploadSection .dn-rtx-drop-target:hover,#uploadSection .dn-rtx-drop-target:focus-visible,#uploadSection #drop.drag .dn-rtx-drop-target{border:1px dashed #76b900!important;background:#151d0b!important;background-image:none!important;box-shadow:inset 0 0 48px rgba(118,185,0,.085),0 0 20px rgba(118,185,0,.1)!important;outline:none!important}
-@media(max-width:850px){#uploadSection>.card.upload>.dn-rtx-tabs{width:min(400px,100%)!important;height:72px!important;min-height:72px!important;padding:4px!important;margin-bottom:12px!important}#uploadSection .dn-rtx-tab{height:62px!important;min-height:62px!important;padding:6px 4px!important}#uploadSection .dn-rtx-tab span{font-size:clamp(11px,2.8vw,15px)!important}#uploadSection .dn-rtx-tab small{font-size:clamp(7px,1.8vw,9px)!important}}
-
-/* Compact CTA tabs: match the Zernio/TikTok lime action buttons. */
-#uploadSection>.card.upload>.dn-rtx-tabs{width:min(360px,100%)!important;height:58px!important;min-height:58px!important;margin:0 auto 16px!important;padding:3px!important;gap:8px!important;border:1px solid #30332b!important;border-radius:12px!important;background:linear-gradient(145deg,#10120d,#171a12)!important;box-shadow:inset 0 1px rgba(255,255,255,.035)!important}
-#uploadSection .dn-rtx-tab{height:48px!important;min-height:48px!important;padding:5px 10px!important;border:1px solid #76b900!important;border-radius:8px!important;background:linear-gradient(110deg,#83d900 0%,#a4ef28 52%,#76c900 100%)!important;color:#101600!important;box-shadow:0 2px 9px rgba(118,185,0,.16),inset 0 1px rgba(255,255,255,.32)!important;gap:3px!important}
-#uploadSection .dn-rtx-tab::before{top:auto!important;bottom:0!important;left:42%!important;width:16%!important;height:2px!important;border-radius:5px 5px 0 0!important;background:linear-gradient(90deg,transparent,#19e9ef 28%,#c4ffff 68%,transparent)!important;box-shadow:0 0 7px rgba(34,230,232,.62)!important}
-#uploadSection .dn-rtx-tab span{font-size:clamp(11px,.85vw,13px)!important;line-height:1.15!important;font-weight:900!important;letter-spacing:.015em!important;color:#101600!important}
-#uploadSection .dn-rtx-tab small{font-size:clamp(7px,.58vw,9px)!important;line-height:1.1!important;letter-spacing:.08em!important;font-weight:850!important;color:#253700!important;opacity:.88!important}
-#uploadSection .dn-rtx-tab:hover{border-color:#b7ff45!important;background:linear-gradient(110deg,#a0ef16 0%,#bdff4b 52%,#8fe000 100%)!important;box-shadow:0 0 0 1px rgba(118,185,0,.22),0 0 17px rgba(118,185,0,.28),inset 0 1px rgba(255,255,255,.48)!important;transform:translateY(-1px)!important}
-#uploadSection .dn-rtx-tab.is-active{border-color:#c0ff53!important;background:linear-gradient(110deg,#a0ef16 0%,#bdff4b 52%,#8fe000 100%)!important;color:#101600!important;box-shadow:0 0 0 1px rgba(118,185,0,.2),0 0 18px rgba(118,185,0,.24),inset 0 1px rgba(255,255,255,.5)!important}
-#uploadSection .dn-rtx-tab.is-active span,#uploadSection .dn-rtx-tab.is-active small{color:#172300!important}
-#uploadSection .dn-rtx-tab.is-active::before{background:linear-gradient(90deg,transparent,#12eaf0 25%,#d0ffff 68%,transparent)!important;box-shadow:0 0 9px rgba(34,230,232,.7)!important}
-#uploadSection .dn-rtx-tab:focus-visible{outline:2px solid #16e9ed!important;outline-offset:2px!important}
-@media(max-width:850px){#uploadSection>.card.upload>.dn-rtx-tabs{width:min(360px,100%)!important;height:52px!important;min-height:52px!important;padding:3px!important;gap:6px!important;margin-bottom:13px!important}#uploadSection .dn-rtx-tab{height:42px!important;min-height:42px!important;padding:4px 6px!important}#uploadSection .dn-rtx-tab span{font-size:clamp(10px,2.5vw,12px)!important}#uploadSection .dn-rtx-tab small{font-size:clamp(7px,1.6vw,8px)!important}}
-</style>
-
-
-<script id="dn-rtxfury-hover-interaction">(()=>{const wrap=document.querySelector('#uploadSection>.card.upload>.dn-rtx-tabs');if(wrap){const st=wrap.style;st.setProperty('display','flex','important');st.setProperty('align-items','center','important');st.setProperty('justify-content','center','important');st.setProperty('width','min(360px,100%)','important');st.setProperty('height','58px','important');st.setProperty('min-height','58px','important');st.setProperty('margin','0 auto 16px','important');st.setProperty('padding','3px','important');st.setProperty('gap','8px','important');st.setProperty('box-sizing','border-box','important');st.setProperty('border','1px solid #34363c','important');st.setProperty('border-radius','999px','important');st.setProperty('background','linear-gradient(145deg,#15161b 0%,#101116 100%)','important');st.setProperty('box-shadow','inset 0 1px 2px rgba(255,255,255,.035)','important');}document.querySelectorAll('#uploadSection .dn-rtx-tab').forEach(b=>{b.style.setProperty('height','48px','important');b.style.setProperty('min-height','48px','important');b.style.setProperty('border-radius','8px','important');});document.querySelectorAll('#uploadSection .dn-rtx-tab span').forEach(t=>{t.style.setProperty('font-size','13px','important');t.style.setProperty('transform','none','important');});document.querySelectorAll('#uploadSection .dn-rtx-tab small').forEach(t=>t.style.setProperty('font-size','9px','important'));const d=document.getElementById('dnDropTarget');if(d&&!d.dataset.rtxHoverBound){d.dataset.rtxHoverBound='1';const normal=()=>{d.style.setProperty('border','1px dashed #3a3b43','important');d.style.setProperty('background','#101116','important');d.style.setProperty('background-image','none','important');d.style.setProperty('box-shadow','inset 0 1px rgba(255,255,255,.025)','important');};const hover=()=>{d.style.setProperty('border','2px dashed #76b900','important');d.style.setProperty('background','#151d0b','important');d.style.setProperty('background-image','none','important');d.style.setProperty('box-shadow','inset 0 0 48px rgba(118,185,0,.085),0 0 20px rgba(118,185,0,.1)','important');};d.addEventListener('pointerenter',hover);d.addEventListener('pointerleave',normal);d.addEventListener('focus',hover);d.addEventListener('blur',normal);d.addEventListener('dragenter',hover);d.addEventListener('dragleave',normal);if(d.matches(':hover'))hover();}})();</script>
-
-<style id="DN_UNIVERSAL_RESPONSIVE_V1">
-/* Dicky News universal responsive system. Layout adapts to available width, not device names. */
-:root{--dn-gutter:clamp(10px,2.2vw,28px);--dn-card-pad:clamp(12px,2vw,24px);--dn-content-max:1240px}
-html,body{width:100%;max-width:100%;overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-*,*::before,*::after{box-sizing:border-box}
-img,svg,video,canvas,iframe{max-width:100%}
-button,input,select,textarea{max-width:100%;font:inherit}
-.app{width:100%;max-width:100%;min-width:0;overflow-x:clip;padding-left:0;padding-right:0;padding-bottom:env(safe-area-inset-bottom)}
-.app .container,.container{width:min(var(--dn-content-max),calc(100% - 2 * var(--dn-gutter)));max-width:100%;min-width:0;margin-inline:auto}
-.app main,.app section,.app article,.app aside,.app form,.app .card,.app .grid,.app .side{min-width:0;max-width:100%}
-.app .hero{width:100%;min-width:0;padding:clamp(34px,6vw,66px) clamp(0px,1vw,12px) clamp(22px,3.5vw,34px);text-align:center}
-.app .hero h1{max-width:100%;font-size:clamp(30px,5.4vw,68px);line-height:1.02;letter-spacing:-.045em;text-wrap:balance;overflow-wrap:normal}
-.app .hero-main-headline{max-width:100%;font-size:clamp(21px,3.5vw,38px);line-height:1.14;text-wrap:balance;overflow-wrap:normal}
-.app .hero-description{width:min(100%,70ch);margin-inline:auto;font-size:clamp(14px,1.35vw,17px);line-height:1.65;text-wrap:pretty;overflow-wrap:anywhere}
-.app .hero-social{width:fit-content;max-width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere}
-.app .hero-social-row{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:stretch!important;gap:clamp(5px,1vw,9px)!important;width:min(100%,620px)!important;max-width:100%!important;margin:0 auto 16px!important}
-.app .hero-social-row .hero-social{display:flex!important;align-items:center!important;justify-content:center!important;gap:clamp(4px,.7vw,8px)!important;width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important;padding:clamp(7px,1vw,10px) clamp(4px,.8vw,10px)!important;font-size:clamp(10px,.95vw,13px)!important;line-height:1.2!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important}
-.app .hero-social-row .hero-social .social-brand-icon,.app .hero-social-row .hero-social .telegram-brand-mark{width:clamp(17px,1.5vw,21px)!important;height:clamp(17px,1.5vw,21px)!important;flex:0 0 clamp(17px,1.5vw,21px)!important}
-.app .hero-social-row .hero-social .social-link-arrow{display:none!important}
-.app .youtube-social{width:min(100%,640px);display:flex;flex-wrap:wrap;gap:6px;justify-content:center;line-height:1.35}
-.app .youtube-social>*{min-width:0}
-.app .youtube-social .youtube-subs{white-space:nowrap}
-.app .grid{grid-template-columns:minmax(0,1.28fr) minmax(260px,.72fr);align-items:start}
-#uploadSection{width:min(1080px,100%);max-width:100%;min-width:0;margin-inline:auto;grid-template-columns:minmax(0,1fr) minmax(260px,.72fr);gap:clamp(12px,1.6vw,20px)}
-#uploadSection>.card.upload{width:100%;max-width:100%;min-width:0;padding:var(--dn-card-pad);border-radius:clamp(16px,2vw,22px)}
-#uploadSection>.card.upload>.dn-rtx-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important;justify-content:stretch!important;gap:clamp(6px,.9vw,10px)!important;width:min(460px,100%)!important;max-width:100%!important;height:auto!important;min-height:0!important;margin:0 auto clamp(12px,1.5vw,18px)!important;padding:4px!important;overflow:visible!important}
-#uploadSection .dn-rtx-tab{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;width:100%!important;min-width:0!important;max-width:100%!important;height:auto!important;min-height:clamp(52px,5.2vw,72px)!important;padding:8px clamp(5px,1vw,12px)!important;border-radius:clamp(10px,1.5vw,18px)!important;box-sizing:border-box!important;text-align:center!important;white-space:normal!important;overflow:hidden!important}
-#uploadSection .dn-rtx-tab span{display:block!important;width:100%!important;max-width:100%!important;font-size:clamp(10px,1.05vw,15px)!important;line-height:1.15!important;letter-spacing:0!important;text-align:center!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;transform:none!important}
-#uploadSection .dn-rtx-tab small{display:block!important;width:100%!important;max-width:100%!important;font-size:clamp(7.5px,.72vw,10px)!important;line-height:1.2!important;letter-spacing:.045em!important;text-align:center!important;white-space:normal!important;overflow-wrap:normal!important}
-#uploadSection .dn-rtx-drop-target{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;max-width:100%!important;min-width:0!important;min-height:clamp(245px,29vw,360px)!important;height:auto!important;padding:clamp(22px,3.5vw,42px) clamp(12px,2.5vw,28px)!important;gap:clamp(10px,1.5vw,16px)!important;border-radius:clamp(16px,2vw,28px)!important;box-sizing:border-box!important;text-align:center!important}
-#uploadSection .dn-rtx-drop-target #dropTitle{max-width:100%;font-size:clamp(19px,2vw,29px)!important;line-height:1.22!important;text-align:center!important;text-wrap:balance;overflow-wrap:anywhere}
-#uploadSection .dn-rtx-drop-target #dropText{max-width:62ch!important;font-size:clamp(12px,1.1vw,17px)!important;line-height:1.5!important;text-align:center!important;overflow-wrap:anywhere!important}
-#uploadSection .dn-rtx-upload-icon{width:clamp(54px,5vw,72px)!important;height:clamp(54px,5vw,72px)!important;flex:0 0 auto!important}
-#uploadSection .dn-rtx-upload-icon svg{width:58%!important;height:58%!important}
-#uploadSection .dn-rtx-bitrate{max-width:100%!important;font-size:clamp(13px,1.25vw,19px)!important;line-height:1.4!important;text-align:center!important;white-space:normal!important;overflow-wrap:anywhere!important}
-#uploadSection .dn-rtx-meter{display:flex!important;align-items:center!important;gap:clamp(7px,1vw,14px)!important;width:100%!important;min-width:0!important;margin:14px 0 16px!important}
-#uploadSection .dn-rtx-meter-track{flex:1 1 auto!important;min-width:0!important}
-#uploadSection #dnRtxMeterText{flex:0 0 auto!important;max-width:46%!important;font-size:clamp(10px,.9vw,13px)!important;white-space:nowrap!important}
-#uploadSection .upload-destination-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(8px,1vw,12px);width:100%;min-width:0}
-#uploadSection .upload-destination-option{min-width:0;max-width:100%}
-#uploadSection .upload-destination-option a{max-width:100%;overflow-wrap:anywhere}
-#uploadSection .upload-destination-option .upload-mode-note{min-width:0;flex-wrap:wrap;text-align:center}
-#uploadSection .wallet-card,#uploadSection .side .card{width:100%;min-width:0;max-width:100%}
-#claimBox,.claim-box,.claim-row{min-width:0;max-width:100%}
-#claimBox .claim-row{grid-template-columns:minmax(0,1fr)!important}
-#claimBox input,#claimBox button{width:100%;min-width:0}
-.wallet-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,135px),1fr));gap:clamp(7px,1vw,12px);min-width:0}
-.wallet-stat{min-width:0;overflow-wrap:anywhere}
-.subscription-panel{width:100%;max-width:100%;min-width:0}
-.subscription-plans-strip{max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-inline:contain}
-.method-flow-track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.5vw,16px)}
-.method-flow-card,.bitrate-guide-item,.payment-option,.vip-tier{min-width:0;max-width:100%;overflow-wrap:anywhere}
-.bitrate-guide-table{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.dn-tg-popup{width:min(500px,calc(100vw - 2 * var(--dn-gutter)));max-width:100%;max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow:auto;overscroll-behavior:contain}
-.golden-scroll-left,.golden-scroll-rail{max-width:calc(100vw - 12px)}
-@media(min-width:1440px){:root{--dn-content-max:1320px}#uploadSection{width:min(1160px,100%)}.app .hero{padding-top:76px}}
-@media(max-width:1100px){
-  #uploadSection{grid-template-columns:minmax(0,1fr)!important;width:100%!important;margin:18px auto 34px!important}
-  #uploadSection>.side,#uploadSection>.wallet-card{width:100%;max-width:100%}
-  .method-flow-track{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:800px){
-  :root{--dn-gutter:clamp(12px,3vw,22px);--dn-card-pad:clamp(13px,2.5vw,19px)}
-  .app .container,.container{width:calc(100% - 2 * var(--dn-gutter))!important}
-  .app .hero{padding-top:clamp(30px,7vw,48px)}
-  .app .grid,.app .analytics{grid-template-columns:minmax(0,1fr)!important;gap:14px}
-  #uploadSection{grid-template-columns:minmax(0,1fr)!important;gap:14px!important}
-  #uploadSection>.card.upload{padding:var(--dn-card-pad)!important}
-  .method-flow-track{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .footer{flex-wrap:wrap}
-  .golden-scroll-left,.golden-scroll-rail{display:none!important}
-}
-@media(max-width:600px){
-  :root{--dn-gutter:clamp(10px,3.2vw,16px);--dn-card-pad:clamp(12px,3vw,16px)}
-  html,body{overflow-x:clip!important}
-  .app{padding:0 0 calc(18px + env(safe-area-inset-bottom))!important}
-  .app .container,.container{width:calc(100% - 2 * var(--dn-gutter))!important;padding-inline:0!important}
-  .app .hero{padding:clamp(26px,7vw,40px) 0 22px!important;margin:0 auto 12px!important}
-  .app .hero .eyebrow{max-width:100%;font-size:clamp(9px,2.6vw,11px);padding:7px 10px;white-space:normal;text-align:center}
-  .app .hero h1{font-size:clamp(29px,8.6vw,43px)!important;line-height:1.04!important;letter-spacing:-.045em!important;margin:16px auto 12px!important}
-  .app .hero-main-headline{font-size:clamp(20px,5.8vw,29px)!important;line-height:1.14!important;margin-inline:auto!important}
-  .app .hero-description{font-size:clamp(13px,3.6vw,15px)!important;line-height:1.6!important;padding-inline:2px}
-  .app .hero-social{padding:8px 12px!important;font-size:clamp(11px,3vw,13px)!important;gap:7px!important}
-  .app .hero-social-row{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;width:100%!important;margin:0 auto 14px!important}
-  .app .hero-social-row .hero-social{min-height:40px!important;padding:6px 3px!important;gap:4px!important;font-size:clamp(9px,2.9vw,11px)!important;border-radius:11px!important}
-  .app .hero-social-row .hero-social .social-brand-icon,.app .hero-social-row .hero-social .telegram-brand-mark{width:18px!important;height:18px!important;flex-basis:18px!important}
-  .app .youtube-social{width:100%!important;max-width:100%!important;flex-wrap:wrap!important;white-space:normal!important;gap:5px!important;padding:10px 8px!important;font-size:clamp(10px,3.2vw,13px)!important}
-  .app .youtube-social .social-divider{display:none!important}
-  .app .youtube-social .youtube-subs{font-size:clamp(10px,3vw,12px)!important}
-  .app .grid{margin:14px 0 26px!important}
-  #uploadSection{width:100%!important;margin:14px auto 26px!important;gap:12px!important}
-  #uploadSection>.card.upload{padding:var(--dn-card-pad)!important;border-radius:18px!important}
-  #uploadSection>.card.upload>.dn-rtx-tabs{width:100%!important;max-width:460px!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;margin-bottom:13px!important;padding:3px!important}
-  #uploadSection .dn-rtx-tab{min-height:58px!important;height:auto!important;padding:7px 4px!important;border-radius:12px!important;gap:4px!important}
-  #uploadSection .dn-rtx-tab span{font-size:clamp(9.5px,2.75vw,12px)!important;line-height:1.15!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important}
-  #uploadSection .dn-rtx-tab small{font-size:clamp(7px,1.9vw,9px)!important;line-height:1.15!important;letter-spacing:.025em!important}
-  #uploadSection .dn-rtx-drop-target{min-height:clamp(225px,66vw,310px)!important;height:auto!important;padding:clamp(20px,6vw,30px) 10px!important;gap:clamp(10px,3vw,14px)!important;border-radius:18px!important}
-  #uploadSection .dn-rtx-upload-icon{width:clamp(50px,15vw,62px)!important;height:clamp(50px,15vw,62px)!important}
-  #uploadSection .dn-rtx-drop-target #dropTitle{font-size:clamp(18px,5.2vw,23px)!important}
-  #uploadSection .dn-rtx-drop-target #dropText{font-size:clamp(11px,3.2vw,13px)!important;line-height:1.45!important;padding-inline:4px}
-  #uploadSection .dn-rtx-bitrate{font-size:clamp(12px,3.6vw,15px)!important;line-height:1.4!important}
-  #uploadSection .dn-rtx-meter{gap:7px!important;margin:11px 0 8px!important}
-  #uploadSection #dnRtxMeterText{max-width:48%!important;font-size:clamp(9px,2.7vw,11px)!important}
-  #uploadSection .upload-destination-options{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
-  #uploadSection .upload-destination-option{padding:clamp(8px,2.5vw,12px)!important}
-  #uploadSection .upload-destination-option .upload-mode-note{font-size:clamp(9px,2.6vw,11px)!important;gap:4px!important}
-  #claimBox{padding-top:12px!important;margin-top:12px!important}
-  #claimBox .claim-row{grid-template-columns:minmax(0,1fr)!important;gap:9px!important}
-  #claimBox .claim-row input{min-height:50px!important;font-size:16px!important}
-  #claimBox .claim-row button{min-height:48px!important}
-  .wallet-card{padding:14px!important}
-  .wallet-card .wallet-title{display:flex!important;flex-wrap:wrap!important;align-items:flex-start!important;gap:8px!important}
-  .wallet-card .wallet-title h2{font-size:clamp(16px,4.5vw,19px)!important}
-  .wallet-card #walletAuthBadge{max-width:100%;white-space:normal;overflow-wrap:anywhere}
-  .wallet-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
-  .wallet-stat{padding:10px!important}
-  .wallet-stat b{font-size:clamp(15px,4vw,20px)!important;overflow-wrap:anywhere}
-  .subscription-panel{padding:clamp(13px,3vw,18px)!important;margin:16px 0!important}
-  .method-flow-track,.steps{grid-template-columns:minmax(0,1fr)!important;gap:11px!important}
-  .method-flow-card,.step{padding:15px!important}
-  .bitrate-guide-table{grid-template-columns:minmax(0,1fr)!important}
-  .footer{flex-direction:column;align-items:flex-start}
-  .dn-tg-popup{width:calc(100vw - 2 * var(--dn-gutter))!important;padding:clamp(16px,4vw,22px)!important}
-  .dn-tg-free-actions{grid-template-columns:minmax(0,1fr)!important}
-  .golden-scroll-left,.golden-scroll-rail{display:none!important}
-}
-@media(max-width:420px){
-  :root{--dn-gutter:10px;--dn-card-pad:12px}
-  .app .hero h1{font-size:clamp(27px,8.2vw,34px)!important}
-  .app .hero-main-headline{font-size:clamp(19px,5.7vw,24px)!important}
-  .app .hero-social-row{gap:5px!important}
-  .app .hero-social-row .hero-social{font-size:clamp(8.5px,2.7vw,10px)!important;padding-inline:2px!important}
-  .app .hero-social-row .social-brand-icon,.app .hero-social-row .telegram-brand-mark{width:16px!important;height:16px!important;flex-basis:16px!important}
-  #uploadSection .dn-rtx-tab{min-height:54px!important;padding:6px 3px!important}
-  #uploadSection .dn-rtx-tab span{font-size:clamp(9px,2.55vw,10.5px)!important}
-  #uploadSection .dn-rtx-tab small{font-size:7px!important;letter-spacing:0!important}
-  #uploadSection .upload-destination-options{grid-template-columns:minmax(0,1fr)!important}
-  .wallet-grid{grid-template-columns:minmax(0,1fr)!important}
-}
-@media(max-width:340px){
-  :root{--dn-gutter:8px;--dn-card-pad:10px}
-  .app .hero .eyebrow{font-size:9px;padding:6px 8px}
-  .app .hero-social-row .hero-social{gap:3px!important;font-size:8px!important}
-  #uploadSection>.card.upload{padding:10px!important}
-  #uploadSection>.card.upload>.dn-rtx-tabs{gap:5px!important}
-  #uploadSection .dn-rtx-tab span{font-size:8.5px!important}
-  #uploadSection .dn-rtx-tab small{font-size:6.5px!important}
-  #uploadSection .dn-rtx-drop-target{min-height:210px!important}
-}
-@media(orientation:landscape) and (max-height:500px) and (max-width:950px){
-  .app .hero{padding-top:22px!important;padding-bottom:14px!important}
-  #uploadSection .dn-rtx-drop-target{min-height:210px!important}
-  .dn-tg-popup{max-height:calc(100dvh - 16px)!important}
-}
-@media(hover:none),(pointer:coarse){.card:hover,.step:hover,.btn:hover,.hero-social:hover{transform:none!important}}
-@media(prefers-reduced-motion:reduce){.app .hero-social,.app .hero-social::after,.app .card,.app .step{animation:none!important;transition:none!important}}
-</style>
-<style id="DN_PROPORTIONAL_SCALE_V2">
-/* One proportional design system for every viewport and aspect ratio. */
-:root{
- --dn-space-1:clamp(4px,.45vw,7px);--dn-space-2:clamp(7px,.7vw,11px);--dn-space-3:clamp(10px,1vw,16px);--dn-space-4:clamp(13px,1.35vw,21px);--dn-space-5:clamp(17px,1.8vw,28px);--dn-space-6:clamp(22px,2.4vw,36px);
- --dn-type-xs:clamp(10px,.72vw,12px);--dn-type-sm:clamp(12px,.88vw,14px);--dn-type-md:clamp(14px,1.02vw,16px);--dn-type-lg:clamp(17px,1.45vw,22px);--dn-type-xl:clamp(21px,2vw,30px);--dn-type-display:clamp(30px,4.8vw,64px);
- --dn-icon-xs:clamp(14px,1.1vw,18px);--dn-icon-sm:clamp(18px,1.45vw,23px);--dn-icon-md:clamp(24px,2vw,32px);--dn-icon-lg:clamp(42px,4.2vw,64px);
- --dn-radius-sm:clamp(9px,.9vw,13px);--dn-radius-md:clamp(13px,1.35vw,20px);--dn-radius-lg:clamp(17px,1.9vw,26px);
- --dn-gutter:clamp(10px,2.25vw,32px);--dn-panel-pad:clamp(12px,1.9vw,26px)
-}
-html{font-size:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{font-size:var(--dn-type-md)!important;line-height:1.55!important}
-.app,.app *{min-width:0}
-.app :where(p,li,label,.mini,.muted,.section-intro,.claim-help,.wallet-stat em,.wallet-stat span,.wallet-progress-head,.machine-notes){font-size:clamp(12px,.95vw,15px);line-height:1.55;overflow-wrap:anywhere}
-.app :where(h1,h2,h3,h4){line-height:1.18;letter-spacing:-.025em;text-wrap:balance;max-width:100%}
-.app :where(h2){font-size:var(--dn-type-xl)}
-.app :where(h3){font-size:var(--dn-type-lg)}
-.app :where(button,.btn,[role="button"],input[type="button"],input[type="submit"]){font-size:clamp(12px,.95vw,15px);line-height:1.25;min-height:clamp(40px,3.6vw,50px);padding:clamp(9px,.9vw,13px) clamp(12px,1.25vw,19px);border-radius:var(--dn-radius-sm);white-space:normal;overflow-wrap:anywhere}
-.app :where(input:not([type="checkbox"]):not([type="radio"]),select,textarea){font-size:16px!important;line-height:1.35;min-height:clamp(44px,3.8vw,52px);padding:clamp(10px,.9vw,14px)!important;border-radius:var(--dn-radius-sm);max-width:100%}
-.app :where(svg,.ui-icon,.social-brand-icon){max-width:100%;flex-shrink:0}
-.app :where(.ui-icon){width:var(--dn-icon-sm);height:var(--dn-icon-sm)}
-.app :where(.social-brand-icon){width:var(--dn-icon-sm);height:var(--dn-icon-sm);flex-basis:var(--dn-icon-sm)}
-.app :where(.container){width:min(100% - 2 * var(--dn-gutter),1320px)!important}
-.app :where(.nav){min-height:clamp(58px,5.2vw,76px);height:auto;gap:var(--dn-space-3);padding-block:var(--dn-space-2);flex-wrap:wrap}
-.app :where(.brand){gap:clamp(7px,.85vw,13px);font-size:clamp(13px,1.15vw,17px);line-height:1.2}
-.app :where(.logo){width:clamp(32px,3.2vw,46px)!important;height:clamp(32px,3.2vw,46px)!important;flex:0 0 clamp(32px,3.2vw,46px);border-radius:clamp(9px,1vw,14px)}
-.app :where(.brand small){font-size:clamp(9px,.72vw,11px);line-height:1.25}
-.app :where(.nav-actions){gap:var(--dn-space-2);flex-wrap:wrap;min-width:0}
-.app :where(.pill,.badge){font-size:var(--dn-type-xs);line-height:1.25;padding:clamp(6px,.65vw,9px) clamp(8px,.9vw,13px);white-space:normal;overflow-wrap:anywhere}
-.app :where(.hero){padding-inline:clamp(0px,1vw,14px)}
-.app :where(.hero h1){font-size:var(--dn-type-display)!important;line-height:1.04!important;letter-spacing:-.045em!important;max-width:100%!important;text-wrap:balance;overflow-wrap:normal}
-.app :where(.hero-main-headline){font-size:clamp(20px,3.2vw,40px)!important;line-height:1.15!important;max-width:100%!important;text-wrap:balance}
-.app :where(.hero-description){font-size:clamp(13px,1.15vw,16px)!important;line-height:1.6!important;max-width:min(100%,72ch)!important}
-.app :where(.eyebrow){font-size:clamp(9px,.75vw,11px)!important;line-height:1.25;padding:clamp(6px,.65vw,9px) clamp(9px,.9vw,13px);letter-spacing:.08em;max-width:100%;white-space:normal}
-.app :where(.hero-social){font-size:clamp(10px,.9vw,13px)!important;line-height:1.2;padding:clamp(7px,.75vw,10px) clamp(9px,1.1vw,16px);gap:clamp(5px,.6vw,9px)}
-.app :where(.hero-social-row){width:min(100%,640px)!important;gap:clamp(5px,.8vw,10px)!important}
-.app :where(.hero-social-row .hero-social){min-height:clamp(38px,3.7vw,48px)!important;font-size:clamp(9px,.82vw,12px)!important;padding:clamp(5px,.65vw,9px)!important;gap:clamp(3px,.55vw,7px)!important}
-.app :where(.hero-social-row .social-brand-icon,.hero-social-row .telegram-brand-mark){width:clamp(15px,1.45vw,21px)!important;height:clamp(15px,1.45vw,21px)!important;flex-basis:clamp(15px,1.45vw,21px)!important}
-.app :where(.card,.step,.method-flow-card,.bitrate-guide-item,.wallet-stat,.metric,.signal){padding:var(--dn-panel-pad);border-radius:var(--dn-radius-md)}
-.app :where(.card h2,.section h2){font-size:clamp(18px,1.65vw,25px)!important;line-height:1.2}
-.app :where(.card-head){gap:var(--dn-space-3);flex-wrap:wrap}
-.app :where(.grid){gap:clamp(10px,1.4vw,20px)}
-.app :where(.mode-buttons){gap:var(--dn-space-2)}
-.app :where(.mode-btn){min-height:clamp(50px,5.1vw,68px);padding:clamp(8px,.95vw,14px);font-size:clamp(11px,.95vw,14px);line-height:1.2;border-radius:var(--dn-radius-sm)}
-.app :where(.mode-btn small){font-size:clamp(9px,.72vw,11px);line-height:1.2;letter-spacing:.035em}
-#uploadSection>.card.upload{padding:clamp(12px,1.8vw,24px)!important;border-radius:var(--dn-radius-lg)!important}
-#uploadSection>.card.upload>.dn-rtx-tabs{width:min(100%,500px)!important;gap:clamp(6px,.9vw,12px)!important;padding:clamp(2px,.35vw,5px)!important}
-#uploadSection .dn-rtx-tab{min-height:clamp(52px,5.5vw,76px)!important;height:auto!important;padding:clamp(7px,.9vw,13px) clamp(5px,.8vw,12px)!important;gap:clamp(3px,.45vw,6px)!important;border-radius:clamp(10px,1.2vw,18px)!important}
-#uploadSection .dn-rtx-tab span{font-size:clamp(10px,.95vw,14px)!important;line-height:1.16!important;letter-spacing:0!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;text-wrap:balance}
-#uploadSection .dn-rtx-tab small{font-size:clamp(8px,.68vw,10px)!important;line-height:1.2!important;letter-spacing:.025em!important;white-space:normal!important}
-#uploadSection .dn-rtx-drop-target{min-height:clamp(220px,27vw,360px)!important;padding:clamp(18px,2.8vw,38px) clamp(10px,2vw,26px)!important;gap:clamp(9px,1.3vw,17px)!important;border-radius:var(--dn-radius-lg)!important}
-#uploadSection .dn-rtx-upload-icon{width:clamp(48px,5vw,72px)!important;height:clamp(48px,5vw,72px)!important;flex-basis:clamp(48px,5vw,72px)!important;border-radius:clamp(13px,1.4vw,20px)!important}
-#uploadSection .dn-rtx-upload-icon svg{width:58%!important;height:58%!important}
-#uploadSection .dn-rtx-drop-target #dropTitle{font-size:clamp(18px,2vw,29px)!important;line-height:1.2!important;text-wrap:balance}
-#uploadSection .dn-rtx-drop-target #dropText{font-size:clamp(12px,1vw,15px)!important;line-height:1.5!important}
-#uploadSection .dn-rtx-bitrate{font-size:clamp(12px,1.05vw,16px)!important;line-height:1.4!important}
-#uploadSection .dn-rtx-meter{gap:clamp(6px,.8vw,12px)!important}
-#uploadSection #dnRtxMeterText{font-size:clamp(9px,.78vw,12px)!important}
-.app :where(.upload-icon){width:clamp(44px,4.5vw,64px);height:clamp(44px,4.5vw,64px);font-size:clamp(20px,2vw,28px);border-radius:var(--dn-radius-md)}
-.app :where(.wallet-grid){gap:clamp(6px,.8vw,12px)}
-.app :where(.wallet-stat b){font-size:clamp(15px,1.3vw,20px);line-height:1.25;overflow-wrap:anywhere}
-.app :where(.wallet-stat span,.wallet-stat em){font-size:clamp(10px,.78vw,12px);line-height:1.4}
-.app :where(.wallet-title h2){font-size:clamp(17px,1.5vw,22px)!important}
-.app :where(.claim-row){gap:var(--dn-space-2)}
-.app :where(.subscription-panel){padding:clamp(13px,1.8vw,24px)!important;border-radius:var(--dn-radius-lg)!important}
-.app :where(.method-flow-track){gap:clamp(8px,1.2vw,18px)}
-.app :where(.method-flow-card){gap:clamp(7px,.9vw,13px);padding:clamp(12px,1.6vw,22px)}
-.app :where(.method-flow-num){width:clamp(27px,2.5vw,36px);height:clamp(27px,2.5vw,36px);font-size:clamp(11px,.85vw,13px)}
-.app :where(.method-flow-icon .ui-icon){width:clamp(22px,2vw,30px);height:clamp(22px,2vw,30px)}
-.app :where(.method-flow-card h3){font-size:clamp(15px,1.2vw,19px);line-height:1.25}
-.app :where(.method-flow-card p){font-size:clamp(12px,.9vw,14px);line-height:1.5}
-.app :where(.method-flow-action){font-size:clamp(11px,.85vw,13px);line-height:1.3;padding:clamp(8px,.8vw,12px)}
-.app :where(.bitrate-guide-table){gap:clamp(7px,.9vw,13px)}
-.app :where(.bitrate-guide-item){padding:clamp(10px,1.2vw,17px)}
-.app :where(.bitrate-guide-item strong,.bitrate-guide-item span){font-size:clamp(12px,.95vw,15px);line-height:1.35}
-.app :where(.section){padding-block:clamp(18px,2.5vw,38px)}
-.app :where(.section>h2){font-size:clamp(20px,2vw,29px)!important}
-.app :where(.metric-grid){gap:clamp(6px,.8vw,12px)}
-.app :where(.metric){padding:clamp(9px,1vw,15px);min-height:0}
-.app :where(.metric span,.signal-label){font-size:clamp(10px,.75vw,12px)}
-.app :where(.metric b){font-size:clamp(14px,1.15vw,18px)}
-.app :where(.footer){gap:var(--dn-space-3);font-size:clamp(10px,.8vw,12px);padding-block:clamp(18px,2vw,30px)}
-.app :where(.dn-tg-popup){width:min(500px,calc(100vw - 2 * var(--dn-gutter)))!important;padding:clamp(14px,2.1vw,26px)!important;border-radius:var(--dn-radius-lg)!important}
-@media(max-width:800px){
- :root{--dn-gutter:clamp(12px,2.7vw,22px);--dn-panel-pad:clamp(12px,2.2vw,18px)}
- .app :where(.nav){align-items:center;flex-wrap:wrap}
- .app :where(.grid,#uploadSection,.analytics){grid-template-columns:minmax(0,1fr)!important}
- .app :where(.method-flow-track,.steps){grid-template-columns:repeat(2,minmax(0,1fr))!important}
- .app :where(.hero h1){font-size:clamp(30px,6vw,48px)!important}
-}
-@media(max-width:600px){
- :root{--dn-gutter:clamp(10px,3vw,16px);--dn-panel-pad:clamp(11px,3vw,15px)}
- .app :where(.hero h1){font-size:clamp(28px,8vw,40px)!important}
- .app :where(.hero-main-headline){font-size:clamp(19px,5.5vw,27px)!important}
- .app :where(.hero-social-row){grid-template-columns:repeat(3,minmax(0,1fr))!important}
- .app :where(.method-flow-track,.steps){grid-template-columns:minmax(0,1fr)!important}
- .app :where(.wallet-grid){grid-template-columns:repeat(2,minmax(0,1fr))!important}
- .app :where(.bitrate-guide-table){grid-template-columns:minmax(0,1fr)!important}
- #uploadSection .dn-rtx-tab{min-height:clamp(52px,13vw,62px)!important;padding:7px 4px!important}
- #uploadSection .dn-rtx-tab span{font-size:clamp(9.5px,2.7vw,12px)!important}
- #uploadSection .dn-rtx-tab small{font-size:clamp(7.5px,1.9vw,9px)!important}
- #uploadSection .dn-rtx-drop-target{min-height:clamp(220px,65vw,290px)!important}
-}
-@media(max-width:380px){
- .app :where(.wallet-grid){grid-template-columns:minmax(0,1fr)!important}
- .app :where(.hero-social-row){gap:4px!important}
- .app :where(.hero-social-row .hero-social){font-size:clamp(8.5px,2.6vw,10px)!important;padding-inline:2px!important}
- #uploadSection .dn-rtx-tabs{gap:5px!important}
- #uploadSection .dn-rtx-tab{padding-inline:3px!important}
- #uploadSection .dn-rtx-tab span{font-size:clamp(9px,2.45vw,10px)!important}
-}
-@media(orientation:landscape) and (max-height:500px){
- .app :where(.hero){padding-block:18px!important}
- #uploadSection .dn-rtx-drop-target{min-height:190px!important}
- .app :where(.dn-tg-popup){max-height:calc(100dvh - 16px)!important}
-}
-</style>
 </body>
 </html>
