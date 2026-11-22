@@ -6248,6 +6248,28 @@ body .dn-tg-continue[hidden]{display:none!important}
 @media(max-width:700px){#uploadSection .dn-rtx-meter{gap:8px!important;margin:12px 0 14px!important}#uploadSection #dnRtxMeterText{font-size:10px!important}}
 
 html body .app .grid>.card.upload > #drop{display:contents!important}
+
+/* RTXFury reference pass: match the reference page proportions without changing upload behavior. */
+#uploadSection{width:min(1080px,calc(100vw - 48px))!important;max-width:1080px!important;margin:24px auto 52px!important;grid-template-columns:minmax(0,1fr)!important;gap:22px!important;align-items:start!important}
+#uploadSection>.card.upload{width:100%!important;min-width:0!important;padding:26px!important;border-radius:20px!important}
+#uploadSection>.card.upload>.dn-rtx-tabs{width:min(320px,100%)!important;min-height:78px!important;margin:0 auto 10px!important;padding:0!important;gap:4px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+#uploadSection .dn-rtx-tab{position:relative!important;overflow:hidden!important;height:78px!important;min-height:78px!important;padding:8px 7px!important;border:1px solid #383a40!important;border-radius:999px!important;background:linear-gradient(145deg,#24252b 0%,#15161c 58%,#303137 100%)!important;color:#a5a6af!important;box-shadow:inset 0 1px 2px rgba(255,255,255,.1),0 5px 16px rgba(0,0,0,.25)!important}
+#uploadSection .dn-rtx-tab::before{content:""!important;position:absolute!important;top:0!important;left:36%!important;width:28%!important;height:2px!important;border:0!important;border-radius:0 0 8px 8px!important;background:linear-gradient(90deg,transparent,#22e6e8 38%,#7cfaff 70%,transparent)!important;box-shadow:0 0 8px rgba(34,230,232,.45)!important}
+#uploadSection .dn-rtx-tab span{font-size:clamp(13px,1vw,16px)!important;font-weight:850!important;letter-spacing:.005em!important}
+#uploadSection #dnModePaid span{display:block!important;transform:scaleX(.82)!important;white-space:nowrap!important}
+#uploadSection .dn-rtx-tab small{font-size:clamp(8px,.7vw,11px)!important;letter-spacing:.1em!important;color:inherit!important;opacity:.72!important}
+#uploadSection .dn-rtx-tab.is-active{background:linear-gradient(112deg,#91e900 0%,#7ac900 58%,#8bd326 100%)!important;color:#090d02!important;border-color:#a0eb2e!important;box-shadow:inset 0 1px 1px rgba(255,255,255,.48),0 7px 22px rgba(118,185,0,.2)!important}
+#uploadSection .dn-rtx-tab.is-active::before{background:linear-gradient(90deg,transparent,#13e9ed 35%,#b5ffff 70%,transparent)!important;box-shadow:0 0 8px rgba(34,230,232,.55)!important}
+#uploadSection .dn-rtx-drop-target{min-height:290px!important;height:290px!important;padding:28px 24px!important;gap:14px!important;border-width:2px!important;border-radius:28px!important;background:linear-gradient(108deg,#242c18 0%,#2b3023 46%,#414146 100%)!important;box-shadow:inset 0 0 55px rgba(0,0,0,.13)!important}
+#uploadSection .dn-rtx-upload-icon{width:68px!important;height:68px!important;flex:0 0 68px!important;border-radius:20px!important;background:rgba(118,185,0,.1)!important}
+#uploadSection .dn-rtx-upload-icon svg{width:38px!important;height:38px!important}
+#uploadSection .dn-rtx-drop-target #dropTitle{font-size:clamp(21px,1.85vw,29px)!important;font-weight:800!important;letter-spacing:-.025em!important}
+#uploadSection .dn-rtx-drop-target #dropText{font-size:clamp(13px,1.05vw,17px)!important;color:#b7b9b4!important}
+#uploadSection .dn-rtx-bitrate{font-size:clamp(15px,1.2vw,20px)!important;font-weight:800!important;margin-top:8px!important}
+#uploadSection .dn-rtx-meter{margin:16px 0 22px!important;gap:16px!important}
+#uploadSection .dn-rtx-meter-track{height:9px!important}
+#uploadSection #dnRtxMeterText{font-size:14px!important}
+@media(max-width:850px){#uploadSection{width:calc(100% - 24px)!important;margin:14px auto 26px!important;grid-template-columns:minmax(0,1fr)!important;gap:14px!important}#uploadSection>.card.upload{padding:16px!important}#uploadSection>.card.upload>.dn-rtx-tabs{width:min(320px,100%)!important;min-height:68px!important;margin-bottom:12px!important}#uploadSection .dn-rtx-tab{height:68px!important;min-height:68px!important;padding:7px 5px!important}#uploadSection .dn-rtx-tab span{font-size:clamp(12px,3vw,17px)!important}#uploadSection .dn-rtx-tab small{font-size:clamp(8px,2vw,10px)!important}#uploadSection .dn-rtx-drop-target{height:270px!important;min-height:270px!important;padding:20px 12px!important;gap:11px!important;border-radius:20px!important}#uploadSection .dn-rtx-upload-icon{width:58px!important;height:58px!important;flex-basis:58px!important}#uploadSection .dn-rtx-bitrate{font-size:clamp(12px,3vw,16px)!important;margin-top:4px!important}#uploadSection #dnRtxMeterText{font-size:11px!important}}
 </style>
 </body>
 </html>
