@@ -6317,51 +6317,163 @@ html body .app .grid>.card.upload > #drop{display:contents!important}
 
 <script id="dn-rtxfury-hover-interaction">(()=>{const wrap=document.querySelector('#uploadSection>.card.upload>.dn-rtx-tabs');if(wrap){const st=wrap.style;st.setProperty('display','flex','important');st.setProperty('align-items','center','important');st.setProperty('justify-content','center','important');st.setProperty('width','min(360px,100%)','important');st.setProperty('height','58px','important');st.setProperty('min-height','58px','important');st.setProperty('margin','0 auto 16px','important');st.setProperty('padding','3px','important');st.setProperty('gap','8px','important');st.setProperty('box-sizing','border-box','important');st.setProperty('border','1px solid #34363c','important');st.setProperty('border-radius','999px','important');st.setProperty('background','linear-gradient(145deg,#15161b 0%,#101116 100%)','important');st.setProperty('box-shadow','inset 0 1px 2px rgba(255,255,255,.035)','important');}document.querySelectorAll('#uploadSection .dn-rtx-tab').forEach(b=>{b.style.setProperty('height','48px','important');b.style.setProperty('min-height','48px','important');b.style.setProperty('border-radius','8px','important');});document.querySelectorAll('#uploadSection .dn-rtx-tab span').forEach(t=>{t.style.setProperty('font-size','13px','important');t.style.setProperty('transform','none','important');});document.querySelectorAll('#uploadSection .dn-rtx-tab small').forEach(t=>t.style.setProperty('font-size','9px','important'));const d=document.getElementById('dnDropTarget');if(d&&!d.dataset.rtxHoverBound){d.dataset.rtxHoverBound='1';const normal=()=>{d.style.setProperty('border','1px dashed #3a3b43','important');d.style.setProperty('background','#101116','important');d.style.setProperty('background-image','none','important');d.style.setProperty('box-shadow','inset 0 1px rgba(255,255,255,.025)','important');};const hover=()=>{d.style.setProperty('border','2px dashed #76b900','important');d.style.setProperty('background','#151d0b','important');d.style.setProperty('background-image','none','important');d.style.setProperty('box-shadow','inset 0 0 48px rgba(118,185,0,.085),0 0 20px rgba(118,185,0,.1)','important');};d.addEventListener('pointerenter',hover);d.addEventListener('pointerleave',normal);d.addEventListener('focus',hover);d.addEventListener('blur',normal);d.addEventListener('dragenter',hover);d.addEventListener('dragleave',normal);if(d.matches(':hover'))hover();}})();</script>
 
-<style id="DN_IPHONE_LAYOUT_REPAIR_V1">
-/* iPhone layout repair: widen the content column, prevent account header collisions,
-   keep the two upload modes readable, and remove floating navigation from content. */
-@media(max-width:600px){
-  html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
-  body{-webkit-text-size-adjust:100%!important}
-  .app{width:100%!important;max-width:100%!important;padding:16px 10px calc(34px + env(safe-area-inset-bottom))!important;box-sizing:border-box!important}
-  .app .container,.container{width:100%!important;max-width:100%!important;margin-left:auto!important;margin-right:auto!important;min-width:0!important}
-  .grid{width:100%!important;max-width:100%!important;margin:14px 0 26px!important;gap:12px!important;grid-template-columns:minmax(0,1fr)!important}
-  .grid>.card,.grid>.side,.side,.wallet-card{width:100%!important;max-width:100%!important;min-width:0!important}
-  .wallet-card{padding:15px 13px!important}
-  .wallet-card .wallet-title{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;gap:9px!important;width:100%!important;min-width:0!important;margin:0 0 12px!important}
-  .wallet-card .wallet-title h2{display:block!important;width:100%!important;margin:0!important;font-size:17px!important;line-height:1.25!important}
-  .wallet-card #walletAuthBadge{display:inline-flex!important;align-self:flex-start!important;max-width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important;text-align:left!important;line-height:1.35!important;padding:7px 11px!important;font-size:11px!important}
-  #claimBox{width:100%!important;max-width:100%!important;min-width:0!important;padding-top:13px!important;margin-top:12px!important}
-  #claimBox .claim-row{display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%!important;gap:9px!important}
-  #claimBox .claim-row input{width:100%!important;min-width:0!important;min-height:54px!important;box-sizing:border-box!important;padding:12px 14px!important;font-size:16px!important;line-height:1.35!important}
-  #claimBox .claim-row #claimKey{width:100%!important;min-height:54px!important;height:auto!important;padding:13px 12px!important;font-size:16px!important}
-  #claimBox .claim-help{font-size:13px!important;line-height:1.5!important;overflow-wrap:anywhere!important}
-  #uploadSection{width:100%!important;max-width:100%!important;min-width:0!important;margin:14px 0 26px!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
-  #uploadSection>.card.upload{width:100%!important;max-width:100%!important;min-width:0!important;padding:14px 12px!important;border-radius:18px!important;box-sizing:border-box!important}
-  #uploadSection>.card.upload>.dn-rtx-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important;justify-content:stretch!important;width:100%!important;max-width:100%!important;height:auto!important;min-height:0!important;margin:0 auto 14px!important;padding:0!important;gap:8px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important}
-  #uploadSection .dn-rtx-tab{display:flex!important;flex:initial!important;width:100%!important;min-width:0!important;max-width:100%!important;height:58px!important;min-height:58px!important;padding:7px 4px!important;gap:3px!important;border:1px solid #76b900!important;border-radius:11px!important;box-sizing:border-box!important;white-space:normal!important;text-align:center!important;overflow:hidden!important}
-  #uploadSection .dn-rtx-tab span{display:block!important;max-width:100%!important;font-size:clamp(10px,2.7vw,12px)!important;line-height:1.15!important;letter-spacing:0!important;white-space:normal!important;overflow-wrap:anywhere!important;text-align:center!important;transform:none!important}
-  #uploadSection .dn-rtx-tab small{display:block!important;font-size:clamp(7px,1.9vw,9px)!important;line-height:1.15!important;letter-spacing:.045em!important;white-space:normal!important;text-align:center!important}
-  #uploadSection .dn-rtx-tab::before{display:none!important}
-  #uploadSection .dn-rtx-drop-target{width:100%!important;min-width:0!important;min-height:245px!important;height:auto!important;padding:24px 12px!important;gap:12px!important;border-radius:18px!important;box-sizing:border-box!important}
-  #uploadSection .dn-rtx-upload-icon{width:56px!important;height:56px!important;flex-basis:56px!important;border-radius:16px!important}
-  #uploadSection .dn-rtx-upload-icon svg{width:31px!important;height:31px!important}
-  #uploadSection .dn-rtx-drop-target #dropTitle{font-size:clamp(18px,4.8vw,21px)!important;line-height:1.25!important;text-align:center!important;overflow-wrap:anywhere!important}
-  #uploadSection .dn-rtx-drop-target #dropText{font-size:12px!important;line-height:1.5!important;text-align:center!important;overflow-wrap:anywhere!important}
-  #uploadSection .dn-rtx-bitrate{max-width:100%!important;margin-top:4px!important;font-size:13px!important;line-height:1.4!important;text-align:center!important;white-space:normal!important;overflow-wrap:anywhere!important}
-  #uploadSection .dn-rtx-meter{display:flex!important;gap:8px!important;margin:12px 0 10px!important;min-width:0!important}
-  #uploadSection #dnRtxMeterText{font-size:10px!important;white-space:nowrap!important}
+<style id="DN_UNIVERSAL_RESPONSIVE_V1">
+/* Dicky News universal responsive system. Layout adapts to available width, not device names. */
+:root{--dn-gutter:clamp(10px,2.2vw,28px);--dn-card-pad:clamp(12px,2vw,24px);--dn-content-max:1240px}
+html,body{width:100%;max-width:100%;overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+*,*::before,*::after{box-sizing:border-box}
+img,svg,video,canvas,iframe{max-width:100%}
+button,input,select,textarea{max-width:100%;font:inherit}
+.app{width:100%;max-width:100%;min-width:0;overflow-x:clip;padding-left:0;padding-right:0;padding-bottom:env(safe-area-inset-bottom)}
+.app .container,.container{width:min(var(--dn-content-max),calc(100% - 2 * var(--dn-gutter)));max-width:100%;min-width:0;margin-inline:auto}
+.app main,.app section,.app article,.app aside,.app form,.app .card,.app .grid,.app .side{min-width:0;max-width:100%}
+.app .hero{width:100%;min-width:0;padding:clamp(34px,6vw,66px) clamp(0px,1vw,12px) clamp(22px,3.5vw,34px);text-align:center}
+.app .hero h1{max-width:100%;font-size:clamp(30px,5.4vw,68px);line-height:1.02;letter-spacing:-.045em;text-wrap:balance;overflow-wrap:normal}
+.app .hero-main-headline{max-width:100%;font-size:clamp(21px,3.5vw,38px);line-height:1.14;text-wrap:balance;overflow-wrap:normal}
+.app .hero-description{width:min(100%,70ch);margin-inline:auto;font-size:clamp(14px,1.35vw,17px);line-height:1.65;text-wrap:pretty;overflow-wrap:anywhere}
+.app .hero-social{width:fit-content;max-width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere}
+.app .hero-social-row{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:stretch!important;gap:clamp(5px,1vw,9px)!important;width:min(100%,620px)!important;max-width:100%!important;margin:0 auto 16px!important}
+.app .hero-social-row .hero-social{display:flex!important;align-items:center!important;justify-content:center!important;gap:clamp(4px,.7vw,8px)!important;width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important;padding:clamp(7px,1vw,10px) clamp(4px,.8vw,10px)!important;font-size:clamp(10px,.95vw,13px)!important;line-height:1.2!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important}
+.app .hero-social-row .hero-social .social-brand-icon,.app .hero-social-row .hero-social .telegram-brand-mark{width:clamp(17px,1.5vw,21px)!important;height:clamp(17px,1.5vw,21px)!important;flex:0 0 clamp(17px,1.5vw,21px)!important}
+.app .hero-social-row .hero-social .social-link-arrow{display:none!important}
+.app .youtube-social{width:min(100%,640px);display:flex;flex-wrap:wrap;gap:6px;justify-content:center;line-height:1.35}
+.app .youtube-social>*{min-width:0}
+.app .youtube-social .youtube-subs{white-space:nowrap}
+.app .grid{grid-template-columns:minmax(0,1.28fr) minmax(260px,.72fr);align-items:start}
+#uploadSection{width:min(1080px,100%);max-width:100%;min-width:0;margin-inline:auto;grid-template-columns:minmax(0,1fr) minmax(260px,.72fr);gap:clamp(12px,1.6vw,20px)}
+#uploadSection>.card.upload{width:100%;max-width:100%;min-width:0;padding:var(--dn-card-pad);border-radius:clamp(16px,2vw,22px)}
+#uploadSection>.card.upload>.dn-rtx-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important;justify-content:stretch!important;gap:clamp(6px,.9vw,10px)!important;width:min(460px,100%)!important;max-width:100%!important;height:auto!important;min-height:0!important;margin:0 auto clamp(12px,1.5vw,18px)!important;padding:4px!important;overflow:visible!important}
+#uploadSection .dn-rtx-tab{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;width:100%!important;min-width:0!important;max-width:100%!important;height:auto!important;min-height:clamp(52px,5.2vw,72px)!important;padding:8px clamp(5px,1vw,12px)!important;border-radius:clamp(10px,1.5vw,18px)!important;box-sizing:border-box!important;text-align:center!important;white-space:normal!important;overflow:hidden!important}
+#uploadSection .dn-rtx-tab span{display:block!important;width:100%!important;max-width:100%!important;font-size:clamp(10px,1.05vw,15px)!important;line-height:1.15!important;letter-spacing:0!important;text-align:center!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;transform:none!important}
+#uploadSection .dn-rtx-tab small{display:block!important;width:100%!important;max-width:100%!important;font-size:clamp(7.5px,.72vw,10px)!important;line-height:1.2!important;letter-spacing:.045em!important;text-align:center!important;white-space:normal!important;overflow-wrap:normal!important}
+#uploadSection .dn-rtx-drop-target{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;max-width:100%!important;min-width:0!important;min-height:clamp(245px,29vw,360px)!important;height:auto!important;padding:clamp(22px,3.5vw,42px) clamp(12px,2.5vw,28px)!important;gap:clamp(10px,1.5vw,16px)!important;border-radius:clamp(16px,2vw,28px)!important;box-sizing:border-box!important;text-align:center!important}
+#uploadSection .dn-rtx-drop-target #dropTitle{max-width:100%;font-size:clamp(19px,2vw,29px)!important;line-height:1.22!important;text-align:center!important;text-wrap:balance;overflow-wrap:anywhere}
+#uploadSection .dn-rtx-drop-target #dropText{max-width:62ch!important;font-size:clamp(12px,1.1vw,17px)!important;line-height:1.5!important;text-align:center!important;overflow-wrap:anywhere!important}
+#uploadSection .dn-rtx-upload-icon{width:clamp(54px,5vw,72px)!important;height:clamp(54px,5vw,72px)!important;flex:0 0 auto!important}
+#uploadSection .dn-rtx-upload-icon svg{width:58%!important;height:58%!important}
+#uploadSection .dn-rtx-bitrate{max-width:100%!important;font-size:clamp(13px,1.25vw,19px)!important;line-height:1.4!important;text-align:center!important;white-space:normal!important;overflow-wrap:anywhere!important}
+#uploadSection .dn-rtx-meter{display:flex!important;align-items:center!important;gap:clamp(7px,1vw,14px)!important;width:100%!important;min-width:0!important;margin:14px 0 16px!important}
+#uploadSection .dn-rtx-meter-track{flex:1 1 auto!important;min-width:0!important}
+#uploadSection #dnRtxMeterText{flex:0 0 auto!important;max-width:46%!important;font-size:clamp(10px,.9vw,13px)!important;white-space:nowrap!important}
+#uploadSection .upload-destination-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(8px,1vw,12px);width:100%;min-width:0}
+#uploadSection .upload-destination-option{min-width:0;max-width:100%}
+#uploadSection .upload-destination-option a{max-width:100%;overflow-wrap:anywhere}
+#uploadSection .upload-destination-option .upload-mode-note{min-width:0;flex-wrap:wrap;text-align:center}
+#uploadSection .wallet-card,#uploadSection .side .card{width:100%;min-width:0;max-width:100%}
+#claimBox,.claim-box,.claim-row{min-width:0;max-width:100%}
+#claimBox .claim-row{grid-template-columns:minmax(0,1fr)!important}
+#claimBox input,#claimBox button{width:100%;min-width:0}
+.wallet-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,135px),1fr));gap:clamp(7px,1vw,12px);min-width:0}
+.wallet-stat{min-width:0;overflow-wrap:anywhere}
+.subscription-panel{width:100%;max-width:100%;min-width:0}
+.subscription-plans-strip{max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-inline:contain}
+.method-flow-track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.5vw,16px)}
+.method-flow-card,.bitrate-guide-item,.payment-option,.vip-tier{min-width:0;max-width:100%;overflow-wrap:anywhere}
+.bitrate-guide-table{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.dn-tg-popup{width:min(500px,calc(100vw - 2 * var(--dn-gutter)));max-width:100%;max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow:auto;overscroll-behavior:contain}
+.golden-scroll-left,.golden-scroll-rail{max-width:calc(100vw - 12px)}
+@media(min-width:1440px){:root{--dn-content-max:1320px}#uploadSection{width:min(1160px,100%)}.app .hero{padding-top:76px}}
+@media(max-width:1100px){
+  #uploadSection{grid-template-columns:minmax(0,1fr)!important;width:100%!important;margin:18px auto 34px!important}
+  #uploadSection>.side,#uploadSection>.wallet-card{width:100%;max-width:100%}
+  .method-flow-track{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:800px){
+  :root{--dn-gutter:clamp(12px,3vw,22px);--dn-card-pad:clamp(13px,2.5vw,19px)}
+  .app .container,.container{width:calc(100% - 2 * var(--dn-gutter))!important}
+  .app .hero{padding-top:clamp(30px,7vw,48px)}
+  .app .grid,.app .analytics{grid-template-columns:minmax(0,1fr)!important;gap:14px}
+  #uploadSection{grid-template-columns:minmax(0,1fr)!important;gap:14px!important}
+  #uploadSection>.card.upload{padding:var(--dn-card-pad)!important}
+  .method-flow-track{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .footer{flex-wrap:wrap}
   .golden-scroll-left,.golden-scroll-rail{display:none!important}
-  .golden-scroll-progress{z-index:999!important;height:2px!important}
-  .golden-scroll-progress>i{height:2px!important}
-  .dn-tg-popup{width:100%!important;max-width:100%!important;max-height:calc(100dvh - 32px - env(safe-area-inset-bottom))!important;overflow-y:auto!important}
 }
-@media(max-width:360px){
-  #uploadSection>.card.upload{padding:12px 10px!important}
-  #uploadSection .dn-rtx-tab{padding:6px 3px!important}
-  #uploadSection .dn-rtx-tab span{font-size:10px!important}
-  #uploadSection .dn-rtx-drop-target{min-height:230px!important;padding:20px 10px!important}
+@media(max-width:600px){
+  :root{--dn-gutter:clamp(10px,3.2vw,16px);--dn-card-pad:clamp(12px,3vw,16px)}
+  html,body{overflow-x:clip!important}
+  .app{padding:0 0 calc(18px + env(safe-area-inset-bottom))!important}
+  .app .container,.container{width:calc(100% - 2 * var(--dn-gutter))!important;padding-inline:0!important}
+  .app .hero{padding:clamp(26px,7vw,40px) 0 22px!important;margin:0 auto 12px!important}
+  .app .hero .eyebrow{max-width:100%;font-size:clamp(9px,2.6vw,11px);padding:7px 10px;white-space:normal;text-align:center}
+  .app .hero h1{font-size:clamp(29px,8.6vw,43px)!important;line-height:1.04!important;letter-spacing:-.045em!important;margin:16px auto 12px!important}
+  .app .hero-main-headline{font-size:clamp(20px,5.8vw,29px)!important;line-height:1.14!important;margin-inline:auto!important}
+  .app .hero-description{font-size:clamp(13px,3.6vw,15px)!important;line-height:1.6!important;padding-inline:2px}
+  .app .hero-social{padding:8px 12px!important;font-size:clamp(11px,3vw,13px)!important;gap:7px!important}
+  .app .hero-social-row{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;width:100%!important;margin:0 auto 14px!important}
+  .app .hero-social-row .hero-social{min-height:40px!important;padding:6px 3px!important;gap:4px!important;font-size:clamp(9px,2.9vw,11px)!important;border-radius:11px!important}
+  .app .hero-social-row .hero-social .social-brand-icon,.app .hero-social-row .hero-social .telegram-brand-mark{width:18px!important;height:18px!important;flex-basis:18px!important}
+  .app .youtube-social{width:100%!important;max-width:100%!important;flex-wrap:wrap!important;white-space:normal!important;gap:5px!important;padding:10px 8px!important;font-size:clamp(10px,3.2vw,13px)!important}
+  .app .youtube-social .social-divider{display:none!important}
+  .app .youtube-social .youtube-subs{font-size:clamp(10px,3vw,12px)!important}
+  .app .grid{margin:14px 0 26px!important}
+  #uploadSection{width:100%!important;margin:14px auto 26px!important;gap:12px!important}
+  #uploadSection>.card.upload{padding:var(--dn-card-pad)!important;border-radius:18px!important}
+  #uploadSection>.card.upload>.dn-rtx-tabs{width:100%!important;max-width:460px!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;margin-bottom:13px!important;padding:3px!important}
+  #uploadSection .dn-rtx-tab{min-height:58px!important;height:auto!important;padding:7px 4px!important;border-radius:12px!important;gap:4px!important}
+  #uploadSection .dn-rtx-tab span{font-size:clamp(9.5px,2.75vw,12px)!important;line-height:1.15!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important}
+  #uploadSection .dn-rtx-tab small{font-size:clamp(7px,1.9vw,9px)!important;line-height:1.15!important;letter-spacing:.025em!important}
+  #uploadSection .dn-rtx-drop-target{min-height:clamp(225px,66vw,310px)!important;height:auto!important;padding:clamp(20px,6vw,30px) 10px!important;gap:clamp(10px,3vw,14px)!important;border-radius:18px!important}
+  #uploadSection .dn-rtx-upload-icon{width:clamp(50px,15vw,62px)!important;height:clamp(50px,15vw,62px)!important}
+  #uploadSection .dn-rtx-drop-target #dropTitle{font-size:clamp(18px,5.2vw,23px)!important}
+  #uploadSection .dn-rtx-drop-target #dropText{font-size:clamp(11px,3.2vw,13px)!important;line-height:1.45!important;padding-inline:4px}
+  #uploadSection .dn-rtx-bitrate{font-size:clamp(12px,3.6vw,15px)!important;line-height:1.4!important}
+  #uploadSection .dn-rtx-meter{gap:7px!important;margin:11px 0 8px!important}
+  #uploadSection #dnRtxMeterText{max-width:48%!important;font-size:clamp(9px,2.7vw,11px)!important}
+  #uploadSection .upload-destination-options{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  #uploadSection .upload-destination-option{padding:clamp(8px,2.5vw,12px)!important}
+  #uploadSection .upload-destination-option .upload-mode-note{font-size:clamp(9px,2.6vw,11px)!important;gap:4px!important}
+  #claimBox{padding-top:12px!important;margin-top:12px!important}
+  #claimBox .claim-row{grid-template-columns:minmax(0,1fr)!important;gap:9px!important}
+  #claimBox .claim-row input{min-height:50px!important;font-size:16px!important}
+  #claimBox .claim-row button{min-height:48px!important}
+  .wallet-card{padding:14px!important}
+  .wallet-card .wallet-title{display:flex!important;flex-wrap:wrap!important;align-items:flex-start!important;gap:8px!important}
+  .wallet-card .wallet-title h2{font-size:clamp(16px,4.5vw,19px)!important}
+  .wallet-card #walletAuthBadge{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+  .wallet-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  .wallet-stat{padding:10px!important}
+  .wallet-stat b{font-size:clamp(15px,4vw,20px)!important;overflow-wrap:anywhere}
+  .subscription-panel{padding:clamp(13px,3vw,18px)!important;margin:16px 0!important}
+  .method-flow-track,.steps{grid-template-columns:minmax(0,1fr)!important;gap:11px!important}
+  .method-flow-card,.step{padding:15px!important}
+  .bitrate-guide-table{grid-template-columns:minmax(0,1fr)!important}
+  .footer{flex-direction:column;align-items:flex-start}
+  .dn-tg-popup{width:calc(100vw - 2 * var(--dn-gutter))!important;padding:clamp(16px,4vw,22px)!important}
+  .dn-tg-free-actions{grid-template-columns:minmax(0,1fr)!important}
+  .golden-scroll-left,.golden-scroll-rail{display:none!important}
 }
+@media(max-width:420px){
+  :root{--dn-gutter:10px;--dn-card-pad:12px}
+  .app .hero h1{font-size:clamp(27px,8.2vw,34px)!important}
+  .app .hero-main-headline{font-size:clamp(19px,5.7vw,24px)!important}
+  .app .hero-social-row{gap:5px!important}
+  .app .hero-social-row .hero-social{font-size:clamp(8.5px,2.7vw,10px)!important;padding-inline:2px!important}
+  .app .hero-social-row .social-brand-icon,.app .hero-social-row .telegram-brand-mark{width:16px!important;height:16px!important;flex-basis:16px!important}
+  #uploadSection .dn-rtx-tab{min-height:54px!important;padding:6px 3px!important}
+  #uploadSection .dn-rtx-tab span{font-size:clamp(9px,2.55vw,10.5px)!important}
+  #uploadSection .dn-rtx-tab small{font-size:7px!important;letter-spacing:0!important}
+  #uploadSection .upload-destination-options{grid-template-columns:minmax(0,1fr)!important}
+  .wallet-grid{grid-template-columns:minmax(0,1fr)!important}
+}
+@media(max-width:340px){
+  :root{--dn-gutter:8px;--dn-card-pad:10px}
+  .app .hero .eyebrow{font-size:9px;padding:6px 8px}
+  .app .hero-social-row .hero-social{gap:3px!important;font-size:8px!important}
+  #uploadSection>.card.upload{padding:10px!important}
+  #uploadSection>.card.upload>.dn-rtx-tabs{gap:5px!important}
+  #uploadSection .dn-rtx-tab span{font-size:8.5px!important}
+  #uploadSection .dn-rtx-tab small{font-size:6.5px!important}
+  #uploadSection .dn-rtx-drop-target{min-height:210px!important}
+}
+@media(orientation:landscape) and (max-height:500px) and (max-width:950px){
+  .app .hero{padding-top:22px!important;padding-bottom:14px!important}
+  #uploadSection .dn-rtx-drop-target{min-height:210px!important}
+  .dn-tg-popup{max-height:calc(100dvh - 16px)!important}
+}
+@media(hover:none),(pointer:coarse){.card:hover,.step:hover,.btn:hover,.hero-social:hover{transform:none!important}}
+@media(prefers-reduced-motion:reduce){.app .hero-social,.app .hero-social::after,.app .card,.app .step{animation:none!important;transition:none!important}}
 </style>
 
 </body>
